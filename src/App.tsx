@@ -1,19 +1,17 @@
 import { FC } from 'react';
-import { ThemeProvider, CssBaseline, Button } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 
 import theme from 'core/theme';
 import { store } from 'store';
+import AppRouter from 'router/AppRouter';
 
 const App: FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div>
-          <h1>CustomerCity</h1>
-          <Button>Click me!</Button>
-        </div>
+        <AppRouter />
       </ThemeProvider>
     </Provider>
   );
