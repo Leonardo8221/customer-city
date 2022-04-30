@@ -10,6 +10,9 @@ const getInitialState = (): AuthState => {
     loading: false,
     error: false,
     accessToken: null,
+    id: null,
+    email: null,
+    roles: [],
     ...(initialAuthSession ?? {}),
   };
 };
@@ -30,7 +33,10 @@ const authStore = createSlice({
 
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.accessToken = payload;
+      state.accessToken = payload.accessToken;
+      state.id = payload.id;
+      state.email = payload.email;
+      state.roles = payload.roles;
     });
 
     builder.addCase(login.rejected, (state, { error }) => {
