@@ -1,14 +1,17 @@
 import { FC, useState } from 'react';
-import { Container, Grid } from '@mui/material';
-import { Form, Input, Button } from 'components/ui';
+import { Container, Grid, FormHelperText } from '@mui/material';
+
+import { Form, Input, LoadingButton } from 'components/ui';
+import { useAuth } from 'store/auth/hooks';
 
 const Login: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { loading, error, login } = useAuth();
 
   const onSubmit = () => {
     if (!username || !password) return;
-    console.log({ username, password });
+    login({ username, password });
   };
 
   return (
@@ -36,7 +39,13 @@ const Login: FC = () => {
               onChange={(event) => setPassword(event.target.value as string)}
             />
 
-            <Button onClick={onSubmit}>Login</Button>
+            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined">
+              Login
+            </LoadingButton>
+
+            {error && (
+              <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
+            )}
           </Form>
         </Grid>
       </Grid>

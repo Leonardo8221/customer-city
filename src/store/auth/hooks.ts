@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { useActionCreator } from 'hooks';
 import { AuthReturnHook } from './types';
 import { RootState } from '../types';
-import { setError } from './actions';
+import { login, setError } from './actions';
 
 export const useAuth = (): AuthReturnHook => {
   const authState = useSelector((state: RootState) => state.auth, shallowEqual);
@@ -11,5 +11,6 @@ export const useAuth = (): AuthReturnHook => {
   return {
     ...authState,
     setError: useActionCreator(setError),
+    login: useActionCreator(login),
   };
 };
