@@ -1,8 +1,6 @@
 import { FC, useState } from 'react';
 import { Container, Grid } from '@mui/material';
-import { Form } from 'components/Form';
-import { Input } from 'components/Input';
-import { Button } from 'components/Button';
+import { Form, Input, Button } from 'components/ui';
 
 const Login: FC = () => {
   const [username, setUsername] = useState('');
