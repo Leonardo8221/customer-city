@@ -8,3 +8,7 @@ export interface AuthReturnHook extends AuthState {
   setError: (error: string | boolean) => void;
   login: (data: { username: string; password: string }) => void;
 }
+
+export interface AuthSession {
+  accessToken: string;
+}

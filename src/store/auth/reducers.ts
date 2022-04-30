@@ -2,16 +2,21 @@ import { ActionReducerMapBuilder, createSlice } from '@reduxjs/toolkit';
 
 import { AuthState } from './types';
 import { setError, login } from './actions';
+import { getAutSession } from './utils';
 
-const initialState: AuthState = {
-  loading: false,
-  error: false,
-  accessToken: null,
+const getInitialState = (): AuthState => {
+  const initialAuthSession = getAutSession();
+  return {
+    loading: false,
+    error: false,
+    accessToken: null,
+    ...(initialAuthSession ?? {}),
+  };
 };
 
 const authStore = createSlice({
   name: 'auth',
-  initialState,
+  initialState: getInitialState(),
   reducers: {},
   extraReducers: (builder: ActionReducerMapBuilder<AuthState>): void => {
     builder.addCase(setError, (state, { payload }) => {
