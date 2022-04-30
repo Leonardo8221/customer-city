@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import theme from 'core/theme';
 import { store } from 'store';
 import AppRouter from 'router/AppRouter';
+import AxiosInterceptors from 'http/interceptors';
+
+AxiosInterceptors.setup(store);
 
 const App: FC = () => {
   return (
