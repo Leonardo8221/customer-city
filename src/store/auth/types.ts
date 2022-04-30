@@ -1,6 +1,7 @@
 export interface AuthState {
   loading: boolean;
   error: boolean | string;
+  success: boolean | string;
   accessToken: string | null;
   id: string | null;
   email: string | null;
@@ -9,7 +10,9 @@ export interface AuthState {
 
 export interface AuthReturnHook extends AuthState {
   setError: (error: string | boolean) => void;
+  setSuccess: (success: string | boolean) => void;
   login: (data: { username: string; password: string }) => void;
+  changePassword: (data: { username: string; password: string; newPassword: string }) => void;
 }
 
 export interface AuthSession {

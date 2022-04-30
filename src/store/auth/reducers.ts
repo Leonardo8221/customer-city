@@ -1,7 +1,7 @@
-import { ActionReducerMapBuilder, createSlice } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { AuthState } from './types';
-import { setError, login } from './actions';
+import { setError, login, changePassword, setSuccess } from './actions';
 import { getAutSession } from './utils';
 
 const getInitialState = (): AuthState => {
@@ -9,6 +9,7 @@ const getInitialState = (): AuthState => {
   return {
     loading: false,
     error: false,
+    success: false,
     accessToken: null,
     id: null,
     email: null,
@@ -26,9 +27,8 @@ const authStore = createSlice({
       state.error = payload;
     });
 
-    builder.addCase(login.pending, (state) => {
-      state.loading = true;
-      state.error = false;
+    builder.addCase(setSuccess, (state, { payload }) => {
+      state.success = payload;
     });
 
     builder.addCase(login.fulfilled, (state, { payload }) => {
@@ -39,9 +39,21 @@ const authStore = createSlice({
       state.roles = payload.roles;
     });
 
-    builder.addCase(login.rejected, (state, { error }) => {
+    builder.addCase(changePassword.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Changed password successfully!';
+    });
+
+    builder.addMatcher(isAnyOf(login.pending, changePassword.pending), (state) => {
+      state.loading = true;
+      state.error = false;
+      state.success = false;
+    });
+
+    builder.addMatcher(isAnyOf(login.rejected, changePassword.rejected), (state, { error }) => {
       state.loading = false;
       state.error = error?.message ?? true;
+      state.success = false;
     });
   },
 });

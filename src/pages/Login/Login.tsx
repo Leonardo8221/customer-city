@@ -39,7 +39,7 @@ const Login: FC = () => {
               onChange={(event) => setPassword(event.target.value as string)}
             />
 
-            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined">
+            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit">
               Login
             </LoadingButton>
 
