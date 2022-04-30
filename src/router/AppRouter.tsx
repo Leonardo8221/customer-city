@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuth } from 'store/auth/hooks';
 import ScrollToTop from './ScrollToTop';
 import { publicRoutes, privateRoutes } from './routes';
-import { Dashboard, Login } from 'pages';
+import { Dashboard, Login, Account } from 'pages';
 
 const PublicRoutes: FC = () => {
   return (
@@ -19,6 +19,7 @@ const PrivateRoutes: FC = () => {
   return (
     <Routes>
       <Route path={privateRoutes.dashboard} element={<Dashboard />} />
+      <Route path={privateRoutes.account} element={<Account />} />
       <Route path="*" element={<Navigate to={privateRoutes.dashboard} replace />} />
     </Routes>
   );
