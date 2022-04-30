@@ -1,7 +1,13 @@
 import { FC } from 'react';
 
+import { Navbar } from 'components/Navbar';
+
 const Dashboard: FC = () => {
-  return <div>Dashboard Page</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default Dashboard;
