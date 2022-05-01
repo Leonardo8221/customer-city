@@ -5,4 +5,5 @@ export const publicRoutes = {
 export const privateRoutes = {
   dashboard: '/d',
   account: '/d/account',
+  createCompany: '/d/create-company',
 };
