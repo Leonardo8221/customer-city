@@ -1,8 +1,10 @@
 import { FC, useState, ChangeEvent } from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, FormHelperText } from '@mui/material';
 
 import { Form, Input, LoadingButton } from 'components/ui';
 import { Navbar } from 'components/Navbar';
+import { useCompany } from 'store/company/hooks';
+import { CreateCompanyData } from 'store/company/types';
 
 interface Company {
   name: string;
@@ -20,6 +22,7 @@ const CreateCompany: FC = () => {
     ownerName: '',
     ownerEmail: '',
   });
+  const { loading, error, success, createCompany } = useCompany();
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCompany((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
@@ -27,7 +30,14 @@ const CreateCompany: FC = () => {
 
   const onSubmit = () => {
     if (!company.name || !company.ownerName || !company.ownerEmail) return;
-    // TODO: Create company
+    const data: CreateCompanyData = {
+      name: company.name,
+      ownerName: company.ownerName,
+      ownerEmail: company.ownerEmail,
+    };
+    if (company.address) data.address = company.address;
+    if (company.billingAddress) data.billingAddress = company.billingAddress;
+    createCompany(data);
   };
 
   return (
@@ -95,13 +105,23 @@ const CreateCompany: FC = () => {
 
               <LoadingButton
                 onClick={onSubmit}
-                loading={false}
+                loading={loading}
                 variant="outlined"
                 type="submit"
                 style={{ alignSelf: 'flex-end' }}
               >
                 {'Add & Send e-amil'}
               </LoadingButton>
+
+              {error && (
+                <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
+              )}
+
+              {success && (
+                <FormHelperText variant="filled" style={{ color: 'green' }}>
+                  {typeof success === 'string' ? success : 'Operation successfully done!'}
+                </FormHelperText>
+              )}
             </Form>
           </Grid>
         </Grid>

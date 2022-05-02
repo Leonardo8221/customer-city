@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Container, Grid, Typography, Box } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from 'components/Navbar';
 import { Button } from 'components/ui';
 import { privateRoutes } from 'router/routes';
+import { useCompany } from 'store/company/hooks';
 
 const columns: GridColDef[] = [
   {
@@ -25,15 +26,14 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = [
-  { id: 1, name: 'Snow Down', ownerName: 'Jon Dow', createdAt: new Date().toLocaleDateString() },
-  { id: 2, name: 'Snow Down', ownerName: 'Jon Dow', createdAt: new Date().toLocaleDateString() },
-  { id: 3, name: 'Snow Down', ownerName: 'Jon Dow', createdAt: new Date().toLocaleDateString() },
-  { id: 4, name: 'Snow Down', ownerName: 'Jon Dow', createdAt: new Date().toLocaleDateString() },
-];
-
 const Dashboard: FC = () => {
   const navigate = useNavigate();
+  const { loading, error, companies, getCompanies } = useCompany();
+
+  useEffect(() => {
+    getCompanies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -47,13 +47,15 @@ const Dashboard: FC = () => {
 
           <Grid item xs={12}>
             <DataGrid
-              rows={rows}
+              rows={companies}
               columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
               checkboxSelection
               disableSelectionOnClick
               autoHeight
+              loading={loading}
+              error={error ? (typeof error === 'string' ? error : 'Something went wrong!') : undefined}
             />
           </Grid>
 

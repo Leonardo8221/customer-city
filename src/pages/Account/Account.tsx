@@ -6,19 +6,10 @@ import { Form, Input, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 
 const Account: FC = () => {
-  const { loading, error, email, success, changePassword, setError, setSuccess } = useAuth();
+  const { loading, error, email, success, changePassword } = useAuth();
   const [username, setUsername] = useState(email);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
-  useEffect(() => {
-    // Clear on unmount
-    return () => {
-      setError(false);
-      setSuccess(false);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if (success) {
@@ -80,7 +71,7 @@ const Account: FC = () => {
               )}
 
               {success && (
-                <FormHelperText variant="filled">
+                <FormHelperText variant="filled" style={{ color: 'green' }}>
                   {typeof success === 'string' ? success : 'Operation successfully done!'}
                 </FormHelperText>
               )}

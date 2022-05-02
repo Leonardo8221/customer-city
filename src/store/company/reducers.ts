@@ -30,7 +30,6 @@ const companyStore = createSlice({
 
     builder.addCase(createCompany.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.companies.push(payload);
       state.success = `Company ${payload.name} created successfully!`;
     });
 
