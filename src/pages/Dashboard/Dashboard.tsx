@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Container, Grid, Typography, Box } from '@mui/material';
-import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 
 import { Navbar } from 'components/Navbar';
@@ -23,6 +23,7 @@ const columns: GridColDef[] = [
     field: 'createdAt',
     headerName: 'Created',
     flex: 1,
+    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt).toLocaleDateString(),
   },
 ];
 

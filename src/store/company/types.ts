@@ -5,7 +5,7 @@ export interface Company {
   billingAddress?: string;
   ownerName: string;
   ownerEmail: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface CreateCompanyData {
