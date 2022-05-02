@@ -30,7 +30,7 @@ const companyStore = createSlice({
 
     builder.addCase(createCompany.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.success = `Company ${payload.name} created successfully!`;
+      state.success = `Company "${payload.name}" created successfully!`;
     });
 
     builder.addMatcher(isAnyOf(getCompanies.pending, createCompany.pending), (state) => {

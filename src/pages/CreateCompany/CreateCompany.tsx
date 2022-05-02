@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState, ChangeEvent, useEffect } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
 
 import { Form, Input, LoadingButton } from 'components/ui';
@@ -14,15 +14,21 @@ interface Company {
   ownerEmail: string;
 }
 
+const initialCompany = {
+  name: '',
+  address: '',
+  billingAddress: '',
+  ownerName: '',
+  ownerEmail: '',
+};
+
 const CreateCompany: FC = () => {
-  const [company, setCompany] = useState<Company>({
-    name: '',
-    address: '',
-    billingAddress: '',
-    ownerName: '',
-    ownerEmail: '',
-  });
+  const [company, setCompany] = useState<Company>(initialCompany);
   const { loading, error, success, createCompany } = useCompany();
+
+  useEffect(() => {
+    if (success) setCompany(initialCompany);
+  }, [success]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCompany((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
