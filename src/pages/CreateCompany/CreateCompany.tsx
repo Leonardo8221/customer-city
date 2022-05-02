@@ -1,12 +1,14 @@
 import { FC, useState, ChangeEvent, useEffect } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import omitBy from 'lodash.omitby';
 
 import { Form, Input, LoadingButton } from 'components/ui';
 import { Navbar } from 'components/Navbar';
 import { useCompany } from 'store/company/hooks';
-import { CreateCompanyData } from 'store/company/types';
+import { Company, CreateCompanyData } from 'store/company/types';
 
-interface Company {
+interface CompanyValues {
   name: string;
   address?: string;
   billingAddress?: string;
@@ -23,12 +25,17 @@ const initialCompany = {
 };
 
 const CreateCompany: FC = () => {
-  const [company, setCompany] = useState<Company>(initialCompany);
-  const { loading, error, success, createCompany } = useCompany();
+  const location = useLocation();
+  const state = location.state as Company | null;
+  const [company, setCompany] = useState<CompanyValues>({
+    ...initialCompany,
+    ...omitBy(state ?? {}, (value) => !value),
+  });
+  const { loading, error, success, createCompany, updateCompany } = useCompany();
 
   useEffect(() => {
-    if (success) setCompany(initialCompany);
-  }, [success]);
+    if (success && !state) setCompany(initialCompany);
+  }, [state, success]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCompany((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
@@ -36,14 +43,28 @@ const CreateCompany: FC = () => {
 
   const onSubmit = () => {
     if (!company.name || !company.ownerName || !company.ownerEmail) return;
-    const data: CreateCompanyData = {
-      name: company.name,
-      ownerName: company.ownerName,
-      ownerEmail: company.ownerEmail,
-    };
-    if (company.address) data.address = company.address;
-    if (company.billingAddress) data.billingAddress = company.billingAddress;
-    createCompany(data);
+
+    if (!state) {
+      const data: CreateCompanyData = {
+        name: company.name,
+        ownerName: company.ownerName,
+        ownerEmail: company.ownerEmail,
+      };
+      if (company.address) data.address = company.address;
+      if (company.billingAddress) data.billingAddress = company.billingAddress;
+
+      createCompany(data);
+      return;
+    }
+
+    const data: Partial<CreateCompanyData> = {};
+    if (company.name !== state.name) data.name = company.name;
+    if (company.address !== state.address) data.address = company.address;
+    if (company.billingAddress !== state.billingAddress) data.billingAddress = company.billingAddress;
+    if (company.ownerName !== state.ownerName) data.ownerName = company.ownerName;
+    if (company.ownerEmail !== state.ownerEmail) data.ownerEmail = company.ownerEmail;
+
+    updateCompany({ id: state.id, data });
   };
 
   return (
@@ -116,7 +137,7 @@ const CreateCompany: FC = () => {
                 type="submit"
                 style={{ alignSelf: 'flex-end' }}
               >
-                {'Add & Send e-amil'}
+                {state ? 'Update company' : 'Add & Send e-amil'}
               </LoadingButton>
 
               {error && (

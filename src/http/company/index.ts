@@ -13,3 +13,10 @@ export const createCompany = (data: CreateCompanyData): Promise<Company> =>
     url: '/company',
     data,
   });
+
+export const updateCompany = (id: number, data: Partial<CreateCompanyData>): Promise<null> =>
+  apiCall({
+    method: 'put',
+    url: `/company/${id}`,
+    data,
+  });

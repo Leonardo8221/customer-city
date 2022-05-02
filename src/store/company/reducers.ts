@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { CompanyState } from './types';
-import { setError, setSuccess, getCompanies, createCompany } from './actions';
+import { setError, setSuccess, getCompanies, createCompany, updateCompany } from './actions';
 
 const initialState: CompanyState = {
   loading: false,
@@ -33,17 +33,25 @@ const companyStore = createSlice({
       state.success = `Company "${payload.name}" created successfully!`;
     });
 
-    builder.addMatcher(isAnyOf(getCompanies.pending, createCompany.pending), (state) => {
+    builder.addCase(updateCompany.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Company updated successfully!';
+    });
+
+    builder.addMatcher(isAnyOf(getCompanies.pending, createCompany.pending, updateCompany.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.success = false;
     });
 
-    builder.addMatcher(isAnyOf(getCompanies.rejected, createCompany.rejected), (state, { error }) => {
-      state.loading = false;
-      state.error = error?.message ?? true;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getCompanies.rejected, createCompany.rejected, updateCompany.rejected),
+      (state, { error }) => {
+        state.loading = false;
+        state.error = error?.message ?? true;
+        state.success = false;
+      },
+    );
   },
 });
 

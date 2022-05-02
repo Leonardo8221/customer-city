@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Container, Grid, Typography, Box } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 
 import { Navbar } from 'components/Navbar';
@@ -35,6 +35,10 @@ const Dashboard: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onRowClick = (params: GridRowParams) => {
+    navigate(privateRoutes.createCompany, { state: { ...params.row } });
+  };
+
   return (
     <>
       <Navbar />
@@ -56,6 +60,7 @@ const Dashboard: FC = () => {
               autoHeight
               loading={loading}
               error={error ? (typeof error === 'string' ? error : 'Something went wrong!') : undefined}
+              onRowClick={onRowClick}
             />
           </Grid>
 

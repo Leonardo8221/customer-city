@@ -16,6 +16,11 @@ export interface CreateCompanyData {
   ownerEmail: string;
 }
 
+export interface UpdateCompanyData {
+  id: number;
+  data: Partial<CreateCompanyData>;
+}
+
 export interface CompanyState {
   loading: boolean;
   error: string | boolean;
@@ -28,4 +33,5 @@ export interface CompanyReturnHook extends CompanyState {
   setSuccess: (success: string | boolean) => void;
   getCompanies: () => void;
   createCompany: (data: CreateCompanyData) => void;
+  updateCompany: (data: UpdateCompanyData) => void;
 }
