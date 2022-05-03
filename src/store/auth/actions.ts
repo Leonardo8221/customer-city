@@ -8,10 +8,13 @@ const SET_ERROR = 'auth/SET_ERROR';
 const SET_SUCCESS = 'auth/SET_SUCCESS';
 const LOGIN = 'auth/LOGIN';
 const CHANGE_PASSWORD = 'auth/CHANGE_PASSWORD';
+const LOG_OUT = 'auth/LOG_OUT';
 
 export const setError = createAction<string | boolean>(SET_ERROR);
 
 export const setSuccess = createAction<string | boolean>(SET_SUCCESS);
+
+export const logout = createAction<void>(LOG_OUT);
 
 export const login = createAsyncThunk<AuthSession, { username: string; password: string }>(
   LOGIN,

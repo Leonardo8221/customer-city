@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { AuthState } from './types';
-import { setError, login, changePassword, setSuccess } from './actions';
+import { setError, login, changePassword, setSuccess, logout } from './actions';
 import { getAutSession } from './utils';
 
 const getInitialState = (): AuthState => {
@@ -43,6 +43,8 @@ const authStore = createSlice({
       state.loading = false;
       state.success = 'Changed password successfully!';
     });
+
+    builder.addCase(logout, () => getInitialState());
 
     builder.addMatcher(isAnyOf(login.pending, changePassword.pending), (state) => {
       state.loading = true;

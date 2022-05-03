@@ -14,3 +14,5 @@ export const changePassword = (email: string, password: string, newPassword: str
     url: '/auth/change-password',
     data: { email, password, newPassword },
   });
+
+export const logout = (id: string): Promise<null> => apiCall({ method: 'post', url: `/auth/logout/${id}` });

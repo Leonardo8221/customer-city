@@ -13,6 +13,7 @@ export interface AuthReturnHook extends AuthState {
   setSuccess: (success: string | boolean) => void;
   login: (data: { username: string; password: string }) => void;
   changePassword: (data: { username: string; password: string; newPassword: string }) => void;
+  logout: () => void;
 }
 
 export interface AuthSession {

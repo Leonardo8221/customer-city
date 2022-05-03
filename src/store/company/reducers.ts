@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { CompanyState } from './types';
 import { setError, setSuccess, getCompanies, createCompany, updateCompany } from './actions';
+import { logout } from '../auth/actions';
 
 const initialState: CompanyState = {
   loading: false,
@@ -37,6 +38,8 @@ const companyStore = createSlice({
       state.loading = false;
       state.success = 'Company updated successfully!';
     });
+
+    builder.addCase(logout, () => initialState);
 
     builder.addMatcher(isAnyOf(getCompanies.pending, createCompany.pending, updateCompany.pending), (state) => {
       state.loading = true;

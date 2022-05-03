@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { privateRoutes } from 'router/routes';
 import { AppBar, LeftContainer, RightContainer, Button } from './ui';
+import { LogoutButton } from 'components/LogoutButton';
 
 const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ const Navbar: FC = () => {
         </LeftContainer>
 
         <RightContainer>
+          <LogoutButton />
+
           {pathname !== privateRoutes.account && (
             <Button onClick={() => navigate(privateRoutes.account)}>My account</Button>
           )}

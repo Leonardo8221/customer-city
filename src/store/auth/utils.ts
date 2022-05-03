@@ -20,3 +20,8 @@ export const getAutSession = (): AuthSession | null => {
     return null;
   }
 };
+
+export const clearAuthSession = (): void => {
+  localStorage?.removeItem(AUTH_SESSION_KEY);
+  sessionStorage?.removeItem(AUTH_SESSION_KEY);
+};
