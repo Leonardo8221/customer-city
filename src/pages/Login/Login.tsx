@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Container, Grid, FormHelperText } from '@mui/material';
+import { Container, Grid, FormHelperText, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import { Form, Input, LoadingButton } from 'components/ui';
@@ -50,6 +50,14 @@ const Login: FC = () => {
             )}
           </Form>
         </Grid>
+
+        {!!error && (
+          <Grid item xs={12}>
+            <Typography variant="caption" color="red">
+              {typeof error === 'string' ? error : 'Something went wrong!'}
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
