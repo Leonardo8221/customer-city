@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 import { Form, Input, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 
 const Login: FC = () => {
-  const [username, setUsername] = useState('');
+  const [searchParams] = useSearchParams();
+  const [username, setUsername] = useState(searchParams.get('email') ?? '');
   const [password, setPassword] = useState('');
   const { loading, error, login } = useAuth();
 
