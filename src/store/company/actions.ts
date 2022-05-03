@@ -4,6 +4,7 @@ import {
   getCompanies as getCompaniesApi,
   createCompany as createCompanyApi,
   updateCompany as updateCompanyApi,
+  deleteCompany as deleteCompanyApi,
 } from 'http/company';
 import { Company, CreateCompanyData, UpdateCompanyData } from './types';
 
@@ -12,6 +13,7 @@ const SET_SUCCESS = 'company/SET_SUCCESS';
 const GET_COMPANIES = 'company/GET_COMPANIES';
 const CREATE_COMPANY = 'company/CREATE_COMPANY';
 const UPDATE_COMPANY = 'company/UPDATE_COMPANY';
+const DELETE_COMPANIES = 'company/DELETE_COMPANIES';
 
 export const setError = createAction<string | boolean>(SET_ERROR);
 
@@ -29,4 +31,9 @@ export const createCompany = createAsyncThunk<Company, CreateCompanyData>(CREATE
 
 export const updateCompany = createAsyncThunk<void, UpdateCompanyData>(UPDATE_COMPANY, async ({ id, data }) => {
   await updateCompanyApi(id, data);
+});
+
+export const deleteCompanies = createAsyncThunk<void, number[]>(DELETE_COMPANIES, async (ids, { dispatch }) => {
+  await Promise.all(ids.map((id) => deleteCompanyApi(id)));
+  dispatch(getCompanies());
 });

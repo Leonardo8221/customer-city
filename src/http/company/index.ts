@@ -20,3 +20,5 @@ export const updateCompany = (id: number, data: Partial<CreateCompanyData>): Pro
     url: `/company/${id}`,
     data,
   });
+
+export const deleteCompany = (id: number): Promise<null> => apiCall({ method: 'delete', url: `/company/${id}` });

@@ -61,7 +61,6 @@ const Dashboard: FC = () => {
               disableSelectionOnClick
               autoHeight
               loading={loading}
-              error={error ? (typeof error === 'string' ? error : 'Something went wrong!') : undefined}
               onRowClick={onRowClick}
               components={{ Footer: TableFooter }}
             />
@@ -72,6 +71,14 @@ const Dashboard: FC = () => {
               <Button onClick={() => navigate(privateRoutes.createCompany)}>Add New Company</Button>
             </Box>
           </Grid>
+
+          {!!error && (
+            <Grid item xs={12}>
+              <Typography variant="caption" color="red">
+                {typeof error === 'string' ? error : 'Something went wrong!'}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </Container>
     </>

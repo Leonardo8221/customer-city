@@ -34,4 +34,5 @@ export interface CompanyReturnHook extends CompanyState {
   getCompanies: () => void;
   createCompany: (data: CreateCompanyData) => void;
   updateCompany: (data: UpdateCompanyData) => void;
+  deleteCompanies: (ids: number[]) => void;
 }
