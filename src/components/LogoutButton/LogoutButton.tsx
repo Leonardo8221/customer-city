@@ -23,8 +23,8 @@ const LogoutButton: FC = () => {
     if (!id) return;
     setLoading(true);
     try {
-      await logoutApi(id);
       logout();
+      await logoutApi(id);
     } catch (error) {
       /** */
     }

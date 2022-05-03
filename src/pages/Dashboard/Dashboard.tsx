@@ -7,6 +7,7 @@ import { Navbar } from 'components/Navbar';
 import { Button } from 'components/ui';
 import { privateRoutes } from 'router/routes';
 import { useCompany } from 'store/company/hooks';
+import { TableFooter } from 'components/TableFooter';
 
 const columns: GridColDef[] = [
   {
@@ -62,6 +63,7 @@ const Dashboard: FC = () => {
               loading={loading}
               error={error ? (typeof error === 'string' ? error : 'Something went wrong!') : undefined}
               onRowClick={onRowClick}
+              components={{ Footer: TableFooter }}
             />
           </Grid>
 
