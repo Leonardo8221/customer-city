@@ -72,7 +72,7 @@ const CreateCompany: FC = () => {
       <Navbar />
 
       <Container maxWidth="lg">
-        <Grid container spacing={2} style={{ marginTop: 70 }}>
+        <Grid container spacing={2} style={{ marginTop: 80 }}>
           <Grid item xs={12} md={6}>
             <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <Input
@@ -136,6 +136,7 @@ const CreateCompany: FC = () => {
                 variant="outlined"
                 type="submit"
                 style={{ alignSelf: 'flex-end' }}
+                marginTop="32px"
               >
                 {state ? 'Update company' : 'Add & Send e-amil'}
               </LoadingButton>

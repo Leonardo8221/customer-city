@@ -4,7 +4,7 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useActionCreator } from 'hooks';
 import { AuthReturnHook } from './types';
 import { RootState } from '../types';
-import { login, setError, changePassword, setSuccess, logout as logoutAction } from './actions';
+import { login, setError, changePassword, setSuccess, logout as logoutAction, setNewPassword } from './actions';
 import { clearAuthSession } from './utils';
 
 export const useAuth = (): AuthReturnHook => {
@@ -23,5 +23,6 @@ export const useAuth = (): AuthReturnHook => {
     login: useActionCreator(login),
     changePassword: useActionCreator(changePassword),
     logout,
+    setNewPassword: useActionCreator(setNewPassword),
   };
 };

@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuth } from 'store/auth/hooks';
 import ScrollToTop from './ScrollToTop';
 import { publicRoutes, privateRoutes } from './routes';
-import { Dashboard, Login, Account, CreateCompany } from 'pages';
+import { Dashboard, Login, Account, CreateCompany, CreatePassword } from 'pages';
 
 const PublicRoutes: FC = () => {
   return (
     <Routes>
       <Route path={publicRoutes.login} element={<Login />} />
+      <Route path={publicRoutes.createPassword} element={<CreatePassword />} />
       <Route path="*" element={<Navigate to={publicRoutes.login} replace />} />
     </Routes>
   );

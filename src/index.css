@@ -4,6 +4,7 @@ body {
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
@@ -12,4 +13,8 @@ code {
 
 .MuiDataGrid-cell {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
 }

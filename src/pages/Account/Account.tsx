@@ -6,21 +6,17 @@ import { Form, Input, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 
 const Account: FC = () => {
-  const { loading, error, email, success, changePassword } = useAuth();
-  const [username, setUsername] = useState(email);
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const { loading, error, email: userEmail, success, changePassword } = useAuth();
+  const [email, setUsername] = useState(userEmail);
+  const [password, setEmail] = useState('');
 
   useEffect(() => {
-    if (success) {
-      setPassword('');
-      setNewPassword('');
-    }
+    if (success) setEmail('');
   }, [success]);
 
   const onSubmit = () => {
-    if (!username || !password || !newPassword) return;
-    changePassword({ username, password, newPassword });
+    if (!email || !password) return;
+    changePassword({ email, password });
   };
 
   return (
@@ -29,40 +25,32 @@ const Account: FC = () => {
 
       <Container maxWidth="lg">
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Form noValidate>
+          <Grid item xs={12} md={6} style={{ marginTop: 80 }}>
+            <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <Input
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 type="email"
                 label="Username"
                 variant="standard"
-                value={username}
+                value={email}
                 onChange={(event) => setUsername(event.target.value as string)}
                 disabled
+                fullWidth
               />
 
               <Input
                 id="password"
                 name="password"
                 type="password"
-                label="Password"
-                variant="standard"
-                value={password}
-                onChange={(event) => setPassword(event.target.value as string)}
-              />
-
-              <Input
-                id="newPassword"
-                name="newPassword"
-                type="password"
                 label="New password"
                 variant="standard"
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value as string)}
+                value={password}
+                onChange={(event) => setEmail(event.target.value as string)}
+                fullWidth
               />
 
-              <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit">
+              <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit" marginTop="32px">
                 Change password
               </LoadingButton>
 

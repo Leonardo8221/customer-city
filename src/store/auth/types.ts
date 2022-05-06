@@ -3,17 +3,25 @@ export interface AuthState {
   error: boolean | string;
   success: boolean | string;
   accessToken: string | null;
+  session: string | null;
   id: string | null;
   email: string | null;
   roles: string[];
+  rememberMe: boolean;
 }
 
 export interface AuthReturnHook extends AuthState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
-  login: (data: { username: string; password: string }) => void;
-  changePassword: (data: { username: string; password: string; newPassword: string }) => void;
+  login: (data: LoginData) => void;
+  changePassword: (data: ChangePasswordData) => void;
   logout: () => void;
+  setNewPassword: (password: string) => void;
+}
+
+export interface AuthResponse {
+  accessToken?: string;
+  session?: string;
 }
 
 export interface AuthSession {
@@ -21,4 +29,17 @@ export interface AuthSession {
   id: string;
   email: string;
   roles: string[];
+  rememberMe: boolean;
+  session?: string;
+}
+
+export interface LoginData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+export interface ChangePasswordData {
+  email: string;
+  password: string;
 }

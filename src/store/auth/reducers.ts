@@ -1,7 +1,16 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { AuthState } from './types';
-import { setError, login, changePassword, setSuccess, logout } from './actions';
+import {
+  setError,
+  login,
+  changePassword,
+  setSuccess,
+  logout,
+  setSession,
+  setAuthSession,
+  setNewPassword,
+} from './actions';
 import { getAutSession } from './utils';
 
 const getInitialState = (): AuthState => {
@@ -11,9 +20,11 @@ const getInitialState = (): AuthState => {
     error: false,
     success: false,
     accessToken: null,
+    session: null,
     id: null,
     email: null,
     roles: [],
+    rememberMe: false,
     ...(initialAuthSession ?? {}),
   };
 };
@@ -31,12 +42,8 @@ const authStore = createSlice({
       state.success = payload;
     });
 
-    builder.addCase(login.fulfilled, (state, { payload }) => {
+    builder.addCase(login.fulfilled, (state) => {
       state.loading = false;
-      state.accessToken = payload.accessToken;
-      state.id = payload.id;
-      state.email = payload.email;
-      state.roles = payload.roles;
     });
 
     builder.addCase(changePassword.fulfilled, (state) => {
@@ -46,17 +53,39 @@ const authStore = createSlice({
 
     builder.addCase(logout, () => getInitialState());
 
-    builder.addMatcher(isAnyOf(login.pending, changePassword.pending), (state) => {
+    builder.addCase(setSession, (state, { payload }) => {
+      state.session = payload.session;
+      state.rememberMe = payload.rememberMe;
+      state.email = payload.email;
+    });
+
+    builder.addCase(setAuthSession, (state, { payload }) => {
+      state.accessToken = payload.accessToken;
+      state.id = payload.id;
+      state.email = payload.email;
+      state.roles = payload.roles;
+      state.rememberMe = payload.rememberMe;
+      state.session = null;
+    });
+
+    builder.addCase(setNewPassword.fulfilled, (state) => {
+      state.loading = false;
+    });
+
+    builder.addMatcher(isAnyOf(login.pending, changePassword.pending, setNewPassword.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.success = false;
     });
 
-    builder.addMatcher(isAnyOf(login.rejected, changePassword.rejected), (state, { error }) => {
-      state.loading = false;
-      state.error = error?.message ?? true;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(login.rejected, changePassword.rejected, setNewPassword.rejected),
+      (state, { error }) => {
+        state.loading = false;
+        state.error = error?.message ?? true;
+        state.success = false;
+      },
+    );
   },
 });
 
