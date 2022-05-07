@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { useActionCreator } from 'hooks';
-import { AuthReturnHook } from './types';
+import { AuthReturnHook, UserRole } from './types';
 import { RootState } from '../types';
 import {
   login,
@@ -20,6 +20,13 @@ export const useAuth = (): AuthReturnHook => {
   const authState = useSelector((state: RootState) => state.auth, shallowEqual);
   const dispatch = useDispatch();
 
+  const roles = useMemo(() => {
+    const userRoles = { isSuperAdmin: false, isAdmin: false };
+    if (authState.roles.includes(UserRole.SUPER_AMIN)) userRoles.isSuperAdmin = true;
+    if (authState.roles.includes(UserRole.ADMIN)) userRoles.isAdmin = true;
+    return userRoles;
+  }, [authState.roles]);
+
   const logout = useCallback(() => {
     clearAuthSession();
     dispatch(logoutAction());
@@ -27,6 +34,7 @@ export const useAuth = (): AuthReturnHook => {
 
   return {
     ...authState,
+    ...roles,
     setError: useActionCreator(setError),
     setSuccess: useActionCreator(setSuccess),
     login: useActionCreator(login),

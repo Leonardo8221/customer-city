@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Box, Typography, InputLabel, FormHelperText } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -18,7 +18,15 @@ const formSchema = yup.object({
 
 const ResetPassword: FC = () => {
   const [userEmail, setUserEmail] = useState('');
-  const { loading, error, success, initPasswordReset, setSuccess } = useAuth();
+  const { loading, error, success, initPasswordReset, setSuccess, setError } = useAuth();
+
+  useEffect(() => {
+    return () => {
+      setError(false);
+      setSuccess(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const initialValues: FormValues = {
     email: userEmail,

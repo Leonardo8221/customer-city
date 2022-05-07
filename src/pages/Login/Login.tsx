@@ -35,9 +35,17 @@ const formSchema = yup.object({
 
 const Login: FC = () => {
   const [searchParams] = useSearchParams();
-  const { loading, error, session, login } = useAuth();
+  const { loading, error, session, login, setError, setSuccess } = useAuth();
   const prevSession = usePrevious<string | null>(session);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      setError(false);
+      setSuccess(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (prevSession !== session && session) navigate(publicRoutes.createPassword);

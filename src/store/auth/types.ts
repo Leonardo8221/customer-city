@@ -11,6 +11,8 @@ export interface AuthState {
 }
 
 export interface AuthReturnHook extends AuthState {
+  isSuperAdmin: boolean;
+  isAdmin: boolean;
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   login: (data: LoginData) => void;
@@ -49,4 +51,9 @@ export interface ChangePasswordData {
 export interface ConfirmPasswordResetData {
   token: string;
   password: string;
+}
+
+export enum UserRole {
+  SUPER_AMIN = 'super_admin',
+  ADMIN = 'admin',
 }
