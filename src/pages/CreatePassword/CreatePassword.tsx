@@ -3,11 +3,12 @@ import { Typography, Box, InputLabel, FormHelperText } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Form, Input, LoadingButton } from 'components/ui';
+import { Form, LoadingButton } from 'components/ui';
 import { AuthLayout } from 'components/AuthLayout';
 import { ValidationRule } from './components';
 import { useAuth } from 'store/auth/hooks';
 import { publicRoutes } from 'router/routes';
+import { PasswordInput } from 'components/PasswordInput';
 
 interface ValidPassword {
   length: boolean;
@@ -66,7 +67,7 @@ const CreatePassword: FC = () => {
         <Form noValidate>
           <InputLabel htmlFor="password">New password</InputLabel>
 
-          <Input
+          <PasswordInput
             id="password"
             name="password"
             type="password"

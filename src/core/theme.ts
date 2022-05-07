@@ -150,6 +150,13 @@ const theme = createTheme({
         disableRipple: true,
         disableFocusRipple: true,
       },
+      styleOverrides: {
+        root: {
+          '&.MuiIconButton-edgeEnd': {
+            paddingRight: 14,
+          },
+        },
+      },
     },
     MuiButton: {
       defaultProps: {
