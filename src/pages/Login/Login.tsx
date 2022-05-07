@@ -13,6 +13,7 @@ import { publicRoutes } from 'router/routes';
 import { CustomCheckbox } from 'components/CustomCheckbox';
 import { noop, validatePassword } from 'core/utils';
 import { usePrevious } from 'hooks';
+import { PasswordInput } from 'components/PasswordInput';
 
 interface FormValues {
   email: string;
@@ -69,7 +70,7 @@ const Login: FC = () => {
         </Typography>
 
         <Formik initialValues={initialValues} validationSchema={formSchema} onSubmit={onSubmit}>
-          {({ values, errors, touched, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
+          {({ values, errors, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
             <Form noValidate>
               <Box>
                 <InputLabel htmlFor="email">Email address</InputLabel>
@@ -80,8 +81,8 @@ const Login: FC = () => {
                   type="email"
                   value={values.email}
                   onChange={handleChange}
-                  error={touched.email && !!errors.email}
-                  helperText={touched.email ? errors.email : ''}
+                  // error={touched.email && !!errors.email}
+                  // helperText={touched.email ? errors.email : ''}
                   onBlur={handleBlur}
                   fullWidth
                 />
@@ -90,14 +91,14 @@ const Login: FC = () => {
               <Box marginTop="24px" marginBottom="4px">
                 <InputLabel htmlFor="password">Password</InputLabel>
 
-                <Input
+                <PasswordInput
                   id="password"
                   name="password"
                   type="password"
                   value={values.password}
                   onChange={handleChange}
-                  error={touched.password && !!errors.password}
-                  helperText={touched.password ? errors.password : ''}
+                  // error={touched.password && !!errors.password}
+                  // helperText={touched.password ? errors.password : ''}
                   onBlur={handleBlur}
                   fullWidth
                 />

@@ -4,6 +4,7 @@ import { Container, Grid, FormHelperText } from '@mui/material';
 import { Navbar } from 'components/Navbar';
 import { Form, Input, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
+import { PasswordInput } from 'components/PasswordInput';
 
 const Account: FC = () => {
   const { loading, error, email: userEmail, success, changePassword } = useAuth();
@@ -39,7 +40,7 @@ const Account: FC = () => {
                 fullWidth
               />
 
-              <Input
+              <PasswordInput
                 id="password"
                 name="password"
                 type="password"
