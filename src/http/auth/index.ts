@@ -19,3 +19,9 @@ export const logout = (id: string): Promise<null> => apiCall({ method: 'post', u
 
 export const setNewPassword = (email: string, password: string, session: string): Promise<{ accessToken: string }> =>
   apiCall({ method: 'post', url: '/auth/set-password', data: { email, password, session } });
+
+export const initPasswordReset = (email: string): Promise<null> =>
+  apiCall({ method: 'post', url: '/auth/password-reset/init', data: { email } });
+
+export const confirmPasswordReset = (token: string, password: string): Promise<AuthResponse> =>
+  apiCall({ method: 'post', url: '/auth/password-reset/confirm', data: { token, password } });

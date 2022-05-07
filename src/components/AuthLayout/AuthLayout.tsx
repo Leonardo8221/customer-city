@@ -1,12 +1,11 @@
 import { FC, ReactNode } from 'react';
 import { Grid, Typography, Box, Link as MuiLink } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { ReactComponent as WhiteLogo } from 'assets/icons/whiteLogo.svg';
 import { ReactComponent as CheckWhiteIcon } from 'assets/icons/checkWhite.svg';
 import { publicRoutes } from 'router/routes';
-import { noop } from 'core/utils';
 import {
   Container,
   ContentContainer,
@@ -25,7 +24,14 @@ interface AuthLayoutProps {
   onGoBack?: () => void;
 }
 
-const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, onGoBack = noop }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, onGoBack }) => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    if (onGoBack) onGoBack();
+    else navigate(-1);
+  };
+
   return (
     <Container>
       <GridContainer container spacing={2}>
@@ -35,7 +41,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, 
               <Box>
                 {backButtonEnabled && (
                   <>
-                    <IconButton onClick={onGoBack}>
+                    <IconButton onClick={handleGoBack}>
                       <NavBackIcon />
                     </IconButton>
 

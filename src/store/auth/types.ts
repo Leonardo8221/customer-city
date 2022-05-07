@@ -17,6 +17,8 @@ export interface AuthReturnHook extends AuthState {
   changePassword: (data: ChangePasswordData) => void;
   logout: () => void;
   setNewPassword: (password: string) => void;
+  initPasswordReset: (email: string) => void;
+  confirmPasswordReset: (data: ConfirmPasswordResetData) => void;
 }
 
 export interface AuthResponse {
@@ -41,5 +43,10 @@ export interface LoginData {
 
 export interface ChangePasswordData {
   email: string;
+  password: string;
+}
+
+export interface ConfirmPasswordResetData {
+  token: string;
   password: string;
 }

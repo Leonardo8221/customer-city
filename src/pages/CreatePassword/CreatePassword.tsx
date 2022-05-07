@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { Typography, Box, InputLabel, FormHelperText } from '@mui/material';
 import debounce from 'lodash.debounce';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Form, Input, LoadingButton } from 'components/ui';
 import { AuthLayout } from 'components/AuthLayout';
@@ -35,11 +35,12 @@ const CreatePassword: FC = () => {
     uppercase: false,
     numberSymbolSpace: false,
   });
-  const { loading, error, session, setNewPassword } = useAuth();
+  const { loading, error, session, setNewPassword, confirmPasswordReset } = useAuth();
   const navigate = useNavigate();
+  const { token } = useParams<{ token?: string }>();
 
   useEffect(() => {
-    if (!session) navigate(publicRoutes.login, { replace: true });
+    if (!session && !token) navigate(publicRoutes.login, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,7 +50,8 @@ const CreatePassword: FC = () => {
 
   const onSubmit = () => {
     if (!password) return;
-    setNewPassword(password);
+    if (token) confirmPasswordReset({ token, password });
+    else setNewPassword(password);
   };
 
   const buttonEnabled = valid.length && valid.lowercase && valid.uppercase && valid.numberSymbolSpace;

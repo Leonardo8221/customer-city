@@ -10,6 +10,8 @@ import {
   setSession,
   setAuthSession,
   setNewPassword,
+  initPasswordReset,
+  confirmPasswordReset,
 } from './actions';
 import { getAutSession } from './utils';
 
@@ -42,10 +44,6 @@ const authStore = createSlice({
       state.success = payload;
     });
 
-    builder.addCase(login.fulfilled, (state) => {
-      state.loading = false;
-    });
-
     builder.addCase(changePassword.fulfilled, (state) => {
       state.loading = false;
       state.success = 'Changed password successfully!';
@@ -68,18 +66,38 @@ const authStore = createSlice({
       state.session = null;
     });
 
-    builder.addCase(setNewPassword.fulfilled, (state) => {
+    builder.addCase(initPasswordReset.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+
+    builder.addMatcher(isAnyOf(login.fulfilled, setNewPassword.fulfilled, confirmPasswordReset.fulfilled), (state) => {
       state.loading = false;
     });
 
-    builder.addMatcher(isAnyOf(login.pending, changePassword.pending, setNewPassword.pending), (state) => {
-      state.loading = true;
-      state.error = false;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(
+        login.pending,
+        changePassword.pending,
+        setNewPassword.pending,
+        initPasswordReset.pending,
+        confirmPasswordReset.pending,
+      ),
+      (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      },
+    );
 
     builder.addMatcher(
-      isAnyOf(login.rejected, changePassword.rejected, setNewPassword.rejected),
+      isAnyOf(
+        login.rejected,
+        changePassword.rejected,
+        setNewPassword.rejected,
+        initPasswordReset.rejected,
+        confirmPasswordReset.rejected,
+      ),
       (state, { error }) => {
         state.loading = false;
         state.error = error?.message ?? true;

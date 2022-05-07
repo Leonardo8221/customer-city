@@ -6,6 +6,6 @@ export const Form = styled('form')(() => ({
 }));
 
 export const Input = styled(TextField)(({ theme }) => ({
-  minWidth: 400,
+  width: 400,
   marginTop: theme.spacing(1),
 }));

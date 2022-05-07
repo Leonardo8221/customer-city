@@ -191,17 +191,51 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 4,
-          borderColor: paletteTheme.palette.neutral.n200,
-          '& > div': {
-            height: '40px',
-          },
           '& input': {
+            height: 40,
+            boxSizing: 'border-box',
+            borderRadius: 4,
             padding: '8px 16px',
             '&::placeholder': {
               ...typographyTheme.typography.p14,
               color: paletteTheme.palette.neutral.n400,
             },
           },
+          '& fieldset': {
+            borderColor: paletteTheme.palette.neutral.n200,
+          },
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          '&.MuiOutlinedInput-root': {
+            ...typographyTheme.typography.p14,
+            '&:hover fieldset': {
+              borderColor: paletteTheme.palette.primary.main,
+            },
+            '&.Mui-error fieldset': {
+              borderColor: paletteTheme.palette.red.main,
+            },
+            '&.Mui-focused fieldset': {
+              borderWidth: 1,
+            },
+            '&.Mui-disabled fieldset': {
+              borderColor: paletteTheme.palette.lightBg.main,
+            },
+            '&.Mui-disabled input': {
+              backgroundColor: paletteTheme.palette.lightBg.main,
+            },
+          },
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: 0,
+          ...typographyTheme.typography.p12,
         },
       },
     },
