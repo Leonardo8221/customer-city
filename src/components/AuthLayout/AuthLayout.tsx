@@ -1,8 +1,9 @@
 import { FC, ReactNode } from 'react';
-import { Grid, Typography, Box, Link as MuiLink } from '@mui/material';
+import { Grid, Typography, Box, Link as MuiLink, useMediaQuery, useTheme } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
+import './AuthLayout.css';
 
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { ReactComponent as WhiteLogo } from 'assets/icons/whiteLogo.svg';
@@ -39,6 +40,8 @@ interface AuthLayoutProps {
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, onGoBack }) => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const smallDevice = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleGoBack = () => {
     if (onGoBack) onGoBack();
@@ -75,7 +78,15 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, 
               </Typography>
             </ContentHeader>
 
-            <CenteredContainer flex="1">{children}</CenteredContainer>
+            <CenteredContainer flex="1">
+              {smallDevice && (
+                <Box marginBottom={5}>
+                  <WhiteLogo width={248} height={40} />
+                </Box>
+              )}
+
+              {children}
+            </CenteredContainer>
 
             <ContentFooter>
               <Typography variant="labelRegular12" textAlign="center" component="p">
@@ -90,43 +101,45 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, 
           </ContentContainer>
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <ContentContainer>
-            <ContentHeader>
-              <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.white' }}>
-                Unified Revenue Operations Platform. The Future of Sales Technology for B2B SaaS Companies
-              </Typography>
+        {!smallDevice && (
+          <Grid item xs={12} md={6}>
+            <ContentContainer>
+              <ContentHeader>
+                <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.white' }}>
+                  Unified Revenue Operations Platform. The Future of Sales Technology for B2B SaaS Companies
+                </Typography>
 
-              <Divider />
-            </ContentHeader>
+                <Divider />
+              </ContentHeader>
 
-            <CenteredContainer flex="1" style={{ marginTop: '-8rem' }}>
-              <WhiteLogo width={248} height={40} />
+              <CenteredContainer flex="1" style={{ marginTop: '-8rem' }}>
+                <WhiteLogo width={248} height={40} />
 
-              <CenteredContainer marginTop={5}>
-                <Slider
-                  vertical
-                  autoplay
-                  infinite
-                  slidesToShow={5}
-                  slidesToScroll={1}
-                  className="cc_carousel-container"
-                  arrows={false}
-                  dots={false}
-                >
-                  {features.map((feat) => {
-                    return (
-                      <RollItem key={feat}>
-                        <CheckWhiteIcon />
-                        <Typography variant="p14">{feat}</Typography>
-                      </RollItem>
-                    );
-                  })}
-                </Slider>
+                <CenteredContainer marginTop={5}>
+                  <Slider
+                    vertical
+                    autoplay
+                    infinite
+                    slidesToShow={5}
+                    slidesToScroll={1}
+                    className="cc_carousel-container"
+                    arrows={false}
+                    dots={false}
+                  >
+                    {features.map((feat) => {
+                      return (
+                        <RollItem key={feat}>
+                          <CheckWhiteIcon />
+                          <Typography variant="p14">{feat}</Typography>
+                        </RollItem>
+                      );
+                    })}
+                  </Slider>
+                </CenteredContainer>
               </CenteredContainer>
-            </CenteredContainer>
-          </ContentContainer>
-        </Grid>
+            </ContentContainer>
+          </Grid>
+        )}
       </GridContainer>
     </Container>
   );

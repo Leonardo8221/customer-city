@@ -9,3 +9,18 @@ export const Input = styled(TextField)(({ theme }) => ({
   width: 400,
   marginTop: theme.spacing(1),
 }));
+
+export const AuthInput = styled(TextField)(({ theme }) => ({
+  width: 400,
+  marginTop: theme.spacing(1),
+  [theme.breakpoints.down('sm')]: {
+    width: 350,
+  },
+  '@media (max-width: 420px)': {
+    width: 280,
+  },
+}));
+
+AuthInput.defaultProps = {
+  className: 'AuthInput',
+};

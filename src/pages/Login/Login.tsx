@@ -1,11 +1,12 @@
 import { FC, ChangeEvent, useEffect } from 'react';
-import { FormHelperText, Typography, Box, InputLabel, Divider } from '@mui/material';
+import { FormHelperText, Typography, Box, InputLabel, Divider, useTheme, useMediaQuery } from '@mui/material';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { ReactComponent as GoogleSmallIcon } from 'assets/icons/googleSmall.svg';
-import { Form, Input, LoadingButton } from 'components/ui';
+import { ReactComponent as GoogleWhiteSmallIcon } from 'assets/icons/googleWhiteSmall.svg';
+import { Form, AuthInput, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 import { AuthLayout } from 'components/AuthLayout';
 import { CustomLink } from 'components/CustomLink';
@@ -39,6 +40,8 @@ const Login: FC = () => {
   const { loading, error, session, login, setError, setSuccess } = useAuth();
   const prevSession = usePrevious<string | null>(session);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const smallDevice = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     return () => {
@@ -75,7 +78,7 @@ const Login: FC = () => {
               <Box>
                 <InputLabel htmlFor="email">Email address</InputLabel>
 
-                <Input
+                <AuthInput
                   id="email"
                   name="email"
                   type="email"
@@ -133,7 +136,12 @@ const Login: FC = () => {
                 <Divider>or</Divider>
               </Box>
 
-              <LoadingButton onClick={noop} variant="outlined" marginTop="24px" startIcon={<GoogleSmallIcon />}>
+              <LoadingButton
+                onClick={noop}
+                variant="outlined"
+                marginTop="24px"
+                startIcon={smallDevice ? <GoogleWhiteSmallIcon /> : <GoogleSmallIcon />}
+              >
                 Sign in with Google
               </LoadingButton>
             </Form>

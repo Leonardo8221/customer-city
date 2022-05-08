@@ -4,15 +4,22 @@ export const Container = styled(MuiBox)(({ theme }) => ({
   background: `linear-gradient(90deg, ${theme.palette.common.white} 50%, ${theme.palette.primary.main} 50%)`,
   minHeight: '100vh',
   display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    background: theme.palette.primary.main,
+  },
 }));
 
-export const ContentContainer = styled(MuiBox)(() => ({
+export const ContentContainer = styled(MuiBox)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
   position: 'relative',
   overflowX: 'hidden',
+  [theme.breakpoints.down('md')]: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  },
 }));
 
 export const ContentHeader = styled(MuiBox)(({ theme }) => ({
@@ -22,12 +29,22 @@ export const ContentHeader = styled(MuiBox)(({ theme }) => ({
   padding: theme.spacing(4),
   color: theme.palette.neutral.n400,
   position: 'relative',
+  [theme.breakpoints.down('md')]: {
+    color: theme.palette.neutral.white,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
 }));
 
 export const ContentFooter = styled(MuiBox)(({ theme }) => ({
   width: '100%',
   color: theme.palette.neutral.n400,
   padding: theme.spacing(4),
+  [theme.breakpoints.down('md')]: {
+    color: theme.palette.neutral.white,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
 }));
 
 export const IconButton = styled(MuiIconButton)(() => ({
@@ -70,9 +87,12 @@ export const RollItem = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export const GridContainer = styled(Grid)(() => ({
+export const GridContainer = styled(Grid)(({ theme }) => ({
   background: 'url(/assets/icons/roadBuildings.svg)',
   backgroundSize: '50vw',
   backgroundPosition: 'bottom right',
   backgroundRepeat: 'no-repeat',
+  [theme.breakpoints.down('md')]: {
+    backgroundSize: '100vw',
+  },
 }));
