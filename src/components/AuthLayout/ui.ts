@@ -51,17 +51,19 @@ export const Divider = styled(MuiDivider)(({ theme }) => ({
   height: 1,
 }));
 
-export const RollItem = styled(CenteredContainer)<{ opacity?: number }>(({ theme, opacity = 1 }) => ({
+export const RollItem = styled(MuiBox)(({ theme }) => ({
   height: 48,
   width: 248,
   backgroundColor: alpha(theme.palette.primary.subtone320 as string, 0.2),
   color: theme.palette.neutral.white,
   marginBottom: theme.spacing(2),
   borderRadius: 4,
-  opacity,
-  flexDirection: 'row',
+  opacity: 0.2,
+  display: 'flex',
+  alignItems: 'center',
   justifyContent: 'flex-start',
   padding: '6px 18px',
+  paddingTop: 12,
   '& span': {
     flex: 1,
     marginLeft: 18,

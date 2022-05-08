@@ -1,6 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { Grid, Typography, Box, Link as MuiLink } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
 
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { ReactComponent as WhiteLogo } from 'assets/icons/whiteLogo.svg';
@@ -17,6 +19,17 @@ import {
   RollItem,
   GridContainer,
 } from './ui';
+
+const features = [
+  'Analytics',
+  'Drag-and-drop editor',
+  'SEO recommendations',
+  'Programmable automation',
+  'Knowledge base',
+  'Marketing automation',
+  'Lead generation',
+  'Advanced CRM',
+];
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -91,26 +104,25 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, 
               <WhiteLogo width={248} height={40} />
 
               <CenteredContainer marginTop={5}>
-                <RollItem opacity={0.33}>
-                  <CheckWhiteIcon />
-                  <Typography variant="p14">Analytics</Typography>
-                </RollItem>
-                <RollItem opacity={0.66}>
-                  <CheckWhiteIcon />
-                  <Typography variant="p14">Drag-and-drop editor</Typography>
-                </RollItem>
-                <RollItem opacity={1}>
-                  <CheckWhiteIcon />
-                  <Typography variant="p14">SEO recommendations</Typography>
-                </RollItem>
-                <RollItem opacity={0.66}>
-                  <CheckWhiteIcon />
-                  <Typography variant="p14">Programmable automation</Typography>
-                </RollItem>
-                <RollItem opacity={0.33}>
-                  <CheckWhiteIcon />
-                  <Typography variant="p14">Knowledge base</Typography>
-                </RollItem>
+                <Slider
+                  vertical
+                  autoplay
+                  infinite
+                  slidesToShow={5}
+                  slidesToScroll={1}
+                  className="cc_carousel-container"
+                  arrows={false}
+                  dots={false}
+                >
+                  {features.map((feat) => {
+                    return (
+                      <RollItem key={feat}>
+                        <CheckWhiteIcon />
+                        <Typography variant="p14">{feat}</Typography>
+                      </RollItem>
+                    );
+                  })}
+                </Slider>
               </CenteredContainer>
             </CenteredContainer>
           </ContentContainer>

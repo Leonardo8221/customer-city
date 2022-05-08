@@ -18,3 +18,19 @@ code {
 a {
   text-decoration: none;
 }
+
+.cc_carousel-container {
+  width: 250px;
+}
+
+.slick-active.slick-current + .slick-active .MuiBox-root {
+  opacity: 0.5;
+}
+
+.slick-active.slick-current + .slick-active + .slick-active .MuiBox-root {
+  opacity: 1;
+}
+
+.slick-active.slick-current + .slick-active + .slick-active + .slick-active .MuiBox-root {
+  opacity: 0.5;
+}
