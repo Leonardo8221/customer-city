@@ -37,7 +37,7 @@ const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems }) => {
       {nestedItems && nestedItems.length > 0 && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {nestedItems.map((item) => (
-            <ListItem key={item.name}>
+            <ListItem key={item.name} nested>
               <ListItemIcon>
                 <BlueDot />
               </ListItemIcon>

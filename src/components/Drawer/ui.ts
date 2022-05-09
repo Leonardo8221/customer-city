@@ -27,7 +27,7 @@ export const MainListContainer = styled(Box)(() => ({
   overflowY: 'auto',
 }));
 
-export const ListItem = styled(MuiListItem)(({ theme }) => ({
+export const ListItem = styled(MuiListItem)<{ nested?: boolean }>(({ theme, nested = false }) => ({
   ...theme.typography.labelMedium14,
   height: 48,
   color: theme.palette.neutral.n400,
@@ -36,13 +36,13 @@ export const ListItem = styled(MuiListItem)(({ theme }) => ({
   position: 'relative',
   cursor: 'pointer',
   ':hover': {
-    backgroundColor: theme.palette.neutral.darkBlueMedium,
+    backgroundColor: nested ? 'inherit' : theme.palette.neutral.darkBlueMedium,
     color: theme.palette.neutral.white,
     '&::before': {
       content: '" "',
       width: 4,
       height: 48,
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: nested ? 'inherit' : theme.palette.primary.main,
       position: 'absolute',
       left: 0,
     },
