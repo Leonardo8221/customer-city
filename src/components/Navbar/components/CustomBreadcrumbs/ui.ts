@@ -19,7 +19,9 @@ export const Container = styled(Box)(({ theme }) => ({
   paddingBottom: 2,
 }));
 
-export const Link = styled(MuiLink)<{ active?: boolean }>(({ theme, active }) => ({
+export const Link = styled(MuiLink, {
+  shouldForwardProp: (props) => props !== 'active',
+})<{ active?: boolean }>(({ theme, active }) => ({
   color: active ? theme.palette.neutral.white : theme.palette.neutral.n400,
   ...theme.typography.labelRegular12,
   cursor: 'pointer',
