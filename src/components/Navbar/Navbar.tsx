@@ -2,10 +2,13 @@ import { FC } from 'react';
 import { Toolbar } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { ReactComponent as HamburguerMenuIcon } from 'assets/icons/hamburguerMenu.svg';
+import { ReactComponent as NavLogoIcon } from 'assets/icons/navLogo.svg';
 import { privateRoutes } from 'router/routes';
-import { AppBar, LeftContainer, RightContainer, Button } from './ui';
 import { LogoutButton } from 'components/LogoutButton';
 import { useAuth } from 'store/auth/hooks';
+import { AppBar, LeftContainer, RightContainer, Button, IconButton, NavLogoButton } from './ui';
+import { CustomBreadcrumbs } from './components';
 
 const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -16,7 +19,15 @@ const Navbar: FC = () => {
     <AppBar position="fixed" elevation={0}>
       <Toolbar>
         <LeftContainer>
-          <Button onClick={() => navigate(privateRoutes.dashboard)}>Home</Button>
+          <IconButton>
+            <HamburguerMenuIcon />
+          </IconButton>
+
+          <NavLogoButton onClick={() => navigate(privateRoutes.dashboard)}>
+            <NavLogoIcon />
+          </NavLogoButton>
+
+          <CustomBreadcrumbs />
         </LeftContainer>
 
         <RightContainer>

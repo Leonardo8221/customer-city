@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
 
 const paletteTheme = createTheme({
   palette: {
@@ -8,8 +8,8 @@ const paletteTheme = createTheme({
       subtone1: '#8CB9FF',
       subtone2: '#DBE9FF',
       subtone3: '#F4F9FF',
-      subtone320: '#F4F9FF',
-      subtone310: '#F4F9FF',
+      subtone320: alpha('#F4F9FF', 0.2),
+      subtone310: alpha('#F4F9FF', 0.1),
     },
     neutral: {
       main: '#1E232C',

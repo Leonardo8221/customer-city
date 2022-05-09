@@ -41,7 +41,7 @@ const SuperAdmin: FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={2} style={{ marginTop: 70 }}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h6">Users</Typography>
         </Grid>

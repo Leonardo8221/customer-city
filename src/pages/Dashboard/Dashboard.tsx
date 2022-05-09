@@ -3,12 +3,12 @@ import { FC } from 'react';
 import { useAuth } from 'store/auth/hooks';
 import { SuperAdmin } from './components/SuperAdmin';
 import { Admin } from './components/Admin';
-import { Layout } from 'components/Layout';
+import { PanelLayout } from 'components/PanelLayout';
 
 const Dashboard: FC = () => {
   const { isSuperAdmin } = useAuth();
 
-  return <Layout>{isSuperAdmin ? <SuperAdmin /> : <Admin />}</Layout>;
+  return <PanelLayout>{isSuperAdmin ? <SuperAdmin /> : <Admin />}</PanelLayout>;
 };
 
 export default Dashboard;
