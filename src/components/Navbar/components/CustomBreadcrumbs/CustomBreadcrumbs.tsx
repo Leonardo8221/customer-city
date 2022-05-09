@@ -3,11 +3,11 @@ import { Breadcrumbs } from '@mui/material';
 
 import { ReactComponent as ChevronRightIcon } from 'assets/icons/chevronRight.svg';
 import { Container, Link, Separator } from './ui';
-import { Dropdown } from '../Dropdown';
+import { DropdownMenu } from '../DropdownMenu';
 
 const breadcrumbs = [
   <Link key="ba">Home</Link>,
-  <Dropdown key="bb">Light Square</Dropdown>,
+  <DropdownMenu key="bb">Light Square</DropdownMenu>,
   <Link key="bc" active>
     Goals and Milestones board
   </Link>,

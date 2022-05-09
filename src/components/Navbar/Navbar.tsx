@@ -18,8 +18,8 @@ import {
   VerticalDivider,
 } from './ui';
 import { CustomBreadcrumbs } from './components';
-import { Dropdown } from './components/Dropdown';
-import { Drawer } from './components/Drawer';
+import { DropdownMenu } from './components/DropdownMenu';
+import { Drawer } from '../Drawer';
 
 const Navbar: FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -66,9 +66,9 @@ const Navbar: FC = () => {
               <UserAvatarIcon />
             </AvatarContainer>
 
-            <Dropdown textMarginRight={10} active>
+            <DropdownMenu textMarginRight={10} active>
               <Typography variant="p14">John Doe</Typography>
-            </Dropdown>
+            </DropdownMenu>
           </RightContainer>
         </Toolbar>
       </AppBar>
