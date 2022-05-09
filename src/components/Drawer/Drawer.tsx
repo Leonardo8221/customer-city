@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent } from 'react';
-import { ListItemText, Box, List } from '@mui/material';
+import { ListItemText, List } from '@mui/material';
 
 import { ReactComponent as MenuHomeIcon } from 'assets/icons/menuHome.svg';
 import { ReactComponent as MenuContactsIcon } from 'assets/icons/menuContacts.svg';
@@ -15,7 +15,17 @@ import { ReactComponent as SettingsIcon } from 'assets/icons/settings.svg';
 import { ReactComponent as OutlineSunIcon } from 'assets/icons/outlineSun.svg';
 import { ReactComponent as OutlineMoonIcon } from 'assets/icons/outlineMoon.svg';
 import { NavRoute } from 'router/types';
-import { Drawer, ListItem, ListItemIcon, ToggleButtonGroup, ToggleButton, ThemeIcon, BottomContainer } from './ui';
+import {
+  Drawer,
+  ListItem,
+  ListItemIcon,
+  ToggleButtonGroup,
+  ToggleButton,
+  ThemeIcon,
+  BottomContainer,
+  MainListContainer,
+} from './ui';
+import { MenuItem } from './components';
 
 const routeList: NavRoute[] = [
   { name: 'Home', path: '/', Icon: <MenuHomeIcon /> },
@@ -53,16 +63,13 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
 
   return (
     <Drawer variant="temporary" open={open} onClose={toggleOpen}>
-      <Box flex="1">
+      <MainListContainer className="no-scrollbar">
         <List>
           {routeList.map((route) => (
-            <ListItem key={route.name}>
-              <ListItemIcon>{route.Icon}</ListItemIcon>
-              <ListItemText primary={route.name} primaryTypographyProps={{ variant: 'labelMedium14' }} />
-            </ListItem>
+            <MenuItem key={route.name} Icon={route.Icon} label={route.name} nestedItems={route.nestedRoutes} />
           ))}
         </List>
-      </Box>
+      </MainListContainer>
 
       <BottomContainer>
         <List>

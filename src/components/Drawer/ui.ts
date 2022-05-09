@@ -22,6 +22,11 @@ export const Drawer = styled(MuiDrawer)(({ theme }) => ({
   },
 }));
 
+export const MainListContainer = styled(Box)(() => ({
+  height: `calc(100% - ${160}px)`,
+  overflowY: 'auto',
+}));
+
 export const ListItem = styled(MuiListItem)(({ theme }) => ({
   ...theme.typography.labelMedium14,
   height: 48,
@@ -47,11 +52,16 @@ export const ListItem = styled(MuiListItem)(({ theme }) => ({
   },
 }));
 
-export const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
-  height: 24,
-  width: 24,
-  minWidth: 24,
-  marginRight: theme.spacing(2),
+export const ListItemIcon = styled(MuiListItemIcon, {
+  shouldForwardProp: (prop) => prop !== 'marginRight' && prop !== 'small',
+})<{ marginRight?: number; small?: boolean }>(({ theme, marginRight, small }) => ({
+  height: small ? 16 : 24,
+  width: small ? 16 : 24,
+  minWidth: small ? 16 : 24,
+  marginRight: marginRight ?? theme.spacing(2),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 }));
 
 export const BottomContainer = styled(Box)(({ theme }) => ({
