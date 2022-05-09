@@ -1,13 +1,16 @@
 import { FC, useState, ReactNode } from 'react';
+import { Typography } from '@mui/material';
 
 import { ReactComponent as TriangleDownIcon } from 'assets/icons/triangleDown.svg';
 import { TextButton, Menu, MenuItem } from './ui';
 
 interface DropdownProps {
   children: ReactNode;
+  active?: boolean;
+  textMarginRight?: number;
 }
 
-const Dropdown: FC<DropdownProps> = ({ children }) => {
+const Dropdown: FC<DropdownProps> = ({ children, active, textMarginRight }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -21,8 +24,14 @@ const Dropdown: FC<DropdownProps> = ({ children }) => {
 
   return (
     <div>
-      <TextButton variant="text" onClick={handleClick} endIcon={<TriangleDownIcon />}>
-        {children}
+      <TextButton
+        variant="text"
+        onClick={handleClick}
+        endIcon={<TriangleDownIcon />}
+        active={active}
+        textMarginRight={textMarginRight}
+      >
+        <Typography variant="labelRegular12">{children}</Typography>
       </TextButton>
       <Menu
         anchorEl={anchorEl}

@@ -1,20 +1,22 @@
 import { styled, Button, Menu as MuiMenu, MenuItem as MuiMenuItem } from '@mui/material';
 
-export const TextButton = styled(Button)<{ active?: boolean }>(({ theme, active }) => ({
-  ...theme.typography.labelRegular12,
-  padding: 0,
-  color: active ? theme.palette.neutral.white : theme.palette.neutral.n400,
-  height: '100%',
-  ':hover, :active': {
-    color: theme.palette.neutral.white,
-    backgroundColor: 'transparent',
-  },
-  '& .MuiButton-endIcon': {
-    marginLeft: 4,
-    height: 8,
-    width: 8,
-  },
-}));
+export const TextButton = styled(Button)<{ active?: boolean; textMarginRight?: number }>(
+  ({ theme, active, textMarginRight }) => ({
+    padding: 0,
+    color: active ? theme.palette.neutral.white : theme.palette.neutral.n400,
+    height: '100%',
+    marginTop: 1,
+    ':hover, :active': {
+      color: theme.palette.neutral.white,
+      backgroundColor: 'transparent',
+    },
+    '& .MuiButton-endIcon': {
+      marginLeft: textMarginRight ?? 4,
+      height: 8,
+      width: 8,
+    },
+  }),
+);
 
 TextButton.defaultProps = { variant: 'text' };
 

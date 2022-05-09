@@ -62,7 +62,7 @@ declare module '@mui/material/styles' {
     white?: string;
   }
 
-  interface TypographyVariants {
+  export interface TypographyVariants {
     labelBold14: React.CSSProperties;
     labelMedium14: React.CSSProperties;
     labelMedium12: React.CSSProperties;

@@ -42,3 +42,25 @@ export const NavLogoButton = styled(MuiIconButton)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   marginRight: theme.spacing(1),
 }));
+
+export const AvatarContainer = styled(Box)(({ theme }) => ({
+  width: 32,
+  height: 32,
+  borderRadius: 16,
+  marginLeft: theme.spacing(3),
+  marginRight: theme.spacing(2),
+}));
+
+export const VerticalDivider = styled(Box)(({ theme }) => ({
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  '&::before': {
+    content: '" "',
+    height: 16,
+    position: 'absolute',
+    top: '50%',
+    marginTop: -8,
+    width: 1,
+    backgroundColor: theme.palette.primary.subtone320,
+  },
+}));
