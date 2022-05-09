@@ -27,9 +27,11 @@ export const MainListContainer = styled(Box)(() => ({
   overflowY: 'auto',
 }));
 
-export const ListItem = styled(MuiListItem)<{ nested?: boolean }>(({ theme, nested = false }) => ({
+export const ListItem = styled(MuiListItem, {
+  shouldForwardProp: (prop) => prop !== 'nested' && prop !== 'height',
+})<{ nested?: boolean; height?: number }>(({ theme, nested = false, height = 48 }) => ({
   ...theme.typography.labelMedium14,
-  height: 48,
+  height,
   color: theme.palette.neutral.n400,
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),

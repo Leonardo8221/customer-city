@@ -71,16 +71,16 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
         </List>
       </MainListContainer>
 
-      <BottomContainer>
+      <BottomContainer paddingTop={1}>
         <List>
-          <ListItem>
+          <ListItem nested height={40}>
             <ListItemIcon>
               <DotsIcon />
             </ListItemIcon>
             <ListItemText primary="More" primaryTypographyProps={{ variant: 'p12' }} />
           </ListItem>
 
-          <ListItem>
+          <ListItem nested height={40}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
