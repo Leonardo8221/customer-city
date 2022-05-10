@@ -1,5 +1,6 @@
 import { FC, ReactNode, useState } from 'react';
 import { ListItemText, Collapse } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as ChevronDownIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ChevronUpIcon } from 'assets/icons/chevronUp.svg';
@@ -12,15 +13,19 @@ interface MenuItemProps {
   label: string;
   nestedItems?: NavRoute[];
   notifications?: number;
+  path: string;
 }
 
-const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications }) => {
+const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications, path }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     if (nestedItems && nestedItems.length > 0) {
       setExpanded(!expanded);
+      return;
     }
+    navigate(path);
   };
 
   return (
@@ -43,7 +48,7 @@ const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications }
       {nestedItems && nestedItems.length > 0 && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {nestedItems.map((item) => (
-            <ListItem key={item.name} nested>
+            <ListItem key={item.name} nested onClick={() => navigate(path)}>
               <ListItemIcon>
                 <BlueDot />
               </ListItemIcon>

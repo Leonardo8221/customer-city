@@ -1,7 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
 
-import { Navbar } from 'components/Navbar';
 import { Form, Input, LoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 import { PasswordInput } from 'components/PasswordInput';
@@ -21,54 +20,50 @@ const Account: FC = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    <Container maxWidth="lg">
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6} style={{ marginTop: 80 }}>
+          <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              label="Username"
+              variant="standard"
+              value={email}
+              onChange={(event) => setUsername(event.target.value as string)}
+              disabled
+              fullWidth
+            />
 
-      <Container maxWidth="lg">
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6} style={{ marginTop: 80 }}>
-            <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                label="Username"
-                variant="standard"
-                value={email}
-                onChange={(event) => setUsername(event.target.value as string)}
-                disabled
-                fullWidth
-              />
+            <PasswordInput
+              id="password"
+              name="password"
+              type="password"
+              label="New password"
+              variant="standard"
+              value={password}
+              onChange={(event) => setEmail(event.target.value as string)}
+              fullWidth
+            />
 
-              <PasswordInput
-                id="password"
-                name="password"
-                type="password"
-                label="New password"
-                variant="standard"
-                value={password}
-                onChange={(event) => setEmail(event.target.value as string)}
-                fullWidth
-              />
+            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit" marginTop="32px">
+              Change password
+            </LoadingButton>
 
-              <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit" marginTop="32px">
-                Change password
-              </LoadingButton>
+            {error && (
+              <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
+            )}
 
-              {error && (
-                <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
-              )}
-
-              {success && (
-                <FormHelperText variant="filled" style={{ color: 'green' }}>
-                  {typeof success === 'string' ? success : 'Operation successfully done!'}
-                </FormHelperText>
-              )}
-            </Form>
-          </Grid>
+            {success && (
+              <FormHelperText variant="filled" style={{ color: 'green' }}>
+                {typeof success === 'string' ? success : 'Operation successfully done!'}
+              </FormHelperText>
+            )}
+          </Form>
         </Grid>
-      </Container>
-    </>
+      </Grid>
+    </Container>
   );
 };
 

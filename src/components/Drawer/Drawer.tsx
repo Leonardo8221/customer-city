@@ -29,22 +29,22 @@ import { MenuItem } from './components';
 
 const routeList: NavRoute[] = [
   { name: 'Home', path: '/', Icon: <MenuHomeIcon /> },
-  { name: 'CitizenID', path: '/', Icon: <MenuContactsIcon /> },
-  { name: 'Accounts', path: '/', Icon: <MenuAccountsIcon /> },
-  { name: 'Product Definer', path: '/', Icon: <MenuProductIcon />, notifications: 1 },
-  { name: 'Hyper Funnel', path: '/', Icon: <MenuFunnelIcon />, notifications: 1 },
-  { name: 'Deal Scape', path: '/', Icon: <MenuDealIcon /> },
-  { name: 'Control Tower', path: '/', Icon: <MenuTowerIcon /> },
-  { name: 'Integration', path: '/', Icon: <MenuIntegrationIcon /> },
+  { name: 'CitizenID', path: 'citizen-id', Icon: <MenuContactsIcon /> },
+  { name: 'Accounts', path: 'accounts', Icon: <MenuAccountsIcon /> },
+  { name: 'Product Definer', path: 'product-definer', Icon: <MenuProductIcon />, notifications: 1 },
+  { name: 'Hyper Funnel', path: 'hyper-funnel', Icon: <MenuFunnelIcon />, notifications: 1 },
+  { name: 'Deal Scape', path: 'deal-scape', Icon: <MenuDealIcon /> },
+  { name: 'Control Tower', path: 'control-tower', Icon: <MenuTowerIcon /> },
+  { name: 'Integration', path: 'integration', Icon: <MenuIntegrationIcon /> },
   {
     name: 'LightSquare',
-    path: '/',
+    path: 'light-square',
     Icon: <MenuLightSquareIcon />,
     nestedRoutes: [
       { name: 'Dashboard', path: '/' },
-      { name: 'Goals and Milestones', path: '/' },
-      { name: 'Forecast', path: '/' },
-      { name: 'Revenue Simulation', path: '/' },
+      { name: 'Goals and Milestones', path: 'goals-milestones' },
+      { name: 'Forecast', path: 'forecast' },
+      { name: 'Revenue Simulation', path: 'revenue-simulation' },
     ],
   },
 ];
@@ -72,6 +72,7 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
               label={route.name}
               nestedItems={route.nestedRoutes}
               notifications={route.notifications}
+              path={route.path}
             />
           ))}
         </List>

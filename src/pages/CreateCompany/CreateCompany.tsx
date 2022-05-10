@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import omitBy from 'lodash.omitby';
 
 import { Form, Input, LoadingButton } from 'components/ui';
-import { Navbar } from 'components/Navbar';
 import { useCompany } from 'store/company/hooks';
 import { Company, CreateCompanyData } from 'store/company/types';
 
@@ -68,93 +67,89 @@ const CreateCompany: FC = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    <Container maxWidth="lg">
+      <Grid container spacing={2} style={{ marginTop: 80 }}>
+        <Grid item xs={12} md={6}>
+          <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              label="Company Name*"
+              variant="standard"
+              value={company.name}
+              onChange={onChange}
+              fullWidth
+            />
 
-      <Container maxWidth="lg">
-        <Grid container spacing={2} style={{ marginTop: 80 }}>
-          <Grid item xs={12} md={6}>
-            <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                label="Company Name*"
-                variant="standard"
-                value={company.name}
-                onChange={onChange}
-                fullWidth
-              />
+            <Input
+              id="address"
+              name="address"
+              type="text"
+              label="Company Address"
+              variant="standard"
+              value={company.address}
+              onChange={onChange}
+              fullWidth
+            />
 
-              <Input
-                id="address"
-                name="address"
-                type="text"
-                label="Company Address"
-                variant="standard"
-                value={company.address}
-                onChange={onChange}
-                fullWidth
-              />
+            <Input
+              id="billingAddress"
+              name="billingAddress"
+              type="text"
+              label="Billing Address"
+              variant="standard"
+              value={company.billingAddress}
+              onChange={onChange}
+              fullWidth
+            />
 
-              <Input
-                id="billingAddress"
-                name="billingAddress"
-                type="text"
-                label="Billing Address"
-                variant="standard"
-                value={company.billingAddress}
-                onChange={onChange}
-                fullWidth
-              />
+            <Input
+              id="ownerName"
+              name="ownerName"
+              type="text"
+              label="Account Owner*"
+              variant="standard"
+              value={company.ownerName}
+              onChange={onChange}
+              fullWidth
+            />
 
-              <Input
-                id="ownerName"
-                name="ownerName"
-                type="text"
-                label="Account Owner*"
-                variant="standard"
-                value={company.ownerName}
-                onChange={onChange}
-                fullWidth
-              />
+            <Input
+              id="ownerEmail"
+              name="ownerEmail"
+              type="email"
+              label="E-mail address*"
+              variant="standard"
+              value={company.ownerEmail}
+              onChange={onChange}
+              fullWidth
+            />
 
-              <Input
-                id="ownerEmail"
-                name="ownerEmail"
-                type="email"
-                label="E-mail address*"
-                variant="standard"
-                value={company.ownerEmail}
-                onChange={onChange}
-                fullWidth
-              />
+            <LoadingButton
+              onClick={onSubmit}
+              loading={loading}
+              variant="outlined"
+              type="submit"
+              style={{ alignSelf: 'flex-end' }}
+              marginTop="32px"
+            >
+              {state ? 'Update company' : 'Add & Send e-amil'}
+            </LoadingButton>
 
-              <LoadingButton
-                onClick={onSubmit}
-                loading={loading}
-                variant="outlined"
-                type="submit"
-                style={{ alignSelf: 'flex-end' }}
-                marginTop="32px"
-              >
-                {state ? 'Update company' : 'Add & Send e-amil'}
-              </LoadingButton>
+            {error && (
+              <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
+            )}
 
-              {error && (
-                <FormHelperText error>{typeof error === 'string' ? error : 'Something went wrong!'}</FormHelperText>
-              )}
-
-              {success && (
-                <FormHelperText variant="filled" style={{ color: 'green' }}>
-                  {typeof success === 'string' ? success : 'Operation successfully done!'}
-                </FormHelperText>
-              )}
-            </Form>
-          </Grid>
+            {success && (
+              <FormHelperText variant="filled" style={{ color: 'green' }}>
+                {typeof success === 'string' ? success : 'Operation successfully done!'}
+              </FormHelperText>
+            )}
+          </Form>
         </Grid>
-      </Container>
-    </>
+      </Grid>
+    </Container>
   );
 };
 
