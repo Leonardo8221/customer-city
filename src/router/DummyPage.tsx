@@ -1,13 +1,15 @@
-import { Container } from '@mui/material';
 import { FC } from 'react';
+import { Container } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+
+import { mapAbsRoutePathToLabel } from 'core/utils';
 
 const DummyPage: FC = () => {
   const { pathname } = useLocation();
 
   return (
     <Container maxWidth="lg">
-      <h1>{pathname}</h1>
+      <h1>{mapAbsRoutePathToLabel(pathname)}</h1>
     </Container>
   );
 };

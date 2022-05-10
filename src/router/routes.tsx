@@ -12,8 +12,6 @@ export const publicRoutes = {
 
 export const privateRoutePaths = {
   home: '/d',
-  myAccount: 'my-account',
-  createCompany: 'create-company',
   citizenId: 'citizen-id',
   accounts: 'accounts',
   productDefiner: 'product-definer',
@@ -26,6 +24,11 @@ export const privateRoutePaths = {
   goalsAndMilestones: 'goals-milestones',
   forecast: 'forecast',
   revenueSimulation: 'revenue-simulation',
+  //
+  myAccount: 'my-account',
+  createCompany: 'create-company',
+  settings: 'settings',
+  more: 'more',
 };
 
 interface AppRoute {
@@ -41,8 +44,6 @@ export const privateRoutes: AppRoute[] = [
     element: <PanelLayout />,
     nestedRoutes: [
       { index: true, path: privateRoutePaths.home, element: <Dashboard /> },
-      { path: privateRoutePaths.myAccount, element: <Account /> },
-      { path: privateRoutePaths.createCompany, element: <CreateCompany /> },
       { path: privateRoutePaths.citizenId, element: <DummyPage /> },
       { path: privateRoutePaths.accounts, element: <DummyPage /> },
       { path: privateRoutePaths.productDefiner, element: <DummyPage /> },
@@ -60,6 +61,10 @@ export const privateRoutes: AppRoute[] = [
           { path: privateRoutePaths.revenueSimulation, element: <DummyPage /> },
         ],
       },
+      { path: privateRoutePaths.myAccount, element: <Account /> },
+      { path: privateRoutePaths.createCompany, element: <CreateCompany /> },
+      { path: privateRoutePaths.settings, element: <DummyPage /> },
+      { path: privateRoutePaths.more, element: <DummyPage /> },
     ],
   },
 ];

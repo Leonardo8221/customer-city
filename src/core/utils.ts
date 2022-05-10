@@ -41,6 +41,14 @@ export const mapAbsRoutePathToLabel = (path: string): string => {
       return 'Forecast';
     case PRIVATE_ABS_ROUTE_PATHS.revenueSimulation:
       return 'Revenue Simulation';
+    case PRIVATE_ABS_ROUTE_PATHS.settings:
+      return 'Settings';
+    case PRIVATE_ABS_ROUTE_PATHS.more:
+      return 'More';
+    case PRIVATE_ABS_ROUTE_PATHS.myAccount:
+      return 'My Account';
+    case PRIVATE_ABS_ROUTE_PATHS.createCompany:
+      return 'Create Company';
     default:
       return 'Home';
   }

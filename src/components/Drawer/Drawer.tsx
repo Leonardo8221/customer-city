@@ -1,5 +1,6 @@
 import { FC, useState, MouseEvent } from 'react';
 import { ListItemText, List } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as MenuHomeIcon } from 'assets/icons/menuHome.svg';
 import { ReactComponent as MenuContactsIcon } from 'assets/icons/menuContacts.svg';
@@ -62,6 +63,7 @@ interface DrawerComponentProps {
 
 const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
   const [activeTheme, setActiveTheme] = useState('light');
+  const navigate = useNavigate();
 
   const handleChange = (event: MouseEvent<HTMLElement>, selectedTheme: string) => {
     setActiveTheme(selectedTheme);
@@ -86,14 +88,14 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
 
       <BottomContainer paddingTop={1}>
         <List>
-          <ListItem nested>
+          <ListItem nested onClick={() => navigate(PRIVATE_ABS_ROUTE_PATHS.more)}>
             <ListItemIcon>
               <DotsIcon />
             </ListItemIcon>
             <ListItemText primary="More" primaryTypographyProps={{ variant: 'p12' }} />
           </ListItem>
 
-          <ListItem nested>
+          <ListItem nested onClick={() => navigate(PRIVATE_ABS_ROUTE_PATHS.settings)}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>

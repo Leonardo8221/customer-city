@@ -20,4 +20,9 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
   goalsMilestones: '/d/light-square/goals-milestones',
   forecast: '/d/light-square/forecast',
   revenueSimulation: '/d/light-square/revenue-simulation',
+  //
+  createCompany: '/d/create-company',
+  myAccount: '/d/my-account',
+  settings: '/d/settings',
+  more: '/d/more',
 };
