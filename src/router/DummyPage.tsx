@@ -9,7 +9,7 @@ const DummyPage: FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <h1>{mapAbsRoutePathToLabel(pathname)}</h1>
+      <h1>{mapAbsRoutePathToLabel(pathname)} Page - Coming Soon</h1>
     </Container>
   );
 };
