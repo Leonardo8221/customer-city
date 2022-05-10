@@ -28,10 +28,10 @@ export const MainListContainer = styled(Box)(() => ({
 }));
 
 export const ListItem = styled(MuiListItem, {
-  shouldForwardProp: (prop) => prop !== 'nested' && prop !== 'height',
-})<{ nested?: boolean; height?: number }>(({ theme, nested = false, height = 48 }) => ({
+  shouldForwardProp: (prop) => prop !== 'nested',
+})<{ nested?: boolean }>(({ theme, nested = false }) => ({
   ...theme.typography.labelMedium14,
-  height,
+  height: nested ? 40 : 56,
   color: theme.palette.neutral.n400,
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
@@ -43,7 +43,7 @@ export const ListItem = styled(MuiListItem, {
     '&::before': {
       content: '" "',
       width: 4,
-      height: 48,
+      height: nested ? 40 : 56,
       backgroundColor: nested ? 'inherit' : theme.palette.primary.main,
       position: 'absolute',
       left: 0,

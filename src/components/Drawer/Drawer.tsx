@@ -31,8 +31,8 @@ const routeList: NavRoute[] = [
   { name: 'Home', path: '/', Icon: <MenuHomeIcon /> },
   { name: 'CitizenID', path: '/', Icon: <MenuContactsIcon /> },
   { name: 'Accounts', path: '/', Icon: <MenuAccountsIcon /> },
-  { name: 'Product Definer', path: '/', Icon: <MenuProductIcon /> },
-  { name: 'Hyper Funnel', path: '/', Icon: <MenuFunnelIcon /> },
+  { name: 'Product Definer', path: '/', Icon: <MenuProductIcon />, notifications: 1 },
+  { name: 'Hyper Funnel', path: '/', Icon: <MenuFunnelIcon />, notifications: 1 },
   { name: 'Deal Scape', path: '/', Icon: <MenuDealIcon /> },
   { name: 'Control Tower', path: '/', Icon: <MenuTowerIcon /> },
   { name: 'Integration', path: '/', Icon: <MenuIntegrationIcon /> },
@@ -66,21 +66,27 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
       <MainListContainer className="no-scrollbar">
         <List>
           {routeList.map((route) => (
-            <MenuItem key={route.name} Icon={route.Icon} label={route.name} nestedItems={route.nestedRoutes} />
+            <MenuItem
+              key={route.name}
+              Icon={route.Icon}
+              label={route.name}
+              nestedItems={route.nestedRoutes}
+              notifications={route.notifications}
+            />
           ))}
         </List>
       </MainListContainer>
 
       <BottomContainer paddingTop={1}>
         <List>
-          <ListItem nested height={40}>
+          <ListItem nested>
             <ListItemIcon>
               <DotsIcon />
             </ListItemIcon>
             <ListItemText primary="More" primaryTypographyProps={{ variant: 'p12' }} />
           </ListItem>
 
-          <ListItem nested height={40}>
+          <ListItem nested>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
