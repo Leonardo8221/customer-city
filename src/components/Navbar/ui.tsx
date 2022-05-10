@@ -28,7 +28,18 @@ export const RightContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const Button = styled(MuiButton)(({ theme }) => ({
+  ...theme.typography.p14,
   color: theme.palette.common.white,
+  padding: '6px 12px',
+  ':hover': {
+    backgroundColor: theme.palette.neutral.darkBlueMedium,
+  },
+  ':disabled': {
+    backgroundColor: theme.palette.neutral.darkBlueMedium,
+  },
+  ':active': {
+    backgroundColor: 'transparent',
+  },
 }));
 
 export const IconButton = styled(MuiIconButton, {

@@ -57,10 +57,12 @@ const Navbar: FC = () => {
             </DropdownMenu> */}
 
             {isSuperAdmin && pathname !== privateRoutes.account && (
-              <Button onClick={() => navigate(privateRoutes.account)}>My account</Button>
+              <Button onClick={() => navigate(privateRoutes.account)} sx={{ marginLeft: 2 }}>
+                My account
+              </Button>
             )}
 
-            <LogoutButton />
+            <LogoutButton sx={{ marginLeft: 1, marginRight: -1 }} />
           </RightContainer>
         </Toolbar>
       </AppBar>
