@@ -69,6 +69,11 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
     setActiveTheme(selectedTheme);
   };
 
+  const onNavigate = (path: string) => {
+    navigate(path);
+    toggleOpen();
+  };
+
   return (
     <Drawer variant="temporary" open={open} onClose={toggleOpen}>
       <MainListContainer className="no-scrollbar">
@@ -81,6 +86,7 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
               nestedItems={route.nestedRoutes}
               notifications={route.notifications}
               path={route.path}
+              onClick={onNavigate}
             />
           ))}
         </List>
@@ -88,14 +94,14 @@ const DrawerComponent: FC<DrawerComponentProps> = ({ open, toggleOpen }) => {
 
       <BottomContainer paddingTop={1}>
         <List>
-          <ListItem nested onClick={() => navigate(PRIVATE_ABS_ROUTE_PATHS.more)}>
+          <ListItem nested onClick={() => onNavigate(PRIVATE_ABS_ROUTE_PATHS.more)}>
             <ListItemIcon>
               <DotsIcon />
             </ListItemIcon>
             <ListItemText primary="More" primaryTypographyProps={{ variant: 'p12' }} />
           </ListItem>
 
-          <ListItem nested onClick={() => navigate(PRIVATE_ABS_ROUTE_PATHS.settings)}>
+          <ListItem nested onClick={() => onNavigate(PRIVATE_ABS_ROUTE_PATHS.settings)}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
