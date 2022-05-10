@@ -9267,6 +9267,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-react-router-breadcrumbs@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/use-react-router-breadcrumbs/-/use-react-router-breadcrumbs-3.2.1.tgz#05eba57efa5feb581e7f6f46a7ad88c7d9cb9db8"
+  integrity sha512-GpDhGo/A0I1ckGLER1/YZX/tgX+KOAyCGG2HgFIc0SVzQ30hTilufNdNRN3Gt+WXJW0zgn48CxxKvKSe+xA3TA==
+
 use-sync-external-store@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.1.0.tgz#3343c3fe7f7e404db70f8c687adf5c1652d34e82"

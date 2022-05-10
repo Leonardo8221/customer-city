@@ -22,6 +22,7 @@ export const privateRoutePaths = {
   controlTower: 'control-tower',
   integration: 'integration',
   lightSquare: 'light-square',
+  dashboard: 'dashboard',
   goalsAndMilestones: 'goals-milestones',
   forecast: 'forecast',
   revenueSimulation: 'revenue-simulation',
@@ -39,7 +40,7 @@ export const privateRoutes: AppRoute[] = [
     path: privateRoutePaths.home,
     element: <PanelLayout />,
     nestedRoutes: [
-      { index: true, element: <Dashboard /> },
+      { index: true, path: privateRoutePaths.home, element: <Dashboard /> },
       { path: privateRoutePaths.myAccount, element: <Account /> },
       { path: privateRoutePaths.createCompany, element: <CreateCompany /> },
       { path: privateRoutePaths.citizenId, element: <DummyPage /> },
@@ -53,7 +54,7 @@ export const privateRoutes: AppRoute[] = [
         path: privateRoutePaths.lightSquare,
         element: <DummyPage />,
         nestedRoutes: [
-          { index: true, element: <DummyPage /> },
+          { index: true, path: privateRoutePaths.dashboard, element: <DummyPage /> },
           { path: privateRoutePaths.goalsAndMilestones, element: <DummyPage /> },
           { path: privateRoutePaths.forecast, element: <DummyPage /> },
           { path: privateRoutePaths.revenueSimulation, element: <DummyPage /> },

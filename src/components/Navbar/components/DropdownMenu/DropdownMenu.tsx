@@ -1,16 +1,23 @@
-import { FC, useState, ReactNode } from 'react';
+import { FC, useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { ReactComponent as TriangleDownIcon } from 'assets/icons/triangleDown.svg';
 import { TextButton, Menu, MenuItem } from './ui';
 
-interface DropdownProps {
-  children: ReactNode;
-  active?: boolean;
-  textMarginRight?: number;
+interface MenuNavItem {
+  label: string;
+  active: boolean;
+  onClick: () => void;
 }
 
-const Dropdown: FC<DropdownProps> = ({ children, active, textMarginRight }) => {
+interface DropdownProps {
+  label: string;
+  active?: boolean;
+  textMarginRight?: number;
+  items: MenuNavItem[];
+}
+
+const Dropdown: FC<DropdownProps> = ({ label, active, textMarginRight, items }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -31,7 +38,7 @@ const Dropdown: FC<DropdownProps> = ({ children, active, textMarginRight }) => {
         active={active}
         textMarginRight={textMarginRight}
       >
-        <Typography variant="labelRegular12">{children}</Typography>
+        <Typography variant="labelRegular12">{label}</Typography>
       </TextButton>
       <Menu
         anchorEl={anchorEl}
@@ -47,12 +54,18 @@ const Dropdown: FC<DropdownProps> = ({ children, active, textMarginRight }) => {
           horizontal: 15,
         }}
       >
-        <MenuItem onClick={handleClose} active>
-          Dashboard
-        </MenuItem>
-        <MenuItem onClick={handleClose}>Goals and Milestones</MenuItem>
-        <MenuItem onClick={handleClose}>Forecast</MenuItem>
-        <MenuItem onClick={handleClose}>Revenue Simulation</MenuItem>
+        {items.map((item) => (
+          <MenuItem
+            key={item.label}
+            onClick={() => {
+              item.onClick();
+              handleClose();
+            }}
+            active={item.active}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

@@ -28,7 +28,7 @@ export const MainListContainer = styled(Box)(() => ({
 }));
 
 export const ListItem = styled(MuiListItem, {
-  shouldForwardProp: (prop) => prop !== 'nested',
+  shouldForwardProp: (prop) => prop !== 'nested' && prop !== 'active',
 })<{ nested?: boolean; active?: boolean }>(({ theme, nested = false, active = false }) => ({
   ...theme.typography.labelMedium14,
   height: nested ? 40 : 56,

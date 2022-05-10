@@ -15,6 +15,7 @@ import { ReactComponent as SettingsIcon } from 'assets/icons/settings.svg';
 import { ReactComponent as OutlineSunIcon } from 'assets/icons/outlineSun.svg';
 import { ReactComponent as OutlineMoonIcon } from 'assets/icons/outlineMoon.svg';
 import { NavRoute } from 'router/types';
+import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import {
   Drawer,
   ListItem,
@@ -28,23 +29,28 @@ import {
 import { MenuItem } from './components';
 
 const routeList: NavRoute[] = [
-  { name: 'Home', path: '/d', Icon: <MenuHomeIcon /> },
-  { name: 'CitizenID', path: '/d/citizen-id', Icon: <MenuContactsIcon /> },
-  { name: 'Accounts', path: '/d/accounts', Icon: <MenuAccountsIcon className="path-fill" /> },
-  { name: 'Product Definer', path: '/d/product-definer', Icon: <MenuProductIcon />, notifications: 1 },
-  { name: 'Hyper Funnel', path: '/d/hyper-funnel', Icon: <MenuFunnelIcon />, notifications: 1 },
-  { name: 'Deal Scape', path: '/d/deal-scape', Icon: <MenuDealIcon /> },
-  { name: 'Control Tower', path: '/d/control-tower', Icon: <MenuTowerIcon /> },
-  { name: 'Integration', path: '/d/integration', Icon: <MenuIntegrationIcon /> },
+  { name: 'Home', path: PRIVATE_ABS_ROUTE_PATHS.home, Icon: <MenuHomeIcon /> },
+  { name: 'CitizenID', path: PRIVATE_ABS_ROUTE_PATHS.citizenId, Icon: <MenuContactsIcon /> },
+  { name: 'Accounts', path: PRIVATE_ABS_ROUTE_PATHS.accounts, Icon: <MenuAccountsIcon className="path-fill" /> },
+  {
+    name: 'Product Definer',
+    path: PRIVATE_ABS_ROUTE_PATHS.productDefiner,
+    Icon: <MenuProductIcon />,
+    notifications: 1,
+  },
+  { name: 'Hyper Funnel', path: PRIVATE_ABS_ROUTE_PATHS.hyperFunnel, Icon: <MenuFunnelIcon />, notifications: 1 },
+  { name: 'Deal Scape', path: PRIVATE_ABS_ROUTE_PATHS.dealScape, Icon: <MenuDealIcon /> },
+  { name: 'Control Tower', path: PRIVATE_ABS_ROUTE_PATHS.controlTower, Icon: <MenuTowerIcon /> },
+  { name: 'Integration', path: PRIVATE_ABS_ROUTE_PATHS.integration, Icon: <MenuIntegrationIcon /> },
   {
     name: 'LightSquare',
-    path: '/d/light-square',
+    path: PRIVATE_ABS_ROUTE_PATHS.lightSquare,
     Icon: <MenuLightSquareIcon />,
     nestedRoutes: [
-      { name: 'Dashboard', path: '/d/light-square' },
-      { name: 'Goals and Milestones', path: '/d/light-square/goals-milestones' },
-      { name: 'Forecast', path: '/d/light-square/forecast' },
-      { name: 'Revenue Simulation', path: '/d/light-square/revenue-simulation' },
+      { name: 'Dashboard', path: PRIVATE_ABS_ROUTE_PATHS.dashboard },
+      { name: 'Goals and Milestones', path: PRIVATE_ABS_ROUTE_PATHS.goalsMilestones },
+      { name: 'Forecast', path: PRIVATE_ABS_ROUTE_PATHS.forecast },
+      { name: 'Revenue Simulation', path: PRIVATE_ABS_ROUTE_PATHS.revenueSimulation },
     ],
   },
 ];
