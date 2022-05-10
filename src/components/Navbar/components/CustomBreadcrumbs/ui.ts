@@ -2,8 +2,9 @@ import { styled, Box, Link as MuiLink } from '@mui/material';
 
 export const Container = styled(Box)(({ theme }) => ({
   position: 'relative',
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  marginLeft: theme.spacing(1),
+  paddingLeft: theme.spacing(3),
+  paddingRight: theme.spacing(3),
   '&::before': {
     content: '" "',
     height: 16,

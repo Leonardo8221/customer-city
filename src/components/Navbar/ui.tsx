@@ -31,15 +31,22 @@ export const Button = styled(MuiButton)(({ theme }) => ({
   color: theme.palette.common.white,
 }));
 
-export const IconButton = styled(MuiIconButton)(({ theme }) => ({
+export const IconButton = styled(MuiIconButton, {
+  shouldForwardProp: (prop) => prop !== 'hoverEnabled',
+})<{ hoverEnabled?: boolean }>(({ theme, hoverEnabled = false }) => ({
+  borderRadius: 0,
+  padding: 4,
   '& svg path': {
     stroke: theme.palette.neutral.white,
+  },
+  ':hover': {
+    backgroundColor: hoverEnabled ? theme.palette.neutral.darkBlueMedium : 'none',
   },
 }));
 
 export const NavLogoButton = styled(MuiIconButton)(({ theme }) => ({
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
   marginLeft: theme.spacing(1),
   marginRight: theme.spacing(1),
 }));

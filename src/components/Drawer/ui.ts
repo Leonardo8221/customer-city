@@ -9,11 +9,11 @@ import {
   ToggleButton as MuiToggleButton,
 } from '@mui/material';
 
-import { NAV_BAR_HEIGHT } from 'core/constants';
+import { NAV_BAR_HEIGHT, DRAWER_MENU_WIDTH, DRAWER_MENU_BOTTOM_SECTION_HEIGHT } from 'core/constants';
 
 export const Drawer = styled(MuiDrawer)(({ theme }) => ({
   '& .MuiPaper-root': {
-    width: 280,
+    width: DRAWER_MENU_WIDTH,
     backgroundColor: theme.palette.neutral.darkBlueHigh,
     paddingTop: NAV_BAR_HEIGHT,
   },
@@ -23,7 +23,7 @@ export const Drawer = styled(MuiDrawer)(({ theme }) => ({
 }));
 
 export const MainListContainer = styled(Box)(() => ({
-  height: `calc(100% - ${160}px)`,
+  height: `calc(100% - ${DRAWER_MENU_BOTTOM_SECTION_HEIGHT}px)`,
   overflowY: 'auto',
 }));
 
@@ -67,7 +67,7 @@ export const ListItemIcon = styled(MuiListItemIcon, {
 }));
 
 export const BottomContainer = styled(Box)(({ theme }) => ({
-  height: 160,
+  height: DRAWER_MENU_BOTTOM_SECTION_HEIGHT,
   borderTop: `1px solid ${theme.palette.primary.subtone310}`,
 }));
 
