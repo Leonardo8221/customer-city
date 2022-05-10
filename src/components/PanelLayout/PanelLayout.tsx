@@ -1,18 +1,14 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { Navbar } from 'components/Navbar';
 import { Container } from './ui';
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const PanelLayout: FC<LayoutProps> = ({ children }) => {
+const PanelLayout: FC = () => {
   return (
     <Container>
       <Navbar />
-
-      {children}
+      <Outlet />
     </Container>
   );
 };

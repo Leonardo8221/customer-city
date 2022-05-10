@@ -4,7 +4,7 @@ import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/ui';
-import { privateRoutes } from 'router/routes';
+import { privateRoutePaths } from 'router/routes';
 import { useCompany } from 'store/company/hooks';
 import { TableFooter } from 'components/TableFooter';
 
@@ -36,7 +36,7 @@ const SuperAdmin: FC = () => {
   }, []);
 
   const onRowClick = (params: GridRowParams) => {
-    navigate(privateRoutes.createCompany, { state: { ...params.row } });
+    navigate(privateRoutePaths.createCompany, { state: { ...params.row } });
   };
 
   return (
@@ -63,7 +63,7 @@ const SuperAdmin: FC = () => {
 
         <Grid item xs={12}>
           <Box display="flex" justifyContent="flex-end">
-            <Button onClick={() => navigate(privateRoutes.createCompany)}>Add New Company</Button>
+            <Button onClick={() => navigate(privateRoutePaths.createCompany)}>Add New Company</Button>
           </Box>
         </Grid>
 

@@ -6,7 +6,7 @@ import { ReactComponent as HamburguerMenuIcon } from 'assets/icons/hamburguerMen
 import { ReactComponent as NavLogoIcon } from 'assets/icons/navLogo.svg';
 import { ReactComponent as BellNotificationIcon } from 'assets/icons/bellNotification.svg';
 import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
-import { privateRoutes } from 'router/routes';
+import { privateRoutePaths } from 'router/routes';
 import { useAuth } from 'store/auth/hooks';
 import { AppBar, LeftContainer, RightContainer, IconButton, NavLogoButton, VerticalDivider, Button } from './ui';
 import { CustomBreadcrumbs } from './components';
@@ -30,7 +30,7 @@ const Navbar: FC = () => {
               <HamburguerMenuIcon />
             </IconButton>
 
-            <NavLogoButton onClick={() => navigate(privateRoutes.dashboard)}>
+            <NavLogoButton onClick={() => navigate(privateRoutePaths.home)}>
               <NavLogoIcon />
             </NavLogoButton>
 
@@ -56,8 +56,8 @@ const Navbar: FC = () => {
               <Typography variant="p14">John Doe</Typography>
             </DropdownMenu> */}
 
-            {isSuperAdmin && pathname !== privateRoutes.account && (
-              <Button onClick={() => navigate(privateRoutes.account)} sx={{ marginLeft: 2 }}>
+            {isSuperAdmin && !pathname.includes(privateRoutePaths.myAccount) && (
+              <Button onClick={() => navigate(privateRoutePaths.myAccount)} sx={{ marginLeft: 2 }}>
                 My account
               </Button>
             )}

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import { useAuth } from 'store/auth/hooks';
 import ScrollToTop from './ScrollToTop';
-import { publicRoutes, privateRoutes } from './routes';
-import { Dashboard, Login, Account, CreateCompany, CreatePassword, ResetPassword } from 'pages';
+import { publicRoutes, privateRoutes, renderRoute, privateRoutePaths } from './routes';
+import { Login, CreatePassword, ResetPassword } from 'pages';
 
 const PublicRoutes: FC = () => {
   return (
@@ -23,10 +23,8 @@ const PublicRoutes: FC = () => {
 const PrivateRoutes: FC = () => {
   return (
     <Routes>
-      <Route path={privateRoutes.dashboard} element={<Dashboard />} />
-      <Route path={privateRoutes.account} element={<Account />} />
-      <Route path={privateRoutes.createCompany} element={<CreateCompany />} />
-      <Route path="*" element={<Navigate to={privateRoutes.dashboard} replace />} />
+      {privateRoutes.map(renderRoute)}
+      <Route path="*" element={<Navigate to={privateRoutePaths.home} replace />} />
     </Routes>
   );
 };
