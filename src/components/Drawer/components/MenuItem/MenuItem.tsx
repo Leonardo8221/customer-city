@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react';
 import { ListItemText, Collapse } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { ReactComponent as ChevronDownIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ChevronUpIcon } from 'assets/icons/chevronUp.svg';
@@ -19,6 +19,7 @@ interface MenuItemProps {
 const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications, path }) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleExpandClick = () => {
     if (nestedItems && nestedItems.length > 0) {
@@ -28,9 +29,11 @@ const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications, 
     navigate(path);
   };
 
+  const active = nestedItems ? pathname.includes(path) : path === pathname;
+
   return (
     <>
-      <ListItem onClick={handleExpandClick}>
+      <ListItem onClick={handleExpandClick} active={active}>
         {Icon && <ListItemIcon>{Icon}</ListItemIcon>}
         <ListItemText primary={label} primaryTypographyProps={{ variant: 'labelMedium14' }} />
         {nestedItems && nestedItems.length > 0 && (
@@ -48,7 +51,7 @@ const MenuItem: FC<MenuItemProps> = ({ Icon, label, nestedItems, notifications, 
       {nestedItems && nestedItems.length > 0 && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {nestedItems.map((item) => (
-            <ListItem key={item.name} nested onClick={() => navigate(path)}>
+            <ListItem key={item.name} nested onClick={() => navigate(item.path)} active={pathname === item.path}>
               <ListItemIcon>
                 <BlueDot />
               </ListItemIcon>

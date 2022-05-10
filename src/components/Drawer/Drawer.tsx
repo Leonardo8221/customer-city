@@ -28,23 +28,23 @@ import {
 import { MenuItem } from './components';
 
 const routeList: NavRoute[] = [
-  { name: 'Home', path: '/', Icon: <MenuHomeIcon /> },
-  { name: 'CitizenID', path: 'citizen-id', Icon: <MenuContactsIcon /> },
-  { name: 'Accounts', path: 'accounts', Icon: <MenuAccountsIcon /> },
-  { name: 'Product Definer', path: 'product-definer', Icon: <MenuProductIcon />, notifications: 1 },
-  { name: 'Hyper Funnel', path: 'hyper-funnel', Icon: <MenuFunnelIcon />, notifications: 1 },
-  { name: 'Deal Scape', path: 'deal-scape', Icon: <MenuDealIcon /> },
-  { name: 'Control Tower', path: 'control-tower', Icon: <MenuTowerIcon /> },
-  { name: 'Integration', path: 'integration', Icon: <MenuIntegrationIcon /> },
+  { name: 'Home', path: '/d', Icon: <MenuHomeIcon /> },
+  { name: 'CitizenID', path: '/d/citizen-id', Icon: <MenuContactsIcon /> },
+  { name: 'Accounts', path: '/d/accounts', Icon: <MenuAccountsIcon className="path-fill" /> },
+  { name: 'Product Definer', path: '/d/product-definer', Icon: <MenuProductIcon />, notifications: 1 },
+  { name: 'Hyper Funnel', path: '/d/hyper-funnel', Icon: <MenuFunnelIcon />, notifications: 1 },
+  { name: 'Deal Scape', path: '/d/deal-scape', Icon: <MenuDealIcon /> },
+  { name: 'Control Tower', path: '/d/control-tower', Icon: <MenuTowerIcon /> },
+  { name: 'Integration', path: '/d/integration', Icon: <MenuIntegrationIcon /> },
   {
     name: 'LightSquare',
-    path: 'light-square',
+    path: '/d/light-square',
     Icon: <MenuLightSquareIcon />,
     nestedRoutes: [
-      { name: 'Dashboard', path: '/' },
-      { name: 'Goals and Milestones', path: 'goals-milestones' },
-      { name: 'Forecast', path: 'forecast' },
-      { name: 'Revenue Simulation', path: 'revenue-simulation' },
+      { name: 'Dashboard', path: '/d/light-square' },
+      { name: 'Goals and Milestones', path: '/d/light-square/goals-milestones' },
+      { name: 'Forecast', path: '/d/light-square/forecast' },
+      { name: 'Revenue Simulation', path: '/d/light-square/revenue-simulation' },
     ],
   },
 ];

@@ -11,7 +11,7 @@ export const publicRoutes = {
 };
 
 export const privateRoutePaths = {
-  home: 'd',
+  home: '/d',
   myAccount: 'my-account',
   createCompany: 'create-company',
   citizenId: 'citizen-id',

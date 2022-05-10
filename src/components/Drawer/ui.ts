@@ -29,27 +29,41 @@ export const MainListContainer = styled(Box)(() => ({
 
 export const ListItem = styled(MuiListItem, {
   shouldForwardProp: (prop) => prop !== 'nested',
-})<{ nested?: boolean }>(({ theme, nested = false }) => ({
+})<{ nested?: boolean; active?: boolean }>(({ theme, nested = false, active = false }) => ({
   ...theme.typography.labelMedium14,
   height: nested ? 40 : 56,
-  color: theme.palette.neutral.n400,
+  color: active ? theme.palette.neutral.white : theme.palette.neutral.n400,
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
   position: 'relative',
+  backgroundColor: active && !nested ? theme.palette.neutral.darkBlueMedium : 'inherit',
   cursor: 'pointer',
+  '&::before': {
+    content: '" "',
+    width: 4,
+    height: nested ? 40 : 56,
+    backgroundColor: nested ? 'inherit' : theme.palette.primary.main,
+    position: 'absolute',
+    left: 0,
+    opacity: active ? 1 : 0,
+  },
+  '& svg:not(.path-fill) path': {
+    stroke: active ? theme.palette.neutral.white : undefined,
+  },
+  '& svg.path-fill path': {
+    fill: active ? theme.palette.neutral.white : undefined,
+  },
   ':hover': {
     backgroundColor: nested ? 'inherit' : theme.palette.neutral.darkBlueMedium,
     color: theme.palette.neutral.white,
     '&::before': {
-      content: '" "',
-      width: 4,
-      height: nested ? 40 : 56,
-      backgroundColor: nested ? 'inherit' : theme.palette.primary.main,
-      position: 'absolute',
-      left: 0,
+      opacity: 1,
     },
-    '& svg path': {
+    '& svg:not(.path-fill) path': {
       stroke: theme.palette.neutral.white,
+    },
+    '& svg.path-fill path': {
+      fill: theme.palette.neutral.white,
     },
   },
 }));
