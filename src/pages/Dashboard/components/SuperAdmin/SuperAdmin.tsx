@@ -26,6 +26,7 @@ const columns: GridColDef[] = [
     valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt).toLocaleDateString(),
   },
 ];
+
 const SuperAdmin: FC = () => {
   const navigate = useNavigate();
   const { loading, error, companies, getCompanies } = useCompany();

@@ -2,7 +2,7 @@ import { FC, useState, SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { Container, TitleContainer, VerticalDivider, Tabs, Tab, TabPanel } from './ui';
-import { Profile } from './components';
+import { Profile, Team } from './components';
 
 const a11yProps = (index: number) => {
   return {
@@ -41,7 +41,9 @@ const ControlTower: FC = () => {
         <Profile />
       </TabPanel>
 
-      <TabPanel hidden={activeIndex !== 1}>Team</TabPanel>
+      <TabPanel hidden={activeIndex !== 1}>
+        <Team />
+      </TabPanel>
     </Container>
   );
 };
