@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
 
 import { PanelLayout } from 'components/PanelLayout';
-import { Account, CreateCompany, Dashboard } from 'pages';
+import { Account, CreateCompany, Dashboard, ControlTower } from 'pages';
 import DummyPage from './DummyPage';
 
 export const publicRoutes = {
@@ -49,7 +49,7 @@ export const privateRoutes: AppRoute[] = [
       { path: privateRoutePaths.productDefiner, element: <DummyPage /> },
       { path: privateRoutePaths.hyperFunnel, element: <DummyPage /> },
       { path: privateRoutePaths.dealScape, element: <DummyPage /> },
-      { path: privateRoutePaths.controlTower, element: <DummyPage /> },
+      { path: privateRoutePaths.controlTower, element: <ControlTower /> },
       { path: privateRoutePaths.integration, element: <DummyPage /> },
       {
         path: privateRoutePaths.lightSquare,
