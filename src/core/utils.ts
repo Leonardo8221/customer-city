@@ -1,4 +1,5 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from './constants';
+import { UserRole } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (): void => {};
@@ -51,5 +52,31 @@ export const mapAbsRoutePathToLabel = (path: string): string => {
       return 'Create Company';
     default:
       return 'Home';
+  }
+};
+
+export const mapUserRoleToLabel = (role: UserRole): string => {
+  switch (role) {
+    case UserRole.ADMIN:
+      return 'Administrator';
+    case UserRole.OWNER:
+      return 'Owner';
+    case UserRole.USER:
+      return 'Business User';
+    default:
+      return 'Super Admin';
+  }
+};
+
+export const mapLabelToUserRole = (label: string): UserRole => {
+  switch (label) {
+    case 'Administrator':
+      return UserRole.ADMIN;
+    case 'Owner':
+      return UserRole.OWNER;
+    case 'Business User':
+      return UserRole.USER;
+    default:
+      return UserRole.SUPER_AMIN;
   }
 };

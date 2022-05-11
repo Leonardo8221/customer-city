@@ -272,6 +272,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          ...typographyTheme.typography.p14,
+          height: 32,
+        },
+      },
+    },
   },
 });
 

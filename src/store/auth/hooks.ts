@@ -2,7 +2,8 @@ import { useCallback, useMemo } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { useActionCreator } from 'hooks';
-import { AuthReturnHook, UserRole } from './types';
+import { UserRole } from 'core/types';
+import { AuthReturnHook } from './types';
 import { RootState } from '../types';
 import {
   login,

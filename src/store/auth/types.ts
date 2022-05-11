@@ -52,8 +52,3 @@ export interface ConfirmPasswordResetData {
   token: string;
   password: string;
 }
-
-export enum UserRole {
-  SUPER_AMIN = 'super_admin',
-  ADMIN = 'admin',
-}
