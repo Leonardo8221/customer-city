@@ -6,6 +6,8 @@ import * as yup from 'yup';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { TextButton } from 'components/ui';
 import { Modal, Container, Header, Footer, Main } from './ui';
+import { CustomDropdown } from 'components/CustomDropdown';
+import { UserRole } from 'core/types';
 
 interface AddNewUserModalProps {
   open: boolean;
@@ -17,7 +19,7 @@ interface FormValues {
   email: string;
   phoneNumber: string;
   additionalPhoneNumber: string;
-  role: string;
+  role: UserRole | null;
 }
 
 const validationSchema = yup.object({
@@ -25,7 +27,7 @@ const validationSchema = yup.object({
   email: yup.string().required('').email(''),
   phoneNumber: yup.string().required(''),
   additionalPhoneNumber: yup.string(),
-  role: yup.string().required(''),
+  role: yup.string().nullable(),
 });
 
 const initialValues: FormValues = {
@@ -33,7 +35,7 @@ const initialValues: FormValues = {
   email: '',
   phoneNumber: '',
   additionalPhoneNumber: '',
-  role: '',
+  role: null,
 };
 
 const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
@@ -56,8 +58,13 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
         <Divider />
 
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-          {({ values, isValid, handleChange, handleBlur, handleSubmit }) => (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          isInitialValid={false}
+        >
+          {({ values, isValid, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
             <>
               <Main>
                 <form noValidate>
@@ -138,14 +145,15 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           Role
                         </InputLabel>
 
-                        <TextField
-                          id="role"
-                          name="role"
-                          type="text"
-                          fullWidth
+                        <CustomDropdown<UserRole>
                           value={values.role}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
+                          options={[
+                            { label: 'Administrator', value: UserRole.ADMIN },
+                            { label: 'Owner', value: UserRole.OWNER },
+                            { label: 'Business User', value: UserRole.USER },
+                          ]}
+                          onSelect={(value) => setFieldValue('role', value)}
+                          placeholder="Role"
                         />
                       </Grid>
                     </Grid>

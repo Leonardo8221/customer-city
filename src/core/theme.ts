@@ -280,6 +280,28 @@ const theme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      defaultProps: {
+        disableClearable: true,
+      },
+      styleOverrides: {
+        root: {
+          '&.MuiAutocomplete-root .MuiOutlinedInput-root': {
+            height: 40,
+            paddingTop: 0,
+            paddingBottom: 0,
+          },
+          '& .MuiAutocomplete-endAdornment': {
+            marginRight: 10,
+            marginTop: 2,
+          },
+          ':hover svg path, &.Mui-focused svg path': {
+            fill: '#1554FF',
+            stroke: '#1554FF',
+          },
+        },
+      },
+    },
   },
 });
 
