@@ -29,6 +29,7 @@
 
 .MuiDataGrid-cell {
   border-bottom: 1px solid #e5e5e5 !important;
+  outline: none;
 }
 
 .MuiDataGrid-virtualScroller {
@@ -48,6 +49,13 @@
 
 .MuiDataGrid-iconButtonContainer svg {
   opacity: 1 !important;
+}
+
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-cell:focus-within,
+.MuiDataGrid-columnHeader:focus,
+.MuiDataGrid-columnHeader:focus-within {
+  outline: none !important;
 }
 
 .sortup-icon {
