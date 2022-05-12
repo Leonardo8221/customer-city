@@ -73,7 +73,7 @@ const Login: FC = () => {
         </Typography>
 
         <Formik initialValues={initialValues} validationSchema={formSchema} onSubmit={onSubmit}>
-          {({ values, errors, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
+          {({ values, isValid, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
             <Form noValidate>
               <Box>
                 <InputLabel htmlFor="email">Email address</InputLabel>
@@ -84,8 +84,6 @@ const Login: FC = () => {
                   type="email"
                   value={values.email}
                   onChange={handleChange}
-                  // error={touched.email && !!errors.email}
-                  // helperText={touched.email ? errors.email : ''}
                   onBlur={handleBlur}
                   fullWidth
                 />
@@ -100,8 +98,6 @@ const Login: FC = () => {
                   type="password"
                   value={values.password}
                   onChange={handleChange}
-                  // error={touched.password && !!errors.password}
-                  // helperText={touched.password ? errors.password : ''}
                   onBlur={handleBlur}
                   fullWidth
                 />
@@ -118,7 +114,7 @@ const Login: FC = () => {
 
               <LoadingButton
                 loading={loading}
-                disabled={!values.email || !values.password || !!errors.email || !!errors.password}
+                disabled={!isValid}
                 marginTop="32px"
                 type="submit"
                 onClick={() => handleSubmit()}

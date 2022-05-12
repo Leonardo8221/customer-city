@@ -1,0 +1,36 @@
+import { styled, Modal as MuiModal, Box, alpha } from '@mui/material';
+
+export const Modal = styled(MuiModal)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '& .MuiBackdrop-root': {
+    backgroundColor: alpha(theme.palette.neutral.darkBlueHigh as string, 0.2),
+  },
+}));
+
+export const Container = styled(Box)(({ theme }) => ({
+  maxWidth: 980,
+  width: '100%',
+  backgroundColor: theme.palette.neutral.white,
+  borderRadius: 4,
+  padding: '16px 32px',
+}));
+
+export const Header = styled(Box)(() => ({
+  padding: '8px 0 24px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
+export const Footer = styled(Box)(() => ({
+  paddingTop: 16,
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+}));
+
+export const Main = styled(Box)(() => ({
+  padding: '32px 0 52px',
+}));
