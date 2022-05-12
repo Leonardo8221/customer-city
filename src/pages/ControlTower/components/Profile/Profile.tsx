@@ -1,43 +1,9 @@
 import { FC } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
+import { Grid } from '@mui/material';
 
-import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
-import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
-import { Container, DetailContainer, TextLinkButton, DetailValueContainer } from './ui';
-
-interface UserDetailProps {
-  label: string;
-  value: string;
-  type?: 'email' | 'phone';
-}
-
-const UserDetail: FC<UserDetailProps> = ({ label, value, type }) => {
-  return (
-    <DetailContainer>
-      <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
-        {label}
-      </Typography>
-
-      <DetailValueContainer>
-        {type ? (
-          type === 'email' ? (
-            <Box>
-              <EmailIcon />
-            </Box>
-          ) : (
-            <Box>
-              <PhoneIcon />
-            </Box>
-          )
-        ) : null}
-
-        <Typography variant="p14" sx={{ color: 'neutral.main', fontWeight: 400, marginTop: 0.5 }}>
-          {value}
-        </Typography>
-      </DetailValueContainer>
-    </DetailContainer>
-  );
-};
+import { TextLinkButton } from 'components/ui';
+import { UserDetail } from '../UserDetail';
+import { Container } from './ui';
 
 const Profile: FC = () => {
   return (

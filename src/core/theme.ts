@@ -140,6 +140,13 @@ const theme = createTheme({
   palette: paletteTheme.palette,
   typography: typographyTheme.typography,
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: '#1E232C',
+        },
+      },
+    },
     MuiButtonBase: {
       defaultProps: {
         disableRipple: true,

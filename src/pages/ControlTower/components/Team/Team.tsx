@@ -16,7 +16,7 @@ import {
   Select,
   TopContainer,
 } from './ui';
-import { AddNewUserModal } from './components';
+import { AddNewUserModal, UserDetailsModal } from './components';
 import './Team.css';
 
 const users = [
@@ -66,8 +66,13 @@ const columns: GridColDef[] = [
 
 const Team: FC = () => {
   const [modalOpen, setModalOpened] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   const toggleModal = () => setModalOpened((prevState) => !prevState);
+
+  const toggleDetails = () => setDetailsOpen((prevState) => !prevState);
+
+  const onRowClick = () => toggleDetails();
 
   return (
     <Container>
@@ -96,7 +101,7 @@ const Team: FC = () => {
             headerHeight={40}
             rowHeight={64}
             // loading={loading}
-            // onRowClick={onRowClick}
+            onRowClick={onRowClick}
             components={{
               Footer: TableFooter,
               BaseCheckbox,
@@ -111,6 +116,8 @@ const Team: FC = () => {
       </Grid>
 
       <AddNewUserModal open={modalOpen} toggleOpen={toggleModal} />
+
+      <UserDetailsModal open={detailsOpen} toggleOpen={toggleDetails} />
     </Container>
   );
 };
