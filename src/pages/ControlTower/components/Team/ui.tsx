@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Component } from 'react';
 import { styled, Box, Checkbox as MuiCheckbox, Select as MuiSelect, Modal as MuiModal, alpha } from '@mui/material';
 
 import { ReactComponent as BoxChecked } from 'assets/icons/boxChecked.svg';
@@ -56,9 +56,11 @@ export const ModalContent = styled(Box)(({ theme }) => ({
   padding: '16px 32px',
 }));
 
-export const BaseCheckbox: FC<any> = (props) => {
-  return <Checkbox {...props} icon={<BoxUnchecked />} checkedIcon={<BoxChecked />} />;
-};
+export class BaseCheckbox extends Component {
+  render() {
+    return <Checkbox {...this.props} icon={<BoxUnchecked />} checkedIcon={<BoxChecked />} />;
+  }
+}
 
 export const ColumnSortedAscendingIcon = () => {
   return <SortUpIcon className="sortup-icon" />;

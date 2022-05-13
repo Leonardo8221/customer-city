@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { Box, Button } from '@mui/material';
-import { GridPagination, useGridApiContext, useGridRootProps, GridSelectedRowCount } from '@mui/x-data-grid';
+import { useGridApiContext, useGridRootProps, GridSelectedRowCount } from '@mui/x-data-grid';
 
 import { useCompany } from 'store/company/hooks';
+import { TablePagination } from '../TablePagination';
 import { Container } from './ui';
 
 const TableFooter: FC = () => {
@@ -34,7 +35,8 @@ const TableFooter: FC = () => {
           <Button onClick={onDelete}>Delete</Button>
         </Box>
       )}
-      {!rootProps.hideFooterPagination && <GridPagination />}
+
+      {!rootProps.hideFooterPagination && <TablePagination />}
     </Container>
   );
 };
