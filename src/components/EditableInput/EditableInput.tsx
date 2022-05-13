@@ -2,7 +2,7 @@ import { FC, useState, ChangeEvent } from 'react';
 import { OutlinedTextFieldProps, ClickAwayListener, Box } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
-import { UserDetail } from 'pages/ControlTower/components/UserDetail';
+import { UserDetail } from '../UserDetail';
 import { CustomInput } from '../CustomInput';
 import { Container, EditButton } from './ui';
 

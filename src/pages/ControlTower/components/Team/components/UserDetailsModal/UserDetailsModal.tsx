@@ -5,7 +5,7 @@ import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import { ReactComponent as ControlsIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedButton } from 'components/ui';
-import { UserDetail } from '../../../UserDetail';
+import { UserDetail } from 'components/UserDetail';
 import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, EditButton } from './ui';
 
 interface UserDetailsModalProps {
