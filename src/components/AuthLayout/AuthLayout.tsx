@@ -14,11 +14,13 @@ import {
   ContentContainer,
   ContentFooter,
   ContentHeader,
-  IconButton,
+  BackButton,
   CenteredContainer,
   Divider,
   RollItem,
   GridContainer,
+  HeaderLeftContent,
+  VerticalDivider,
 } from './ui';
 
 const features = [
@@ -36,9 +38,17 @@ interface AuthLayoutProps {
   children: ReactNode;
   backButtonEnabled?: boolean;
   onGoBack?: () => void;
+  currentStep?: number;
+  totalSteps?: number;
 }
 
-const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, onGoBack }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({
+  children,
+  backButtonEnabled = false,
+  currentStep,
+  totalSteps,
+  onGoBack,
+}) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const smallDevice = useMediaQuery(theme.breakpoints.down('md'));
@@ -50,23 +60,27 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children, backButtonEnabled = false, 
 
   return (
     <Container>
-      <GridContainer container spacing={2}>
+      <GridContainer container>
         <Grid item xs={12} md={6}>
           <ContentContainer>
             <ContentHeader>
-              <Box>
+              <HeaderLeftContent paddingLeft={backButtonEnabled ? '65px' : '0px'}>
                 {backButtonEnabled && (
-                  <>
-                    <IconButton onClick={handleGoBack}>
-                      <NavBackIcon />
-                    </IconButton>
+                  <BackButton onClick={handleGoBack} startIcon={<NavBackIcon />}>
+                    Back
+                  </BackButton>
+                )}
 
-                    <Typography variant="p12" sx={{ color: 'neutral.main' }}>
-                      Back
+                {currentStep && totalSteps && (
+                  <>
+                    <VerticalDivider />
+
+                    <Typography variant="labelRegular10">
+                      STEP {currentStep} / {totalSteps}
                     </Typography>
                   </>
                 )}
-              </Box>
+              </HeaderLeftContent>
 
               <Typography variant="labelRegular12" textAlign="right" component="p" alignItems="center" display="flex">
                 Don&apos;t have an account?&nbsp;

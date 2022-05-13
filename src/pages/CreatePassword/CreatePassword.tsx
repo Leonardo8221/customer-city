@@ -58,7 +58,7 @@ const CreatePassword: FC = () => {
   const buttonEnabled = valid.length && valid.lowercase && valid.uppercase && valid.numberSymbolSpace;
 
   return (
-    <AuthLayout>
+    <AuthLayout backButtonEnabled currentStep={2} totalSteps={4}>
       <Box>
         <Typography variant="h2" marginBottom={4}>
           Create new password!

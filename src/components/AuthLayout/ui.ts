@@ -1,6 +1,8 @@
-import { styled, Box as MuiBox, IconButton as MuiIconButton, Divider as MuiDivider, alpha, Grid } from '@mui/material';
+import { styled, Box, Divider as MuiDivider, alpha, Grid } from '@mui/material';
 
-export const Container = styled(MuiBox)(({ theme }) => ({
+import { TextButton } from 'components/ui';
+
+export const Container = styled(Box)(({ theme }) => ({
   background: `linear-gradient(90deg, ${theme.palette.common.white} 50%, ${theme.palette.primary.main} 50%)`,
   minHeight: '100vh',
   display: 'flex',
@@ -9,7 +11,7 @@ export const Container = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export const ContentContainer = styled(MuiBox)(({ theme }) => ({
+export const ContentContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -22,13 +24,14 @@ export const ContentContainer = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export const ContentHeader = styled(MuiBox)(({ theme }) => ({
+export const ContentHeader = styled(Box)(({ theme }) => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   padding: theme.spacing(4),
   color: theme.palette.neutral.n400,
   position: 'relative',
+  height: 80,
   [theme.breakpoints.down('md')]: {
     color: theme.palette.neutral.white,
     paddingLeft: theme.spacing(2),
@@ -36,7 +39,7 @@ export const ContentHeader = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export const ContentFooter = styled(MuiBox)(({ theme }) => ({
+export const ContentFooter = styled(Box)(({ theme }) => ({
   width: '100%',
   color: theme.palette.neutral.n400,
   padding: theme.spacing(4),
@@ -47,13 +50,22 @@ export const ContentFooter = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export const IconButton = styled(MuiIconButton)(() => ({
-  paddingLeft: 14,
-  paddingRight: 14,
-  marginLeft: -14,
+export const HeaderLeftContent = styled(Box)(() => ({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
 }));
 
-export const CenteredContainer = styled(MuiBox)(() => ({
+export const BackButton = styled(TextButton)(({ theme }) => ({
+  ...theme.typography.p12,
+  position: 'absolute',
+  top: -12,
+  left: -8,
+}));
+
+BackButton.defaultProps = { variant: 'text' };
+
+export const CenteredContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -68,7 +80,7 @@ export const Divider = styled(MuiDivider)(({ theme }) => ({
   height: 1,
 }));
 
-export const RollItem = styled(MuiBox)(({ theme }) => ({
+export const RollItem = styled(Box)(({ theme }) => ({
   height: 48,
   width: 248,
   backgroundColor: alpha(theme.palette.primary.subtone320 as string, 0.2),
@@ -94,5 +106,22 @@ export const GridContainer = styled(Grid)(({ theme }) => ({
   backgroundRepeat: 'no-repeat',
   [theme.breakpoints.down('md')]: {
     backgroundSize: '100vw',
+  },
+}));
+
+export const VerticalDivider = styled(Box)(({ theme }) => ({
+  marginLeft: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  width: 1,
+  height: 16,
+  position: 'relative',
+  '&::before': {
+    content: '" "',
+    height: 16,
+    position: 'absolute',
+    top: -1,
+    width: 1,
+    backgroundColor: theme.palette.neutral.n200,
+    marginBottom: -4,
   },
 }));
