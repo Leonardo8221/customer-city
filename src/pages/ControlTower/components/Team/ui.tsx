@@ -1,5 +1,5 @@
-import { FC, Component } from 'react';
-import { styled, Box, Checkbox as MuiCheckbox, Select as MuiSelect, Modal as MuiModal, alpha } from '@mui/material';
+import { Component } from 'react';
+import { styled, Box, Checkbox as MuiCheckbox } from '@mui/material';
 
 import { ReactComponent as BoxChecked } from 'assets/icons/boxChecked.svg';
 import { ReactComponent as BoxUnchecked } from 'assets/icons/boxUnchecked.svg';
@@ -12,7 +12,7 @@ export const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-export const TopContainer = styled(Box)(() => ({
+export const TitleContainer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -20,40 +20,6 @@ export const TopContainer = styled(Box)(() => ({
 
 const Checkbox = styled(MuiCheckbox)(() => ({
   padding: '0 10px 0 0',
-}));
-
-export const Select = styled(MuiSelect)(({ theme }) => ({
-  ...theme.typography.p14,
-  padding: '4px 8px',
-  position: 'relative',
-  '& svg': {
-    marginTop: 2,
-    right: 12,
-    position: 'absolute',
-  },
-  ':before, :after': {
-    borderWidth: '0px !important',
-  },
-  '& .MuiInput-input:focus': {
-    backgroundColor: 'transparent',
-  },
-}));
-
-Select.defaultProps = { variant: 'standard', IconComponent: SortDownIcon };
-
-export const Modal = styled(MuiModal)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  '& .MuiBackdrop-root': {
-    backgroundColor: alpha(theme.palette.neutral.darkBlueHigh as string, 0.2),
-  },
-}));
-
-export const ModalContent = styled(Box)(({ theme }) => ({
-  width: '70%',
-  backgroundColor: theme.palette.neutral.white,
-  padding: '16px 32px',
 }));
 
 export class BaseCheckbox extends Component {
