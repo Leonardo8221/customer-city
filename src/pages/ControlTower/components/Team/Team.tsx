@@ -107,6 +107,7 @@ const columns: GridColDef[] = [
 const Team: FC = () => {
   const [modalOpen, setModalOpened] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [pageSize, setPageSize] = useState(5);
 
   const toggleModal = () => setModalOpened((prevState) => !prevState);
 
@@ -129,15 +130,14 @@ const Team: FC = () => {
           </TitleContainer>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ height: 480, width: '100%' }}>
           <DataGrid
             rows={users}
             columns={columns}
-            pageSize={5}
+            pageSize={pageSize}
             rowsPerPageOptions={[5, 10, 25, 50]}
             checkboxSelection
             disableSelectionOnClick
-            autoHeight
             headerHeight={40}
             rowHeight={64}
             // loading={loading}
@@ -151,6 +151,7 @@ const Team: FC = () => {
             }}
             disableColumnMenu
             disableVirtualization
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           />
         </Grid>
       </Grid>
