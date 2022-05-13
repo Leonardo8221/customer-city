@@ -26,3 +26,5 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
   settings: '/d/settings',
   more: '/d/more',
 };
+
+export const PHONE_REGEX = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;

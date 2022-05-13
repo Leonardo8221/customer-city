@@ -5,10 +5,11 @@ import * as yup from 'yup';
 
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { TextButton } from 'components/ui';
-import { Modal, Container, Header, Footer, Main } from './ui';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { UserRole } from 'core/types';
 import { CustomInput } from 'components/CustomInput';
+import { PHONE_REGEX } from 'core/constants';
+import { Modal, Container, Header, Footer, Main } from './ui';
 
 interface AddNewUserModalProps {
   open: boolean;
@@ -20,15 +21,15 @@ interface FormValues {
   email: string;
   phoneNumber: string;
   additionalPhoneNumber: string;
-  role: UserRole | string;
+  role: UserRole;
 }
 
 const validationSchema = yup.object({
-  name: yup.string().required('').min(3, ''),
-  email: yup.string().required('').email(''),
-  phoneNumber: yup.string().required(''),
+  name: yup.string().required('Required').min(3, 'Invalid name'),
+  email: yup.string().required('Required').email('Invalid email'),
+  phoneNumber: yup.string().required('Required').matches(PHONE_REGEX, 'Invalid phone number'),
   additionalPhoneNumber: yup.string(),
-  role: yup.string(),
+  role: yup.string().oneOf(Object.values(UserRole), 'Invalid role'),
 });
 
 const initialValues: FormValues = {
@@ -36,7 +37,7 @@ const initialValues: FormValues = {
   email: '',
   phoneNumber: '',
   additionalPhoneNumber: '',
-  role: '',
+  role: UserRole.USER,
 };
 
 const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
@@ -59,13 +60,8 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
         <Divider />
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          isInitialValid={false}
-        >
-          {({ values, isValid, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+          {({ values, isValid, errors, touched, dirty, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
             <>
               <Main>
                 <form noValidate>
@@ -80,6 +76,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           value={values.name}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={touched.name && !!errors.name}
                         />
                       </Grid>
                     </Grid>
@@ -95,6 +92,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           value={values.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={touched.email && !!errors.email}
                         />
                       </Grid>
                     </Grid>
@@ -104,11 +102,13 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                         <CustomInput
                           id="phoneNumber"
                           name="phoneNumber"
+                          type="tel"
                           label="Work phone number"
                           fullWidth
                           value={values.phoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={touched.phoneNumber && !!errors.phoneNumber}
                         />
                       </Grid>
 
@@ -116,18 +116,20 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                         <CustomInput
                           id="additionalPhoneNumber"
                           name="additionalPhoneNumber"
+                          type="tel"
                           label="Additional number (optional)"
                           fullWidth
                           value={values.additionalPhoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={touched.additionalPhoneNumber && !!errors.additionalPhoneNumber}
                         />
                       </Grid>
                     </Grid>
 
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <CustomDropdown<UserRole | string>
+                        <CustomDropdown<UserRole>
                           id="role"
                           label="Role"
                           placeholder="Role"
@@ -152,7 +154,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                   Cancel
                 </TextButton>
 
-                <Button variant="contained" disabled={!isValid} onClick={() => handleSubmit()}>
+                <Button variant="contained" disabled={!(isValid && dirty)} onClick={() => handleSubmit()}>
                   Add new user
                 </Button>
               </Footer>
