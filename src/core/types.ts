@@ -4,3 +4,8 @@ export enum UserRole {
   OWNER = 'owner',
   USER = 'user',
 }
+
+export interface OptionValue<T> {
+  label: string;
+  value: T;
+}

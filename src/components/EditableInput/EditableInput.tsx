@@ -11,10 +11,11 @@ interface EditableInputProps extends Partial<OutlinedTextFieldProps> {
   name: string;
   label: string;
   value: string;
+  small?: boolean;
   onSave?: () => Promise<void>;
 }
 
-const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, onSave, ...rest }) => {
+const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, small = true, onSave, ...rest }) => {
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
@@ -63,9 +64,10 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, o
   }
 
   return (
-    <Container>
-      <UserDetail label={label} value={value} type={type} />
-      <EditButton onClick={() => setEditing(true)}>
+    <Container small={small}>
+      <UserDetail label={label} value={value} type={type} small={small} />
+
+      <EditButton onClick={() => setEditing(true)} small={small}>
         <EditIcon />
       </EditButton>
     </Container>

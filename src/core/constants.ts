@@ -1,4 +1,4 @@
-import { UserRole } from './types';
+import { OptionValue, UserRole } from './types';
 import { mapUserRoleToLabel } from './utils';
 
 export const AUTH_SESSION_KEY = 'customerCity/AUTH_SESSION_KEY';
@@ -32,7 +32,10 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
 
 export const PHONE_REGEX = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
-export const USER_ROLE_OPTIONS = Object.values(UserRole).map((role) => ({
-  label: mapUserRoleToLabel(role),
-  value: role,
-}));
+export const USER_ROLE_OPTIONS = Object.values(UserRole).reduce(
+  (acc: OptionValue<UserRole>[], role): OptionValue<UserRole>[] => {
+    if (role === UserRole.SUPER_AMIN) return acc;
+    return [...acc, { label: mapUserRoleToLabel(role), value: role }];
+  },
+  [],
+);

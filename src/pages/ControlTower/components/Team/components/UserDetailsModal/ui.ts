@@ -43,8 +43,10 @@ export const Main = styled(Box)(() => ({
   padding: '8px 0px',
 }));
 
-export const NameContainer = styled(Box)(() => ({
+export const NameContainer = styled(Box)(({ theme }) => ({
   padding: '0px 20px 20px',
+  minHeight: 110,
+  marginBottom: theme.spacing(2),
 }));
 
 export const EditButton = styled(IconButton)(({ theme }) => ({

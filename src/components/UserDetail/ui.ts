@@ -1,4 +1,4 @@
-import { styled, Box } from '@mui/material';
+import { styled, Box, Typography } from '@mui/material';
 
 export const Container = styled(Box)(() => ({
   padding: 72,
@@ -21,3 +21,15 @@ export const DetailValueContainer = styled(Box)(() => ({
     paddingTop: 1,
   },
 }));
+
+export const TextValue = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'small',
+})<{ small?: boolean }>(({ theme, small = true }) => {
+  const typography = small ? theme.typography.p14 : theme.typography.h3;
+  return {
+    ...typography,
+    color: theme.palette.neutral.main,
+    fontWeight: small ? 400 : 600,
+    marginTop: small ? theme.spacing(0.5) : theme.spacing(1.5),
+  };
+});

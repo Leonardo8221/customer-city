@@ -3,16 +3,17 @@ import { Typography, Box, SxProps, Theme } from '@mui/material';
 
 import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
-import { DetailContainer, DetailValueContainer } from './ui';
+import { DetailContainer, DetailValueContainer, TextValue } from './ui';
 
 interface UserDetailProps {
   label: string;
   value: string;
   type?: HTMLInputTypeAttribute;
   sx?: SxProps<Theme>;
+  small?: boolean;
 }
 
-const UserDetail: FC<UserDetailProps> = ({ label, value, type, sx }) => {
+const UserDetail: FC<UserDetailProps> = ({ label, value, type, sx, small = true }) => {
   const renderIcon = () => {
     switch (type) {
       case 'email':
@@ -41,9 +42,7 @@ const UserDetail: FC<UserDetailProps> = ({ label, value, type, sx }) => {
       <DetailValueContainer>
         {renderIcon()}
 
-        <Typography variant="p14" sx={{ color: 'neutral.main', fontWeight: 400, marginTop: 0.5 }}>
-          {value}
-        </Typography>
+        <TextValue small={small}>{value}</TextValue>
       </DetailValueContainer>
     </DetailContainer>
   );

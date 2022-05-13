@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Typography, IconButton, Divider, Box } from '@mui/material';
 
-import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import { ReactComponent as ControlsIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedButton } from 'components/ui';
@@ -9,17 +8,7 @@ import { EditableInput } from 'components/EditableInput';
 import { CustomSelect } from 'components/CustomSelect';
 import { UserRole } from 'core/types';
 import { USER_ROLE_OPTIONS } from 'core/constants';
-import {
-  Container,
-  Modal,
-  Header,
-  HeaderTitleContainer,
-  Footer,
-  Main,
-  NameContainer,
-  EditButton,
-  RoleSelectContainer,
-} from './ui';
+import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, RoleSelectContainer } from './ui';
 
 interface UserDetailsModalProps {
   open: boolean;
@@ -44,17 +33,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen }) => {
 
         <Main>
           <NameContainer>
-            <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
-              Name
-            </Typography>
-
-            <Typography variant="h3" sx={{ marginTop: 1.5 }}>
-              Roger Lyons
-            </Typography>
-
-            <EditButton>
-              <EditIcon />
-            </EditButton>
+            <EditableInput id="name" name="name" label="Name" value="Roger Lyons" small={false} />
           </NameContainer>
 
           <RoleSelectContainer>
