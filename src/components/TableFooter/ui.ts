@@ -5,4 +5,5 @@ export const Container = styled(Box)(() => ({
   justifyContent: 'flex-end',
   alignItems: 'center',
   paddingTop: 16,
+  height: 40,
 }));

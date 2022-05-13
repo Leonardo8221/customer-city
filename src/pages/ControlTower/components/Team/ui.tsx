@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { forwardRef } from 'react';
 import { styled, Box, Checkbox as MuiCheckbox } from '@mui/material';
 
 import { ReactComponent as BoxChecked } from 'assets/icons/boxChecked.svg';
@@ -22,11 +22,11 @@ const Checkbox = styled(MuiCheckbox)(() => ({
   padding: '0 10px 0 0',
 }));
 
-export class BaseCheckbox extends Component {
-  render() {
-    return <Checkbox {...this.props} icon={<BoxUnchecked />} checkedIcon={<BoxChecked />} />;
-  }
-}
+// eslint-disable-next-line react/display-name
+export const BaseCheckbox = forwardRef((props, ref) => {
+  // @ts-ignore
+  return <Checkbox ref={ref} {...props} icon={<BoxUnchecked />} checkedIcon={<BoxChecked />} />;
+});
 
 export const ColumnSortedAscendingIcon = () => {
   return <SortUpIcon className="sortup-icon" />;

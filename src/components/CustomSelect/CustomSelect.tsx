@@ -11,9 +11,15 @@ interface CustomSelectProps<T extends OptionValue> {
   value: T;
   options: Option<T>[];
   onSelect: (value: T) => void;
+  small?: boolean;
 }
 
-const CustomSelect = <T extends OptionValue>({ value, options, onSelect }: CustomSelectProps<T>): JSX.Element => {
+const CustomSelect = <T extends OptionValue>({
+  value,
+  options,
+  onSelect,
+  small,
+}: CustomSelectProps<T>): JSX.Element => {
   const selectedOption = options.find((option) => option.value === value);
 
   return (
@@ -29,9 +35,10 @@ const CustomSelect = <T extends OptionValue>({ value, options, onSelect }: Custo
           },
         },
       }}
+      small={small}
     >
       {options.map((option) => (
-        <OptionItem key={option.value} value={option.value}>
+        <OptionItem key={option.value} value={option.value} small={small}>
           {option.label}
         </OptionItem>
       ))}

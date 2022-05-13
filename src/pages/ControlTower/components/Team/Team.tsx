@@ -134,7 +134,7 @@ const Team: FC = () => {
             rows={users}
             columns={columns}
             pageSize={5}
-            rowsPerPageOptions={[5]}
+            rowsPerPageOptions={[5, 10, 25, 50]}
             checkboxSelection
             disableSelectionOnClick
             autoHeight
