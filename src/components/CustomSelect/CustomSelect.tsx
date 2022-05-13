@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { SelectChangeEvent } from '@mui/material';
+
 import { Select, OptionItem } from './ui';
 
 type OptionValue = string | number;
@@ -10,7 +13,7 @@ interface Option<T extends OptionValue> {
 interface CustomSelectProps<T extends OptionValue> {
   value: T;
   options: Option<T>[];
-  onSelect: (value: T) => void;
+  onSelect?: (value: T) => void;
   small?: boolean;
 }
 
@@ -20,13 +23,20 @@ const CustomSelect = <T extends OptionValue>({
   onSelect,
   small,
 }: CustomSelectProps<T>): JSX.Element => {
-  const selectedOption = options.find((option) => option.value === value);
+  const [selectedValue, setSelectedValue] = useState<T>(value);
+
+  const onChange = (event: SelectChangeEvent<unknown>) => {
+    setSelectedValue(event.target.value as T);
+    if (onSelect) onSelect(event.target.value as T);
+  };
+
+  const selectedOption = options.find((option) => option.value === selectedValue);
 
   return (
     <Select
       value={selectedOption?.value ?? ''}
       label={selectedOption?.label ?? ''}
-      onChange={(event) => onSelect(event.target.value as T)}
+      onChange={onChange}
       MenuProps={{
         PaperProps: {
           style: {
@@ -36,6 +46,7 @@ const CustomSelect = <T extends OptionValue>({
         },
       }}
       small={small}
+      sx={{ width: 'fit-content' }}
     >
       {options.map((option) => (
         <OptionItem key={option.value} value={option.value} small={small}>

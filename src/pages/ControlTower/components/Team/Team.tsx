@@ -6,6 +6,8 @@ import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { TableFooter } from 'components/TableFooter';
 import { UserRole } from 'core/types';
 import { SecondaryButton } from 'components/ui';
+import { CustomSelect } from 'components/CustomSelect';
+import { USER_ROLE_OPTIONS } from 'core/constants';
 import {
   Container,
   BaseCheckbox,
@@ -16,7 +18,6 @@ import {
 } from './ui';
 import { AddNewUserModal, UserDetailsModal } from './components';
 import './Team.css';
-import { CustomSelect } from 'components/CustomSelect';
 
 const users = [
   { id: 1, name: 'Roger Lyons 1', email: 'roger.lyons@gmail.com', role: 'user', permissions: '' },
@@ -64,22 +65,6 @@ const users = [
   { id: 40, name: 'Roger Lyons 40', email: 'roger.lyons@gmail.com', role: 'user', permissions: '' },
 ];
 
-const SelectUserRole: FC<{ initialValue: string }> = ({ initialValue }) => {
-  const [selectedValue, setSelectedValue] = useState<string>(initialValue);
-
-  return (
-    <CustomSelect<string>
-      value={selectedValue}
-      options={[
-        { label: 'Administrator', value: UserRole.ADMIN as string },
-        { label: 'Owner', value: UserRole.OWNER as string },
-        { label: 'Business User', value: UserRole.USER as string },
-      ]}
-      onSelect={(value) => setSelectedValue(value)}
-    />
-  );
-};
-
 const columns: GridColDef[] = [
   {
     field: 'name',
@@ -95,7 +80,9 @@ const columns: GridColDef[] = [
     field: 'role',
     headerName: 'Role',
     flex: 1,
-    renderCell: (params: GridRenderCellParams<string>) => <SelectUserRole initialValue={params.value ?? ''} />,
+    renderCell: (params: GridRenderCellParams<string>) => (
+      <CustomSelect<UserRole> value={params.value as UserRole} options={USER_ROLE_OPTIONS} />
+    ),
   },
   {
     field: 'permissions',

@@ -55,3 +55,11 @@ export const EditButton = styled(IconButton)(({ theme }) => ({
   marginTop: 20,
   padding: 0,
 }));
+
+export const RoleSelectContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  '& > div': {
+    marginLeft: -8,
+  },
+}));

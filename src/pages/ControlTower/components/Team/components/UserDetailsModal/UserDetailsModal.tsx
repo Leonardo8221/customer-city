@@ -1,12 +1,25 @@
 import { FC } from 'react';
-import { Typography, IconButton, Divider } from '@mui/material';
+import { Typography, IconButton, Divider, Box } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import { ReactComponent as ControlsIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedButton } from 'components/ui';
-import { UserDetail } from 'components/UserDetail';
-import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, EditButton } from './ui';
+import { EditableInput } from 'components/EditableInput';
+import { CustomSelect } from 'components/CustomSelect';
+import { UserRole } from 'core/types';
+import { USER_ROLE_OPTIONS } from 'core/constants';
+import {
+  Container,
+  Modal,
+  Header,
+  HeaderTitleContainer,
+  Footer,
+  Main,
+  NameContainer,
+  EditButton,
+  RoleSelectContainer,
+} from './ui';
 
 interface UserDetailsModalProps {
   open: boolean;
@@ -44,15 +57,44 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen }) => {
             </EditButton>
           </NameContainer>
 
-          <UserDetail label="Role" value="Business owner" sx={{ marginTop: 3 }} />
+          <RoleSelectContainer>
+            <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
+              Role
+            </Typography>
+            <CustomSelect<UserRole> value={UserRole.USER} options={USER_ROLE_OPTIONS} />
+          </RoleSelectContainer>
 
           <Divider sx={{ marginTop: 3 }} />
 
-          <UserDetail label="Work email" value="roger.lyons@gmail.com" type="email" sx={{ marginTop: 3 }} />
+          <Box marginTop={3}>
+            <EditableInput
+              id="workEmail"
+              name="workEmail"
+              label="Work email"
+              value="roger.lyons@gmail.com"
+              type="email"
+            />
+          </Box>
 
-          <UserDetail label="Work phone number" value="+4 123 345 345" type="tel" sx={{ marginTop: 2 }} />
+          <Box marginTop={2}>
+            <EditableInput
+              id="workPhoneNumber"
+              name="workPhoneNumber"
+              label="Work phone number"
+              value="+4 123 345 345"
+              type="tel"
+            />
+          </Box>
 
-          <UserDetail label="Additional number" value="+4 123 345 123" type="tel" sx={{ marginTop: 2 }} />
+          <Box marginTop={2}>
+            <EditableInput
+              id="workEmail"
+              name="workEmail"
+              label="Additional number"
+              value="+4 123 345 123"
+              type="tel"
+            />
+          </Box>
         </Main>
 
         <Divider />

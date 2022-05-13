@@ -1,3 +1,6 @@
+import { UserRole } from './types';
+import { mapUserRoleToLabel } from './utils';
+
 export const AUTH_SESSION_KEY = 'customerCity/AUTH_SESSION_KEY';
 
 export const NAV_BAR_HEIGHT = 56;
@@ -28,3 +31,8 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
 };
 
 export const PHONE_REGEX = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+
+export const USER_ROLE_OPTIONS = Object.values(UserRole).map((role) => ({
+  label: mapUserRoleToLabel(role),
+  value: role,
+}));
