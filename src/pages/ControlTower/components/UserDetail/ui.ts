@@ -8,6 +8,7 @@ export const Container = styled(Box)(() => ({
 export const DetailContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
+  width: 'fit-content',
 }));
 
 export const DetailValueContainer = styled(Box)(() => ({

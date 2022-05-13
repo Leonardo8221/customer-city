@@ -76,6 +76,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           id="name"
                           name="name"
                           label="Name"
+                          fullWidth
                           value={values.name}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -90,6 +91,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           name="email"
                           type="email"
                           label="Work email"
+                          fullWidth
                           value={values.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -103,6 +105,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           id="phoneNumber"
                           name="phoneNumber"
                           label="Work phone number"
+                          fullWidth
                           value={values.phoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -114,6 +117,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                           id="additionalPhoneNumber"
                           name="additionalPhoneNumber"
                           label="Additional number (optional)"
+                          fullWidth
                           value={values.additionalPhoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, InputLabel, TextField, OutlinedTextFieldProps } from '@mui/material';
+import { InputLabel, TextField, OutlinedTextFieldProps } from '@mui/material';
 
 interface CustomInputProps extends Partial<OutlinedTextFieldProps> {
   id: string;
@@ -8,15 +8,15 @@ interface CustomInputProps extends Partial<OutlinedTextFieldProps> {
 
 const CustomInput: FC<CustomInputProps> = ({ id, name, label, ...rest }) => {
   return (
-    <Box>
+    <>
       {label && (
         <InputLabel htmlFor={id} sx={{ marginBottom: 1 }}>
           {label}
         </InputLabel>
       )}
 
-      <TextField id={id} name={name} type="text" fullWidth {...rest} />
-    </Box>
+      <TextField id={id} name={name} type="text" {...rest} />
+    </>
   );
 };
 

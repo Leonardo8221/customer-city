@@ -50,9 +50,9 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen }) => {
 
           <UserDetail label="Work email" value="roger.lyons@gmail.com" type="email" sx={{ marginTop: 3 }} />
 
-          <UserDetail label="Work phone number" value="+4 123 345 345" type="phone" sx={{ marginTop: 2 }} />
+          <UserDetail label="Work phone number" value="+4 123 345 345" type="tel" sx={{ marginTop: 2 }} />
 
-          <UserDetail label="Additional number" value="+4 123 345 123" type="phone" sx={{ marginTop: 2 }} />
+          <UserDetail label="Additional number" value="+4 123 345 123" type="tel" sx={{ marginTop: 2 }} />
         </Main>
 
         <Divider />

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, HTMLInputTypeAttribute } from 'react';
 import { Typography, Box, SxProps, Theme } from '@mui/material';
 
 import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
@@ -8,11 +8,30 @@ import { DetailContainer, DetailValueContainer } from './ui';
 interface UserDetailProps {
   label: string;
   value: string;
-  type?: 'email' | 'phone';
+  type?: HTMLInputTypeAttribute;
   sx?: SxProps<Theme>;
 }
 
 const UserDetail: FC<UserDetailProps> = ({ label, value, type, sx }) => {
+  const renderIcon = () => {
+    switch (type) {
+      case 'email':
+        return (
+          <Box>
+            <EmailIcon />
+          </Box>
+        );
+      case 'tel':
+        return (
+          <Box>
+            <PhoneIcon />
+          </Box>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <DetailContainer sx={sx}>
       <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
@@ -20,17 +39,7 @@ const UserDetail: FC<UserDetailProps> = ({ label, value, type, sx }) => {
       </Typography>
 
       <DetailValueContainer>
-        {type ? (
-          type === 'email' ? (
-            <Box>
-              <EmailIcon />
-            </Box>
-          ) : (
-            <Box>
-              <PhoneIcon />
-            </Box>
-          )
-        ) : null}
+        {renderIcon()}
 
         <Typography variant="p14" sx={{ color: 'neutral.main', fontWeight: 400, marginTop: 0.5 }}>
           {value}
