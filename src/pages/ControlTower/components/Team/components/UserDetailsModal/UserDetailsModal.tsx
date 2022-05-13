@@ -4,7 +4,7 @@ import { Typography, IconButton, Divider } from '@mui/material';
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import { ReactComponent as ControlsIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
-import { SecondaryButton } from 'components/ui';
+import { SecondaryRedButton } from 'components/ui';
 import { UserDetail } from '../../../UserDetail';
 import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, EditButton } from './ui';
 
@@ -58,9 +58,9 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen }) => {
         <Divider />
 
         <Footer>
-          <SecondaryButton fullWidth onClick={toggleOpen}>
+          <SecondaryRedButton fullWidth onClick={toggleOpen}>
             Inactive user
-          </SecondaryButton>
+          </SecondaryRedButton>
         </Footer>
       </Container>
     </Modal>

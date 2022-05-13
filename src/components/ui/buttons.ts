@@ -1,4 +1,4 @@
-import { styled, Button as MuiButton } from '@mui/material';
+import { styled, Button as MuiButton, alpha } from '@mui/material';
 import { LoadingButton as MuiLoadingButton } from '@mui/lab';
 
 export const Button = styled(MuiButton)(({ theme }) => ({
@@ -18,6 +18,7 @@ LoadingButton.defaultProps = {
 
 export const SecondaryButton = styled(MuiButton)(({ theme }) => ({
   padding: '8px 16px',
+  backgroundColor: theme.palette.neutral.white,
   ':hover': {
     backgroundColor: theme.palette.primary.subtone3,
     color: theme.palette.primary.main,
@@ -56,3 +57,16 @@ export const TextButton = styled(MuiButton)(({ theme }) => ({
 }));
 
 TextButton.defaultProps = { variant: 'text' };
+
+export const SecondaryRedButton = styled(SecondaryButton)(({ theme }) => ({
+  color: theme.palette.red.main,
+  borderColor: theme.palette.red.main,
+  ':hover': {
+    backgroundColor: alpha(theme.palette.red.light, 0.35),
+    color: theme.palette.red.main,
+    borderColor: theme.palette.red.main,
+  },
+  ':active': {
+    backgroundColor: theme.palette.red.light,
+  },
+}));
