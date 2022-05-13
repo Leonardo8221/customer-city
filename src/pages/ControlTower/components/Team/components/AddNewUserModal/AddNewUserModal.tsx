@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Grid, Typography, Divider, IconButton, InputLabel, TextField, Button } from '@mui/material';
+import { Grid, Typography, Divider, IconButton, Button } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -8,6 +8,7 @@ import { TextButton } from 'components/ui';
 import { Modal, Container, Header, Footer, Main } from './ui';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { UserRole } from 'core/types';
+import { CustomInput } from 'components/CustomInput';
 
 interface AddNewUserModalProps {
   open: boolean;
@@ -19,7 +20,7 @@ interface FormValues {
   email: string;
   phoneNumber: string;
   additionalPhoneNumber: string;
-  role: UserRole | null;
+  role: UserRole | string;
 }
 
 const validationSchema = yup.object({
@@ -27,7 +28,7 @@ const validationSchema = yup.object({
   email: yup.string().required('').email(''),
   phoneNumber: yup.string().required(''),
   additionalPhoneNumber: yup.string(),
-  role: yup.string().nullable(),
+  role: yup.string(),
 });
 
 const initialValues: FormValues = {
@@ -35,7 +36,7 @@ const initialValues: FormValues = {
   email: '',
   phoneNumber: '',
   additionalPhoneNumber: '',
-  role: null,
+  role: '',
 };
 
 const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
@@ -71,15 +72,10 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                   <Grid container spacing={2}>
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="name" sx={{ marginBottom: 1 }}>
-                          Name
-                        </InputLabel>
-
-                        <TextField
+                        <CustomInput
                           id="name"
                           name="name"
-                          type="text"
-                          fullWidth
+                          label="Name"
                           value={values.name}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -89,15 +85,11 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="email" sx={{ marginBottom: 1 }}>
-                          Work email
-                        </InputLabel>
-
-                        <TextField
+                        <CustomInput
                           id="email"
                           name="email"
                           type="email"
-                          fullWidth
+                          label="Work email"
                           value={values.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -107,15 +99,10 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="phoneNumber" sx={{ marginBottom: 1 }}>
-                          Work phone number
-                        </InputLabel>
-
-                        <TextField
+                        <CustomInput
                           id="phoneNumber"
                           name="phoneNumber"
-                          type="text"
-                          fullWidth
+                          label="Work phone number"
                           value={values.phoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -123,15 +110,10 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                       </Grid>
 
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="additionalPhoneNumber" sx={{ marginBottom: 1 }}>
-                          Additional number (optional)
-                        </InputLabel>
-
-                        <TextField
+                        <CustomInput
                           id="additionalPhoneNumber"
                           name="additionalPhoneNumber"
-                          type="text"
-                          fullWidth
+                          label="Additional number (optional)"
                           value={values.additionalPhoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -141,11 +123,10 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <InputLabel htmlFor="role" sx={{ marginBottom: 1 }}>
-                          Role
-                        </InputLabel>
-
-                        <CustomDropdown<UserRole>
+                        <CustomDropdown<UserRole | string>
+                          id="role"
+                          label="Role"
+                          placeholder="Role"
                           value={values.role}
                           options={[
                             { label: 'Administrator', value: UserRole.ADMIN },
@@ -153,7 +134,6 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                             { label: 'Business User', value: UserRole.USER },
                           ]}
                           onSelect={(value) => setFieldValue('role', value)}
-                          placeholder="Role"
                         />
                       </Grid>
                     </Grid>
