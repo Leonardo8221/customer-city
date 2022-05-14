@@ -6,3 +6,4 @@ export * from './CreatePassword';
 export * from './ResetPassword';
 export * from './ControlTower';
 export * from './CompleteProfileOne';
+export * from './CompleteProfileTwo';

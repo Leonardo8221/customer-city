@@ -39,3 +39,20 @@ export const USER_ROLE_OPTIONS = Object.values(UserRole).reduce(
   },
   [],
 );
+
+export const WORKERS_NUMBER_OPTIONS = [
+  { label: '1', value: '1' },
+  { label: '2 to 5', value: '2-5' },
+  { label: '6 to 10', value: '6-10' },
+  { label: '11 to 25', value: '11-25' },
+  { label: '26 to 50', value: '26-50' },
+  { label: '51 to 200', value: '51-200' },
+  { label: '201 to 1,000', value: '201-1000' },
+  { label: '1,001 to 10,000', value: '1001-10000' },
+  { label: '10,000 or more', value: '>=10000' },
+];
+
+export const WEBSITE_REGEX =
+  /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+
+export const DOMAIN_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/;

@@ -30,6 +30,7 @@ export const privateRoutePaths = {
   settings: 'settings',
   more: 'more',
   completeProfileOne: '/profile-one',
+  completeProfileTwo: '/profile-two',
 };
 
 interface AppRoute {

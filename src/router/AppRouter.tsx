@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuth } from 'store/auth/hooks';
 import ScrollToTop from './ScrollToTop';
 import { publicRoutes, privateRoutes, renderRoute, privateRoutePaths } from './routes';
-import { Login, CreatePassword, ResetPassword, CompleteProfileOne } from 'pages';
+import { Login, CreatePassword, ResetPassword, CompleteProfileOne, CompleteProfileTwo } from 'pages';
 
 const PublicRoutes: FC = () => {
   return (
@@ -25,6 +25,7 @@ const PrivateRoutes: FC = () => {
     <Routes>
       {privateRoutes.map(renderRoute)}
       <Route path={privateRoutePaths.completeProfileOne} element={<CompleteProfileOne />} />
+      <Route path={privateRoutePaths.completeProfileTwo} element={<CompleteProfileTwo />} />
       <Route path="*" element={<Navigate to={privateRoutePaths.home} replace />} />
     </Routes>
   );
