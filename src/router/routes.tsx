@@ -29,6 +29,7 @@ export const privateRoutePaths = {
   createCompany: 'create-company',
   settings: 'settings',
   more: 'more',
+  completeProfileOne: '/profile-one',
 };
 
 interface AppRoute {

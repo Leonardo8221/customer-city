@@ -1,4 +1,4 @@
-import { styled, TextField } from '@mui/material';
+import { styled, TextField, Box } from '@mui/material';
 
 export const Form = styled('form')(() => ({
   display: 'flex',
@@ -24,3 +24,7 @@ export const AuthInput = styled(TextField)(({ theme }) => ({
 AuthInput.defaultProps = {
   className: 'AuthInput',
 };
+
+export const AuthFormContainer = styled(Box)(() => ({
+  width: 400,
+}));

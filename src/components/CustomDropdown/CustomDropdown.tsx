@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, InputLabel } from '@mui/material';
+import { Autocomplete, TextField, InputLabel, SxProps, Theme, InputProps } from '@mui/material';
 
 import { ReactComponent as TraingleDownIcon } from 'assets/icons/triangleDown.svg';
 import { Paper } from './ui';
@@ -16,6 +16,9 @@ interface CustomDropdownProps<T extends OptionValue> {
   placeholder: string;
   id: string;
   label?: string;
+  labelSx?: SxProps<Theme>;
+  withPopupIcon?: boolean;
+  InputProps?: Partial<InputProps>;
   onSelect: (value: T) => void;
 }
 
@@ -25,12 +28,15 @@ const CustomDropdown = <T extends OptionValue>({
   placeholder,
   id,
   label,
+  labelSx = {},
+  withPopupIcon = true,
   onSelect,
+  InputProps,
 }: CustomDropdownProps<T>): JSX.Element => {
   return (
     <>
       {label && (
-        <InputLabel htmlFor={id} sx={{ marginBottom: 1 }}>
+        <InputLabel htmlFor={id} sx={{ marginBottom: 1, ...labelSx }}>
           {label}
         </InputLabel>
       )}
@@ -39,14 +45,21 @@ const CustomDropdown = <T extends OptionValue>({
         disablePortal
         id={id}
         options={options}
-        renderInput={(params) => <TextField {...params} fullWidth placeholder={placeholder} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            placeholder={placeholder}
+            InputProps={{ ...params.InputProps, ...InputProps }}
+          />
+        )}
         disableClearable
         PaperComponent={Paper}
         ListboxProps={{ style: { maxHeight: 300 } }}
         value={options.find((options) => options.value === value)}
         onChange={(e, value) => onSelect(value.value)}
         isOptionEqualToValue={(option, value) => option.value === value.value}
-        popupIcon={<TraingleDownIcon />}
+        popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
       />
     </>
   );
