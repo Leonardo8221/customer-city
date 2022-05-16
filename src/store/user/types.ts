@@ -1,24 +1,28 @@
 import { UserRole } from 'core/types';
 
 export interface Profile {
-  workPhoneNumber: string | null;
+  profileId: number;
+  workPhoneNumber: string;
   additionalPhoneNumber?: string;
   profileJobRole?: string;
 }
 
 export interface User {
-  userId: number | null;
-  userEmail: string | null;
-  userRole: UserRole | null;
-  userName: string | null;
-  companyId: number | null;
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userRole: UserRole;
+  companyId?: number;
+  userCreatedAt: Date;
+  userUpdatedAt: Date;
   profile: Profile;
 }
 
-export interface UserState extends User {
+export interface UserState {
   loading: boolean;
   error: string | boolean;
   success: string | boolean;
+  user: User | null;
 }
 
 export interface UserReturnHook extends UserState {

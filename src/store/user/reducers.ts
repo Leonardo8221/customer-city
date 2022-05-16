@@ -7,16 +7,7 @@ const initialState: UserState = {
   loading: false,
   error: false,
   success: false,
-  userId: null,
-  userEmail: null,
-  userRole: null,
-  userName: null,
-  companyId: null,
-  profile: {
-    workPhoneNumber: null,
-    additionalPhoneNumber: undefined,
-    profileJobRole: undefined,
-  },
+  user: null,
 };
 
 const userStore = createSlice({
@@ -34,13 +25,7 @@ const userStore = createSlice({
 
     builder.addCase(getCurrentUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      if (!payload) return;
-      state.userId = payload.userId;
-      state.userEmail = payload.userEmail;
-      state.userRole = payload.userRole;
-      state.userName = payload.userName;
-      state.companyId = payload.companyId;
-      state.profile = payload.profile;
+      state.user = payload;
     });
 
     builder.addCase(getCurrentUser.pending, (state) => {

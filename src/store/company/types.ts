@@ -9,6 +9,8 @@ export interface Company {
   companyCcDomain?: string;
   companyEmail?: string;
   companyCreatedAt: string;
+  companyUpdatedAt: string;
+  ownerId: number;
   ownerName: string;
   ownerEmail: string;
 }

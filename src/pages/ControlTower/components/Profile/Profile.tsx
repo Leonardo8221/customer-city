@@ -11,7 +11,7 @@ import { useUser } from 'store/user/hooks';
 import { Container } from './ui';
 
 const Profile: FC = () => {
-  const { loading: userLoading, userId, userName, userEmail, profile } = useUser();
+  const { loading: userLoading, user } = useUser();
   const { loading: companyLoading, company } = useCompany();
 
   return (
@@ -23,11 +23,11 @@ const Profile: FC = () => {
               id="accountOwner"
               name="accountOwner"
               label="Account Owner"
-              value={userName ?? ''}
+              value={user?.userName ?? ''}
               fullWidth
               onSave={async (value) => {
-                if (!userId) return;
-                await updateUserApi(userId, { userName: value });
+                if (!user?.userId) return;
+                await updateUserApi(user.userId, { userName: value });
               }}
             />
           </Grid>
@@ -53,12 +53,12 @@ const Profile: FC = () => {
               id="workEmail"
               name="workEmail"
               label="Work email"
-              value={userEmail ?? ''}
+              value={user?.userEmail ?? ''}
               fullWidth
               type="email"
               onSave={async (value) => {
-                if (!userId) return;
-                await updateUserApi(userId, { userEmail: value });
+                if (!user?.userId) return;
+                await updateUserApi(user.userId, { userEmail: value });
               }}
             />
           </Grid>
@@ -84,12 +84,12 @@ const Profile: FC = () => {
               id="workPhoneNumber"
               name="workPhoneNumber"
               label="Work phone number"
-              value={profile.workPhoneNumber ?? ''}
+              value={user?.profile.workPhoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
-                if (!userId) return;
-                await updateUserApi(userId, { workPhoneNumber: value });
+                if (!user?.userId) return;
+                await updateUserApi(user.userId, { workPhoneNumber: value });
               }}
             />
           </Grid>
@@ -115,12 +115,12 @@ const Profile: FC = () => {
               id="additionalPhoneNumber"
               name="additionalPhoneNumber"
               label="Additional number"
-              value={profile.additionalPhoneNumber ?? ''}
+              value={user?.profile.additionalPhoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
-                if (!userId) return;
-                await updateUserApi(userId, { additionalPhoneNumber: value });
+                if (!user?.userId) return;
+                await updateUserApi(user.userId, { additionalPhoneNumber: value });
               }}
             />
           </Grid>
