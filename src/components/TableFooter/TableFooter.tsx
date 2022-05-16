@@ -41,7 +41,7 @@ const TableFooter: FC = () => {
       <CustomSelect<number>
         value={rootProps.pageSize as number}
         options={rootProps.rowsPerPageOptions.map((size) => ({ label: `${size} per page`, value: size }))}
-        onSelect={(value) => apiRef.current.setPageSize(value)}
+        onSelect={async (value) => apiRef.current.setPageSize(value)}
         small
       />
 

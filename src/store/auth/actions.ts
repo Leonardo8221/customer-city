@@ -37,7 +37,7 @@ export const login = createAsyncThunk<void, LoginData>(LOGIN, async ({ email, pa
   const { accessToken, session } = await loginApi(email, password);
 
   if (session) {
-    persistAuthSession({ accessToken: '', id: '', roles: [], email, session, rememberMe }, rememberMe);
+    persistAuthSession({ accessToken: '', id: '', role: '', email, session, rememberMe }, rememberMe);
     dispatch(setSession({ session, rememberMe, email }));
     return;
   }
@@ -48,7 +48,7 @@ export const login = createAsyncThunk<void, LoginData>(LOGIN, async ({ email, pa
     accessToken,
   );
 
-  const authSession: AuthSession = { accessToken, id, roles, email, rememberMe };
+  const authSession: AuthSession = { accessToken, id, role: roles[0], email, rememberMe };
 
   persistAuthSession(authSession, rememberMe);
 
@@ -77,7 +77,7 @@ export const setNewPassword = createAsyncThunk<void, string>(
       JwtPayload & { sub: string; ['cognito:groups']: string[] }
     >(accessToken);
 
-    const authSession: AuthSession = { accessToken, id, roles, email, rememberMe };
+    const authSession: AuthSession = { accessToken, id, role: roles[0], email, rememberMe };
 
     persistAuthSession(authSession, rememberMe);
 
@@ -104,7 +104,7 @@ export const confirmPasswordReset = createAsyncThunk<void, ConfirmPasswordResetD
 
     const rememberMe = false;
 
-    const authSession: AuthSession = { accessToken, id, roles, email, rememberMe };
+    const authSession: AuthSession = { accessToken, id, role: roles[0], email, rememberMe };
 
     persistAuthSession(authSession, rememberMe);
 

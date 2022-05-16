@@ -1,8 +1,10 @@
-import { FC } from 'react';
-import { Grid, Typography, Divider, IconButton, Button } from '@mui/material';
-import { Formik } from 'formik';
+import { FC, useState, useRef } from 'react';
+import { Grid, Typography, Divider, IconButton, FormHelperText } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
 
+import { createUser as createUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { TextButton } from 'components/ui';
 import { CustomDropdown } from 'components/CustomDropdown';
@@ -14,35 +16,53 @@ import { Modal, Container, Header, Footer, Main } from './ui';
 interface AddNewUserModalProps {
   open: boolean;
   toggleOpen: () => void;
+  getUsers: () => Promise<void>;
 }
 
 interface FormValues {
-  name: string;
-  email: string;
-  phoneNumber: string;
+  userName: string;
+  userEmail: string;
+  workPhoneNumber: string;
   additionalPhoneNumber: string;
-  role: UserRole;
+  userRole: UserRole;
 }
 
 const validationSchema = yup.object({
-  name: yup.string().required('Required').min(3, 'Invalid name'),
-  email: yup.string().required('Required').email('Invalid email'),
-  phoneNumber: yup.string().required('Required').matches(PHONE_REGEX, 'Invalid phone number'),
+  userName: yup.string().required('Required').min(3, 'Invalid name'),
+  userEmail: yup.string().required('Required').email('Invalid email'),
+  workPhoneNumber: yup.string().required('Required').matches(PHONE_REGEX, 'Invalid phone number'),
   additionalPhoneNumber: yup.string(),
-  role: yup.string().oneOf(Object.values(UserRole), 'Invalid role'),
+  userRole: yup.string().oneOf(Object.values(UserRole), 'Invalid role'),
 });
 
 const initialValues: FormValues = {
-  name: '',
-  email: '',
-  phoneNumber: '',
+  userName: '',
+  userEmail: '',
+  workPhoneNumber: '',
   additionalPhoneNumber: '',
-  role: UserRole.USER,
+  userRole: UserRole.USER,
 };
 
-const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
-  const onSubmit = (values: FormValues) => {
-    console.log(values);
+const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const formRef = useRef<FormikProps<FormValues> | null>(null);
+
+  const closeModal = () => {
+    formRef.current?.resetForm();
+    toggleOpen();
+  };
+
+  const onSubmit = async (values: FormValues) => {
+    setLoading(true);
+    try {
+      await createUserApi(values);
+      closeModal();
+      getUsers();
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   return (
@@ -60,7 +80,12 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
 
         <Divider />
 
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          innerRef={formRef}
+        >
           {({ values, isValid, errors, touched, dirty, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
             <>
               <Main>
@@ -69,14 +94,14 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
                         <CustomInput
-                          id="name"
-                          name="name"
+                          id="userName"
+                          name="userName"
                           label="Name"
                           fullWidth
-                          value={values.name}
+                          value={values.userName}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.name && !!errors.name}
+                          error={touched.userName && !!errors.userName}
                         />
                       </Grid>
                     </Grid>
@@ -84,15 +109,15 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
                         <CustomInput
-                          id="email"
-                          name="email"
+                          id="userEmail"
+                          name="userEmail"
                           type="email"
                           label="Work email"
                           fullWidth
-                          value={values.email}
+                          value={values.userEmail}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.email && !!errors.email}
+                          error={touched.userEmail && !!errors.userEmail}
                         />
                       </Grid>
                     </Grid>
@@ -100,15 +125,15 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
                         <CustomInput
-                          id="phoneNumber"
-                          name="phoneNumber"
+                          id="workPhoneNumber"
+                          name="workPhoneNumber"
                           type="tel"
                           label="Work phone number"
                           fullWidth
-                          value={values.phoneNumber}
+                          value={values.workPhoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.phoneNumber && !!errors.phoneNumber}
+                          error={touched.workPhoneNumber && !!errors.workPhoneNumber}
                         />
                       </Grid>
 
@@ -130,18 +155,26 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
                         <CustomDropdown<UserRole>
-                          id="role"
+                          id="userRole"
                           label="Role"
                           placeholder="Role"
-                          value={values.role}
+                          value={values.userRole}
                           options={[
                             { label: 'Administrator', value: UserRole.ADMIN },
                             { label: 'Owner', value: UserRole.OWNER },
                             { label: 'Business User', value: UserRole.USER },
                           ]}
-                          onSelect={(value) => setFieldValue('role', value)}
+                          onSelect={(value) => setFieldValue('userRole', value)}
                         />
                       </Grid>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      {!!error && (
+                        <FormHelperText sx={{ color: 'red.main', textAlign: 'center', marginTop: 2 }}>
+                          {typeof error === 'string' ? error : 'Something went wrong!'}
+                        </FormHelperText>
+                      )}
                     </Grid>
                   </Grid>
                 </form>
@@ -154,9 +187,15 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                   Cancel
                 </TextButton>
 
-                <Button variant="contained" disabled={!(isValid && dirty)} onClick={() => handleSubmit()}>
+                <LoadingButton
+                  variant="contained"
+                  disabled={!(isValid && dirty)}
+                  loading={loading}
+                  onClick={() => handleSubmit()}
+                  type="submit"
+                >
                   Add new user
-                </Button>
+                </LoadingButton>
               </Footer>
             </>
           )}

@@ -5,20 +5,20 @@ import omitBy from 'lodash.omitby';
 
 import { Form, Input, LoadingButton } from 'components/ui';
 import { useCompany } from 'store/company/hooks';
-import { Company, CreateCompanyData } from 'store/company/types';
+import { Company } from 'store/company/types';
 
 interface CompanyValues {
-  name: string;
-  address?: string;
-  billingAddress?: string;
+  companyName: string;
+  companyAddress?: string;
+  companyBillingAddress?: string;
   ownerName: string;
   ownerEmail: string;
 }
 
 const initialCompany = {
-  name: '',
-  address: '',
-  billingAddress: '',
+  companyName: '',
+  companyAddress: '',
+  companyBillingAddress: '',
   ownerName: '',
   ownerEmail: '',
 };
@@ -41,29 +41,30 @@ const CreateCompany: FC = () => {
   };
 
   const onSubmit = () => {
-    if (!company.name || !company.ownerName || !company.ownerEmail) return;
+    if (!company.companyName || !company.ownerName || !company.ownerEmail) return;
 
     if (!state) {
-      const data: CreateCompanyData = {
-        name: company.name,
+      const data: Partial<Company> = {
+        companyName: company.companyName,
         ownerName: company.ownerName,
         ownerEmail: company.ownerEmail,
       };
-      if (company.address) data.address = company.address;
-      if (company.billingAddress) data.billingAddress = company.billingAddress;
+      if (company.companyAddress) data.companyAddress = company.companyAddress;
+      if (company.companyBillingAddress) data.companyBillingAddress = company.companyBillingAddress;
 
       createCompany(data);
       return;
     }
 
-    const data: Partial<CreateCompanyData> = {};
-    if (company.name !== state.name) data.name = company.name;
-    if (company.address !== state.address) data.address = company.address;
-    if (company.billingAddress !== state.billingAddress) data.billingAddress = company.billingAddress;
+    const data: Partial<Company> = {};
+    if (company.companyName !== state.companyName) data.companyName = company.companyName;
+    if (company.companyAddress !== state.companyAddress) data.companyAddress = company.companyAddress;
+    if (company.companyBillingAddress !== state.companyBillingAddress)
+      data.companyBillingAddress = company.companyBillingAddress;
     if (company.ownerName !== state.ownerName) data.ownerName = company.ownerName;
     if (company.ownerEmail !== state.ownerEmail) data.ownerEmail = company.ownerEmail;
 
-    updateCompany({ id: state.id, data });
+    updateCompany({ companyId: state.companyId, data });
   };
 
   return (
@@ -72,34 +73,34 @@ const CreateCompany: FC = () => {
         <Grid item xs={12} md={6}>
           <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             <Input
-              id="name"
-              name="name"
+              id="companyName"
+              name="companyName"
               type="text"
               label="Company Name*"
               variant="standard"
-              value={company.name}
+              value={company.companyName}
               onChange={onChange}
               fullWidth
             />
 
             <Input
-              id="address"
-              name="address"
+              id="companyAddress"
+              name="companyAddress"
               type="text"
               label="Company Address"
               variant="standard"
-              value={company.address}
+              value={company.companyAddress}
               onChange={onChange}
               fullWidth
             />
 
             <Input
-              id="billingAddress"
-              name="billingAddress"
+              id="companyBillingAddress"
+              name="companyBillingAddress"
               type="text"
               label="Billing Address"
               variant="standard"
-              value={company.billingAddress}
+              value={company.companyBillingAddress}
               onChange={onChange}
               fullWidth
             />

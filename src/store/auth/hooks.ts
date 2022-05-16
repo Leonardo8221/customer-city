@@ -23,10 +23,10 @@ export const useAuth = (): AuthReturnHook => {
 
   const roles = useMemo(() => {
     const userRoles = { isSuperAdmin: false, isAdmin: false };
-    if (authState.roles.includes(UserRole.SUPER_AMIN)) userRoles.isSuperAdmin = true;
-    if (authState.roles.includes(UserRole.ADMIN)) userRoles.isAdmin = true;
+    if (authState.role === UserRole.SUPER_AMIN) userRoles.isSuperAdmin = true;
+    if (authState.role === UserRole.ADMIN) userRoles.isAdmin = true;
     return userRoles;
-  }, [authState.roles]);
+  }, [authState.role]);
 
   const logout = useCallback(() => {
     clearAuthSession();

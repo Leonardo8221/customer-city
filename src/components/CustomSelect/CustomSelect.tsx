@@ -13,7 +13,7 @@ interface Option<T extends OptionValue> {
 interface CustomSelectProps<T extends OptionValue> {
   value: T;
   options: Option<T>[];
-  onSelect?: (value: T) => void;
+  onSelect?: (value: T) => Promise<void>;
   small?: boolean;
 }
 
@@ -25,9 +25,16 @@ const CustomSelect = <T extends OptionValue>({
 }: CustomSelectProps<T>): JSX.Element => {
   const [selectedValue, setSelectedValue] = useState<T>(value);
 
-  const onChange = (event: SelectChangeEvent<unknown>) => {
+  const onChange = async (event: SelectChangeEvent<unknown>) => {
     setSelectedValue(event.target.value as T);
-    if (onSelect) onSelect(event.target.value as T);
+
+    if (!onSelect) return;
+
+    try {
+      await onSelect(event.target.value as T);
+    } catch (error) {
+      /** */
+    }
   };
 
   const selectedOption = options.find((option) => option.value === selectedValue);

@@ -1,24 +1,21 @@
 export interface Company {
-  id: number;
-  name: string;
-  address?: string;
-  billingAddress?: string;
-  ownerName: string;
-  ownerEmail: string;
-  createdAt: string;
-}
-
-export interface CreateCompanyData {
-  name: string;
-  address?: string;
-  billingAddress?: string;
+  companyId: number;
+  companyName: string;
+  companyAddress?: string;
+  companyBillingAddress?: string;
+  companyIndustry?: string;
+  companyEmployees?: string;
+  companyWebsite?: string;
+  companyCcDomain?: string;
+  companyEmail?: string;
+  companyCreatedAt: string;
   ownerName: string;
   ownerEmail: string;
 }
 
 export interface UpdateCompanyData {
-  id: number;
-  data: Partial<CreateCompanyData>;
+  companyId: number;
+  data: Partial<Company>;
 }
 
 export interface CompanyState {
@@ -26,13 +23,15 @@ export interface CompanyState {
   error: string | boolean;
   success: string | boolean;
   companies: Company[];
+  company: Company | null;
 }
 
 export interface CompanyReturnHook extends CompanyState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getCompanies: () => void;
-  createCompany: (data: CreateCompanyData) => void;
+  createCompany: (data: Partial<Company>) => void;
   updateCompany: (data: UpdateCompanyData) => void;
   deleteCompanies: (ids: number[]) => void;
+  getCompany: (id: number) => void;
 }

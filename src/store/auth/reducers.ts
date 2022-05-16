@@ -25,7 +25,7 @@ const getInitialState = (): AuthState => {
     session: null,
     id: null,
     email: null,
-    roles: [],
+    role: null,
     rememberMe: false,
     ...(initialAuthSession ?? {}),
   };
@@ -61,7 +61,7 @@ const authStore = createSlice({
       state.accessToken = payload.accessToken;
       state.id = payload.id;
       state.email = payload.email;
-      state.roles = payload.roles;
+      state.role = payload.role;
       state.rememberMe = payload.rememberMe;
       state.session = null;
     });

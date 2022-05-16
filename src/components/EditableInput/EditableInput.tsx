@@ -12,13 +12,14 @@ interface EditableInputProps extends Partial<OutlinedTextFieldProps> {
   label: string;
   value: string;
   small?: boolean;
-  onSave?: () => Promise<void>;
+  onSave?: (value: string) => Promise<void>;
 }
 
 const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, small = true, onSave, ...rest }) => {
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!inputValue) setError(false);
@@ -36,7 +37,8 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
     if (!onSave) return;
 
     try {
-      await onSave();
+      await onSave(inputValue);
+      setSuccess(true);
     } catch (err) {
       // TODO: How should we handle loading and error states if needed
     }
@@ -65,9 +67,15 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
 
   return (
     <Container small={small}>
-      <UserDetail label={label} value={value} type={type} small={small} />
+      <UserDetail label={label} value={success ? inputValue : value} type={type} small={small} />
 
-      <EditButton onClick={() => setEditing(true)} small={small}>
+      <EditButton
+        onClick={() => {
+          setEditing(true);
+          setSuccess(false);
+        }}
+        small={small}
+      >
         <EditIcon />
       </EditButton>
     </Container>

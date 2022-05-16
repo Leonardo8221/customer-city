@@ -1,21 +1,47 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
 
+import { updateCompany as updateCompanyApi } from 'http/company';
+import { updateUser as updateUserApi } from 'http/user';
 import { TextLinkButton } from 'components/ui';
 import { EditableInput } from 'components/EditableInput';
+import { Loader } from 'components/Loader';
+import { useCompany } from 'store/company/hooks';
+import { useUser } from 'store/user/hooks';
 import { Container } from './ui';
 
 const Profile: FC = () => {
+  const { loading: userLoading, userId, userName, userEmail, profile } = useUser();
+  const { loading: companyLoading, company } = useCompany();
+
   return (
-    <Container>
+    <Container position="relative">
       <Grid container spacing={2}>
         <Grid item xs={12} container sx={{ marginBottom: 5 }}>
           <Grid item xs={4}>
-            <EditableInput id="accountOwner" name="accountOwner" label="Account Owner" value="Kasia Niewczas" />
+            <EditableInput
+              id="accountOwner"
+              name="accountOwner"
+              label="Account Owner"
+              value={userName ?? ''}
+              onSave={async (value) => {
+                if (!userId) return;
+                await updateUserApi(userId, { userName: value });
+              }}
+            />
           </Grid>
 
           <Grid item xs={4}>
-            <EditableInput id="companyName" name="companyName" label="Company Name" value="The New Company" />
+            <EditableInput
+              id="companyName"
+              name="companyName"
+              label="Company Name"
+              value={company?.companyName ?? ''}
+              onSave={async (value) => {
+                if (!company?.companyId) return;
+                await updateCompanyApi(company.companyId, { companyName: value });
+              }}
+            />
           </Grid>
         </Grid>
 
@@ -25,13 +51,26 @@ const Profile: FC = () => {
               id="workEmail"
               name="workEmail"
               label="Work email"
-              value="roger.lyons@gmail.com"
+              value={userEmail ?? ''}
               type="email"
+              onSave={async (value) => {
+                if (!userId) return;
+                await updateUserApi(userId, { userEmail: value });
+              }}
             />
           </Grid>
 
           <Grid item xs={4}>
-            <EditableInput id="address" name="address" label="Address" value="Main Street 100, New York" />
+            <EditableInput
+              id="address"
+              name="address"
+              label="Address"
+              value={company?.companyAddress ?? ''}
+              onSave={async (value) => {
+                if (!company?.companyId) return;
+                await updateCompanyApi(company.companyId, { companyAddress: value });
+              }}
+            />
           </Grid>
         </Grid>
 
@@ -41,8 +80,12 @@ const Profile: FC = () => {
               id="workPhoneNumber"
               name="workPhoneNumber"
               label="Work phone number"
-              value="+4 123 345 345"
+              value={profile.workPhoneNumber ?? ''}
               type="tel"
+              onSave={async (value) => {
+                if (!userId) return;
+                await updateUserApi(userId, { workPhoneNumber: value });
+              }}
             />
           </Grid>
 
@@ -51,7 +94,11 @@ const Profile: FC = () => {
               id="companyEmail"
               name="companyEmail"
               label="Company e-mail"
-              value="invoices@newcompany.com"
+              value={company?.companyEmail ?? ''}
+              onSave={async (value) => {
+                if (!company?.companyId) return;
+                await updateCompanyApi(company.companyId, { companyEmail: value });
+              }}
             />
           </Grid>
         </Grid>
@@ -59,16 +106,29 @@ const Profile: FC = () => {
         <Grid item xs={12} container>
           <Grid item xs={4}>
             <EditableInput
-              id="additionalNumber"
-              name="additionalNumber"
+              id="additionalPhoneNumber"
+              name="additionalPhoneNumber"
               label="Additional number"
-              value="+4 123 345 345"
+              value={profile.additionalPhoneNumber ?? ''}
               type="tel"
+              onSave={async (value) => {
+                if (!userId) return;
+                await updateUserApi(userId, { additionalPhoneNumber: value });
+              }}
             />
           </Grid>
 
           <Grid item xs={4}>
-            <EditableInput id="companyUrl" name="companyUrl" label="Company URL" value="www.thenewcompany.com" />
+            <EditableInput
+              id="companyUrl"
+              name="companyUrl"
+              label="Company URL"
+              value={company?.companyWebsite ?? ''}
+              onSave={async (value) => {
+                if (!company?.companyId) return;
+                await updateCompanyApi(company.companyId, { companyWebsite: value });
+              }}
+            />
           </Grid>
         </Grid>
 
@@ -76,6 +136,8 @@ const Profile: FC = () => {
           <TextLinkButton>Reset user&apos;s password</TextLinkButton>
         </Grid>
       </Grid>
+
+      {(userLoading || companyLoading) && <Loader />}
     </Container>
   );
 };

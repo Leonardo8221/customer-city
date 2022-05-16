@@ -1,7 +1,15 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { CompanyState } from './types';
-import { setError, setSuccess, getCompanies, createCompany, updateCompany, deleteCompanies } from './actions';
+import {
+  setError,
+  setSuccess,
+  getCompanies,
+  createCompany,
+  updateCompany,
+  deleteCompanies,
+  getCompany,
+} from './actions';
 import { logout } from '../auth/actions';
 
 const initialState: CompanyState = {
@@ -9,6 +17,7 @@ const initialState: CompanyState = {
   error: false,
   success: false,
   companies: [],
+  company: null,
 };
 
 const companyStore = createSlice({
@@ -31,7 +40,7 @@ const companyStore = createSlice({
 
     builder.addCase(createCompany.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.success = `Company "${payload.name}" created successfully!`;
+      state.success = `Company "${payload.companyName}" created successfully!`;
     });
 
     builder.addCase(updateCompany.fulfilled, (state) => {
@@ -46,8 +55,19 @@ const companyStore = createSlice({
       state.success = 'Company(ies) deleted successfully!';
     });
 
+    builder.addCase(getCompany.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.company = payload;
+    });
+
     builder.addMatcher(
-      isAnyOf(getCompanies.pending, createCompany.pending, updateCompany.pending, deleteCompanies.pending),
+      isAnyOf(
+        getCompanies.pending,
+        createCompany.pending,
+        updateCompany.pending,
+        deleteCompanies.pending,
+        getCompany.pending,
+      ),
       (state) => {
         state.loading = true;
         state.error = false;
@@ -56,7 +76,13 @@ const companyStore = createSlice({
     );
 
     builder.addMatcher(
-      isAnyOf(getCompanies.rejected, createCompany.rejected, updateCompany.rejected, deleteCompanies.rejected),
+      isAnyOf(
+        getCompanies.rejected,
+        createCompany.rejected,
+        updateCompany.rejected,
+        deleteCompanies.rejected,
+        getCompany.rejected,
+      ),
       (state, { error }) => {
         state.loading = false;
         state.error = error?.message ?? true;

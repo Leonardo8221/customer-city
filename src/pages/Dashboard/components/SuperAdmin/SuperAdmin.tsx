@@ -7,10 +7,11 @@ import { Button } from 'components/ui';
 import { privateRoutePaths } from 'router/routes';
 import { useCompany } from 'store/company/hooks';
 import { TableFooter } from 'components/TableFooter';
+import { Company } from 'store/company/types';
 
 const columns: GridColDef[] = [
   {
-    field: 'name',
+    field: 'companyName',
     headerName: 'Company Name',
     flex: 1,
   },
@@ -20,10 +21,10 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: 'createdAt',
+    field: 'companyCreatedAt',
     headerName: 'Created',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt).toLocaleDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.row.companyCreatedAt).toLocaleDateString(),
   },
 ];
 
@@ -59,6 +60,7 @@ const SuperAdmin: FC = () => {
             loading={loading}
             onRowClick={onRowClick}
             components={{ Footer: TableFooter }}
+            getRowId={(row: Company) => row.companyId}
           />
         </Grid>
 

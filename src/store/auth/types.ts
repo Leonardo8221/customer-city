@@ -6,7 +6,7 @@ export interface AuthState {
   session: string | null;
   id: string | null;
   email: string | null;
-  roles: string[];
+  role: string | null;
   rememberMe: boolean;
 }
 
@@ -32,7 +32,7 @@ export interface AuthSession {
   accessToken: string;
   id: string;
   email: string;
-  roles: string[];
+  role: string;
   rememberMe: boolean;
   session?: string;
 }

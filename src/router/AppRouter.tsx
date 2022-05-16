@@ -1,10 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import { useAuth } from 'store/auth/hooks';
 import ScrollToTop from './ScrollToTop';
 import { publicRoutes, privateRoutes, renderRoute, privateRoutePaths } from './routes';
 import { Login, CreatePassword, ResetPassword, CompleteProfileOne, CompleteProfileTwo } from 'pages';
+import { useUser } from 'store/user/hooks';
 
 const PublicRoutes: FC = () => {
   return (
@@ -21,6 +22,13 @@ const PublicRoutes: FC = () => {
 };
 
 const PrivateRoutes: FC = () => {
+  const { getCurrentUser } = useUser();
+
+  useEffect(() => {
+    getCurrentUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Routes>
       {privateRoutes.map(renderRoute)}
