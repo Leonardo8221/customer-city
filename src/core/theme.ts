@@ -302,6 +302,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          '&.MuiSelect-iconOpen path': {
+            fill: '#1554FF',
+            stroke: '#1554FF',
+          },
+        },
+      },
+    },
   },
 });
 

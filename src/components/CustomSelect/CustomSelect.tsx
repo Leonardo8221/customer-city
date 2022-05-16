@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SelectChangeEvent } from '@mui/material';
+import { SelectChangeEvent, SxProps, Theme } from '@mui/material';
 
 import { Select, OptionItem } from './ui';
 
@@ -15,6 +15,8 @@ interface CustomSelectProps<T extends OptionValue> {
   options: Option<T>[];
   onSelect?: (value: T) => Promise<void>;
   small?: boolean;
+  sx?: SxProps<Theme>;
+  variant?: 'outlined' | 'standard';
 }
 
 const CustomSelect = <T extends OptionValue>({
@@ -22,6 +24,8 @@ const CustomSelect = <T extends OptionValue>({
   options,
   onSelect,
   small,
+  sx = {},
+  variant = 'standard',
 }: CustomSelectProps<T>): JSX.Element => {
   const [selectedValue, setSelectedValue] = useState<T>(value);
 
@@ -42,7 +46,6 @@ const CustomSelect = <T extends OptionValue>({
   return (
     <Select
       value={selectedOption?.value ?? ''}
-      label={selectedOption?.label ?? ''}
       onChange={onChange}
       MenuProps={{
         PaperProps: {
@@ -53,7 +56,22 @@ const CustomSelect = <T extends OptionValue>({
         },
       }}
       small={small}
-      sx={{ width: 'fit-content' }}
+      sx={{
+        width: 'fit-content',
+        height: 40,
+        '& .MuiSelect-select': {
+          paddingLeft: 1,
+          paddingTop: 1,
+          paddingBottom: 1,
+        },
+        ':hover svg path': {
+          fill: '#1554FF',
+          stroke: '#1554FF',
+        },
+        ...sx,
+      }}
+      variant={variant}
+      label=""
     >
       {options.map((option) => (
         <OptionItem key={option.value} value={option.value} small={small}>

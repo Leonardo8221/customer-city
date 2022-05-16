@@ -16,6 +16,27 @@ LoadingButton.defaultProps = {
   variant: 'contained',
 };
 
+export const PrimaryButton = styled(MuiButton)(({ theme }) => ({
+  padding: '8px 16px',
+  ':hover': {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  ':active': {
+    backgroundColor: theme.palette.primary.main,
+  },
+  ':focused': {
+    borderColor: theme.palette.primary.dark,
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: 8,
+    '& svg, & svg path': {
+      fill: theme.palette.neutral.white,
+    },
+  },
+}));
+
+PrimaryButton.defaultProps = { variant: 'contained' };
+
 export const SecondaryButton = styled(MuiButton)(({ theme }) => ({
   padding: '8px 16px',
   backgroundColor: theme.palette.neutral.white,
@@ -31,6 +52,9 @@ export const SecondaryButton = styled(MuiButton)(({ theme }) => ({
   },
   '& .MuiButton-startIcon': {
     marginRight: 8,
+    '& svg, & svg path': {
+      fill: theme.palette.primary.main,
+    },
   },
 }));
 
