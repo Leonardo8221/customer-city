@@ -41,6 +41,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
               name="userName"
               label="Name"
               value={user?.userName ?? ''}
+              fullWidth
               small={false}
               onSave={async (value) => {
                 if (!user?.userId) return;
@@ -72,6 +73,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
               name="workEmail"
               label="Work email"
               value={user?.userEmail ?? ''}
+              fullWidth
               type="email"
               onSave={async (value) => {
                 if (!user?.userId) return;
@@ -86,6 +88,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
               name="workPhoneNumber"
               label="Work phone number"
               value={user?.profile.workPhoneNumber ?? ''}
+              fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
@@ -100,6 +103,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
               name="additionalPhoneNumber"
               label="Additional number"
               value={user?.profile.additionalPhoneNumber ?? ''}
+              fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;

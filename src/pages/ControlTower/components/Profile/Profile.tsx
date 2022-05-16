@@ -17,13 +17,14 @@ const Profile: FC = () => {
   return (
     <Container position="relative">
       <Grid container spacing={2}>
-        <Grid item xs={12} container sx={{ marginBottom: 5 }}>
+        <Grid item xs={12} container spacing={3} sx={{ marginBottom: 5 }}>
           <Grid item xs={4}>
             <EditableInput
               id="accountOwner"
               name="accountOwner"
               label="Account Owner"
               value={userName ?? ''}
+              fullWidth
               onSave={async (value) => {
                 if (!userId) return;
                 await updateUserApi(userId, { userName: value });
@@ -37,6 +38,7 @@ const Profile: FC = () => {
               name="companyName"
               label="Company Name"
               value={company?.companyName ?? ''}
+              fullWidth
               onSave={async (value) => {
                 if (!company?.companyId) return;
                 await updateCompanyApi(company.companyId, { companyName: value });
@@ -45,13 +47,14 @@ const Profile: FC = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container>
+        <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
               id="workEmail"
               name="workEmail"
               label="Work email"
               value={userEmail ?? ''}
+              fullWidth
               type="email"
               onSave={async (value) => {
                 if (!userId) return;
@@ -66,6 +69,7 @@ const Profile: FC = () => {
               name="address"
               label="Address"
               value={company?.companyAddress ?? ''}
+              fullWidth
               onSave={async (value) => {
                 if (!company?.companyId) return;
                 await updateCompanyApi(company.companyId, { companyAddress: value });
@@ -74,13 +78,14 @@ const Profile: FC = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container>
+        <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
               id="workPhoneNumber"
               name="workPhoneNumber"
               label="Work phone number"
               value={profile.workPhoneNumber ?? ''}
+              fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!userId) return;
@@ -95,6 +100,7 @@ const Profile: FC = () => {
               name="companyEmail"
               label="Company e-mail"
               value={company?.companyEmail ?? ''}
+              fullWidth
               onSave={async (value) => {
                 if (!company?.companyId) return;
                 await updateCompanyApi(company.companyId, { companyEmail: value });
@@ -103,13 +109,14 @@ const Profile: FC = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container>
+        <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
               id="additionalPhoneNumber"
               name="additionalPhoneNumber"
               label="Additional number"
               value={profile.additionalPhoneNumber ?? ''}
+              fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!userId) return;
@@ -124,6 +131,7 @@ const Profile: FC = () => {
               name="companyUrl"
               label="Company URL"
               value={company?.companyWebsite ?? ''}
+              fullWidth
               onSave={async (value) => {
                 if (!company?.companyId) return;
                 await updateCompanyApi(company.companyId, { companyWebsite: value });

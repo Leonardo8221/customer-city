@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import { OutlinedTextFieldProps, ClickAwayListener, Box } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
@@ -17,9 +17,13 @@ interface EditableInputProps extends Partial<OutlinedTextFieldProps> {
 
 const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, small = true, onSave, ...rest }) => {
   const [editing, setEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!inputValue) setError(false);
@@ -44,10 +48,16 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
     }
   };
 
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      onClose();
+    }
+  };
+
   if (editing) {
     return (
       <ClickAwayListener onClickAway={onClose}>
-        <Box position="relative" width="fit-content">
+        <Box position="relative">
           <CustomInput
             id={id}
             name={name}
@@ -57,8 +67,8 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
             value={inputValue}
             onChange={onChange}
             onBlur={onClose}
-            style={{ width: (value.length + 1) * 10, minWidth: 150 }}
             error={error}
+            onKeyDown={onKeyDown}
           />
         </Box>
       </ClickAwayListener>
