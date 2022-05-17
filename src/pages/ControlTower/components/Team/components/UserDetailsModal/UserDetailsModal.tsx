@@ -1,8 +1,7 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Typography, IconButton, Divider, Box } from '@mui/material';
 
 import { updateUser as updateUserApi } from 'http/user';
-import { ReactComponent as ControlsIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedButton } from 'components/ui';
 import { EditableInput } from 'components/EditableInput';
@@ -19,14 +18,16 @@ interface UserDetailsModalProps {
 }
 
 const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user }) => {
+  const [activeUser, setActiveUser] = useState(true);
+
+  const toggleActiveUser = () => setActiveUser((prevState) => !prevState);
+
   return (
     <Modal open={open} onClose={toggleOpen}>
       <Container>
         <Header>
           <HeaderTitleContainer>
             <Typography variant="p16">User details</Typography>
-
-            <ControlsIcon />
           </HeaderTitleContainer>
 
           <IconButton onClick={toggleOpen}>
@@ -116,8 +117,8 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
         <Divider />
 
         <Footer>
-          <SecondaryRedButton fullWidth onClick={toggleOpen}>
-            Inactive user
+          <SecondaryRedButton fullWidth onClick={toggleActiveUser}>
+            {activeUser ? 'Inactivate User' : 'Reactivate User'}
           </SecondaryRedButton>
         </Footer>
       </Container>
