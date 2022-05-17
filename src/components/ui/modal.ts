@@ -10,6 +10,8 @@ export const Modal = styled(MuiModal)(({ theme }) => ({
 }));
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
+  maxHeight: '90%',
+  overflowY: 'auto',
   maxWidth: 980,
   width: '100%',
   backgroundColor: theme.palette.neutral.white,

@@ -9,6 +9,7 @@ import { Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter, TextButton 
 import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { PriceCurrencyContainer } from './ui';
+import { CustomTextArea } from 'components/CustomTextarea';
 
 interface FormValues {
   productName: string;
@@ -60,6 +61,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
     } catch (err) {
       setError(true);
     }
+    setLoading(false);
   };
 
   return (
@@ -103,15 +105,23 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <CustomInput
+                      <CustomTextArea
                         id="productDescription"
                         name="productDescription"
-                        label="Description"
-                        fullWidth
+                        label={
+                          <Typography variant="labelRegular12">
+                            Description{' '}
+                            <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
+                              (optional)
+                            </Typography>
+                          </Typography>
+                        }
+                        placeholder="Add description to the product"
+                        minRows={4}
+                        maxRows={8}
                         value={values.productDescription}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={touched.productDescription && !!errors.productDescription}
                       />
                     </Grid>
 
@@ -121,8 +131,12 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                         label="Category"
                         placeholder="Not selected"
                         value={values.productCategory}
-                        options={[]}
+                        options={[{ label: 'Category 1', value: 'category1' }]}
                         onSelect={(value) => setFieldValue('productCategory', value)}
+                        InputProps={{
+                          error: touched.productCategory && !!errors.productCategory,
+                          onBlur: handleBlur,
+                        }}
                       />
                     </Grid>
 
@@ -132,8 +146,12 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                         label="Rate Charge Type"
                         placeholder="Not selected"
                         value={values.productRateChargeType}
-                        options={[]}
+                        options={[{ label: 'Charge type 1', value: 'type1' }]}
                         onSelect={(value) => setFieldValue('productRateChargeType', value)}
+                        InputProps={{
+                          error: touched.productRateChargeType && !!errors.productRateChargeType,
+                          onBlur: handleBlur,
+                        }}
                       />
                     </Grid>
 
@@ -144,6 +162,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                           name="productPrice"
                           label="Standard Prices/Fees"
                           placeholder="Ex. 100"
+                          type="number"
                           fullWidth
                           value={values.productPrice}
                           onChange={handleChange}
