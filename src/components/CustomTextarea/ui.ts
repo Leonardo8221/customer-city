@@ -7,9 +7,10 @@ export const Textarea = styled(TextareaAutosize)(({ theme }) => ({
   padding: '8px 16px',
   fontFamily: theme.typography.fontFamily,
   resize: 'none',
-  '&::-webkit-input-placeholder, &:-moz-placeholder, &::-moz-placeholder, &:-ms-input-placeholder, &::placeholder': {
+  '&::placeholder': {
     ...theme.typography.p14,
     color: theme.palette.neutral.n400,
+    fontFamily: theme.typography.fontFamily,
     fontWeight: 400,
   },
   ':hover': {

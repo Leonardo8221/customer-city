@@ -206,6 +206,8 @@ const theme = createTheme({
             '&::placeholder': {
               ...typographyTheme.typography.p14,
               color: paletteTheme.palette.neutral.n400,
+              opacity: 1,
+              fontWeight: 400,
             },
           },
           '& fieldset': {
