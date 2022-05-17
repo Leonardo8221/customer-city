@@ -1,3 +1,4 @@
+import { JSXElementConstructor, HTMLAttributes } from 'react';
 import { Autocomplete, TextField, InputLabel, SxProps, Theme, InputProps } from '@mui/material';
 
 import { ReactComponent as TraingleDownIcon } from 'assets/icons/triangleDown.svg';
@@ -20,6 +21,7 @@ interface CustomDropdownProps<T extends OptionValue> {
   withPopupIcon?: boolean;
   InputProps?: Partial<InputProps>;
   onSelect: (value: T) => void;
+  PaperComponent?: JSXElementConstructor<HTMLAttributes<HTMLElement>>;
 }
 
 const CustomDropdown = <T extends OptionValue>({
@@ -32,6 +34,7 @@ const CustomDropdown = <T extends OptionValue>({
   withPopupIcon = true,
   onSelect,
   InputProps,
+  PaperComponent,
 }: CustomDropdownProps<T>): JSX.Element => {
   return (
     <div>
@@ -54,7 +57,7 @@ const CustomDropdown = <T extends OptionValue>({
           />
         )}
         disableClearable
-        PaperComponent={Paper}
+        PaperComponent={PaperComponent || Paper}
         ListboxProps={{ style: { maxHeight: 300 } }}
         value={options.find((options) => options.value === value)}
         onChange={(e, value) => onSelect(value.value)}

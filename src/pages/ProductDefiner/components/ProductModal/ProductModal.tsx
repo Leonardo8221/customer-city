@@ -8,8 +8,8 @@ import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter, TextButton } from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
-import { PriceCurrencyContainer } from './ui';
 import { CustomTextArea } from 'components/CustomTextarea';
+import { PriceCurrencyContainer, Paper } from './ui';
 
 interface FormValues {
   productName: string;
@@ -131,12 +131,18 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                         label="Category"
                         placeholder="Not selected"
                         value={values.productCategory}
-                        options={[{ label: 'Category 1', value: 'category1' }]}
+                        options={[
+                          { label: 'Not selected', value: '' },
+                          { label: 'Base product', value: 'base' },
+                          { label: 'Add On', value: 'add-on' },
+                          { label: 'Misc Product', value: 'misc' },
+                        ]}
                         onSelect={(value) => setFieldValue('productCategory', value)}
                         InputProps={{
                           error: touched.productCategory && !!errors.productCategory,
                           onBlur: handleBlur,
                         }}
+                        PaperComponent={Paper}
                       />
                     </Grid>
 
@@ -146,12 +152,18 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                         label="Rate Charge Type"
                         placeholder="Not selected"
                         value={values.productRateChargeType}
-                        options={[{ label: 'Charge type 1', value: 'type1' }]}
+                        options={[
+                          { label: 'Not selected', value: '' },
+                          { label: 'One-time', value: 'one-time' },
+                          { label: 'Recurring', value: 'recurring' },
+                          { label: 'Usage', value: 'usage' },
+                        ]}
                         onSelect={(value) => setFieldValue('productRateChargeType', value)}
                         InputProps={{
                           error: touched.productRateChargeType && !!errors.productRateChargeType,
                           onBlur: handleBlur,
                         }}
+                        PaperComponent={Paper}
                       />
                     </Grid>
 
