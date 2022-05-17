@@ -15,9 +15,13 @@ import {
   SectionTitleContainer,
 } from './ui';
 import { ProductModal } from './components';
+import { ProductsTable } from './components/ProductsTable';
+import { Product } from 'core/types';
 
 const ProductDefiner: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [products, setProducts] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
 
   const toggleModal = () => setModalOpen((prevState) => !prevState);
 
@@ -63,30 +67,46 @@ const ProductDefiner: FC = () => {
       </Grid>
 
       <ProductsSection>
-        <SectionTitleContainer>
-          <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.main' }}>
-            PRODUCTS
-          </Typography>
+        {products ? (
+          <ProductsTable
+            setSelectedProduct={(product) => {
+              setSelectedProduct(product);
+              toggleModal();
+            }}
+          />
+        ) : (
+          <>
+            <SectionTitleContainer>
+              <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.main' }}>
+                PRODUCTS
+              </Typography>
 
-          <CounterContainer>
-            <Typography variant="labelRegular12" sx={{ color: 'neutral.main' }}>
-              0
-            </Typography>
-          </CounterContainer>
-        </SectionTitleContainer>
+              <CounterContainer>
+                <Typography variant="labelRegular12" sx={{ color: 'neutral.main' }}>
+                  0
+                </Typography>
+              </CounterContainer>
+            </SectionTitleContainer>
 
-        <ProducsContainer marginTop={1}>
-          <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
-            You have not added any products yet
-          </Typography>
+            <ProducsContainer marginTop={1}>
+              <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
+                You have not added any products yet
+              </Typography>
 
-          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }} onClick={toggleModal}>
-            Add new product
-          </PrimaryButton>
-        </ProducsContainer>
+              <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }} onClick={toggleModal}>
+                Add new product
+              </PrimaryButton>
+            </ProducsContainer>
+          </>
+        )}
       </ProductsSection>
 
-      <ProductModal open={modalOpen} toggleOpen={toggleModal} />
+      <ProductModal
+        open={modalOpen}
+        toggleOpen={toggleModal}
+        setProducts={() => setProducts(true)}
+        product={selectedProduct}
+      />
     </Container>
   );
 };

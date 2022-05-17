@@ -10,6 +10,7 @@ import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { CustomTextArea } from 'components/CustomTextarea';
 import { PriceCurrencyContainer, Paper } from './ui';
+import { Product } from 'core/types';
 
 interface FormValues {
   productName: string;
@@ -29,21 +30,14 @@ const validationSchema = yup.object({
   productCurrency: yup.string().required('Required'),
 });
 
-const initialValues: FormValues = {
-  productName: '',
-  productDescription: '',
-  productCategory: '',
-  productRateChargeType: '',
-  productPrice: '',
-  productCurrency: 'USD',
-};
-
 interface ProductModalProps {
   open: boolean;
   toggleOpen: () => void;
+  setProducts: () => void;
+  product?: Product;
 }
 
-const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
+const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen, setProducts }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
@@ -51,6 +45,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
   const closeModal = () => {
     formRef.current?.resetForm();
     toggleOpen();
+    setProducts();
   };
 
   const onSubmit = () => {
@@ -64,12 +59,21 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
     setLoading(false);
   };
 
+  const initialValues: FormValues = {
+    productName: product?.productName ?? '',
+    productDescription: product?.productDescription ?? '',
+    productCategory: product?.productCategory ?? '',
+    productRateChargeType: product?.productRateChargeType ?? '',
+    productPrice: product?.productPrice.toString() ?? '',
+    productCurrency: 'USD',
+  };
+
   return (
     <Modal open={open} onClose={toggleOpen}>
       <ModalContainer>
         <ModalHeader>
           <Typography variant="h3" sx={{ color: 'neutral.main' }}>
-            New Product
+            {product ? 'Update Product' : 'New Product'}
           </Typography>
 
           <IconButton onClick={toggleOpen}>
@@ -154,7 +158,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                         value={values.productRateChargeType}
                         options={[
                           { label: 'Not selected', value: '' },
-                          { label: 'One-time', value: 'one-time' },
+                          { label: 'One time', value: 'one-time' },
                           { label: 'Recurring', value: 'recurring' },
                           { label: 'Usage', value: 'usage' },
                         ]}
@@ -218,7 +222,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
                   onClick={() => handleSubmit()}
                   type="submit"
                 >
-                  Add the product
+                  {product ? 'Update the product' : 'Add the product'}
                 </LoadingButton>
               </ModalFooter>
             </>

@@ -4,7 +4,7 @@ export const PriceCurrencyContainer = styled(Box)(() => ({
   display: 'flex',
   '& > div': {
     flex: 1,
-    ':first-child': {
+    ':first-of-type': {
       '& .MuiTextField-root fieldset': {
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
