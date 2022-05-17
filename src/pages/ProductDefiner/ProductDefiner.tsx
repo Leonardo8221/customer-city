@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
@@ -6,6 +6,9 @@ import { ReactComponent as FilterGrayIcon } from 'assets/icons/filterGray.svg';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { PrimaryButton, SecondaryButton } from 'components/ui';
 import { CustomSelect } from 'components/CustomSelect';
+import { Product } from 'store/product/types';
+import { useProduct } from 'store/product/hooks';
+import { Loader } from 'components/Loader';
 import {
   Container,
   ProductsSection,
@@ -16,12 +19,16 @@ import {
 } from './ui';
 import { ProductModal } from './components';
 import { ProductsTable } from './components/ProductsTable';
-import { Product } from 'core/types';
 
 const ProductDefiner: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [products, setProducts] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const { loading, error, products, getProducts } = useProduct();
+
+  useEffect(() => {
+    getProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleModal = () => setModalOpen((prevState) => !prevState);
 
@@ -67,7 +74,7 @@ const ProductDefiner: FC = () => {
       </Grid>
 
       <ProductsSection>
-        {products ? (
+        {products.length > 0 ? (
           <ProductsTable
             setSelectedProduct={(product) => {
               setSelectedProduct(product);
@@ -101,12 +108,15 @@ const ProductDefiner: FC = () => {
         )}
       </ProductsSection>
 
-      <ProductModal
-        open={modalOpen}
-        toggleOpen={toggleModal}
-        setProducts={() => setProducts(true)}
-        product={selectedProduct}
-      />
+      <ProductModal open={modalOpen} toggleOpen={toggleModal} product={selectedProduct} />
+
+      {!!error && (
+        <Typography variant="caption" color="red">
+          {typeof error === 'string' ? error : 'Something went wrong!'}
+        </Typography>
+      )}
+
+      {loading && <Loader />}
     </Container>
   );
 };

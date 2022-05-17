@@ -4,56 +4,10 @@ import { DataGrid, GridColDef, GridValueGetterParams, GridRowParams } from '@mui
 import format from 'date-fns/format';
 
 import { TableFooter } from 'components/TableFooter';
-import { Product } from 'core/types';
+import { Product } from 'store/product/types';
+import { useProduct } from 'store/product/hooks';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
 import './ProductsTable.css';
-
-const products: Product[] = [
-  {
-    productId: 1,
-    productName: 'Aronda Program',
-    productCategory: 'base',
-    productRateChargeType: 'recurring',
-    productDescription: '',
-    productPrice: 50,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    productCurrency: 'USD',
-  },
-  {
-    productId: 2,
-    productName: 'Aronda Program',
-    productCategory: 'base',
-    productRateChargeType: 'recurring',
-    productDescription: '',
-    productPrice: 50,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    productCurrency: 'USD',
-  },
-  {
-    productId: 3,
-    productName: 'Aronda Program',
-    productCategory: 'base',
-    productRateChargeType: 'recurring',
-    productDescription: '',
-    productPrice: 50,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    productCurrency: 'USD',
-  },
-  {
-    productId: 4,
-    productName: 'Aronda Program',
-    productCategory: 'base',
-    productRateChargeType: 'recurring',
-    productDescription: '',
-    productPrice: 50,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    productCurrency: 'USD',
-  },
-];
 
 const columns: GridColDef[] = [
   {
@@ -92,8 +46,8 @@ interface ProductsTableProps {
 }
 
 const ProductsTable: FC<ProductsTableProps> = ({ setSelectedProduct }) => {
-  // const [loading, setLoading] = useState(false);
   const [pageSize, setPageSize] = useState(5);
+  const { products, loading } = useProduct();
 
   const onRowClick = (params: GridRowParams) => {
     setSelectedProduct(params.row);
@@ -110,7 +64,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ setSelectedProduct }) => {
         disableSelectionOnClick
         headerHeight={40}
         rowHeight={64}
-        // loading={loading}
+        loading={loading}
         onRowClick={onRowClick}
         components={{
           Footer: TableFooter,

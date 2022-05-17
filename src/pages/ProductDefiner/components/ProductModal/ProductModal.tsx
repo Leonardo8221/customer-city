@@ -10,7 +10,7 @@ import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { CustomTextArea } from 'components/CustomTextarea';
 import { PriceCurrencyContainer, Paper } from './ui';
-import { Product } from 'core/types';
+import { Product } from 'store/product/types';
 
 interface FormValues {
   productName: string;
@@ -33,11 +33,10 @@ const validationSchema = yup.object({
 interface ProductModalProps {
   open: boolean;
   toggleOpen: () => void;
-  setProducts: () => void;
   product?: Product;
 }
 
-const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen, setProducts }) => {
+const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
@@ -45,7 +44,6 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen, setPro
   const closeModal = () => {
     formRef.current?.resetForm();
     toggleOpen();
-    setProducts();
   };
 
   const onSubmit = () => {
