@@ -6,12 +6,11 @@ import * as yup from 'yup';
 
 import { createUser as createUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
-import { TextButton } from 'components/ui';
+import { TextButton, Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter } from 'components/ui';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { UserRole } from 'core/types';
 import { CustomInput } from 'components/CustomInput';
 import { PHONE_REGEX } from 'core/constants';
-import { Modal, Container, Header, Footer, Main } from './ui';
 
 interface AddNewUserModalProps {
   open: boolean;
@@ -67,8 +66,8 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers 
 
   return (
     <Modal open={open} onClose={toggleOpen}>
-      <Container>
-        <Header>
+      <ModalContainer>
+        <ModalHeader>
           <Typography variant="h3" sx={{ color: 'neutral.main' }}>
             New User
           </Typography>
@@ -76,7 +75,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers 
           <IconButton onClick={toggleOpen}>
             <CrossIcon />
           </IconButton>
-        </Header>
+        </ModalHeader>
 
         <Divider />
 
@@ -88,7 +87,7 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers 
         >
           {({ values, isValid, errors, touched, dirty, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
             <>
-              <Main>
+              <ModalMain>
                 <form noValidate>
                   <Grid container spacing={2}>
                     <Grid item xs={12} container spacing={2}>
@@ -178,11 +177,11 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers 
                     </Grid>
                   </Grid>
                 </form>
-              </Main>
+              </ModalMain>
 
               <Divider />
 
-              <Footer>
+              <ModalFooter>
                 <TextButton sx={{ marginRight: 3 }} onClick={toggleOpen}>
                   Cancel
                 </TextButton>
@@ -196,11 +195,11 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers 
                 >
                   Add new user
                 </LoadingButton>
-              </Footer>
+              </ModalFooter>
             </>
           )}
         </Formik>
-      </Container>
+      </ModalContainer>
     </Modal>
   );
 };
