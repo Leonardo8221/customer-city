@@ -34,7 +34,7 @@ const CustomDropdown = <T extends OptionValue>({
   InputProps,
 }: CustomDropdownProps<T>): JSX.Element => {
   return (
-    <>
+    <div>
       {label && (
         <InputLabel htmlFor={id} sx={{ marginBottom: 1, ...labelSx }}>
           {label}
@@ -61,7 +61,7 @@ const CustomDropdown = <T extends OptionValue>({
         isOptionEqualToValue={(option, value) => option.value === value.value}
         popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
       />
-    </>
+    </div>
   );
 };
 

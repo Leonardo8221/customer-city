@@ -9,7 +9,7 @@ interface CustomInputProps extends Partial<OutlinedTextFieldProps> {
 
 const CustomInput: FC<CustomInputProps> = ({ id, name, label, labelSx = {}, ...rest }) => {
   return (
-    <>
+    <div>
       {label && (
         <InputLabel htmlFor={id} sx={{ marginBottom: 1, ...labelSx }}>
           {label}
@@ -17,7 +17,7 @@ const CustomInput: FC<CustomInputProps> = ({ id, name, label, labelSx = {}, ...r
       )}
 
       <TextField id={id} name={name} type="text" {...rest} />
-    </>
+    </div>
   );
 };
 

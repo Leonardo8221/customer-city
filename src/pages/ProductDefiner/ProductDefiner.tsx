@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
@@ -14,8 +14,13 @@ import {
   CounterContainer,
   SectionTitleContainer,
 } from './ui';
+import { ProductModal } from './components';
 
 const ProductDefiner: FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => setModalOpen((prevState) => !prevState);
+
   return (
     <Container>
       <Grid container spacing={2} sx={{ backgroundColor: 'neutral.white', padding: '24px 32px 16px' }}>
@@ -51,7 +56,7 @@ const ProductDefiner: FC = () => {
 
           <SecondaryButton>Import</SecondaryButton>
 
-          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }}>
+          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
             Add product
           </PrimaryButton>
         </Grid>
@@ -75,11 +80,13 @@ const ProductDefiner: FC = () => {
             You have not added any products yet
           </Typography>
 
-          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }}>
+          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }} onClick={toggleModal}>
             Add new product
           </PrimaryButton>
         </ProducsContainer>
       </ProductsSection>
+
+      <ProductModal open={modalOpen} toggleOpen={toggleModal} />
     </Container>
   );
 };

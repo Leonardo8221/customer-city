@@ -17,6 +17,8 @@ interface CustomSelectProps<T extends OptionValue> {
   small?: boolean;
   sx?: SxProps<Theme>;
   variant?: 'outlined' | 'standard';
+  fullWidth?: boolean;
+  placeholder?: string;
 }
 
 const CustomSelect = <T extends OptionValue>({
@@ -26,6 +28,8 @@ const CustomSelect = <T extends OptionValue>({
   small,
   sx = {},
   variant = 'standard',
+  fullWidth,
+  placeholder,
 }: CustomSelectProps<T>): JSX.Element => {
   const [selectedValue, setSelectedValue] = useState<T>(value);
 
@@ -57,7 +61,7 @@ const CustomSelect = <T extends OptionValue>({
       }}
       small={small}
       sx={{
-        width: 'fit-content',
+        width: fullWidth ? '100%' : 'fit-content',
         height: 40,
         '& .MuiSelect-select': {
           paddingLeft: 1,
@@ -72,6 +76,8 @@ const CustomSelect = <T extends OptionValue>({
       }}
       variant={variant}
       label=""
+      fullWidth={fullWidth}
+      placeholder={placeholder}
     >
       {options.map((option) => (
         <OptionItem key={option.value} value={option.value} small={small}>
