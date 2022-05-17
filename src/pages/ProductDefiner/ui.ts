@@ -1,5 +1,11 @@
 import { styled, Box } from '@mui/material';
 
+export const Container = styled(Box)(() => ({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
 export const VerticalDivider = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   marginRight: theme.spacing(2),
@@ -21,6 +27,13 @@ export const SectionTitleContainer = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
+export const ProductsSection = styled(Box)(() => ({
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '24px 32px',
+}));
+
 export const CounterContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.neutral.white,
   borderRadius: 4,
@@ -34,7 +47,7 @@ export const CounterContainer = styled(Box)(({ theme }) => ({
 
 export const ProducsContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.darkBg.main,
-  minHeight: 500,
+  flex: 1,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
