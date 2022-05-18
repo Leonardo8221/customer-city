@@ -47,7 +47,7 @@ const Account: FC = () => {
               fullWidth
             />
 
-            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit" marginTop="32px">
+            <LoadingButton onClick={onSubmit} loading={loading} variant="outlined" type="submit" sx={{ marginTop: 4 }}>
               Change password
             </LoadingButton>
 

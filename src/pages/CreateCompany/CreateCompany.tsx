@@ -132,8 +132,7 @@ const CreateCompany: FC = () => {
               loading={loading}
               variant="outlined"
               type="submit"
-              style={{ alignSelf: 'flex-end' }}
-              marginTop="32px"
+              sx={{ marginTop: 4, alignSelf: 'flex-end' }}
             >
               {state ? 'Update company' : 'Add & Send e-amil'}
             </LoadingButton>

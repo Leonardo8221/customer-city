@@ -5,16 +5,52 @@ export const Button = styled(MuiButton)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-export const LoadingButton = styled(MuiLoadingButton, {
-  shouldForwardProp: (prop) => prop !== 'marginTop',
-})<{ marginTop?: string }>(({ marginTop }) => ({
-  marginTop: marginTop ?? '0px',
+export const LoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
+  padding: '8px 16px',
+  ':hover': {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  ':active': {
+    backgroundColor: theme.palette.primary.main,
+  },
+  ':focused': {
+    borderColor: theme.palette.primary.dark,
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: 8,
+    '& svg, & svg path': {
+      fill: theme.palette.neutral.white,
+    },
+  },
 }));
 
-LoadingButton.defaultProps = {
-  color: 'primary',
-  variant: 'contained',
-};
+LoadingButton.defaultProps = { variant: 'contained' };
+
+export const SecondaryLoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
+  padding: '8px 16px',
+  backgroundColor: theme.palette.neutral.white,
+  ':hover': {
+    backgroundColor: theme.palette.primary.subtone3,
+    color: theme.palette.primary.main,
+  },
+  ':active': {
+    backgroundColor: theme.palette.primary.subtone2,
+  },
+  ':focused': {
+    borderWidth: 2,
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: 8,
+    '& svg:not(.custom-color), & svg:not(.custom-color) path': {
+      fill: theme.palette.primary.main,
+    },
+    '& svg.custom-color': {
+      marginRight: 8,
+    },
+  },
+}));
+
+SecondaryLoadingButton.defaultProps = { variant: 'outlined' };
 
 export const LoadingRedButton = styled(MuiLoadingButton)(({ theme }) => ({
   color: theme.palette.red.main,

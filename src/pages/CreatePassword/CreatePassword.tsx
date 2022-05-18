@@ -83,7 +83,13 @@ const CreatePassword: FC = () => {
             <ValidationRule label="One number, symbol, or whitespace character" checked={valid.numberSymbolSpace} />
           </Box>
 
-          <LoadingButton onClick={onSubmit} disabled={!buttonEnabled} marginTop="32px" loading={loading} type="submit">
+          <LoadingButton
+            onClick={onSubmit}
+            disabled={!buttonEnabled}
+            sx={{ marginTop: 4 }}
+            loading={loading}
+            type="submit"
+          >
             Save new password
           </LoadingButton>
 

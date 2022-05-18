@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 import { ReactComponent as GoogleSmallIcon } from 'assets/icons/googleSmall.svg';
 import { ReactComponent as GoogleWhiteSmallIcon } from 'assets/icons/googleWhiteSmall.svg';
-import { Form, AuthInput, LoadingButton } from 'components/ui';
+import { Form, AuthInput, LoadingButton, SecondaryLoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 import { AuthLayout } from 'components/AuthLayout';
 import { CustomLink } from 'components/CustomLink';
@@ -73,7 +73,7 @@ const Login: FC = () => {
         </Typography>
 
         <Formik initialValues={initialValues} validationSchema={formSchema} onSubmit={onSubmit}>
-          {({ values, isValid, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
+          {({ values, isValid, dirty, handleChange, setFieldValue, handleSubmit, handleBlur }) => (
             <Form noValidate>
               <Box>
                 <InputLabel htmlFor="email">Email address</InputLabel>
@@ -114,10 +114,13 @@ const Login: FC = () => {
 
               <LoadingButton
                 loading={loading}
-                disabled={!isValid}
-                marginTop="32px"
+                disabled={!(isValid && dirty)}
+                sx={{ marginTop: 4 }}
                 type="submit"
-                onClick={() => handleSubmit()}
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleSubmit();
+                }}
               >
                 Log in
               </LoadingButton>
@@ -132,14 +135,14 @@ const Login: FC = () => {
                 <Divider>or</Divider>
               </Box>
 
-              <LoadingButton
+              <SecondaryLoadingButton
                 onClick={noop}
                 variant="outlined"
-                marginTop="24px"
-                startIcon={smallDevice ? <GoogleWhiteSmallIcon /> : <GoogleSmallIcon />}
+                sx={{ marginTop: 3 }}
+                startIcon={smallDevice ? <GoogleWhiteSmallIcon /> : <GoogleSmallIcon className="custom-color" />}
               >
                 Sign in with Google
-              </LoadingButton>
+              </SecondaryLoadingButton>
             </Form>
           )}
         </Formik>

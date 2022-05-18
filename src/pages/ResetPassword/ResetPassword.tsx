@@ -59,7 +59,7 @@ const ResetPassword: FC = () => {
 
           <LoadingButton
             onClick={() => window.open(`mailto:${userEmail}`, '_blank', 'noopener')}
-            marginTop="32px"
+            sx={{ marginTop: 4 }}
             startIcon={<GoogleWhiteSmallIcon />}
             fullWidth
           >
@@ -115,7 +115,7 @@ const ResetPassword: FC = () => {
               <LoadingButton
                 loading={loading}
                 disabled={!values.email || !!errors.email}
-                marginTop="32px"
+                sx={{ marginTop: 4 }}
                 type="submit"
                 onClick={() => handleSubmit()}
               >

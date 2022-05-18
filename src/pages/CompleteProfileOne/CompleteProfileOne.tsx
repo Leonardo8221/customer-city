@@ -122,7 +122,7 @@ const CompleteProfileOne: FC = () => {
                     handleSubmit();
                   }}
                   disabled={!(isValid && dirty)}
-                  marginTop="32px"
+                  sx={{ marginTop: 4 }}
                   type="submit"
                 >
                   Next
