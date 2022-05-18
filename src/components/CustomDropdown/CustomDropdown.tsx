@@ -66,7 +66,7 @@ const CustomDropdown = <T extends OptionValue>({
         onChange={(e, value) => onSelect((value?.value ?? '') as T)}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
-        clearIcon={<CrossIcon style={{ marginRight: -8 }} />}
+        clearIcon={<CrossIcon />}
       />
     </div>
   );

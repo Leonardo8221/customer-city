@@ -301,6 +301,12 @@ const theme = createTheme({
             fill: '#1554FF',
             stroke: '#1554FF',
           },
+          '& .MuiAutocomplete-clearIndicator': {
+            marginRight: -8,
+            '& svg rect': {
+              fill: '#1554FF',
+            },
+          },
         },
       },
     },
