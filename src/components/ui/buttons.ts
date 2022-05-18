@@ -16,6 +16,23 @@ LoadingButton.defaultProps = {
   variant: 'contained',
 };
 
+export const LoadingRedButton = styled(MuiLoadingButton)(({ theme }) => ({
+  color: theme.palette.red.main,
+  borderColor: theme.palette.red.main,
+  ':hover': {
+    backgroundColor: alpha(theme.palette.red.light, 0.35),
+    color: theme.palette.red.main,
+    borderColor: theme.palette.red.main,
+  },
+  ':active': {
+    backgroundColor: theme.palette.red.light,
+  },
+}));
+
+LoadingRedButton.defaultProps = {
+  variant: 'outlined',
+};
+
 export const PrimaryButton = styled(MuiButton)(({ theme }) => ({
   padding: '8px 16px',
   ':hover': {

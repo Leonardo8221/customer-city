@@ -1,36 +1,60 @@
 import { FC, useState } from 'react';
 import { Typography, IconButton, Divider, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
+import { inactivateUser as inactivateUserApi, reactivateUser as reactivateUserApi } from 'http/user';
 import { updateUser as updateUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
-import { SecondaryRedButton } from 'components/ui';
+import { LoadingRedButton } from 'components/ui';
 import { EditableInput } from 'components/EditableInput';
 import { CustomSelect } from 'components/CustomSelect';
 import { UserRole } from 'core/types';
 import { USER_ROLE_OPTIONS } from 'core/constants';
-import { User } from 'store/user/types';
+import { userSelector, useUser } from 'store/user/hooks';
+import { RootState } from 'store/types';
 import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, RoleSelectContainer } from './ui';
 
 interface UserDetailsModalProps {
   open: boolean;
   toggleOpen: () => void;
-  user?: User;
+  userId?: number;
 }
 
-const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user }) => {
-  const [activeUser, setActiveUser] = useState(true);
+const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const { getUsers } = useUser();
+  const user = useSelector((state: RootState) => userSelector(state, userId));
 
-  const toggleActiveUser = () => setActiveUser((prevState) => !prevState);
+  const onClose = () => {
+    if (error) setError(false);
+    if (loading) setLoading(false);
+    toggleOpen();
+  };
+
+  const toggleActiveUser = async () => {
+    if (!user) return;
+    if (error) setError(true);
+    setLoading(true);
+    try {
+      const action = user.userActive ? inactivateUserApi : reactivateUserApi;
+      await action(user.userId);
+      getUsers();
+    } catch (err) {
+      setError(true);
+    }
+    setLoading(false);
+  };
 
   return (
-    <Modal open={open} onClose={toggleOpen}>
+    <Modal open={open} onClose={onClose}>
       <Container>
         <Header>
           <HeaderTitleContainer>
             <Typography variant="p16">User details</Typography>
           </HeaderTitleContainer>
 
-          <IconButton onClick={toggleOpen}>
+          <IconButton onClick={onClose}>
             <CrossIcon />
           </IconButton>
         </Header>
@@ -117,9 +141,15 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, user })
         <Divider />
 
         <Footer>
-          <SecondaryRedButton fullWidth onClick={toggleActiveUser}>
-            {activeUser ? 'Inactivate User' : 'Reactivate User'}
-          </SecondaryRedButton>
+          <LoadingRedButton fullWidth onClick={toggleActiveUser} loading={loading}>
+            {user?.userActive ? 'Inactivate User' : 'Reactivate User'}
+          </LoadingRedButton>
+
+          {!!error && (
+            <Typography variant="caption" sx={{ color: 'red.main', marginTop: 1.5 }}>
+              {typeof error === 'string' ? error : 'Something went wrong!'}
+            </Typography>
+          )}
         </Footer>
       </Container>
     </Modal>

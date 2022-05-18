@@ -36,6 +36,7 @@ export const Footer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
+  flexDirection: 'column',
 }));
 
 export const Main = styled(Box)(() => ({
