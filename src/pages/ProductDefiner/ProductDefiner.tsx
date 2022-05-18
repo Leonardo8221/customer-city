@@ -2,21 +2,12 @@ import { FC, useState, useEffect } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
-import { ReactComponent as FilterGrayIcon } from 'assets/icons/filterGray.svg';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { PrimaryButton, SecondaryButton } from 'components/ui';
-import { CustomSelect } from 'components/CustomSelect';
 import { Product } from 'store/product/types';
 import { useProduct } from 'store/product/hooks';
 import { Loader } from 'components/Loader';
-import {
-  Container,
-  ProductsSection,
-  ProducsContainer,
-  VerticalDivider,
-  CounterContainer,
-  SectionTitleContainer,
-} from './ui';
+import { Container, ProductsSection, ProducsContainer, CounterContainer, SectionTitleContainer } from './ui';
 import { ProductModal } from './components';
 import { ProductsTable } from './components/ProductsTable';
 
@@ -47,27 +38,10 @@ const ProductDefiner: FC = () => {
             <Box width="250px" marginRight={2}>
               <SearchDropdown id="search-products" placeholder="Search all products..." />
             </Box>
-
-            <SecondaryButton startIcon={<FilterGrayIcon />}>Filters</SecondaryButton>
           </Box>
         </Grid>
 
         <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
-          <Box>
-            <Typography variant="p14" sx={{ marginRight: 2 }}>
-              Sort by
-            </Typography>
-
-            <CustomSelect<string>
-              value="dateCreated"
-              options={[{ label: 'Date created', value: 'dateCreated' }]}
-              sx={{ minWidth: '175px' }}
-              variant="outlined"
-            />
-          </Box>
-
-          <VerticalDivider />
-
           <SecondaryButton>Import</SecondaryButton>
 
           <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
