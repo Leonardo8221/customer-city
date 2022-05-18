@@ -1,6 +1,7 @@
 import { JSXElementConstructor, HTMLAttributes } from 'react';
 import { Autocomplete, TextField, InputLabel, SxProps, Theme, InputProps } from '@mui/material';
 
+import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ReactComponent as TraingleDownIcon } from 'assets/icons/triangleDown.svg';
 import { Paper } from './ui';
 
@@ -22,6 +23,7 @@ interface CustomDropdownProps<T extends OptionValue> {
   InputProps?: Partial<InputProps>;
   onSelect: (value: T) => void;
   PaperComponent?: JSXElementConstructor<HTMLAttributes<HTMLElement>>;
+  disableClearable?: boolean;
 }
 
 const CustomDropdown = <T extends OptionValue>({
@@ -35,6 +37,7 @@ const CustomDropdown = <T extends OptionValue>({
   onSelect,
   InputProps,
   PaperComponent,
+  disableClearable = true,
 }: CustomDropdownProps<T>): JSX.Element => {
   return (
     <div>
@@ -56,13 +59,14 @@ const CustomDropdown = <T extends OptionValue>({
             InputProps={{ ...params.InputProps, ...InputProps }}
           />
         )}
-        disableClearable
+        disableClearable={disableClearable}
         PaperComponent={PaperComponent || Paper}
         ListboxProps={{ style: { maxHeight: 300 } }}
         value={options.find((options) => options.value === value)}
-        onChange={(e, value) => onSelect(value.value)}
+        onChange={(e, value) => onSelect((value?.value ?? '') as T)}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
+        clearIcon={<CrossIcon style={{ marginRight: -8 }} />}
       />
     </div>
   );

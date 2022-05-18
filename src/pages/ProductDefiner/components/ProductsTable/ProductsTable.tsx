@@ -5,7 +5,6 @@ import format from 'date-fns/format';
 
 import { TableFooter } from 'components/TableFooter';
 import { Product } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
 import './ProductsTable.css';
 
@@ -42,12 +41,12 @@ const columns: GridColDef[] = [
 ];
 
 interface ProductsTableProps {
+  products: Product[];
   setSelectedProduct: (product: Product) => void;
 }
 
-const ProductsTable: FC<ProductsTableProps> = ({ setSelectedProduct }) => {
+const ProductsTable: FC<ProductsTableProps> = ({ products, setSelectedProduct }) => {
   const [pageSize, setPageSize] = useState(5);
-  const { products, loading } = useProduct();
 
   const onRowClick = (params: GridRowParams) => {
     setSelectedProduct(params.row);
@@ -64,7 +63,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ setSelectedProduct }) => {
         disableSelectionOnClick
         headerHeight={40}
         rowHeight={64}
-        loading={loading}
+        // loading={loading}
         onRowClick={onRowClick}
         components={{
           Footer: TableFooter,

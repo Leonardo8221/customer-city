@@ -1,26 +1,28 @@
-import { FC, useState } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { Box } from '@mui/material';
 
 import { ReactComponent as SearchIcon } from 'assets/icons/searchGray.svg';
+import { OptionValue } from 'core/types';
 import { CustomDropdown } from '../CustomDropdown';
 
 interface SearchDropdownProps {
   id: string;
   placeholder: string;
   label?: string;
+  options?: OptionValue<string>[];
+  onSelect: (selectedValue: string) => void;
+  onChange: (value: string) => void;
 }
 
-const SearchDropdown: FC<SearchDropdownProps> = ({ id, placeholder, label }) => {
-  const [selectedValue, setSelectedValue] = useState('');
-
+const SearchDropdown: FC<SearchDropdownProps> = ({ id, placeholder, label, options = [], onSelect, onChange }) => {
   return (
     <CustomDropdown<string>
       id={id}
       label={label}
       placeholder={placeholder}
-      value={selectedValue}
-      options={[]}
-      onSelect={(value) => setSelectedValue(value)}
+      value=""
+      options={options}
+      onSelect={(value) => onSelect(value)}
       labelSx={{ color: 'neutral.main' }}
       withPopupIcon={false}
       InputProps={{
@@ -29,7 +31,9 @@ const SearchDropdown: FC<SearchDropdownProps> = ({ id, placeholder, label }) => 
             <SearchIcon />
           </Box>
         ),
+        onChange: (event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value),
       }}
+      disableClearable={false}
     />
   );
 };

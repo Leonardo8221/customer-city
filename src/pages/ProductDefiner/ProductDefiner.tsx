@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useMemo } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
@@ -10,10 +10,13 @@ import { Loader } from 'components/Loader';
 import { Container, ProductsSection, ProducsContainer, CounterContainer, SectionTitleContainer } from './ui';
 import { ProductModal } from './components';
 import { ProductsTable } from './components/ProductsTable';
+import { OptionValue } from 'core/types';
 
 const ProductDefiner: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterValue, setFilterValue] = useState('');
   const { loading, error, products, getProducts } = useProduct();
 
   useEffect(() => {
@@ -26,6 +29,21 @@ const ProductDefiner: FC = () => {
     setModalOpen((prevState) => !prevState);
   };
 
+  const suggestions = useMemo(() => {
+    if (!searchTerm) return [];
+    const regex = new RegExp(searchTerm, 'i');
+    return products.reduce((acc, val) => {
+      const productName = val.productName;
+      if (productName.match(regex)) acc.push({ label: productName, value: productName });
+      return acc;
+    }, [] as OptionValue<string>[]);
+  }, [products, searchTerm]);
+
+  const data = useMemo(() => {
+    if (!filterValue) return products;
+    return products.filter((product) => product.productName === filterValue);
+  }, [products, filterValue]);
+
   return (
     <Container>
       <Grid container spacing={2} sx={{ backgroundColor: 'neutral.white', padding: '24px 32px 16px' }}>
@@ -36,7 +54,13 @@ const ProductDefiner: FC = () => {
 
           <Box display="flex" flexDirection="row" alignItems="center" marginTop={2.5}>
             <Box width="250px" marginRight={2}>
-              <SearchDropdown id="search-products" placeholder="Search all products..." />
+              <SearchDropdown
+                id="search-products"
+                placeholder="Search all products..."
+                options={suggestions}
+                onSelect={(term) => setFilterValue(term)}
+                onChange={(term) => setSearchTerm(term)}
+              />
             </Box>
           </Box>
         </Grid>
@@ -53,6 +77,7 @@ const ProductDefiner: FC = () => {
       <ProductsSection>
         {products.length > 0 ? (
           <ProductsTable
+            products={data}
             setSelectedProduct={(product) => {
               setSelectedProduct(product);
               toggleModal();
