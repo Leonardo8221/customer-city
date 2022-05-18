@@ -30,7 +30,10 @@ const ProductDefiner: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toggleModal = () => setModalOpen((prevState) => !prevState);
+  const toggleModal = () => {
+    if (modalOpen && selectedProduct) setSelectedProduct(undefined);
+    setModalOpen((prevState) => !prevState);
+  };
 
   return (
     <Container>

@@ -34,10 +34,10 @@ const columns: GridColDef[] = [
     valueGetter: (params: GridValueGetterParams) => `$ ${params.row.productPrice}`,
   },
   {
-    field: 'updatedAt',
+    field: 'productUpdatedAt',
     headerName: 'Last Activity',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.updatedAt), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.productUpdatedAt), 'PP'),
   },
 ];
 
