@@ -7,10 +7,11 @@ import { PrimaryButton, SecondaryButton } from 'components/ui';
 import { Product } from 'store/product/types';
 import { useProduct } from 'store/product/hooks';
 import { Loader } from 'components/Loader';
+import { OptionValue } from 'core/types';
+import { useAuth } from 'store/auth/hooks';
 import { Container, ProductsSection, ProducsContainer, CounterContainer, SectionTitleContainer } from './ui';
 import { ProductModal } from './components';
 import { ProductsTable } from './components/ProductsTable';
-import { OptionValue } from 'core/types';
 
 const ProductDefiner: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -18,6 +19,7 @@ const ProductDefiner: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, products, getProducts } = useProduct();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     getProducts();
@@ -65,13 +67,15 @@ const ProductDefiner: FC = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
-          <SecondaryButton>Import</SecondaryButton>
+        {isAdmin && (
+          <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
+            <SecondaryButton>Import</SecondaryButton>
 
-          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
-            Add product
-          </PrimaryButton>
-        </Grid>
+            <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
+              Add product
+            </PrimaryButton>
+          </Grid>
+        )}
       </Grid>
 
       <ProductsSection>
@@ -98,13 +102,17 @@ const ProductDefiner: FC = () => {
             </SectionTitleContainer>
 
             <ProducsContainer marginTop={1}>
-              <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
-                You have not added any products yet
-              </Typography>
-
-              <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }} onClick={toggleModal}>
-                Add new product
-              </PrimaryButton>
+              {isAdmin && (
+                <>
+                  {' '}
+                  <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
+                    You have not added any products yet
+                  </Typography>
+                  <PrimaryButton startIcon={<PlusIcon />} sx={{ marginTop: 3 }} onClick={toggleModal}>
+                    Add new product
+                  </PrimaryButton>{' '}
+                </>
+              )}
             </ProducsContainer>
           </>
         )}

@@ -22,9 +22,11 @@ export const useAuth = (): AuthReturnHook => {
   const dispatch = useDispatch();
 
   const roles = useMemo(() => {
-    const userRoles = { isSuperAdmin: false, isAdmin: false };
+    const userRoles = { isSuperAdmin: false, isAdmin: false, isOwner: false, isBusinessUser: false };
     if (authState.role === UserRole.SUPER_AMIN) userRoles.isSuperAdmin = true;
-    if (authState.role === UserRole.ADMIN) userRoles.isAdmin = true;
+    else if (authState.role === UserRole.ADMIN) userRoles.isAdmin = true;
+    else if (authState.role === UserRole.OWNER) userRoles.isOwner = true;
+    else if (authState.role === UserRole.USER) userRoles.isBusinessUser = true;
     return userRoles;
   }, [authState.role]);
 
