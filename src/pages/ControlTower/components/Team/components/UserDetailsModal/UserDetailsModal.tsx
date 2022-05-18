@@ -12,6 +12,7 @@ import { UserRole } from 'core/types';
 import { USER_ROLE_OPTIONS } from 'core/constants';
 import { userSelector, useUser } from 'store/user/hooks';
 import { RootState } from 'store/types';
+import { useAuth } from 'store/auth/hooks';
 import { Container, Modal, Header, HeaderTitleContainer, Footer, Main, NameContainer, RoleSelectContainer } from './ui';
 
 interface UserDetailsModalProps {
@@ -23,8 +24,9 @@ interface UserDetailsModalProps {
 const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { getUsers } = useUser();
+  const { user: currentUser, getUsers } = useUser();
   const user = useSelector((state: RootState) => userSelector(state, userId));
+  const { isAdmin } = useAuth();
 
   const onClose = () => {
     if (error) setError(false);
@@ -138,19 +140,23 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
           </Box>
         </Main>
 
-        <Divider />
+        {isAdmin && userId !== currentUser?.userId && (
+          <>
+            <Divider />
 
-        <Footer>
-          <LoadingRedButton fullWidth onClick={toggleActiveUser} loading={loading}>
-            {user?.userActive ? 'Inactivate User' : 'Reactivate User'}
-          </LoadingRedButton>
+            <Footer>
+              <LoadingRedButton fullWidth onClick={toggleActiveUser} loading={loading}>
+                {user?.userActive ? 'Inactivate User' : 'Reactivate User'}
+              </LoadingRedButton>
 
-          {!!error && (
-            <Typography variant="caption" sx={{ color: 'red.main', marginTop: 1.5 }}>
-              {typeof error === 'string' ? error : 'Something went wrong!'}
-            </Typography>
-          )}
-        </Footer>
+              {!!error && (
+                <Typography variant="caption" sx={{ color: 'red.main', marginTop: 1.5 }}>
+                  {typeof error === 'string' ? error : 'Something went wrong!'}
+                </Typography>
+              )}
+            </Footer>
+          </>
+        )}
       </Container>
     </Modal>
   );
