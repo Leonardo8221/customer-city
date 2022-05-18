@@ -5,6 +5,7 @@ import format from 'date-fns/format';
 
 import { TableFooter } from 'components/TableFooter';
 import { Product } from 'store/product/types';
+import { mapProductCategoryToLabel, mapProductRateChargeTypeToLabel } from 'core/utils';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
 import './ProductsTable.css';
 
@@ -18,13 +19,13 @@ const columns: GridColDef[] = [
     field: 'productCategory',
     headerName: 'Category',
     flex: 1,
-    valueGetter: () => 'Base Product',
+    valueGetter: (params: GridValueGetterParams) => mapProductCategoryToLabel(params.row.productCategory),
   },
   {
     field: 'productRateChargeType',
     headerName: 'Rate Change Type',
     flex: 1,
-    valueGetter: () => 'Recurring',
+    valueGetter: (params: GridValueGetterParams) => mapProductRateChargeTypeToLabel(params.row.productRateChargeType),
   },
   {
     field: 'productPrice',
