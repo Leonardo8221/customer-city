@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, MouseEvent } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
 
 import { Form, Input, LoadingButton } from 'components/ui';
@@ -14,7 +14,8 @@ const Account: FC = () => {
     if (success) setEmail('');
   }, [success]);
 
-  const onSubmit = () => {
+  const onSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     if (!email || !password) return;
     changePassword({ email, password });
   };

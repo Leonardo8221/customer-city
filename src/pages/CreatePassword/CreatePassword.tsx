@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { FC, useState, useEffect, Dispatch, SetStateAction, MouseEvent } from 'react';
 import { Typography, Box, InputLabel, FormHelperText } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -49,7 +49,8 @@ const CreatePassword: FC = () => {
     debouncedValidatePassword(password, setValid);
   }, [password]);
 
-  const onSubmit = () => {
+  const onSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     if (!password) return;
     if (token) confirmPasswordReset({ token, password });
     else setNewPassword(password);

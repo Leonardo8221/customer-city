@@ -222,7 +222,10 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                   variant="contained"
                   disabled={!(isValid && dirty)}
                   loading={loading}
-                  onClick={() => handleSubmit()}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleSubmit();
+                  }}
                   type="submit"
                 >
                   {product ? 'Update the product' : 'Add the product'}

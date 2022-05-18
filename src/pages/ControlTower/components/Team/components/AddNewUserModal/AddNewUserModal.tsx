@@ -191,7 +191,10 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                   variant="contained"
                   disabled={!(isValid && dirty)}
                   loading={loading}
-                  onClick={() => handleSubmit()}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleSubmit();
+                  }}
                   type="submit"
                 >
                   Add new user

@@ -117,7 +117,10 @@ const ResetPassword: FC = () => {
                 disabled={!values.email || !!errors.email}
                 sx={{ marginTop: 4 }}
                 type="submit"
-                onClick={() => handleSubmit()}
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleSubmit();
+                }}
               >
                 Reset password
               </LoadingButton>

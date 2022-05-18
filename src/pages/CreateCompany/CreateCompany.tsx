@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent, useEffect } from 'react';
+import { FC, useState, ChangeEvent, useEffect, MouseEvent } from 'react';
 import { Container, Grid, FormHelperText } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import omitBy from 'lodash.omitby';
@@ -40,7 +40,9 @@ const CreateCompany: FC = () => {
     setCompany((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event: MouseEvent) => {
+    event.preventDefault();
+
     if (!company.companyName || !company.ownerName || !company.ownerEmail) return;
 
     if (!state) {
