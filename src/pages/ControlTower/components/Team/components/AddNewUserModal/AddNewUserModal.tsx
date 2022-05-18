@@ -11,11 +11,11 @@ import { CustomDropdown } from 'components/CustomDropdown';
 import { UserRole } from 'core/types';
 import { CustomInput } from 'components/CustomInput';
 import { PHONE_REGEX } from 'core/constants';
+import { useUser } from 'store/user/hooks';
 
 interface AddNewUserModalProps {
   open: boolean;
   toggleOpen: () => void;
-  getUsers: () => Promise<void>;
 }
 
 interface FormValues {
@@ -42,10 +42,11 @@ const initialValues: FormValues = {
   userRole: UserRole.USER,
 };
 
-const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen, getUsers }) => {
+const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
+  const { getUsers } = useUser();
 
   const closeModal = () => {
     formRef.current?.resetForm();

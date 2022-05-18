@@ -1,14 +1,17 @@
-import { FC, useCallback, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowParams } from '@mui/x-data-grid';
 
-import { getUsers as getUsersApi, updateUser as updateUserApi } from 'http/user';
+import { updateUser as updateUserApi } from 'http/user';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { TableFooter } from 'components/TableFooter';
 import { UserRole } from 'core/types';
 import { SecondaryButton } from 'components/ui';
 import { CustomSelect } from 'components/CustomSelect';
 import { USER_ROLE_OPTIONS } from 'core/constants';
+import { User } from 'store/user/types';
+import { Loader } from 'components/Loader';
+import { useUser } from 'store/user/hooks';
 import {
   Container,
   BaseCheckbox,
@@ -19,8 +22,6 @@ import {
 } from './ui';
 import { AddNewUserModal, UserDetailsModal } from './components';
 import './Team.css';
-import { User } from 'store/user/types';
-import { Loader } from 'components/Loader';
 
 const columns: GridColDef[] = [
   {
@@ -59,21 +60,8 @@ const Team: FC = () => {
   const [modalOpen, setModalOpened] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [pageSize, setPageSize] = useState(5);
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
-
-  const getUsers = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await getUsersApi();
-      setUsers(data);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }, []);
+  const [selectedUserId, setSelectedUserId] = useState<number | undefined>(undefined);
+  const { loading, error, users, getUsers } = useUser();
 
   useEffect(() => {
     getUsers();
@@ -83,12 +71,12 @@ const Team: FC = () => {
   const toggleModal = () => setModalOpened((prevState) => !prevState);
 
   const toggleDetails = () => {
-    if (detailsOpen) setSelectedUser(undefined);
+    if (detailsOpen) setSelectedUserId(undefined);
     setDetailsOpen((prevState) => !prevState);
   };
 
   const onRowClick = (params: GridRowParams) => {
-    setSelectedUser(params.row);
+    setSelectedUserId(params.row.userId);
     toggleDetails();
   };
 
@@ -142,9 +130,9 @@ const Team: FC = () => {
         )}
       </Grid>
 
-      <AddNewUserModal open={modalOpen} toggleOpen={toggleModal} getUsers={getUsers} />
+      <AddNewUserModal open={modalOpen} toggleOpen={toggleModal} />
 
-      <UserDetailsModal open={detailsOpen} toggleOpen={toggleDetails} user={selectedUser} />
+      <UserDetailsModal open={detailsOpen} toggleOpen={toggleDetails} userId={selectedUserId} />
 
       {loading && <Loader />}
     </Container>

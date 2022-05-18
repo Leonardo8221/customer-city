@@ -12,6 +12,7 @@ export interface User {
   userName: string;
   userEmail: string;
   userRole: UserRole;
+  userActive: boolean;
   companyId?: number;
   userCreatedAt: Date;
   userUpdatedAt: Date;
@@ -23,12 +24,14 @@ export interface UserState {
   error: string | boolean;
   success: string | boolean;
   user: User | null;
+  users: User[];
 }
 
 export interface UserReturnHook extends UserState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getCurrentUser: () => void;
+  getUsers: () => void;
 }
 
 export interface CreateUserData {

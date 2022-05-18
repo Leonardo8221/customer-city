@@ -1,6 +1,6 @@
-import { ActionReducerMapBuilder, createSlice } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getCurrentUser } from './actions';
+import { setError, setSuccess, getCurrentUser, getUsers } from './actions';
 import { UserState } from './types';
 
 const initialState: UserState = {
@@ -8,6 +8,7 @@ const initialState: UserState = {
   error: false,
   success: false,
   user: null,
+  users: [],
 };
 
 const userStore = createSlice({
@@ -28,13 +29,18 @@ const userStore = createSlice({
       state.user = payload;
     });
 
-    builder.addCase(getCurrentUser.pending, (state) => {
+    builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.users = payload;
+    });
+
+    builder.addMatcher(isAnyOf(getCurrentUser.pending, getUsers.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.success = false;
     });
 
-    builder.addCase(getCurrentUser.rejected, (state, { error }) => {
+    builder.addMatcher(isAnyOf(getCurrentUser.rejected, getUsers.rejected), (state, { error }) => {
       state.loading = false;
       state.error = error?.message ?? true;
       state.success = false;
