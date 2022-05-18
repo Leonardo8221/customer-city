@@ -1,3 +1,5 @@
+import { ProductCategory, ProductCurrency } from 'store/product/types';
+import { ProductRateChargeType } from 'store/product/types';
 import { PRIVATE_ABS_ROUTE_PATHS } from './constants';
 import { UserRole } from './types';
 
@@ -78,5 +80,75 @@ export const mapLabelToUserRole = (label: string): UserRole => {
       return UserRole.USER;
     default:
       return UserRole.SUPER_AMIN;
+  }
+};
+
+export const mapProductCategoryToLabel = (category: ProductCategory): string => {
+  switch (category) {
+    case ProductCategory.BASE_PRODUCT:
+      return 'Base Product';
+    case ProductCategory.ADD_ON:
+      return 'Add On';
+    case ProductCategory.MISC_PRODUCT:
+      return 'Misc Product';
+    default:
+      return 'Unknown Category';
+  }
+};
+
+export const mapLabelToProductCategory = (label: string): ProductCategory => {
+  switch (label) {
+    case 'Base Product':
+      return ProductCategory.BASE_PRODUCT;
+    case 'Add On':
+      return ProductCategory.ADD_ON;
+    case 'Misc Product':
+      return ProductCategory.MISC_PRODUCT;
+    default:
+      return ProductCategory.BASE_PRODUCT;
+  }
+};
+
+export const mapProductRateChargeTypeToLabel = (category: ProductRateChargeType): string => {
+  switch (category) {
+    case ProductRateChargeType.ONE_TIME:
+      return 'One time';
+    case ProductRateChargeType.RECURRING:
+      return 'Recurring';
+    case ProductRateChargeType.USAGE:
+      return 'Usage';
+    default:
+      return 'Unknown Rate Charge Type';
+  }
+};
+
+export const mapLabelToProductRateChargeType = (label: string): ProductRateChargeType => {
+  switch (label) {
+    case 'One time':
+      return ProductRateChargeType.ONE_TIME;
+    case 'Recurring':
+      return ProductRateChargeType.RECURRING;
+    case 'Usage':
+      return ProductRateChargeType.USAGE;
+    default:
+      return ProductRateChargeType.ONE_TIME;
+  }
+};
+
+export const mapProductCurrencyToLabel = (category: ProductCurrency): string => {
+  switch (category) {
+    case ProductCurrency.USD:
+      return '$ USD (US Dollar)';
+    default:
+      return 'Unknown Currency';
+  }
+};
+
+export const mapLabelToProductCurrency = (label: string): ProductCurrency => {
+  switch (label) {
+    case '$ USD (US Dollar)':
+      return ProductCurrency.USD;
+    default:
+      return ProductCurrency.USD;
   }
 };

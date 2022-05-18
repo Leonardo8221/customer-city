@@ -4,13 +4,16 @@ import { LoadingButton } from '@mui/lab';
 import { Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
 
+import { createProduct as createProductApi, updateProduct as updateProductApi } from 'http/product';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter, TextButton } from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { CustomTextArea } from 'components/CustomTextarea';
+import { Product, ProductCategory, ProductCurrency, ProductRateChargeType } from 'store/product/types';
+import { useProduct } from 'store/product/hooks';
+import { PRODUCT_RATE_CHARGE_TYPE_OPTIONS, PRODUCT_CATEGORY_OPTIONS, PRODUCT_CURRENCY_OPTIONS } from 'core/constants';
 import { PriceCurrencyContainer, Paper } from './ui';
-import { Product } from 'store/product/types';
 
 interface FormValues {
   productName: string;
@@ -40,16 +43,28 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
+  const { getProducts } = useProduct();
 
   const closeModal = () => {
     formRef.current?.resetForm();
     toggleOpen();
   };
 
-  const onSubmit = () => {
+  const onSubmit = async (values: FormValues) => {
     setLoading(true);
     try {
-      // TODO:
+      const data: Partial<Product> = {
+        ...values,
+        productCategory: values.productCategory as ProductCategory,
+        productRateChargeType: values.productRateChargeType as ProductRateChargeType,
+        productPrice: parseFloat(values.productPrice),
+      };
+
+      if (product) await updateProductApi(product.productId, data);
+      else await createProductApi(data);
+
+      getProducts();
+
       closeModal();
     } catch (err) {
       setError(true);
@@ -63,7 +78,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
     productCategory: product?.productCategory ?? '',
     productRateChargeType: product?.productRateChargeType ?? '',
     productPrice: product?.productPrice.toString() ?? '',
-    productCurrency: 'USD',
+    productCurrency: ProductCurrency.USD,
   };
 
   return (
@@ -133,12 +148,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                         label="Category"
                         placeholder="Not selected"
                         value={values.productCategory}
-                        options={[
-                          { label: 'Not selected', value: '' },
-                          { label: 'Base product', value: 'base' },
-                          { label: 'Add On', value: 'add-on' },
-                          { label: 'Misc Product', value: 'misc' },
-                        ]}
+                        options={PRODUCT_CATEGORY_OPTIONS}
                         onSelect={(value) => setFieldValue('productCategory', value)}
                         InputProps={{
                           error: touched.productCategory && !!errors.productCategory,
@@ -154,12 +164,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                         label="Rate Charge Type"
                         placeholder="Not selected"
                         value={values.productRateChargeType}
-                        options={[
-                          { label: 'Not selected', value: '' },
-                          { label: 'One time', value: 'one-time' },
-                          { label: 'Recurring', value: 'recurring' },
-                          { label: 'Usage', value: 'usage' },
-                        ]}
+                        options={PRODUCT_RATE_CHARGE_TYPE_OPTIONS}
                         onSelect={(value) => setFieldValue('productRateChargeType', value)}
                         InputProps={{
                           error: touched.productRateChargeType && !!errors.productRateChargeType,
@@ -189,7 +194,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                           label="Currency"
                           placeholder="Not selected"
                           value={values.productCurrency}
-                          options={[{ label: '$ USD (US Dollar)', value: 'USD' }]}
+                          options={PRODUCT_CURRENCY_OPTIONS}
                           onSelect={(value) => setFieldValue('productCurrency', value)}
                         />
                       </PriceCurrencyContainer>

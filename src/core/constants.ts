@@ -1,5 +1,11 @@
+import { ProductCategory, ProductCurrency, ProductRateChargeType } from 'store/product/types';
 import { OptionValue, UserRole } from './types';
-import { mapUserRoleToLabel } from './utils';
+import {
+  mapUserRoleToLabel,
+  mapProductRateChargeTypeToLabel,
+  mapProductCategoryToLabel,
+  mapProductCurrencyToLabel,
+} from './utils';
 
 export const AUTH_SESSION_KEY = 'customerCity/AUTH_SESSION_KEY';
 
@@ -56,3 +62,26 @@ export const WEBSITE_REGEX =
   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 
 export const DOMAIN_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/;
+
+export const PRODUCT_RATE_CHARGE_TYPE_OPTIONS = [
+  { label: 'Not selected', value: '' },
+  ...Object.values(ProductRateChargeType).map((type) => ({
+    label: mapProductRateChargeTypeToLabel(type),
+    value: type,
+  })),
+];
+
+export const PRODUCT_CATEGORY_OPTIONS = [
+  { label: 'Not selected', value: '' },
+  ...Object.values(ProductCategory).map((category) => ({
+    label: mapProductCategoryToLabel(category),
+    value: category,
+  })),
+];
+
+export const PRODUCT_CURRENCY_OPTIONS = [
+  ...Object.values(ProductCurrency).map((category) => ({
+    label: mapProductCurrencyToLabel(category),
+    value: category,
+  })),
+];
