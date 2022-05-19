@@ -1,15 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { CompanyState } from './types';
-import {
-  setError,
-  setSuccess,
-  getCompanies,
-  createCompany,
-  updateCompany,
-  deleteCompanies,
-  getCompany,
-} from './actions';
+import { setError, setSuccess, getCompanies, createCompany, updateCompany, getCompany } from './actions';
 import { logout } from '../auth/actions';
 
 const initialState: CompanyState = {
@@ -50,24 +42,13 @@ const companyStore = createSlice({
 
     builder.addCase(logout, () => initialState);
 
-    builder.addCase(deleteCompanies.fulfilled, (state) => {
-      state.loading = false;
-      state.success = 'Company(ies) deleted successfully!';
-    });
-
     builder.addCase(getCompany.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.company = payload;
     });
 
     builder.addMatcher(
-      isAnyOf(
-        getCompanies.pending,
-        createCompany.pending,
-        updateCompany.pending,
-        deleteCompanies.pending,
-        getCompany.pending,
-      ),
+      isAnyOf(getCompanies.pending, createCompany.pending, updateCompany.pending, getCompany.pending),
       (state) => {
         state.loading = true;
         state.error = false;
@@ -76,13 +57,7 @@ const companyStore = createSlice({
     );
 
     builder.addMatcher(
-      isAnyOf(
-        getCompanies.rejected,
-        createCompany.rejected,
-        updateCompany.rejected,
-        deleteCompanies.rejected,
-        getCompany.rejected,
-      ),
+      isAnyOf(getCompanies.rejected, createCompany.rejected, updateCompany.rejected, getCompany.rejected),
       (state, { error }) => {
         state.loading = false;
         state.error = error?.message ?? true;
