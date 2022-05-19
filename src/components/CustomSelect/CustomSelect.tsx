@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SelectChangeEvent, SxProps, Theme } from '@mui/material';
 
 import { Select, OptionItem } from './ui';
@@ -31,7 +31,11 @@ const CustomSelect = <T extends OptionValue>({
   fullWidth,
   placeholder,
 }: CustomSelectProps<T>): JSX.Element => {
-  const [selectedValue, setSelectedValue] = useState<T>(value);
+  const [selectedValue, setSelectedValue] = useState<T>();
+
+  useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
 
   const onChange = async (event: SelectChangeEvent<unknown>) => {
     setSelectedValue(event.target.value as T);

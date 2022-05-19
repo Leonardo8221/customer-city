@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowParams } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
 
 import { updateUser as updateUserApi, deleteUser as deleteUserApi } from 'http/user';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
@@ -11,7 +12,8 @@ import { CustomSelect } from 'components/CustomSelect';
 import { USER_ROLE_OPTIONS } from 'core/constants';
 import { User } from 'store/user/types';
 import { Loader } from 'components/Loader';
-import { useUser } from 'store/user/hooks';
+import { userSelector, useUser } from 'store/user/hooks';
+import { RootState } from 'store/types';
 import {
   Container,
   BaseCheckbox,
@@ -42,6 +44,23 @@ const TeamFooter: FC = () => {
   );
 };
 
+const UserRoleCell: FC<{ userId: number }> = ({ userId }) => {
+  const { updateUser } = useUser();
+  const user = useSelector((state: RootState) => userSelector(state, userId));
+
+  return (
+    <CustomSelect<UserRole>
+      value={user?.userRole as UserRole}
+      options={USER_ROLE_OPTIONS}
+      onSelect={async (value) => {
+        if (!user?.userId) return;
+        await updateUserApi(user.userId, { userRole: value });
+        updateUser({ userId: user.userId, user: { userRole: value } });
+      }}
+    />
+  );
+};
+
 const columns: GridColDef[] = [
   {
     field: 'userName',
@@ -57,16 +76,7 @@ const columns: GridColDef[] = [
     field: 'userRole',
     headerName: 'Role',
     flex: 1,
-    renderCell: (params: GridRenderCellParams<string>) => (
-      <CustomSelect<UserRole>
-        value={params.value as UserRole}
-        options={USER_ROLE_OPTIONS}
-        onSelect={async (value) => {
-          if (!params.row?.userId) return;
-          await updateUserApi(params.row.userId, { userRole: value });
-        }}
-      />
-    ),
+    renderCell: (params: GridRenderCellParams<string>) => <UserRoleCell userId={params.row.userId} />,
   },
   {
     field: 'permissions',

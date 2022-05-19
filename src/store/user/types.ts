@@ -32,6 +32,7 @@ export interface UserReturnHook extends UserState {
   setSuccess: (success: string | boolean) => void;
   getCurrentUser: () => void;
   getUsers: () => void;
+  updateUser: (data: UpdateUserData) => void;
 }
 
 export interface CreateUserData {
@@ -41,4 +42,10 @@ export interface CreateUserData {
   workPhoneNumber: string;
   additionalPhoneNumber?: string;
   profileJobRole?: string;
+}
+
+export interface UpdateUserData {
+  userId: number;
+  user?: Partial<Omit<User, 'profile'>>;
+  profile?: Partial<Profile>;
 }

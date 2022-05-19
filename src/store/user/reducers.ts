@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getCurrentUser, getUsers } from './actions';
+import { setError, setSuccess, getCurrentUser, getUsers, updateUser } from './actions';
 import { UserState } from './types';
 
 const initialState: UserState = {
@@ -32,6 +32,10 @@ const userStore = createSlice({
     builder.addCase(getUsers.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.users = payload;
+    });
+
+    builder.addCase(updateUser, (state, { payload }) => {
+      state.users[payload.index] = payload.user;
     });
 
     builder.addMatcher(isAnyOf(getCurrentUser.pending, getUsers.pending), (state) => {

@@ -24,7 +24,7 @@ interface UserDetailsModalProps {
 const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { user: currentUser, getUsers } = useUser();
+  const { user: currentUser, updateUser } = useUser();
   const user = useSelector((state: RootState) => userSelector(state, userId));
   const { isAdmin } = useAuth();
 
@@ -41,7 +41,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
     try {
       const action = user.userActive ? inactivateUserApi : reactivateUserApi;
       await action(user.userId);
-      getUsers();
+      updateUser({ userId: user.userId, user: { userActive: !user.userActive } });
     } catch (err) {
       setError(true);
     }
@@ -49,7 +49,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} keepMounted>
       <Container>
         <Header>
           <HeaderTitleContainer>
@@ -73,6 +73,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               onSave={async (value) => {
                 if (!user?.userId) return;
                 await updateUserApi(user.userId, { userName: value });
+                updateUser({ userId: user.userId, user: { userName: value } });
               }}
             />
           </NameContainer>
@@ -83,11 +84,12 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
             </Typography>
 
             <CustomSelect<UserRole>
-              value={UserRole.USER}
+              value={user?.userRole as UserRole}
               options={USER_ROLE_OPTIONS}
               onSelect={async (value) => {
                 if (!user?.userId) return;
                 await updateUserApi(user.userId, { userRole: value });
+                updateUser({ userId: user.userId, user: { userRole: value } });
               }}
             />
           </RoleSelectContainer>
@@ -105,6 +107,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               onSave={async (value) => {
                 if (!user?.userId) return;
                 await updateUserApi(user.userId, { userEmail: value });
+                updateUser({ userId: user.userId, user: { userEmail: value } });
               }}
             />
           </Box>
@@ -120,6 +123,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               onSave={async (value) => {
                 if (!user?.userId) return;
                 await updateUserApi(user.userId, { workPhoneNumber: value });
+                updateUser({ userId: user.userId, profile: { workPhoneNumber: value } });
               }}
             />
           </Box>
@@ -135,6 +139,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               onSave={async (value) => {
                 if (!user?.userId) return;
                 await updateUserApi(user.userId, { additionalPhoneNumber: value });
+                updateUser({ userId: user.userId, profile: { additionalPhoneNumber: value } });
               }}
             />
           </Box>

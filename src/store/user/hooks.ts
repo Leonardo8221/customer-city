@@ -1,10 +1,10 @@
 import { shallowEqual, useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 
 import { useActionCreator } from 'hooks';
 import { RootState } from 'store/types';
 import { User, UserReturnHook } from './types';
-import { setError, setSuccess, getCurrentUser, getUsers } from './actions';
-import { createSelector } from '@reduxjs/toolkit';
+import { setError, setSuccess, getCurrentUser, getUsers, updateUserAction } from './actions';
 
 export const userSelector = createSelector(
   (state: RootState) => state.user.users,
@@ -21,5 +21,6 @@ export const useUser = (): UserReturnHook => {
     setSuccess: useActionCreator(setSuccess),
     getCurrentUser: useActionCreator(getCurrentUser),
     getUsers: useActionCreator(getUsers),
+    updateUser: useActionCreator(updateUserAction),
   };
 };
