@@ -13,3 +13,5 @@ export const createUser = (data: CreateUserData): Promise<User> => apiCall({ met
 export const inactivateUser = (id: number): Promise<null> => apiCall({ method: 'put', url: `/user/${id}/inactivate` });
 
 export const reactivateUser = (id: number): Promise<null> => apiCall({ method: 'put', url: `/user/${id}/reactivate` });
+
+export const deleteUser = (id: number): Promise<null> => apiCall({ method: 'delete', url: `/user/${id}` });

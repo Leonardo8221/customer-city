@@ -3,11 +3,29 @@ import { Box } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams, GridRowParams } from '@mui/x-data-grid';
 import format from 'date-fns/format';
 
+import { deleteProduct as deleteProductApi } from 'http/product';
 import { TableFooter } from 'components/TableFooter';
 import { Product } from 'store/product/types';
 import { mapProductCategoryToLabel, mapProductRateChargeTypeToLabel } from 'core/utils';
+import { useProduct } from 'store/product/hooks';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
 import './ProductsTable.css';
+
+const ProductFooter: FC = () => {
+  const { getProducts } = useProduct();
+
+  return (
+    <TableFooter
+      entity="product"
+      pluralEntity="products"
+      idProp="productId"
+      onDelete={async (ids: number[]) => {
+        await Promise.all(ids.map((id) => deleteProductApi(id)));
+      }}
+      onSuccess={getProducts}
+    />
+  );
+};
 
 const columns: GridColDef[] = [
   {
@@ -67,7 +85,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ products, setSelectedProduct })
         // loading={loading}
         onRowClick={onRowClick}
         components={{
-          Footer: TableFooter,
+          Footer: ProductFooter,
           BaseCheckbox,
           ColumnSortedAscendingIcon,
           ColumnSortedDescendingIcon,

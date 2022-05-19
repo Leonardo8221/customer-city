@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridRowParams } from '@mui/x-data-grid';
 
-import { updateUser as updateUserApi } from 'http/user';
+import { updateUser as updateUserApi, deleteUser as deleteUserApi } from 'http/user';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { TableFooter } from 'components/TableFooter';
 import { UserRole } from 'core/types';
@@ -21,6 +21,26 @@ import {
   TitleContainer,
 } from './ui';
 import { AddNewUserModal, UserDetailsModal } from './components';
+
+const TeamFooter: FC = () => {
+  const { user, getUsers } = useUser();
+
+  return (
+    <TableFooter
+      entity="user"
+      pluralEntity="users"
+      idProp="userId"
+      onDelete={async (ids: number[]) => {
+        const filteredIds = ids.reduce((acc, val) => {
+          if (val !== user?.userId) acc.push(val);
+          return acc;
+        }, [] as number[]);
+        await Promise.all(filteredIds.map((id) => deleteUserApi(id)));
+      }}
+      onSuccess={getUsers}
+    />
+  );
+};
 
 const columns: GridColDef[] = [
   {
@@ -107,7 +127,7 @@ const Team: FC = () => {
             loading={loading}
             onRowClick={onRowClick}
             components={{
-              Footer: TableFooter,
+              Footer: TeamFooter,
               BaseCheckbox,
               ColumnSortedAscendingIcon,
               ColumnSortedDescendingIcon,
