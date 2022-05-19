@@ -3,11 +3,29 @@ import { Container, Grid, Typography, Box } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 
+import { deleteCompany as deleteCompanyApi } from 'http/company';
 import { Button } from 'components/ui';
 import { privateRoutePaths } from 'router/routes';
 import { useCompany } from 'store/company/hooks';
 import { TableFooter } from 'components/TableFooter';
 import { Company } from 'store/company/types';
+import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
+
+const CompanyFooter: FC = () => {
+  const { getCompanies } = useCompany();
+
+  return (
+    <TableFooter
+      entity="company"
+      pluralEntity="companies"
+      idProp="companyId"
+      onDelete={async (ids: number[]) => {
+        await Promise.all(ids.map((id) => deleteCompanyApi(id)));
+      }}
+      onSuccess={getCompanies}
+    />
+  );
+};
 
 const columns: GridColDef[] = [
   {
@@ -48,7 +66,7 @@ const SuperAdmin: FC = () => {
           <Typography variant="h6">Users</Typography>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ height: 480, width: '100%' }}>
           <DataGrid
             rows={companies}
             columns={columns}
@@ -56,11 +74,20 @@ const SuperAdmin: FC = () => {
             rowsPerPageOptions={[10]}
             checkboxSelection
             disableSelectionOnClick
-            autoHeight
             loading={loading}
             onRowClick={onRowClick}
-            components={{ Footer: TableFooter }}
             getRowId={(row: Company) => row.companyId}
+            headerHeight={40}
+            rowHeight={64}
+            components={{
+              Footer: CompanyFooter,
+              BaseCheckbox,
+              ColumnSortedAscendingIcon,
+              ColumnSortedDescendingIcon,
+              ColumnUnsortedIcon,
+            }}
+            disableColumnMenu
+            disableVirtualization
           />
         </Grid>
 
