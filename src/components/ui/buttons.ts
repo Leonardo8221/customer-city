@@ -1,20 +1,44 @@
-import { styled, Button as MuiButton, alpha } from '@mui/material';
+import { styled, Button as MuiButton, alpha, darken } from '@mui/material';
 import { LoadingButton as MuiLoadingButton } from '@mui/lab';
 
 export const Button = styled(MuiButton)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-export const LoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
+export const LoadingButton = styled(MuiLoadingButton)(({ theme }) => {
+  return {
+    padding: '8px 16px',
+    ':hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    ':active': {
+      backgroundColor: theme.palette.primary.main,
+    },
+    ':focused': {
+      borderColor: theme.palette.primary.dark,
+    },
+    '& .MuiButton-startIcon': {
+      marginRight: 8,
+      '& svg, & svg path': {
+        fill: theme.palette.neutral.white,
+      },
+    },
+  };
+});
+
+LoadingButton.defaultProps = { variant: 'contained' };
+
+export const RedLoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
+  backgroundColor: theme.palette.red.main,
   padding: '8px 16px',
   ':hover': {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: darken(theme.palette.red.main, 0.1),
   },
   ':active': {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.red.main,
   },
   ':focused': {
-    borderColor: theme.palette.primary.dark,
+    borderColor: darken(theme.palette.red.main, 0.1),
   },
   '& .MuiButton-startIcon': {
     marginRight: 8,
@@ -24,7 +48,7 @@ export const LoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
   },
 }));
 
-LoadingButton.defaultProps = { variant: 'contained' };
+RedLoadingButton.defaultProps = { variant: 'contained' };
 
 export const SecondaryLoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
   padding: '8px 16px',
@@ -52,7 +76,7 @@ export const SecondaryLoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
 
 SecondaryLoadingButton.defaultProps = { variant: 'outlined' };
 
-export const LoadingRedButton = styled(MuiLoadingButton)(({ theme }) => ({
+export const SecondaryRedLoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
   color: theme.palette.red.main,
   borderColor: theme.palette.red.main,
   ':hover': {
@@ -65,7 +89,7 @@ export const LoadingRedButton = styled(MuiLoadingButton)(({ theme }) => ({
   },
 }));
 
-LoadingRedButton.defaultProps = {
+SecondaryRedLoadingButton.defaultProps = {
   variant: 'outlined',
 };
 

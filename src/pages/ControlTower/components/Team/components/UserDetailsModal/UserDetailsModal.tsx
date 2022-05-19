@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { inactivateUser as inactivateUserApi, reactivateUser as reactivateUserApi } from 'http/user';
 import { updateUser as updateUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
-import { LoadingRedButton } from 'components/ui';
+import { SecondaryRedLoadingButton } from 'components/ui';
 import { EditableInput } from 'components/EditableInput';
 import { CustomSelect } from 'components/CustomSelect';
 import { UserRole } from 'core/types';
@@ -145,9 +145,9 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
             <Divider />
 
             <Footer>
-              <LoadingRedButton fullWidth onClick={toggleActiveUser} loading={loading}>
+              <SecondaryRedLoadingButton fullWidth onClick={toggleActiveUser} loading={loading}>
                 {user?.userActive ? 'Inactivate User' : 'Reactivate User'}
-              </LoadingRedButton>
+              </SecondaryRedLoadingButton>
 
               {!!error && (
                 <Typography variant="caption" sx={{ color: 'red.main', marginTop: 1.5 }}>
