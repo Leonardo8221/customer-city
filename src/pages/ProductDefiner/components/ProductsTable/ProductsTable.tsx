@@ -54,7 +54,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ products, setSelectedProduct })
   };
 
   return (
-    <Box style={{ height: 525, width: '100%' }}>
+    <Box style={{ height: 525, width: '100%' }} className="products-table">
       <DataGrid
         rows={products}
         columns={columns}

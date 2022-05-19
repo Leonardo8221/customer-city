@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { Box, Button } from '@mui/material';
 import { useGridApiContext, useGridRootProps, GridSelectedRowCount } from '@mui/x-data-grid';
 
 import { useCompany } from 'store/company/hooks';
 import { TablePagination } from '../TablePagination';
-import { Container } from './ui';
 import { CustomSelect } from '../CustomSelect';
+import { SecondaryButton } from '../ui';
+import { Container, SelectedRowsContainer } from './ui';
 
 const TableFooter: FC = () => {
   const apiRef = useGridApiContext();
@@ -31,11 +31,11 @@ const TableFooter: FC = () => {
   return (
     <Container>
       {!rootProps.hideFooterRowCount && selectedRows.size > 0 && (
-        <Box sx={{ display: 'flex' }}>
+        <SelectedRowsContainer>
           <GridSelectedRowCount selectedRowCount={selectedRows.size} />
 
-          <Button onClick={onDelete}>Delete</Button>
-        </Box>
+          <SecondaryButton onClick={onDelete}>Delete</SecondaryButton>
+        </SelectedRowsContainer>
       )}
 
       <CustomSelect<number>

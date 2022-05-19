@@ -21,7 +21,6 @@ import {
   TitleContainer,
 } from './ui';
 import { AddNewUserModal, UserDetailsModal } from './components';
-import './Team.css';
 
 const columns: GridColDef[] = [
   {
