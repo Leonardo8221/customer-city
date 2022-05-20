@@ -6,6 +6,7 @@ import Login from './Login';
 test('renders login form', () => {
   render(<Login />);
 
+  expect(screen.getByRole('heading', { name: /welcome back!/i })).toBeInTheDocument();
   expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /forgot my password/i })).toBeInTheDocument();
