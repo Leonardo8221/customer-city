@@ -8,9 +8,7 @@ export const noop = (): void => {};
 
 export const validatePassword = (password?: string) => {
   if (!password) return false;
-  return (
-    password.length >= 8 && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[^a-zA-Z0-9]|\s|\d/.test(password)
-  );
+  return password.length >= 8 && /[a-z]/.test(password) && /[A-Z]/.test(password) && /[^a-zA-Z0-9\s]/.test(password);
 };
 
 export const validateEmail = (email: string) => {

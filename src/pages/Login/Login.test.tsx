@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 
-import { render, screen, waitFor, act } from 'test/test-utils';
+import { render, screen, act } from 'test/test-utils';
 import Login from './Login';
 
 test('renders login form', () => {
@@ -23,17 +23,59 @@ test('renders login form', () => {
   expect(signInGoogleButton).toBeEnabled();
 });
 
-test('validates form inputs', async () => {
+test('login disabled when entering invalid email', async () => {
+  const invalidEmail = 'test@email';
+  const validPassword = 'Test1234!';
+
   render(<Login />);
+
   const emailInput = screen.getByLabelText(/email address/i);
   const passwordInput = screen.getByLabelText(/^password$/i);
 
   await act(async () => {
-    userEvent.type(emailInput, 'email@email.com');
-    userEvent.type(passwordInput, 'Test1234!');
+    userEvent.type(emailInput, invalidEmail);
+    userEvent.type(passwordInput, validPassword);
   });
 
-  expect(emailInput).toHaveValue('email@email.com');
-  expect(passwordInput).toHaveValue('Test1234!');
+  expect(emailInput).toHaveValue(invalidEmail);
+  expect(passwordInput).toHaveValue(validPassword);
+  expect(screen.getByRole('button', { name: /log in/i })).toBeDisabled();
+});
+
+test('login disabled when entering invalid password', async () => {
+  const validEmail = 'test@email.com';
+  const invalidPassword = 'Test1234';
+
+  render(<Login />);
+
+  const emailInput = screen.getByLabelText(/email address/i);
+  const passwordInput = screen.getByLabelText(/^password$/i);
+
+  await act(async () => {
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(passwordInput, invalidPassword);
+  });
+
+  expect(emailInput).toHaveValue(validEmail);
+  expect(passwordInput).toHaveValue(invalidPassword);
+  expect(screen.getByRole('button', { name: /log in/i })).toBeDisabled();
+});
+
+test('login enabled when entering a valid email and password', async () => {
+  const validEmail = 'test@email.com';
+  const validPassword = 'Test1234!';
+
+  render(<Login />);
+
+  const emailInput = screen.getByLabelText(/email address/i);
+  const passwordInput = screen.getByLabelText(/^password$/i);
+
+  await act(async () => {
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(passwordInput, validPassword);
+  });
+
+  expect(emailInput).toHaveValue(validEmail);
+  expect(passwordInput).toHaveValue(validPassword);
   expect(screen.getByRole('button', { name: /log in/i })).toBeEnabled();
 });
