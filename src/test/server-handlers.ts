@@ -1,5 +1,7 @@
 import { rest } from 'msw';
 
+import { loginData, currentUserData, usersData } from './data';
+
 export const TEST_BASE_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:3005';
 
 export const getApiPath = (path: string): string => {
@@ -13,9 +15,7 @@ export const handlers = [
       ctx.json({
         success: true,
         message: 'Successfully logged in.',
-        data: {
-          accessToken: 'eyJraWQiOiJiUDdTREdIM3dYeDhuenBiTHluOE9nTl...',
-        },
+        data: loginData,
       }),
     );
   }),
@@ -25,22 +25,27 @@ export const handlers = [
       ctx.json({
         success: true,
         message: 'Current user fetched successfully!',
-        data: {
-          userId: 1,
-          userName: 'admin user 1',
-          userEmail: 'admin-user1@gmail.com',
-          userRole: 'admin',
-          userActive: true,
-          companyId: 1,
-          userCreatedAt: '2022-05-19T19:36:04.608Z',
-          userUpdatedAt: '2022-05-19T19:36:04.608Z',
-          profile: {
-            profileId: 1,
-            workPhoneNumber: '12344555562',
-            additionalPhoneNumber: null,
-            profileJobRole: null,
-          },
-        },
+        data: currentUserData,
+      }),
+    );
+  }),
+  rest.get(getApiPath('user'), async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        message: 'Users fetched successfully!',
+        data: usersData,
+      }),
+    );
+  }),
+  rest.put(getApiPath('user/:id'), async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        message: 'User updated successfully!',
+        data: null,
       }),
     );
   }),

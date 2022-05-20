@@ -37,13 +37,9 @@ const ControlTower: FC = () => {
         <Tab label="Team" {...a11yProps(1)} />
       </Tabs>
 
-      <TabPanel hidden={activeIndex !== 0}>
-        <Profile />
-      </TabPanel>
+      <TabPanel hidden={activeIndex !== 0}>{activeIndex === 0 && <Profile />}</TabPanel>
 
-      <TabPanel hidden={activeIndex !== 1}>
-        <Team />
-      </TabPanel>
+      <TabPanel hidden={activeIndex !== 1}>{activeIndex === 1 && <Team />}</TabPanel>
     </Container>
   );
 };

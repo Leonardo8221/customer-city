@@ -85,6 +85,7 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
           setSuccess(false);
         }}
         small={small}
+        data-testid={`edit-${id}`}
       >
         <EditIcon />
       </EditButton>

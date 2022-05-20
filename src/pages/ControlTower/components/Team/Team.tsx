@@ -124,7 +124,7 @@ const Team: FC = () => {
           </TitleContainer>
         </Grid>
 
-        <Grid item xs={12} style={{ height: 480, width: '100%' }}>
+        <Grid item xs={12} style={{ height: 480, width: '100%' }} data-testid="team-table">
           <DataGrid
             rows={users}
             columns={columns}
