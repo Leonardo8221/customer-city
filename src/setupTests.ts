@@ -14,14 +14,13 @@ window.matchMedia =
 
 window.scrollTo = jest.fn();
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-global.XMLHttpRequest = undefined;
-
-jest.mock('jwt-decode', () => () => jest.fn());
-
 beforeAll(() => server.listen());
 
 afterEach(() => server.resetHandlers());
 
-afterAll(() => server.close());
+afterAll(() => {
+  server.close();
+  jest.clearAllMocks();
+});
+
+beforeEach(() => jest.restoreAllMocks());
