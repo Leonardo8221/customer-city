@@ -45,7 +45,7 @@ test('login disabled when entering invalid email', async () => {
 
 test('login disabled when entering invalid password', async () => {
   const validEmail = 'test@email.com';
-  const invalidPassword = 'Test1234';
+  const invalidPassword = 'Test123';
 
   render(<Login />);
 

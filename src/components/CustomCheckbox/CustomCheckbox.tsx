@@ -1,26 +1,9 @@
 import { CSSProperties, FC } from 'react';
-import {
-  styled,
-  Checkbox as MuiCheckbox,
-  CheckboxProps,
-  Box as MuiBox,
-  Typography,
-  SxProps,
-  Theme,
-  FormControlLabel,
-} from '@mui/material';
+import { CheckboxProps, Typography, SxProps, Theme, FormControlLabel } from '@mui/material';
 
 import { ReactComponent as BoxChecked } from 'assets/icons/boxChecked.svg';
 import { ReactComponent as BoxUnchecked } from 'assets/icons/boxUnchecked.svg';
-
-const Box = styled(MuiBox)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-}));
-
-const Checkbox = styled(MuiCheckbox)(() => ({
-  padding: '0 10px 0 0',
-}));
+import { Checkbox } from './ui';
 
 interface CustomCheckboxProps extends CheckboxProps {
   label: string;

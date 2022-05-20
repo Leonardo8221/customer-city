@@ -1,41 +1,29 @@
 import { FC } from 'react';
-import { styled, Box as MuiBox, Typography as MuiTypography } from '@mui/material';
+import { styled, Typography as MuiTypography, FormControlLabel, CheckboxProps } from '@mui/material';
 
 import { ReactComponent as CircleCheckedIcon } from 'assets/icons/circleChecked.svg';
 import { ReactComponent as CircleUncheckedIcon } from 'assets/icons/circleUnchecked.svg';
-
-const Container = styled(MuiBox)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginTop: theme.spacing(0.5),
-  marginBottom: theme.spacing(0.5),
-}));
-
-const CicleCheckContainer = styled(MuiBox)<{ checked: boolean }>(({ checked }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginLeft: checked ? -2 : 0,
-  marginRight: checked ? 8 : 10,
-}));
+import { Checkbox } from './ui';
 
 const Typography = styled(MuiTypography)(({ theme }) => ({
   color: theme.palette.neutral.n400,
 }));
 
-interface ValidationRuleProps {
+interface ValidationRuleProps extends CheckboxProps {
   label: string;
-  checked: boolean;
 }
 
-const ValidationRule: FC<ValidationRuleProps> = ({ label, checked }) => {
+const ValidationRule: FC<ValidationRuleProps> = ({ label, ...props }) => {
   return (
-    <Container>
-      <CicleCheckContainer checked={checked}>
-        {checked ? <CircleCheckedIcon /> : <CircleUncheckedIcon />}
-      </CicleCheckContainer>
-      <Typography variant="p14">{label}</Typography>
-    </Container>
+    <FormControlLabel
+      sx={{ display: 'flex', alignItems: 'center', marginLeft: '2px' }}
+      control={<Checkbox {...props} icon={<CircleUncheckedIcon />} checkedIcon={<CircleCheckedIcon />} />}
+      label={
+        <Typography variant="p14" sx={{ color: 'neutral.n400' }}>
+          {label}
+        </Typography>
+      }
+    />
   );
 };
 
