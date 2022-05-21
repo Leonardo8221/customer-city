@@ -3,11 +3,11 @@ import { Typography, Box, InputLabel, FormHelperText } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { PUBLIC_ABS_ROUTE_PATHS } from 'core/constants';
 import { Form, LoadingButton } from 'components/ui';
 import { AuthLayout } from 'components/AuthLayout';
 import { ValidationRule } from './components';
 import { useAuth } from 'store/auth/hooks';
-import { publicRoutes } from 'router/routes';
 import { PasswordInput } from 'components/PasswordInput';
 
 interface ValidPassword {
@@ -41,7 +41,7 @@ const CreatePassword: FC = () => {
   const { token } = useParams<{ token?: string }>();
 
   useEffect(() => {
-    if (!session && !token) navigate(publicRoutes.login, { replace: true });
+    if (!session && !token) navigate(PUBLIC_ABS_ROUTE_PATHS.login, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

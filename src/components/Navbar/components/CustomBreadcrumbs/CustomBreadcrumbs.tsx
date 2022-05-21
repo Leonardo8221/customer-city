@@ -4,14 +4,14 @@ import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as ChevronRightIcon } from 'assets/icons/chevronRight.svg';
-import { privateRoutes } from 'router/routes';
+import { dashboardRoutes } from 'router/routes';
 import { mapAbsRoutePathToLabel } from 'core/utils';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { Container, Link, Separator } from './ui';
 import { DropdownMenu } from '../DropdownMenu';
 
 const CustomBreadcrumbs: FC = () => {
-  const breadcrumbs = useBreadcrumbs(privateRoutes);
+  const breadcrumbs = useBreadcrumbs(dashboardRoutes);
   const navigate = useNavigate();
 
   return (

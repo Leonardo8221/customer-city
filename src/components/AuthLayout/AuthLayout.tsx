@@ -5,10 +5,10 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import './AuthLayout.css';
 
+import { PUBLIC_ABS_ROUTE_PATHS } from 'core/constants';
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { ReactComponent as WhiteLogo } from 'assets/icons/whiteLogo.svg';
 import { ReactComponent as CheckWhiteIcon } from 'assets/icons/checkWhite.svg';
-import { publicRoutes } from 'router/routes';
 import {
   Container,
   ContentContainer,
@@ -84,7 +84,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
 
               <Typography variant="labelRegular12" textAlign="right" component="p" alignItems="center" display="flex">
                 Don&apos;t have an account?&nbsp;
-                <Link to={publicRoutes.login}>
+                <Link to={PUBLIC_ABS_ROUTE_PATHS.login}>
                   <MuiLink style={{ textDecoration: 'none' }} component="span">
                     Sign up
                   </MuiLink>
@@ -105,7 +105,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
             <ContentFooter>
               <Typography variant="labelRegular12" textAlign="center" component="p">
                 © 2022 сustomercity.com, inc. All rights reserved. |{' '}
-                <Link to={publicRoutes.login}>
+                <Link to={PUBLIC_ABS_ROUTE_PATHS.login}>
                   <MuiLink style={{ textDecoration: 'none' }} component="span">
                     Privacy
                   </MuiLink>

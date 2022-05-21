@@ -4,13 +4,13 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
+import { PUBLIC_ABS_ROUTE_PATHS } from 'core/constants';
 import { ReactComponent as GoogleSmallIcon } from 'assets/icons/googleSmall.svg';
 import { ReactComponent as GoogleWhiteSmallIcon } from 'assets/icons/googleWhiteSmall.svg';
 import { Form, AuthInput, LoadingButton, SecondaryLoadingButton } from 'components/ui';
 import { useAuth } from 'store/auth/hooks';
 import { AuthLayout } from 'components/AuthLayout';
 import { CustomLink } from 'components/CustomLink';
-import { publicRoutes } from 'router/routes';
 import { CustomCheckbox } from 'components/CustomCheckbox';
 import { noop, validatePassword } from 'core/utils';
 import { usePrevious } from 'hooks';
@@ -52,7 +52,7 @@ const Login: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (prevSession !== session && session) navigate(publicRoutes.createPassword);
+    if (prevSession !== session && session) navigate(PUBLIC_ABS_ROUTE_PATHS.createPassword);
   }, [session, prevSession, navigate]);
 
   const initialValues: FormValues = {
@@ -103,7 +103,7 @@ const Login: FC = () => {
                 />
               </Box>
 
-              <CustomLink to={publicRoutes.resetPassword}>Forgot my password</CustomLink>
+              <CustomLink to={PUBLIC_ABS_ROUTE_PATHS.resetPassword}>Forgot my password</CustomLink>
 
               <CustomCheckbox
                 label="Remember me"

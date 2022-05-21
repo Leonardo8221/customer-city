@@ -3,9 +3,9 @@ import { Container, Grid, Typography, Box } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 
+import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { deleteCompany as deleteCompanyApi } from 'http/company';
 import { Button } from 'components/ui';
-import { privateRoutePaths } from 'router/routes';
 import { useCompany } from 'store/company/hooks';
 import { TableFooter } from 'components/TableFooter';
 import { Company } from 'store/company/types';
@@ -56,7 +56,7 @@ const SuperAdmin: FC = () => {
   }, []);
 
   const onRowClick = (params: GridRowParams) => {
-    navigate(privateRoutePaths.createCompany, { state: { ...params.row } });
+    navigate(PRIVATE_ROUTE_PATHS.createCompany, { state: { ...params.row } });
   };
 
   return (
@@ -93,7 +93,7 @@ const SuperAdmin: FC = () => {
 
         <Grid item xs={12}>
           <Box display="flex" justifyContent="flex-end">
-            <Button onClick={() => navigate(privateRoutePaths.createCompany)}>Add New Company</Button>
+            <Button onClick={() => navigate(PRIVATE_ROUTE_PATHS.createCompany)}>Add New Company</Button>
           </Box>
         </Grid>
 

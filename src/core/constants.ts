@@ -15,6 +15,35 @@ export const DRAWER_MENU_WIDTH = 280;
 
 export const DRAWER_MENU_BOTTOM_SECTION_HEIGHT = 160;
 
+export const PUBLIC_ABS_ROUTE_PATHS = {
+  login: '/auth/login',
+  createPassword: '/auth/create-password',
+  resetPassword: '/auth/reset-password',
+};
+
+export const PRIVATE_ROUTE_PATHS = {
+  home: '/d',
+  citizenId: 'citizen-id',
+  accounts: 'accounts',
+  productDefiner: 'product-definer',
+  hyperFunnel: 'hyper-funnel',
+  dealScape: 'deal-scape',
+  controlTower: 'control-tower',
+  integration: 'integration',
+  lightSquare: 'light-square',
+  dashboard: 'dashboard',
+  goalsAndMilestones: 'goals-milestones',
+  forecast: 'forecast',
+  revenueSimulation: 'revenue-simulation',
+  //
+  myAccount: 'my-account',
+  createCompany: 'create-company',
+  settings: 'settings',
+  more: 'more',
+  completeProfileOne: '/profile-one',
+  completeProfileTwo: '/profile-two',
+};
+
 export const PRIVATE_ABS_ROUTE_PATHS = {
   home: '/d',
   citizenId: '/d/citizen-id',

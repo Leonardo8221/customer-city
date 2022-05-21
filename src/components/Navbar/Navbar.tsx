@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { Toolbar } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { ReactComponent as HamburguerMenuIcon } from 'assets/icons/hamburguerMenu.svg';
 import { ReactComponent as NavLogoIcon } from 'assets/icons/navLogo.svg';
 import { ReactComponent as BellNotificationIcon } from 'assets/icons/bellNotification.svg';
 import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
-import { privateRoutePaths } from 'router/routes';
 import { useAuth } from 'store/auth/hooks';
 import { AppBar, LeftContainer, RightContainer, IconButton, NavLogoButton, VerticalDivider, Button } from './ui';
 import { CustomBreadcrumbs } from './components';
@@ -29,7 +29,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
             <HamburguerMenuIcon />
           </IconButton>
 
-          <NavLogoButton onClick={() => navigate(privateRoutePaths.home)}>
+          <NavLogoButton onClick={() => navigate(PRIVATE_ROUTE_PATHS.home)}>
             <NavLogoIcon />
           </NavLogoButton>
 
@@ -55,8 +55,8 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
               <Typography variant="p14">John Doe</Typography>
             </DropdownMenu> */}
 
-          {isSuperAdmin && !pathname.includes(privateRoutePaths.myAccount) && (
-            <Button onClick={() => navigate(privateRoutePaths.myAccount)} sx={{ marginLeft: 2 }}>
+          {isSuperAdmin && !pathname.includes(PRIVATE_ROUTE_PATHS.myAccount) && (
+            <Button onClick={() => navigate(PRIVATE_ROUTE_PATHS.myAccount)} sx={{ marginLeft: 2 }}>
               My account
             </Button>
           )}

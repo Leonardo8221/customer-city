@@ -1,37 +1,17 @@
 import { Route } from 'react-router-dom';
 
+import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { PanelLayout } from 'components/PanelLayout';
-import { Account, CreateCompany, Dashboard, ControlTower, ProductDefiner } from 'pages';
+import {
+  Account,
+  CreateCompany,
+  Dashboard,
+  ControlTower,
+  ProductDefiner,
+  CompleteProfileOne,
+  CompleteProfileTwo,
+} from 'pages';
 import DummyPage from './DummyPage';
-
-export const publicRoutes = {
-  login: '/auth/login',
-  createPassword: '/auth/create-password',
-  resetPassword: '/auth/reset-password',
-};
-
-export const privateRoutePaths = {
-  home: '/d',
-  citizenId: 'citizen-id',
-  accounts: 'accounts',
-  productDefiner: 'product-definer',
-  hyperFunnel: 'hyper-funnel',
-  dealScape: 'deal-scape',
-  controlTower: 'control-tower',
-  integration: 'integration',
-  lightSquare: 'light-square',
-  dashboard: 'dashboard',
-  goalsAndMilestones: 'goals-milestones',
-  forecast: 'forecast',
-  revenueSimulation: 'revenue-simulation',
-  //
-  myAccount: 'my-account',
-  createCompany: 'create-company',
-  settings: 'settings',
-  more: 'more',
-  completeProfileOne: '/profile-one',
-  completeProfileTwo: '/profile-two',
-};
 
 interface AppRoute {
   path?: string;
@@ -40,35 +20,40 @@ interface AppRoute {
   nestedRoutes?: AppRoute[];
 }
 
-export const privateRoutes: AppRoute[] = [
+export const dashboardRoutes: AppRoute[] = [
   {
-    path: privateRoutePaths.home,
+    path: PRIVATE_ROUTE_PATHS.home,
     element: <PanelLayout />,
     nestedRoutes: [
-      { index: true, path: privateRoutePaths.home, element: <Dashboard /> },
-      { path: privateRoutePaths.citizenId, element: <DummyPage /> },
-      { path: privateRoutePaths.accounts, element: <DummyPage /> },
-      { path: privateRoutePaths.productDefiner, element: <ProductDefiner /> },
-      { path: privateRoutePaths.hyperFunnel, element: <DummyPage /> },
-      { path: privateRoutePaths.dealScape, element: <DummyPage /> },
-      { path: privateRoutePaths.controlTower, element: <ControlTower /> },
-      { path: privateRoutePaths.integration, element: <DummyPage /> },
+      { index: true, path: PRIVATE_ROUTE_PATHS.home, element: <Dashboard /> },
+      { path: PRIVATE_ROUTE_PATHS.citizenId, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.accounts, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.productDefiner, element: <ProductDefiner /> },
+      { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.dealScape, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.controlTower, element: <ControlTower /> },
+      { path: PRIVATE_ROUTE_PATHS.integration, element: <DummyPage /> },
       {
-        path: privateRoutePaths.lightSquare,
+        path: PRIVATE_ROUTE_PATHS.lightSquare,
         element: <DummyPage />,
         nestedRoutes: [
-          { index: true, path: privateRoutePaths.dashboard, element: <DummyPage /> },
-          { path: privateRoutePaths.goalsAndMilestones, element: <DummyPage /> },
-          { path: privateRoutePaths.forecast, element: <DummyPage /> },
-          { path: privateRoutePaths.revenueSimulation, element: <DummyPage /> },
+          { index: true, path: PRIVATE_ROUTE_PATHS.dashboard, element: <DummyPage /> },
+          { path: PRIVATE_ROUTE_PATHS.goalsAndMilestones, element: <DummyPage /> },
+          { path: PRIVATE_ROUTE_PATHS.forecast, element: <DummyPage /> },
+          { path: PRIVATE_ROUTE_PATHS.revenueSimulation, element: <DummyPage /> },
         ],
       },
-      { path: privateRoutePaths.myAccount, element: <Account /> },
-      { path: privateRoutePaths.createCompany, element: <CreateCompany /> },
-      { path: privateRoutePaths.settings, element: <DummyPage /> },
-      { path: privateRoutePaths.more, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.myAccount, element: <Account /> },
+      { path: PRIVATE_ROUTE_PATHS.createCompany, element: <CreateCompany /> },
+      { path: PRIVATE_ROUTE_PATHS.settings, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.more, element: <DummyPage /> },
     ],
   },
+];
+
+export const profileRoutes = [
+  { path: PRIVATE_ROUTE_PATHS.completeProfileOne, element: <CompleteProfileOne /> },
+  { path: PRIVATE_ROUTE_PATHS.completeProfileTwo, element: <CompleteProfileTwo /> },
 ];
 
 export const renderRoute = ({ nestedRoutes, ...route }: AppRoute, idx: number) => {

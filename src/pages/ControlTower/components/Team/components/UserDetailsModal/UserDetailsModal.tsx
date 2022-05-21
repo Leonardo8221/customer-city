@@ -56,7 +56,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
             <Typography variant="p16">User details</Typography>
           </HeaderTitleContainer>
 
-          <IconButton onClick={onClose}>
+          <IconButton onClick={onClose} sx={{ marginRight: -1 }}>
             <CrossIcon />
           </IconButton>
         </Header>
