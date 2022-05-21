@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
-import { usersData } from 'test/data';
 
+import { usersData } from 'test/data';
 import { render, screen, within, waitFor } from 'test/test-utils';
 import ControlTower from './ControlTower';
 
@@ -105,7 +105,7 @@ describe('Team tab', () => {
     expect(within(presentation).getByRole('button', { name: /add new user/i })).toBeDisabled();
   });
 
-  test('clicking on user row/cell opens up user details modal', async () => {
+  test('clicking on user row/cell opens user details modal', async () => {
     render(<ControlTower />);
 
     userEvent.click(screen.getByRole('tab', { name: /team/i }));

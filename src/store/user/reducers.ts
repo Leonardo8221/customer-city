@@ -3,7 +3,7 @@ import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { setError, setSuccess, getCurrentUser, getUsers, updateUser } from './actions';
 import { UserState } from './types';
 
-const initialState: UserState = {
+export const initialState: UserState = {
   loading: false,
   error: false,
   success: false,

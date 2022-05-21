@@ -4,7 +4,7 @@ import { CompanyState } from './types';
 import { setError, setSuccess, getCompanies, createCompany, updateCompany, getCompany } from './actions';
 import { logout } from '../auth/actions';
 
-const initialState: CompanyState = {
+export const initialState: CompanyState = {
   loading: false,
   error: false,
   success: false,

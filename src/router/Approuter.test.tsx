@@ -3,11 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, act } from 'test/test-utils';
 import AppRouter from './AppRouter';
 
-jest.mock('jwt-decode', () => () => ({
-  'cognito:groups': ['admin'],
-  sub: 'f551f3c8-9fb8-4227-a919-1d72e98a885a',
-}));
-
 test('user can login with valid credentials', async () => {
   render(<AppRouter />, { withRouter: false });
 

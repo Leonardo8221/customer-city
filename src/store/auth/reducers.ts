@@ -15,18 +15,22 @@ import {
 } from './actions';
 import { getAutSession } from './utils';
 
+export const initialState: AuthState = {
+  loading: false,
+  error: false,
+  success: false,
+  accessToken: null,
+  session: null,
+  id: null,
+  email: null,
+  role: null,
+  rememberMe: false,
+};
+
 const getInitialState = (): AuthState => {
   const initialAuthSession = getAutSession();
   return {
-    loading: false,
-    error: false,
-    success: false,
-    accessToken: null,
-    session: null,
-    id: null,
-    email: null,
-    role: null,
-    rememberMe: false,
+    ...initialState,
     ...(initialAuthSession ?? {}),
   };
 };

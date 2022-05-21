@@ -3,7 +3,7 @@ import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { setError, setSuccess, getProducts } from './actions';
 import { ProductState } from './types';
 
-const initialState: ProductState = {
+export const initialState: ProductState = {
   loading: false,
   error: false,
   success: false,

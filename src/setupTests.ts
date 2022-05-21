@@ -24,3 +24,8 @@ afterAll(() => {
 });
 
 beforeEach(() => jest.restoreAllMocks());
+
+jest.mock('jwt-decode', () => () => ({
+  'cognito:groups': ['admin'],
+  sub: 'f551f3c8-9fb8-4227-a919-1d72e98a885a',
+}));

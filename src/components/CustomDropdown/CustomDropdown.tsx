@@ -67,6 +67,7 @@ const CustomDropdown = <T extends OptionValue>({
         isOptionEqualToValue={(option, value) => option.value === value.value}
         popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
         clearIcon={<CrossIcon />}
+        data-testid={id}
       />
     </div>
   );

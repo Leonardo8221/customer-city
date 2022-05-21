@@ -1,9 +1,16 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import authReducer from './auth/reducers';
-import companyReducer from './company/reducers';
-import userReducer from './user/reducers';
-import productReducer from './product/reducers';
+import authReducer, { initialState as authState } from './auth/reducers';
+import companyReducer, { initialState as companyState } from './company/reducers';
+import userReducer, { initialState as userState } from './user/reducers';
+import productReducer, { initialState as productState } from './product/reducers';
+
+export const initialRootState = {
+  auth: authState,
+  company: companyState,
+  user: userState,
+  product: productState,
+};
 
 const rootReducer = combineReducers({
   auth: authReducer,
