@@ -1,7 +1,6 @@
 import { rest } from 'msw';
 
-import { loginData, currentUserData, usersData } from './data';
-import { productsData } from './data/product';
+import { loginData, currentUserData, usersData, productsData, companiesData } from './data';
 
 export const TEST_BASE_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:3005';
 
@@ -50,14 +49,24 @@ export const handlers = [
       }),
     );
   }),
-  rest.get(getApiPath('product'), async (req, res, ctx) =>
-    res(
+  rest.get(getApiPath('product'), async (req, res, ctx) => {
+    return res(
       ctx.status(200),
       ctx.json({
         success: true,
         message: 'Products fetched successfully!',
         data: productsData,
       }),
-    ),
-  ),
+    );
+  }),
+  rest.get(getApiPath('company'), async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        message: 'Companies fetched succesfully!',
+        data: companiesData,
+      }),
+    );
+  }),
 ];

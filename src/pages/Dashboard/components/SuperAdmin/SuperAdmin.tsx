@@ -63,7 +63,7 @@ const SuperAdmin: FC = () => {
     <Container maxWidth="lg">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h6">Users</Typography>
+          <Typography variant="h6">Companies</Typography>
         </Grid>
 
         <Grid item xs={12} style={{ height: 480, width: '100%' }}>
