@@ -136,7 +136,7 @@ const CreateCompany: FC = () => {
               type="submit"
               sx={{ marginTop: 4, alignSelf: 'flex-end' }}
             >
-              {state ? 'Update company' : 'Add & Send e-amil'}
+              {state ? 'Update company' : 'Add & Send e-mail'}
             </LoadingButton>
 
             {error && (
