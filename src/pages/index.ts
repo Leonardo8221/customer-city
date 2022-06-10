@@ -8,3 +8,4 @@ export * from './ControlTower';
 export * from './CompleteProfileOne';
 export * from './CompleteProfileTwo';
 export * from './ProductDefiner';
+export * from './Contact';

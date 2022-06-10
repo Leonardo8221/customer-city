@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { PanelLayout } from 'components/PanelLayout';
 import {
+  Contact,
   Account,
   CreateCompany,
   Dashboard,
@@ -26,7 +27,7 @@ export const dashboardRoutes: AppRoute[] = [
     element: <PanelLayout />,
     nestedRoutes: [
       { index: true, path: PRIVATE_ROUTE_PATHS.home, element: <Dashboard /> },
-      { path: PRIVATE_ROUTE_PATHS.citizenId, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.contacts, element: <Contact /> },
       { path: PRIVATE_ROUTE_PATHS.accounts, element: <DummyPage /> },
       { path: PRIVATE_ROUTE_PATHS.productDefiner, element: <ProductDefiner /> },
       { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <DummyPage /> },
