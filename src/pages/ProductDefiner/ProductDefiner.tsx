@@ -19,7 +19,7 @@ const ProductDefiner: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, products, getProducts } = useProduct();
-  const { isAdmin } = useAuth();
+  const { isAdmin, isSuperAdmin } = useAuth();
 
   useEffect(() => {
     getProducts();
@@ -67,7 +67,7 @@ const ProductDefiner: FC = () => {
           </Box>
         </Grid>
 
-        {isAdmin && (
+        {(isAdmin || isSuperAdmin) && (
           <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
             <SecondaryButton>Import</SecondaryButton>
 
@@ -102,7 +102,7 @@ const ProductDefiner: FC = () => {
             </SectionTitleContainer>
 
             <ProducsContainer marginTop={1}>
-              {isAdmin && (
+              {(isAdmin || isSuperAdmin) && (
                 <>
                   {' '}
                   <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
