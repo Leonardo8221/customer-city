@@ -31,7 +31,7 @@ import { MenuItem } from './components';
 
 const routeList: NavRoute[] = [
   { name: 'Home', path: PRIVATE_ABS_ROUTE_PATHS.home, Icon: <MenuHomeIcon /> },
-  { name: 'CitizenID', path: PRIVATE_ABS_ROUTE_PATHS.citizenId, Icon: <MenuContactsIcon /> },
+  { name: 'Contacts', path: PRIVATE_ABS_ROUTE_PATHS.contacts, Icon: <MenuContactsIcon /> },
   { name: 'Accounts', path: PRIVATE_ABS_ROUTE_PATHS.accounts, Icon: <MenuAccountsIcon className="path-fill" /> },
   {
     name: 'Product Definer',

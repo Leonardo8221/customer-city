@@ -18,8 +18,8 @@ export const validateEmail = (email: string) => {
 
 export const mapAbsRoutePathToLabel = (path: string): string => {
   switch (path) {
-    case PRIVATE_ABS_ROUTE_PATHS.citizenId:
-      return 'CitizenID';
+    case PRIVATE_ABS_ROUTE_PATHS.contacts:
+      return 'Contacts';
     case PRIVATE_ABS_ROUTE_PATHS.accounts:
       return 'Accounts';
     case PRIVATE_ABS_ROUTE_PATHS.productDefiner:

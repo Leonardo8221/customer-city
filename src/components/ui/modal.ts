@@ -35,4 +35,7 @@ export const ModalFooter = styled(Box)(() => ({
 
 export const ModalMain = styled(Box)(() => ({
   padding: '32px 0 52px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '24px',
 }));
