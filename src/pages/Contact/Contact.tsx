@@ -12,6 +12,7 @@ import { useAuth } from 'store/auth/hooks';
 import { Container, ContactsSection, ContactsContainer } from './ui';
 import { ContactModal } from './components';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
+import { ContactsTable } from './components/ContactsTable';
 
 const ContactPage: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -80,7 +81,13 @@ const ContactPage: FC = () => {
 
       <ContactsSection>
         {contacts.length > 0 ? (
-          <></>
+          <ContactsTable
+            contacts={contacts}
+            setSelectedContact={(contact) => {
+              setSelectedContact(contact);
+              toggleModal();
+            }}
+          />
         ) : (
           <>
             <ContactsContainer marginTop={1}>
