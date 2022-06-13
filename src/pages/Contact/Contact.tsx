@@ -67,15 +67,15 @@ const ContactPage: FC = () => {
           </Box>
         </Grid>
 
-        {isAdmin && (
-          <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
-            <SecondaryButton>Import</SecondaryButton>
+        {/* {isAdmin && ( */}
+        <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
+          <SecondaryButton>Import</SecondaryButton>
 
-            <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
-              Create contact
-            </PrimaryButton>
-          </Grid>
-        )}
+          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
+            Create contact
+          </PrimaryButton>
+        </Grid>
+        {/* )} */}
       </Grid>
 
       <ContactsSection>
@@ -84,22 +84,22 @@ const ContactPage: FC = () => {
         ) : (
           <>
             <ContactsContainer marginTop={1}>
-              {isAdmin && (
-                <>
-                  <ContactAvatarIcon />
-                  <Typography
-                    variant="labelRegular12"
-                    component="p"
-                    sx={{ color: 'neutral.n400', my: 3, width: 240, textAlign: 'center' }}
-                  >
-                    You don’t have any contacts yet.
-                    <br /> Create first contact and to work with.
-                  </Typography>
-                  <PrimaryButton startIcon={<PlusIcon />} onClick={toggleModal}>
-                    Create contact
-                  </PrimaryButton>
-                </>
-              )}
+              {/* {isAdmin && ( */}
+              <>
+                <ContactAvatarIcon />
+                <Typography
+                  variant="labelRegular12"
+                  component="p"
+                  sx={{ color: 'neutral.n400', my: 3, width: 240, textAlign: 'center' }}
+                >
+                  You don’t have any contacts yet.
+                  <br /> Create first contact and to work with.
+                </Typography>
+                <PrimaryButton startIcon={<PlusIcon />} onClick={toggleModal}>
+                  Create contact
+                </PrimaryButton>
+              </>
+              {/* )} */}
             </ContactsContainer>
           </>
         )}
