@@ -2,7 +2,7 @@ import { styled, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const Container = styled(Box)(() => ({
-  width: 400,
+  flex: 1,
   padding: 24,
   display: 'flex',
   flexDirection: 'column',
@@ -17,7 +17,7 @@ export const BackToRoute = styled(Link)(() => ({
   color: 'black',
 }));
 
-export const DeleteButton = styled(Button)(({ theme }) => ({
+export const DeleteButton = styled(Button)(() => ({
   fontWeight: 400,
   color: '#FB4E6D',
   padding: '0 16px',

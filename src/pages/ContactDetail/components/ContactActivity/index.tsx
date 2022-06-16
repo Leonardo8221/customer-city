@@ -1,30 +1,29 @@
 import { Typography } from '@mui/material';
-import { TextButton } from 'components/ui';
-import { FC, SyntheticEvent, useState } from 'react';
-import { ActivityHead, Container, NotificationButton, Tab, TabPanel, Tabs } from './ui';
-import { ReactComponent as FilterIcon } from 'assets/icons/filterGray.svg';
+import { FC } from 'react';
+import { Container } from './ui';
 import AllActivity from '../AllActivity';
-import ActivityToolBar from '../ActivityToolBar/ActivityToolBar';
 
-const a11yProps = (index: number) => {
-  return {
-    id: `tab-${index}`,
-    'aria-controls': `tabpanel-${index}`,
-  };
-};
+// const a11yProps = (index: number) => {
+//   return {
+//     id: `tab-${index}`,
+//     'aria-controls': `tabpanel-${index}`,
+//   };
+// };
 
 const ContactActivity: FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  // const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  const onTabChange = (event: SyntheticEvent, newValue: number) => {
-    setActiveIndex(newValue);
-  };
+  // const onTabChange = (event: SyntheticEvent, newValue: number) => {
+  //   setActiveIndex(newValue);
+  // };
 
   return (
     <Container>
-      <Typography variant="h3">{'Activity'}</Typography>
+      <Typography variant="h3" sx={{ mb: 3 }}>
+        {'Activity'}
+      </Typography>
 
-      <ActivityHead>
+      {/* <ActivityHead>
         <Tabs value={activeIndex} onChange={onTabChange} aria-label="contact activity tabs">
           <Tab label="All activity" {...a11yProps(0)} />
           <Tab label="Tasks" {...a11yProps(1)} />
@@ -46,9 +45,11 @@ const ContactActivity: FC = () => {
       <TabPanel hidden={activeIndex !== 1}>{activeIndex === 1 && <AllActivity />}</TabPanel>
       <TabPanel hidden={activeIndex !== 2}>{activeIndex === 2 && <AllActivity />}</TabPanel>
       <TabPanel hidden={activeIndex !== 3}>{activeIndex === 3 && <AllActivity />}</TabPanel>
-      <TabPanel hidden={activeIndex !== 4}>{activeIndex === 4 && <AllActivity />}</TabPanel>
+      <TabPanel hidden={activeIndex !== 4}>{activeIndex === 4 && <AllActivity />}</TabPanel> */}
 
-      <ActivityToolBar />
+      <AllActivity />
+
+      {/* <ActivityToolBar /> */}
     </Container>
   );
 };

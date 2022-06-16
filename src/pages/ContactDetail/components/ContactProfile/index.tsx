@@ -3,9 +3,9 @@ import { FC, useCallback, useState } from 'react';
 import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyHead } from './ui';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
-import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
+// import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
-import { Divider, IconButton, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { deleteContact as deleteContactApi } from 'http/contact';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
@@ -72,12 +72,12 @@ const ContactProfile: FC<Props> = ({ contact }) => {
       <Divider />
       <PropertyHead>
         <Typography variant="h3">{'Properties'}</Typography>
-        <IconButton
+        {/* <IconButton
           sx={{ borderRadius: 1, border: '1px solid #F0F3F8' }}
           onClick={() => console.log('property buttton click!')}
         >
           <ControlIcon />
-        </IconButton>
+        </IconButton> */}
       </PropertyHead>
     </Container>
   );
