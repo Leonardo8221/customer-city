@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getContacts } from './actions';
+import { setError, setSuccess, getContacts, getContact } from './actions';
 import { ContactState } from './types';
 
 export const initialState: ContactState = {
@@ -8,6 +8,7 @@ export const initialState: ContactState = {
   error: false,
   success: false,
   contacts: [],
+  contact: null,
 };
 
 const contactReducer = createSlice({
@@ -38,6 +39,11 @@ const contactReducer = createSlice({
       state.loading = false;
       state.error = error?.message ?? true;
       state.success = false;
+    });
+
+    builder.addCase(getContact.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.contact = payload;
     });
   },
 });

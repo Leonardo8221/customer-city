@@ -11,6 +11,7 @@ import {
   ProductDefiner,
   CompleteProfileOne,
   CompleteProfileTwo,
+  ContactDetail,
 } from 'pages';
 import DummyPage from './DummyPage';
 
@@ -28,6 +29,7 @@ export const dashboardRoutes: AppRoute[] = [
     nestedRoutes: [
       { index: true, path: PRIVATE_ROUTE_PATHS.home, element: <Dashboard /> },
       { path: PRIVATE_ROUTE_PATHS.contacts, element: <Contact /> },
+      { path: PRIVATE_ROUTE_PATHS.contactDetail, element: <ContactDetail /> },
       { path: PRIVATE_ROUTE_PATHS.accounts, element: <DummyPage /> },
       { path: PRIVATE_ROUTE_PATHS.productDefiner, element: <ProductDefiner /> },
       { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <DummyPage /> },

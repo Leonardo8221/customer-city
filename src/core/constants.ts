@@ -24,6 +24,7 @@ export const PUBLIC_ABS_ROUTE_PATHS = {
 export const PRIVATE_ROUTE_PATHS = {
   home: '/d',
   contacts: 'contacts',
+  contactDetail: 'contacts/:id',
   accounts: 'accounts',
   productDefiner: 'product-definer',
   hyperFunnel: 'hyper-funnel',
@@ -47,6 +48,7 @@ export const PRIVATE_ROUTE_PATHS = {
 export const PRIVATE_ABS_ROUTE_PATHS = {
   home: '/d',
   contacts: '/d/contacts',
+  contactDetail: '/d/contacts/:id',
   accounts: '/d/accounts',
   productDefiner: '/d/product-definer',
   hyperFunnel: '/d/hyper-funnel',

@@ -13,10 +13,12 @@ export interface ContactState {
   error: boolean | string;
   success: boolean | string;
   contacts: Contact[];
+  contact: Contact | null;
 }
 
 export interface ContactReturnHook extends ContactState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getContacts: () => void;
+  getContact: (id: number) => void;
 }

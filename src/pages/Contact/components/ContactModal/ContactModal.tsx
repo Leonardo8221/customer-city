@@ -13,6 +13,8 @@ import { useContact } from 'store/contact/hooks';
 import { Contact } from 'store/contact/types';
 import { IconAutoComplete } from 'components/IconAutoComplete';
 import { RoleMutliSelect } from './components/RoleMultiSelect';
+import { useNavigate, generatePath } from 'react-router-dom';
+import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 
 interface FormValues {
   contactFirstName: string;
@@ -35,6 +37,7 @@ interface ContactModalProps {
 }
 
 const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
@@ -52,10 +55,14 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
         ...values,
       };
 
-      if (contact) await updateContactApi(contact.contactId, data);
-      else await createContactApi(data);
+      let contactRes: Contact;
 
-      getContacts();
+      if (contact) contactRes = await updateContactApi(contact.contactId, data);
+      else contactRes = await createContactApi(data);
+
+      navigate(generatePath(PRIVATE_ABS_ROUTE_PATHS.contactDetail, { id: String(contactRes.contactId) }));
+
+      // getContacts();
 
       closeModal();
     } catch (err) {

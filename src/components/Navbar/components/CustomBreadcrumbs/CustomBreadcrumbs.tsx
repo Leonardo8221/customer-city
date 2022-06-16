@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Breadcrumbs } from '@mui/material';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
-import { useNavigate } from 'react-router-dom';
+import { matchPath, useNavigate } from 'react-router-dom';
 
 import { ReactComponent as ChevronRightIcon } from 'assets/icons/chevronRight.svg';
 import { dashboardRoutes } from 'router/routes';
@@ -9,10 +9,14 @@ import { mapAbsRoutePathToLabel } from 'core/utils';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { Container, Link, Separator } from './ui';
 import { DropdownMenu } from '../DropdownMenu';
+import { useContact } from 'store/contact/hooks';
 
 const CustomBreadcrumbs: FC = () => {
   const breadcrumbs = useBreadcrumbs(dashboardRoutes);
   const navigate = useNavigate();
+  const { loading, contact } = useContact();
+
+  console.log('breadcrumbs', breadcrumbs.slice(1), contact);
 
   return (
     <Container>
@@ -26,10 +30,14 @@ const CustomBreadcrumbs: FC = () => {
       >
         {breadcrumbs.slice(1).map((breadcrumb) => {
           const path = breadcrumb.key;
-          const label = mapAbsRoutePathToLabel(breadcrumb.key);
+          let label = mapAbsRoutePathToLabel(breadcrumb.key);
           const pathname = breadcrumb.location.pathname;
           const active = path === pathname;
 
+          // Contact Name
+          if (matchPath(PRIVATE_ABS_ROUTE_PATHS.contactDetail, breadcrumb.key)) {
+            label = (contact?.contactFirstName ?? '') + ' ' + (contact?.contactLastName ?? '');
+          }
           if (path === PRIVATE_ABS_ROUTE_PATHS.lightSquare) {
             return (
               <DropdownMenu
