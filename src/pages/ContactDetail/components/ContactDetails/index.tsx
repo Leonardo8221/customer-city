@@ -11,6 +11,8 @@ const ContactDetails: FC = () => {
 
       <Divider />
 
+      <DropDownPanel title={'Contact Source'}></DropDownPanel>
+
       <DropDownPanel title={'Deals Connection'}>
         <AddButton startIcon={<PlusIcon />}>Add Deal</AddButton>
       </DropDownPanel>
@@ -18,6 +20,13 @@ const ContactDetails: FC = () => {
       <DropDownPanel title={'Account Relation'}>
         <AddButton startIcon={<PlusIcon />}>Add Account</AddButton>
       </DropDownPanel>
+
+      <DropDownPanel title={'Influence Level'}></DropDownPanel>
+      <DropDownPanel title={'Motivations and Objections'}></DropDownPanel>
+      <DropDownPanel title={'Engagement Score'}></DropDownPanel>
+      <DropDownPanel title={'Contact Connections'}></DropDownPanel>
+      <DropDownPanel title={'Sentiment and Interests'}></DropDownPanel>
+      <DropDownPanel title={'Similar Audience'}></DropDownPanel>
     </Container>
   );
 };
