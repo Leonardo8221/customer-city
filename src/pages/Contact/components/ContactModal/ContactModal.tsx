@@ -10,7 +10,6 @@ import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { Modal, ModalContainer, ModalHeader, ModalMain, TextButton, PaginatedModalFooter } from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
 import { AddressBox, GridItem, Paper } from './ui';
-import { useContact } from 'store/contact/hooks';
 import { Contact } from 'store/contact/types';
 import { IconAutoComplete } from 'components/IconAutoComplete';
 import { useNavigate, generatePath } from 'react-router-dom';
@@ -50,7 +49,6 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
   const navigate = useNavigate();
   const [isFirst, setIsFirst] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
 
   const closeModal = () => {
@@ -74,7 +72,7 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
 
       closeModal();
     } catch (err) {
-      setError(true);
+      console.error(err);
     }
     setLoading(false);
   };
@@ -176,19 +174,6 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                       </GridItem>
 
                       <GridItem item xs={6}>
-                        {/* <RoleMutliSelect<string>
-                          id="contact-roles"
-                          label="Role"
-                          placeholder="Select Contact Role"
-                          value={values.contactAssociate}
-                          options={[]}
-                          onSelect={(value) => setFieldValue('contactAssociate', value)}
-                          InputProps={{
-                            error: touched.contactAssociate && !!errors.contactAssociate,
-                            onBlur: handleBlur,
-                          }}
-                          PaperComponent={Paper}
-                        /> */}
                         <CustomInput
                           id="contactRole"
                           name="contactRole"
