@@ -14,9 +14,7 @@ import { useContact } from 'store/contact/hooks';
 const CustomBreadcrumbs: FC = () => {
   const breadcrumbs = useBreadcrumbs(dashboardRoutes);
   const navigate = useNavigate();
-  const { loading, contact } = useContact();
-
-  console.log('breadcrumbs', breadcrumbs.slice(1), contact);
+  const { contact } = useContact();
 
   return (
     <Container>

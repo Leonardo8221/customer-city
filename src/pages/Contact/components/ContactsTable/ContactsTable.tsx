@@ -28,13 +28,19 @@ const ContactFooter: FC = () => {
 
 const columns: GridColDef[] = [
   {
-    field: 'contactFirstName',
-    headerName: 'First Name',
+    field: 'contactName',
+    headerName: 'Name',
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => `${params.row.contactFirstName} ${params.row.contactLastName}`,
+  },
+  {
+    field: 'contactAssociate',
+    headerName: 'Account',
     flex: 1,
   },
   {
-    field: 'contactLastName',
-    headerName: 'LastName',
+    field: 'contactRole',
+    headerName: 'Role',
     flex: 1,
   },
   {
