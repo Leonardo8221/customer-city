@@ -2,7 +2,7 @@ import { styled, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const Container = styled(Box)(() => ({
-  flex: 1,
+  flex: 5,
   padding: 24,
   display: 'flex',
   flexDirection: 'column',

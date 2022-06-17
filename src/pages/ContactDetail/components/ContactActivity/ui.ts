@@ -2,7 +2,7 @@ import { styled, Box, Tabs as MuiTabs, Tab as MuiTab, Button } from '@mui/materi
 
 export const Container = styled(Box)(() => ({
   padding: 24,
-  flex: 1,
+  flex: 5,
   display: 'flex',
   flexDirection: 'column',
   borderLeft: '1px solid #EDF0F5',

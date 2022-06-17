@@ -8,19 +8,20 @@ import { Contact } from 'store/contact/types';
 import { useContact } from 'store/contact/hooks';
 import { Loader } from 'components/Loader';
 import { OptionValue } from 'core/types';
-import { useAuth } from 'store/auth/hooks';
 import { Container, ContactsSection, ContactsContainer } from './ui';
 import { ContactModal } from './components';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
 import { ContactsTable } from './components/ContactsTable';
+import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
+import { generatePath, useNavigate } from 'react-router-dom';
 
 const ContactPage: FC = () => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedContact, setSelectedContact] = useState<Contact | undefined>();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, contacts, getContacts } = useContact();
-  const { isAdmin } = useAuth();
 
   useEffect(() => {
     getContacts();
@@ -84,8 +85,9 @@ const ContactPage: FC = () => {
           <ContactsTable
             contacts={contacts}
             setSelectedContact={(contact) => {
-              setSelectedContact(contact);
-              toggleModal();
+              navigate(generatePath(PRIVATE_ABS_ROUTE_PATHS.contactDetail, { id: String(contact.contactId) }));
+              // setSelectedContact(contact);
+              // toggleModal();
             }}
           />
         ) : (
