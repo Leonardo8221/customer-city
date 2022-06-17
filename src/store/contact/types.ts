@@ -1,9 +1,22 @@
 export interface Contact {
   contactId: number;
   contactFirstName: string;
+  contactMiddleName: string;
   contactLastName: string;
+  contactTitle: string;
   contactAssociate: string;
-  contactRoles: string[];
+  contactRole: string;
+  contactPrimaryEmail: string;
+  contactSecondaryEmail: string;
+  contactPhoneNumber: string;
+  contactMobileNumber: string;
+  contactStage: string;
+  contactType: string;
+  //address
+  contactStreet: string;
+  contactState: string;
+  contactCity: string;
+  contactCountry: string;
   contactCreatedAt: string;
   contactUpdatedAt: string;
 }

@@ -1,4 +1,4 @@
-import { styled, Paper as MuiPaper } from '@mui/material';
+import { styled, Paper as MuiPaper, Grid, Box } from '@mui/material';
 
 export const Paper = styled(MuiPaper)(({ theme }) => ({
   boxShadow: '0px 4px 24px rgba(23, 46, 82, 0.08)',
@@ -26,4 +26,19 @@ export const Paper = styled(MuiPaper)(({ theme }) => ({
     ...theme.typography.p14,
     height: 48,
   },
+}));
+
+export const GridItem = styled(Grid)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 18,
+}));
+
+export const AddressBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 22,
+  backgroundColor: '#F0F3F8',
+  borderRadius: 4,
+  padding: 24,
 }));

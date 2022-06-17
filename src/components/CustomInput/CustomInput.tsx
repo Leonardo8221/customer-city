@@ -16,7 +16,7 @@ const CustomInput: FC<CustomInputProps> = ({ id, name, label, labelSx = {}, ...r
         </InputLabel>
       )}
 
-      <TextField id={id} name={name} type="text" {...rest} />
+      <TextField id={id} name={name} type="text" {...rest} sx={{ backgroundColor: 'white' }} />
     </div>
   );
 };

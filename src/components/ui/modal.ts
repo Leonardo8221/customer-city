@@ -33,6 +33,14 @@ export const ModalFooter = styled(Box)(() => ({
   alignItems: 'center',
 }));
 
+export const PaginatedModalFooter = styled(Box)(() => ({
+  width: '100%',
+  paddingTop: 16,
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
 export const ModalMain = styled(Box)(() => ({
   padding: '32px 0 52px',
   display: 'flex',
