@@ -15,6 +15,7 @@ export interface Contact {
   //address
   contactStreet: string;
   contactState: string;
+  contactZipCode: string;
   contactCity: string;
   contactCountry: string;
   contactCreatedAt: string;

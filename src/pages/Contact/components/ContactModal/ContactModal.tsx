@@ -33,6 +33,7 @@ interface FormValues {
   contactState: string;
   contactCity: string;
   contactCountry: string;
+  contactZipCode: string;
 }
 
 const validationSchema = yup.object({
@@ -94,6 +95,7 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
     contactState: contact?.contactState ?? '',
     contactCity: contact?.contactCity ?? '',
     contactCountry: contact?.contactCountry ?? '',
+    contactZipCode: contact?.contactZipCode ?? '',
   };
 
   return (
@@ -294,19 +296,8 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                             onBlur={handleBlur}
                             error={touched.contactStreet && !!errors.contactStreet}
                           />
-                          <CustomInput
-                            id="contactState"
-                            name="contactState"
-                            label="State/Province"
-                            placeholder="Type the State/Province"
-                            fullWidth
-                            value={values.contactState}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={touched.contactState && !!errors.contactState}
-                          />
                           <Grid container spacing={3}>
-                            <Grid item xs={6}>
+                            <GridItem item xs={6}>
                               <CustomInput
                                 id="contactCity"
                                 name="contactCity"
@@ -318,8 +309,30 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                                 onBlur={handleBlur}
                                 error={touched.contactCity && !!errors.contactCity}
                               />
-                            </Grid>
-                            <Grid item xs={6}>
+                              <CustomInput
+                                id="contactZipCode"
+                                name="contactZipCode"
+                                label="Zip code"
+                                placeholder="Type the Zip code"
+                                fullWidth
+                                value={values.contactZipCode}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.contactZipCode && !!errors.contactZipCode}
+                              />
+                            </GridItem>
+                            <GridItem item xs={6}>
+                              <CustomInput
+                                id="contactState"
+                                name="contactState"
+                                label="State/Province"
+                                placeholder="Type the State/Province"
+                                fullWidth
+                                value={values.contactState}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.contactState && !!errors.contactState}
+                              />
                               <CustomInput
                                 id="contactCountry"
                                 name="contactCountry"
@@ -331,7 +344,7 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                                 onBlur={handleBlur}
                                 error={touched.contactCountry && !!errors.contactCountry}
                               />
-                            </Grid>
+                            </GridItem>
                           </Grid>
                         </AddressBox>
                       </Grid>
@@ -345,14 +358,14 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
               <PaginatedModalFooter>
                 <Box sx={{ width: 250 }}>
                   {!isFirst && (
-                    <TextButton onClick={() => setIsFirst(true)}>
+                    <TextButton onClick={() => setIsFirst(true)} sx={{ fontWeight: 400 }}>
                       <NavBackIcon style={{ marginRight: 10 }} />
                       Back to Step 1
                     </TextButton>
                   )}
                 </Box>
                 <span>
-                  <strong>{isFirst ? '1' : '2'}</strong>/ 2
+                  <strong>{isFirst ? '1' : '2'}</strong> / 2
                 </span>
                 <Box sx={{ width: 250, display: 'flex', flexDirection: 'row-reverse' }}>
                   {isFirst ? (
