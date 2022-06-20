@@ -112,11 +112,11 @@ const ContactProfile: FC<Props> = ({ contact }) => {
         <Typography variant="p14">{contact?.contactPrimaryEmail}</Typography>
       </TitleContainer>
 
-      <TitleContainer label="Work email">
+      <TitleContainer label="Work Phone number">
         <Typography variant="p14">{contact?.contactPhoneNumber}</Typography>
       </TitleContainer>
 
-      <TitleContainer label="Work email">
+      <TitleContainer label="Additional number">
         <Typography variant="p14">{contact?.contactMobileNumber}</Typography>
       </TitleContainer>
     </Container>
