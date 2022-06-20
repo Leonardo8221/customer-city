@@ -11,6 +11,7 @@ import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import { Contact } from 'store/contact/types';
+import TitleContainer from 'components/TitileContainer/TitleContainer';
 
 interface Props {
   contact: Contact | null;
@@ -39,6 +40,7 @@ const ContactProfile: FC<Props> = ({ contact }) => {
     setLoading(false);
   };
 
+  console.log('contact', contact);
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.contacts}>
@@ -79,6 +81,44 @@ const ContactProfile: FC<Props> = ({ contact }) => {
           <ControlIcon />
         </IconButton> */}
       </PropertyHead>
+      <TitleContainer label="Work title">
+        <Typography variant="p14">{contact?.contactTitle}</Typography>
+      </TitleContainer>
+
+      <TitleContainer label="Work department">
+        <Typography variant="p14">{contact?.contactAssociate}</Typography>
+      </TitleContainer>
+
+      <TitleContainer label="Company name">
+        <Typography variant="p14">{contact?.contactAssociate}</Typography>
+      </TitleContainer>
+
+      <TitleContainer label="Work Address">
+        <Typography variant="p14">
+          {contact?.contactZipCode} {contact?.contactStreet} {contact?.contactCity}, {contact?.contactState},{' '}
+          {contact?.contactCountry}
+        </Typography>
+      </TitleContainer>
+
+      <Divider />
+
+      <TitleContainer label="Type of contact">
+        <Typography variant="p14"></Typography>
+      </TitleContainer>
+
+      <Divider />
+
+      <TitleContainer label="Work email">
+        <Typography variant="p14">{contact?.contactPrimaryEmail}</Typography>
+      </TitleContainer>
+
+      <TitleContainer label="Work email">
+        <Typography variant="p14">{contact?.contactPhoneNumber}</Typography>
+      </TitleContainer>
+
+      <TitleContainer label="Work email">
+        <Typography variant="p14">{contact?.contactMobileNumber}</Typography>
+      </TitleContainer>
     </Container>
   );
 };
