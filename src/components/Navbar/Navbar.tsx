@@ -64,7 +64,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
             <BellNotificationIcon />
           </IconButton>
 
-          <AvatarDropDown avatarIcon={<UserAvatarIcon />} label={'John Doe'}>
+          <AvatarDropDown avatarIcon={<UserAvatarIcon />} label={user?.userName ?? ''}>
             <AvatarMenuHead>
               <AvatarContainer>
                 <UserAvatarIcon />
