@@ -1,13 +1,14 @@
 import { Popover } from '@mui/material';
 import { FC, useState, ReactNode } from 'react';
-import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
+
 import { StyledButton } from './ui';
 
 type Props = {
+  icon?: ReactNode;
   children?: ReactNode;
 };
 
-const DropDownWrapper: FC<Props> = ({ children }) => {
+const PopoverWrapper: FC<Props> = ({ children, icon }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,7 +25,7 @@ const DropDownWrapper: FC<Props> = ({ children }) => {
   return (
     <>
       <StyledButton aria-describedby={id} onClick={handleClick}>
-        <DotsIcon />
+        {icon}
       </StyledButton>
       <Popover
         id={id}
@@ -46,4 +47,4 @@ const DropDownWrapper: FC<Props> = ({ children }) => {
   );
 };
 
-export default DropDownWrapper;
+export default PopoverWrapper;

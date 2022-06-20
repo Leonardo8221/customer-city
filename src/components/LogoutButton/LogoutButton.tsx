@@ -6,14 +6,13 @@ import { logout as logoutApi } from 'http/auth';
 import { useAuth } from 'store/auth/hooks';
 
 const LoadingButton = styled(MuiLoadingButton)(({ theme }) => ({
-  ...theme.typography.p14,
-  color: theme.palette.common.white,
-  padding: '6px 12px',
+  ...theme.typography.p12,
+  color: theme.palette.primary.main,
+  padding: '6px 2px',
+  minWidth: 30,
   ':hover': {
-    backgroundColor: theme.palette.neutral.darkBlueMedium,
-  },
-  ':disabled': {
-    backgroundColor: theme.palette.neutral.darkBlueMedium,
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.dark,
   },
   ':active': {
     backgroundColor: 'transparent',

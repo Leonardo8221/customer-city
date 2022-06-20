@@ -1,17 +1,31 @@
 import { FC } from 'react';
-import { Toolbar } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Box, Divider, Toolbar, Typography } from '@mui/material';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { ReactComponent as HamburguerMenuIcon } from 'assets/icons/hamburguerMenu.svg';
 import { ReactComponent as NavLogoIcon } from 'assets/icons/navLogo.svg';
 import { ReactComponent as BellNotificationIcon } from 'assets/icons/bellNotification.svg';
+import { ReactComponent as UserAvatarIcon } from 'assets/icons/userAvatar.svg';
 import { ReactComponent as SearchIcon } from 'assets/icons/search.svg';
 import { useAuth } from 'store/auth/hooks';
-import { AppBar, LeftContainer, RightContainer, IconButton, NavLogoButton, VerticalDivider, Button } from './ui';
+import {
+  AppBar,
+  LeftContainer,
+  RightContainer,
+  IconButton,
+  NavLogoButton,
+  VerticalDivider,
+  Button,
+  AvatarContainer,
+  AvatarMenuHead,
+  AvatarMenuFooter,
+} from './ui';
 import { CustomBreadcrumbs } from './components';
 import { LogoutButton } from '../LogoutButton';
-
+import AvatarDropDown from './components/DropdownMenu/AvatarDropDownMenu';
+import { AvatarMenuItem } from './components/DropdownMenu/ui';
+import { useUser } from 'store/user/hooks';
 interface NavbarProps {
   toggleDrawer: () => void;
 }
@@ -20,6 +34,9 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isSuperAdmin } = useAuth();
+  const { user } = useUser();
+
+  console.log('user', user);
 
   return (
     <AppBar position="fixed" elevation={0}>
@@ -47,21 +64,38 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
             <BellNotificationIcon />
           </IconButton>
 
-          {/* <AvatarContainer>
-              <UserAvatarIcon />
-            </AvatarContainer>
-
-            <DropdownMenu textMarginRight={10} active>
-              <Typography variant="p14">John Doe</Typography>
-            </DropdownMenu> */}
+          <AvatarDropDown avatarIcon={<UserAvatarIcon />} label={'John Doe'}>
+            <AvatarMenuHead>
+              <AvatarContainer>
+                <UserAvatarIcon />
+              </AvatarContainer>
+              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <Typography variant="p14">{user?.userName}</Typography>
+                <Typography variant="p12">{user?.userEmail}</Typography>
+              </Box>
+            </AvatarMenuHead>
+            <AvatarMenuItem>
+              <Link to={'#'}>{'Profile & Preferences'}</Link>
+            </AvatarMenuItem>
+            <Divider />
+            <AvatarMenuItem>{'Account & Billing'}</AvatarMenuItem>
+            <AvatarMenuItem>{'Pricing & Features'}</AvatarMenuItem>
+            <AvatarMenuItem>{'Product Updates'}</AvatarMenuItem>
+            <AvatarMenuItem>{'Training Services'}</AvatarMenuItem>
+            <Divider />
+            <AvatarMenuFooter>
+              <LogoutButton />
+              <Typography variant="p12">
+                <Link to={'#'}>{'Privacy Policy'}</Link>
+              </Typography>
+            </AvatarMenuFooter>
+          </AvatarDropDown>
 
           {isSuperAdmin && !pathname.includes(PRIVATE_ROUTE_PATHS.myAccount) && (
             <Button onClick={() => navigate(PRIVATE_ROUTE_PATHS.myAccount)} sx={{ marginLeft: 2 }}>
               My account
             </Button>
           )}
-
-          <LogoutButton sx={{ marginLeft: 1, marginRight: -1 }} />
         </RightContainer>
       </Toolbar>
     </AppBar>

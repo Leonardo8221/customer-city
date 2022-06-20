@@ -3,6 +3,7 @@ import { FC, useCallback, useState } from 'react';
 import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyHead } from './ui';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
+import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
 // import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
 import { Divider, Typography } from '@mui/material';
@@ -56,7 +57,7 @@ const ContactProfile: FC<Props> = ({ contact }) => {
               {contact?.contactFirstName ?? ''} {contact?.contactLastName ?? ''}
             </Typography>
           </div>
-          <PopoverWrapper>
+          <PopoverWrapper icon={<DotsIcon />}>
             <DeleteButton startIcon={<DeleteIcon />} onClick={() => setModalOpen(true)}>
               {'Delete contact'}
             </DeleteButton>

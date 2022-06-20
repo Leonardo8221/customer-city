@@ -41,3 +41,36 @@ export const MenuItem = styled(MuiMenuItem, {
     color: theme.palette.neutral.white,
   },
 }));
+
+export const IconButton = styled(Button)(({ theme }) => ({
+  padding: 0,
+  color: theme.palette.neutral.white,
+  height: '100%',
+  marginTop: 1,
+  marginLeft: 24,
+  ':hover, :active': {
+    color: theme.palette.neutral.white,
+    backgroundColor: 'transparent',
+  },
+  '& .MuiButton-endIcon': {
+    marginLeft: 8,
+    height: 8,
+    width: 8,
+  },
+}));
+
+IconButton.defaultProps = { variant: 'text' };
+
+export const AvatarMenu = styled(MuiMenu)(({ theme }) => ({
+  '& .MuiList-root': {
+    minWidth: 240,
+    backgroundColor: theme.palette.neutral.white,
+    paddingInline: theme.spacing(2),
+  },
+}));
+
+export const AvatarMenuItem = styled(MuiMenuItem)(({ theme }) => ({
+  ...theme.typography.labelRegular12,
+  height: 32,
+  padding: '12px 2px',
+}));

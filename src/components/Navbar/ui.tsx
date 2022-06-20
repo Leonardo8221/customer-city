@@ -62,11 +62,25 @@ export const NavLogoButton = styled(MuiIconButton)(({ theme }) => ({
   marginRight: theme.spacing(1),
 }));
 
+export const AvatarMenuHead = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  marginBlock: theme.spacing(1),
+}));
+
+export const AvatarMenuFooter = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
 export const AvatarContainer = styled(Box)(({ theme }) => ({
-  width: 32,
-  height: 32,
-  borderRadius: 16,
-  marginLeft: theme.spacing(3),
+  '& svg': {
+    width: 56,
+    height: 56,
+  },
+  width: 56,
+  height: 56,
+  borderRadius: 28,
   marginRight: theme.spacing(2),
 }));
 
