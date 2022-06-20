@@ -58,7 +58,7 @@ const ContactProfile: FC<Props> = ({ contact }) => {
           </div>
           <PopoverWrapper>
             <DeleteButton startIcon={<DeleteIcon />} onClick={() => setModalOpen(true)}>
-              {'Delete account'}
+              {'Delete contact'}
             </DeleteButton>
           </PopoverWrapper>
           <DeleteModal
