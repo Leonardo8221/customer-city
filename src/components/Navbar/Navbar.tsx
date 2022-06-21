@@ -80,8 +80,6 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
             <Divider />
             <AvatarMenuItem>{'Account & Billing'}</AvatarMenuItem>
             <AvatarMenuItem>{'Pricing & Features'}</AvatarMenuItem>
-            <AvatarMenuItem>{'Product Updates'}</AvatarMenuItem>
-            <AvatarMenuItem>{'Training Services'}</AvatarMenuItem>
             <Divider />
             <AvatarMenuFooter>
               <LogoutButton />

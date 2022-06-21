@@ -10,11 +10,13 @@ import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { Container, Link, Separator } from './ui';
 import { DropdownMenu } from '../DropdownMenu';
 import { useContact } from 'store/contact/hooks';
+import { useAccount } from 'store/account/hooks';
 
 const CustomBreadcrumbs: FC = () => {
   const breadcrumbs = useBreadcrumbs(dashboardRoutes);
   const navigate = useNavigate();
   const { contact } = useContact();
+  const { account } = useAccount();
 
   return (
     <Container>
@@ -35,6 +37,10 @@ const CustomBreadcrumbs: FC = () => {
           // Contact Name
           if (matchPath(PRIVATE_ABS_ROUTE_PATHS.contactDetail, breadcrumb.key)) {
             label = (contact?.contactFirstName ?? '') + ' ' + (contact?.contactLastName ?? '');
+          }
+          // Account Name
+          if (matchPath(PRIVATE_ABS_ROUTE_PATHS.accountDetail, breadcrumb.key)) {
+            label = account?.accountName ?? '';
           }
           if (path === PRIVATE_ABS_ROUTE_PATHS.lightSquare) {
             return (
