@@ -26,6 +26,8 @@ import { LogoutButton } from '../LogoutButton';
 import AvatarDropDown from './components/DropdownMenu/AvatarDropDownMenu';
 import { AvatarMenuItem } from './components/DropdownMenu/ui';
 import { useUser } from 'store/user/hooks';
+import { mapUserRoleToLabel } from 'core/utils';
+import { useCompany } from 'store/company/hooks';
 interface NavbarProps {
   toggleDrawer: () => void;
 }
@@ -35,6 +37,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
   const { pathname } = useLocation();
   const { isSuperAdmin } = useAuth();
   const { user } = useUser();
+  const { company } = useCompany();
 
   console.log('user', user);
 
@@ -78,8 +81,8 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
               <Link to={'#'}>{'Profile & Preferences'}</Link>
             </AvatarMenuItem>
             <Divider />
-            <AvatarMenuItem>{'Account & Billing'}</AvatarMenuItem>
-            <AvatarMenuItem>{'Pricing & Features'}</AvatarMenuItem>
+            {!!user && <AvatarMenuItem>{mapUserRoleToLabel(user.userRole)}</AvatarMenuItem>}
+            <AvatarMenuItem>{company?.companyName}</AvatarMenuItem>
             <Divider />
             <AvatarMenuFooter>
               <LogoutButton />
