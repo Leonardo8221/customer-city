@@ -27,7 +27,7 @@ const DealPage: FC = () => {
     getDeals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(filterValue);
   const toggleModal = () => {
     if (modalOpen && selectedDeal) setSelectedDeal(undefined);
     setModalOpen((prevState) => !prevState);

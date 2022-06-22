@@ -43,6 +43,7 @@ const AccountPage: FC = () => {
     }, [] as OptionValue<string>[]);
   }, [accounts, searchTerm]);
 
+  console.log(filterValue);
   // const data = useMemo(() => {
   //   if (!filterValue) return accounts;
   //   return accounts.filter((account) => account.accountFirstName === filterValue);

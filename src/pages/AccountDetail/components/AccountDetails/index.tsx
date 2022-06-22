@@ -3,6 +3,7 @@ import DropDownPanel from 'components/DropDownPanel';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { FC } from 'react';
 import { AddButton, Container } from './ui';
+import { ContactItem, DealItem } from 'components/DetailItems';
 
 const AccountDetails: FC = () => {
   return (
@@ -12,10 +13,13 @@ const AccountDetails: FC = () => {
       <Divider />
 
       <DropDownPanel title={'Deals Connection'}>
+        <DealItem />
+        <DealItem />
         <AddButton startIcon={<PlusIcon />}>Add new Deal</AddButton>
       </DropDownPanel>
 
       <DropDownPanel title={'Contacts'}>
+        <ContactItem />
         <AddButton startIcon={<PlusIcon />}>Add new Contact</AddButton>
       </DropDownPanel>
     </Container>

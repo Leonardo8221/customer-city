@@ -67,7 +67,7 @@ export const AvatarMenuHead = styled(Box)(({ theme }) => ({
   marginBlock: theme.spacing(1),
 }));
 
-export const AvatarMenuFooter = styled(Box)(({ theme }) => ({
+export const AvatarMenuFooter = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
