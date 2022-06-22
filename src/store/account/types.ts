@@ -16,6 +16,9 @@ export interface Account {
   accountStage: string;
   accountStatus: number;
   accountType: string;
+  accountCreatedAt: string;
+  accountUpdatedAt: string;
+  accountModifiedBy: number;
 }
 
 export interface AccountState {
