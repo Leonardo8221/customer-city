@@ -9,7 +9,7 @@ interface Props {
 const CustomTextArea: FC<Props> = ({ label, children }) => {
   return (
     <div>
-      {label && <InputLabel sx={{ marginBottom: 1 }}>{label}</InputLabel>}
+      {label && <InputLabel sx={{ marginBottom: 0.5 }}>{label}</InputLabel>}
 
       {children}
     </div>

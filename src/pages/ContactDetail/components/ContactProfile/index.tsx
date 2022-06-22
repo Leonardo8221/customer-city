@@ -1,6 +1,7 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { FC, useCallback, useState } from 'react';
-import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyHead } from './ui';
+import { BackToRoute, Container, DeleteButton, ProfileHead } from './ui';
+import format from 'date-fns/format';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
@@ -13,6 +14,8 @@ import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import { Contact } from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
+import { SecondaryButton } from 'components/ui';
+import { StyledDropDownPanel } from 'components/DropDownPanel';
 
 interface Props {
   contact: Contact | null;
@@ -72,54 +75,107 @@ const ContactProfile: FC<Props> = ({ contact }) => {
           />
         </div>
       </ProfileHead>
-      <Divider />
-      <PropertyHead>
-        <Typography variant="h3">{'Properties'}</Typography>
-        {/* <IconButton
-          sx={{ borderRadius: 1, border: '1px solid #F0F3F8' }}
-          onClick={() => console.log('property buttton click!')}
-        >
-          <ControlIcon />
-        </IconButton> */}
-      </PropertyHead>
-      <TitleContainer label="Work title">
-        <Typography variant="p14">{contact?.contactTitle}</Typography>
-      </TitleContainer>
-
-      <TitleContainer label="Work department">
-        <Typography variant="p14">{contact?.contactAssociate}</Typography>
-      </TitleContainer>
-
-      <TitleContainer label="Company name">
-        <Typography variant="p14">{contact?.contactAssociate}</Typography>
-      </TitleContainer>
-
-      <TitleContainer label="Work Address">
-        <Typography variant="p14">
-          {contact?.contactZipCode} {contact?.contactStreet} {contact?.contactCity}, {contact?.contactState},{' '}
-          {contact?.contactCountry}
-        </Typography>
-      </TitleContainer>
 
       <Divider />
 
-      <TitleContainer label="Type of contact">
-        <Typography variant="p14"></Typography>
-      </TitleContainer>
+      <div>
+        <StyledDropDownPanel title={'Core Information'}>
+          <TitleContainer label="First Name">
+            <Typography variant="p14">{contact?.contactFirstName ?? '-'}</Typography>
+          </TitleContainer>
 
-      <Divider />
+          <TitleContainer label="Middle Name">
+            <Typography variant="p14">{contact?.contactMiddleName ?? '-' ?? '-'}</Typography>
+          </TitleContainer>
 
-      <TitleContainer label="Work email">
-        <Typography variant="p14">{contact?.contactPrimaryEmail}</Typography>
-      </TitleContainer>
+          <TitleContainer label="Last Name">
+            <Typography variant="p14">{contact?.contactLastName ?? '-'}</Typography>
+          </TitleContainer>
 
-      <TitleContainer label="Work Phone number">
-        <Typography variant="p14">{contact?.contactPhoneNumber}</Typography>
-      </TitleContainer>
+          <TitleContainer label="Account Name">
+            <Typography variant="p14">{contact?.contactAssociate ?? '-'}</Typography>
+          </TitleContainer>
 
-      <TitleContainer label="Additional number">
-        <Typography variant="p14">{contact?.contactMobileNumber}</Typography>
-      </TitleContainer>
+          <TitleContainer label="Title">
+            <Typography variant="p14">{contact?.contactTitle ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Role">
+            <Typography variant="p14">{contact?.contactRole ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Contact Type">
+            <Typography variant="p14">{contact?.contactType ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Contact Status">
+            <Typography variant="p14">{contact?.contactStatus ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Contact Stage">
+            <Typography variant="p14">{contact?.contactStage ?? '-'}</Typography>
+          </TitleContainer>
+        </StyledDropDownPanel>
+
+        <StyledDropDownPanel title={'Contact Information'}>
+          <TitleContainer label="Primary Email">
+            <Typography variant="p14">{contact?.contactPrimaryEmail ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Secondary Email">
+            <Typography variant="p14">{contact?.contactSecondaryEmail ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Phone Number">
+            <Typography variant="p14">{contact?.contactPhoneNumber ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Mobile Number">
+            <Typography variant="p14">{contact?.contactMobileNumber ?? '-'}</Typography>
+          </TitleContainer>
+        </StyledDropDownPanel>
+
+        <StyledDropDownPanel title={'Address'}>
+          <TitleContainer label="Street">
+            <Typography variant="p14">{contact?.contactStreet ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="City">
+            <Typography variant="p14">{contact?.contactCity ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="State">
+            <Typography variant="p14">{contact?.contactState ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Country">
+            <Typography variant="p14">{contact?.contactCountry ?? '-'}</Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Zip Code">
+            <Typography variant="p14">{contact?.contactZipCode ?? '-'}</Typography>
+          </TitleContainer>
+        </StyledDropDownPanel>
+
+        <StyledDropDownPanel title={'System Information'}>
+          <TitleContainer label="Created Date">
+            <Typography variant="p14">
+              {contact?.contactUpdatedAt ? format(new Date(contact?.contactCreatedAt), 'PP') : '-'}
+            </Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Last Updated on">
+            <Typography variant="p14">
+              {contact?.contactUpdatedAt ? format(new Date(contact?.contactUpdatedAt), 'PP') : '-'}
+            </Typography>
+          </TitleContainer>
+
+          <TitleContainer label="Last Updated by">
+            <Typography variant="p14">{contact?.contactModifiedBy ?? '-'}</Typography>
+          </TitleContainer>
+        </StyledDropDownPanel>
+      </div>
+      <SecondaryButton>Enrich contact details</SecondaryButton>
     </Container>
   );
 };

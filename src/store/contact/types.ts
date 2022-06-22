@@ -12,6 +12,7 @@ export interface Contact {
   contactMobileNumber: string;
   contactStage: string;
   contactType: string;
+  contactStatus: string;
   //address
   contactStreet: string;
   contactState: string;
@@ -20,6 +21,7 @@ export interface Contact {
   contactCountry: string;
   contactCreatedAt: string;
   contactUpdatedAt: string;
+  contactModifiedBy: number;
 }
 
 export interface ContactState {

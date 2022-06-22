@@ -35,11 +35,6 @@ export const DeleteButton = styled(Button)(() => ({
     },
   },
 }));
-export const PropertyHead = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-}));
 
 export const ProfileHead = styled(Box)(() => ({
   display: 'flex',
