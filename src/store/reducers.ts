@@ -6,6 +6,7 @@ import userReducer, { initialState as userState } from './user/reducers';
 import productReducer, { initialState as productState } from './product/reducers';
 import contactReducer, { initialState as contactState } from './contact/reducers';
 import accountReducer, { initialState as accountState } from './account/reducers';
+import dealReducer, { initialState as dealState } from './deal/reducers';
 
 export const initialRootState = {
   auth: authState,
@@ -14,6 +15,7 @@ export const initialRootState = {
   product: productState,
   contact: contactState,
   account: accountState,
+  deal: dealState,
 };
 
 const rootReducer = combineReducers({
@@ -23,6 +25,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   contact: contactReducer,
   account: accountReducer,
+  deal: dealReducer,
 });
 
 export default rootReducer;

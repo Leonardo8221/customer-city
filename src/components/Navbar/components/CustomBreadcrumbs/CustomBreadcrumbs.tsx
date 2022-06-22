@@ -11,12 +11,14 @@ import { Container, Link, Separator } from './ui';
 import { DropdownMenu } from '../DropdownMenu';
 import { useContact } from 'store/contact/hooks';
 import { useAccount } from 'store/account/hooks';
+import { useDeal } from 'store/deal/hooks';
 
 const CustomBreadcrumbs: FC = () => {
   const breadcrumbs = useBreadcrumbs(dashboardRoutes);
   const navigate = useNavigate();
   const { contact } = useContact();
   const { account } = useAccount();
+  const { deal } = useDeal();
 
   return (
     <Container>
@@ -41,6 +43,10 @@ const CustomBreadcrumbs: FC = () => {
           // Account Name
           if (matchPath(PRIVATE_ABS_ROUTE_PATHS.accountDetail, breadcrumb.key)) {
             label = account?.accountName ?? '';
+          }
+          // Deal Name
+          if (matchPath(PRIVATE_ABS_ROUTE_PATHS.dealScapeDetail, breadcrumb.key)) {
+            label = deal?.dealName ?? '';
           }
           if (path === PRIVATE_ABS_ROUTE_PATHS.lightSquare) {
             return (
