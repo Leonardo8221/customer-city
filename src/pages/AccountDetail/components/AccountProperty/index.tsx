@@ -140,8 +140,8 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
 
           <TitleContainer label="Account Status">
-            <CustomSelect<number>
-              value={account?.accountStatus ?? 0}
+            <CustomSelect<string>
+              value={account?.accountStatus ?? '-'}
               options={ACCOUNT_STATUS_OPTIONS}
               sx={{
                 '& .MuiSelect-select': {

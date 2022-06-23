@@ -11,8 +11,8 @@ export const ACCOUNT_STAGE_OPTIONS = [
 ];
 
 export const ACCOUNT_STATUS_OPTIONS = [
-  { label: 'Active', value: 1 },
-  { label: 'Inactive', value: 0 },
+  { label: 'Active', value: 'Active' },
+  { label: 'Inactive', value: 'Inactive' },
 ];
 
 export const ACCOUNT_TYPE_OPTIONS = [{ label: 'Startup', value: 'Startup' }];
@@ -33,7 +33,7 @@ export interface Account {
   accountIndustry: string;
   accountPrimaryContact: string;
   accountStage: string;
-  accountStatus: number;
+  accountStatus: string;
   accountType: string;
   accountCreatedAt: string;
   accountUpdatedAt: string;
