@@ -7,6 +7,8 @@ export const Container = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
+  overflowY: 'auto',
+  height: 'calc(100vh - 3.5rem)',
 }));
 
 export const AddButton = styled(TextButton)(({ theme }) => ({

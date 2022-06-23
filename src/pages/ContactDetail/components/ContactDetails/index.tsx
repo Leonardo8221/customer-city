@@ -20,6 +20,8 @@ const ContactDetails: FC = () => {
 
       <DropDownPanel title={'Account Relation'}>
         <AccountItem />
+        <AccountItem />
+        <AccountItem />
         <AddButton startIcon={<PlusIcon />}>Add Account</AddButton>
       </DropDownPanel>
     </Container>
