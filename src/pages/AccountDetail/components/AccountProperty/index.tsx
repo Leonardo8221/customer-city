@@ -22,6 +22,7 @@ import {
   ACCOUNT_STATUS_OPTIONS,
   ACCOUNT_TYPE_OPTIONS,
 } from 'store/account/types';
+import { Loader } from 'components/Loader';
 
 interface Props {
   accountId: number;
@@ -206,6 +207,7 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>
+      {loading && <Loader />}
     </Container>
   );
 };

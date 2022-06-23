@@ -11,12 +11,13 @@ import { Divider, Typography } from '@mui/material';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
-import { DEAL_STAGE_OPTIONS } from 'store/deal/types';
+import { Deal, DEAL_STAGE_OPTIONS } from 'store/deal/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { CustomSelect } from 'components/CustomSelect';
 import StageBar from 'components/StageBar';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
+import { Loader } from 'components/Loader';
 
 interface Props {
   dealId: number;
@@ -26,7 +27,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { loading, error, deal, getDeal, deleteDeal } = useDeal();
+  const { loading, error, deal, getDeal, deleteDeal, updateDeal } = useDeal();
 
   useEffect(() => {
     getDeal(Number(dealId));
@@ -37,12 +38,15 @@ const DealProperty: FC<Props> = ({ dealId }) => {
   }, []);
 
   const handleDelete = async () => {
-    deal && deleteDeal(deal?.dealId);
+    deal && deleteDeal(deal.dealId);
     toggleModalOpen();
     navigate(PRIVATE_ABS_ROUTE_PATHS.dealScape);
   };
 
-  console.log('deal', deal);
+  const handleUpdate = (data: Partial<Deal>) => {
+    deal && updateDeal({ dealId: deal.dealId, data });
+  };
+
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.dealScape}>
@@ -75,13 +79,14 @@ const DealProperty: FC<Props> = ({ dealId }) => {
       <PropertyContainer>
         <TitleContainer label="Stage">
           <CustomSelect<string>
-            value={'engagement'}
+            value={deal?.dealStage ?? '-'}
             options={DEAL_STAGE_OPTIONS}
             sx={{
               '& .MuiSelect-select': {
                 padding: 0,
               },
             }}
+            onSelect={async (value) => handleUpdate({ dealStage: value })}
           />
           <StageBar stage={4} />
         </TitleContainer>
@@ -146,6 +151,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>
+      {loading && <Loader />}
     </Container>
   );
 };

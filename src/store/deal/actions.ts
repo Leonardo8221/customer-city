@@ -29,8 +29,9 @@ export const getDeal = createAsyncThunk<Deal, number>(GET_DEAL, async (id) => {
   return deal;
 });
 
-export const updateDeal = createAsyncThunk<void, UpdateDealData>(UPDATE_DEAL, async ({ dealId, data }) => {
-  await updateDealApi(dealId, data);
+export const updateDeal = createAsyncThunk<Deal, UpdateDealData>(UPDATE_DEAL, async ({ dealId, data }) => {
+  const deal = await updateDealApi(dealId, data);
+  return deal;
 });
 
 export const deleteDeal = createAsyncThunk<void, number>(DELETE_DEAL, async (id) => {

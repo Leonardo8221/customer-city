@@ -11,12 +11,3 @@ export const LoaderContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
 }));
-
-export const ContentLoadContainer = styled(Box)(({ theme }) => ({
-  height: '100%',
-  width: '100%',
-  backgroundColor: alpha(theme.palette.neutral.darkBlueHigh as string, 0.2),
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-}));

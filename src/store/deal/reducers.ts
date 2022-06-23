@@ -34,8 +34,9 @@ const dealReducer = createSlice({
       state.deal = payload;
     });
 
-    builder.addCase(updateDeal.fulfilled, (state) => {
+    builder.addCase(updateDeal.fulfilled, (state, { payload }) => {
       state.loading = false;
+      state.deal = payload;
       state.success = 'Deal updated successfully!';
     });
 

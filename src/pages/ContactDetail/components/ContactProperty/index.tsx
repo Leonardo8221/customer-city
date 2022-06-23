@@ -22,7 +22,7 @@ import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { CustomSelect } from 'components/CustomSelect';
 import { useContact } from 'store/contact/hooks';
-import { ContentLoader } from 'components/Loader';
+import { Loader } from 'components/Loader';
 
 interface Props {
   contactId: number;
@@ -51,13 +51,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const handleUpdate = (data: Partial<Contact>) => {
     contact && updateContact({ contactId: contact.contactId, data });
   };
-
-  if (loading)
-    return (
-      <Container>
-        <ContentLoader />
-      </Container>
-    );
 
   return (
     <Container>
@@ -229,6 +222,7 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>
+      {loading && <Loader />}
       {/* <SecondaryButton>Enrich contact details</SecondaryButton> */}
     </Container>
   );
