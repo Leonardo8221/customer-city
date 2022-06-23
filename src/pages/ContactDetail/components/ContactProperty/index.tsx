@@ -19,10 +19,10 @@ import {
   CONTACT_TYPE_OPTIONS,
 } from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
-import { SecondaryButton } from 'components/ui';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { CustomSelect } from 'components/CustomSelect';
 import { useContact } from 'store/contact/hooks';
+import { ContentLoader } from 'components/Loader';
 
 interface Props {
   contactId: number;
@@ -51,6 +51,13 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const handleUpdate = (data: Partial<Contact>) => {
     contact && updateContact({ contactId: contact.contactId, data });
   };
+
+  if (loading)
+    return (
+      <Container>
+        <ContentLoader />
+      </Container>
+    );
 
   return (
     <Container>
