@@ -42,15 +42,11 @@ export const ProfileHead = styled(Box)(() => ({
   display: 'flex',
   gap: 24,
   padding: '32px 24px',
-  '& .main-profile': {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'space-between',
-    '&-content': {
-      padding: '16px 0',
+  '& .profile-head': {
+    width: '100%',
+    '& .popover-wrapper': {
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-evenly',
+      flexDirection: 'row-reverse',
     },
   },
 }));

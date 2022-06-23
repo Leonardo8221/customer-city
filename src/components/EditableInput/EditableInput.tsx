@@ -1,10 +1,12 @@
 import { FC, useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
-import { OutlinedTextFieldProps, ClickAwayListener, Box } from '@mui/material';
+import { OutlinedTextFieldProps, ClickAwayListener, Box, Typography } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
-import { UserDetail } from '../UserDetail';
+import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
+import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
 import { CustomInput } from '../CustomInput';
-import { Container, EditButton } from './ui';
+import { EditButton, DetailContainer, DetailValueContainer, TextValue } from './ui';
+import { CustomTextArea } from 'components/CustomTextarea';
 
 interface EditableInputProps extends Partial<OutlinedTextFieldProps> {
   id: string;
@@ -12,10 +14,21 @@ interface EditableInputProps extends Partial<OutlinedTextFieldProps> {
   label: string;
   value: string;
   small?: boolean;
+  isText?: boolean;
   onSave?: (value: string) => Promise<void>;
 }
 
-const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, small = true, onSave, ...rest }) => {
+const EditableInput: FC<EditableInputProps> = ({
+  id,
+  name,
+  label,
+  type,
+  value,
+  small = true,
+  isText = false,
+  onSave,
+  ...rest
+}) => {
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
@@ -25,7 +38,7 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
     setInputValue(value);
   }, [value]);
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!inputValue) setError(false);
     setInputValue(event.target.value);
   };
@@ -54,42 +67,74 @@ const EditableInput: FC<EditableInputProps> = ({ id, name, label, type, value, s
     }
   };
 
+  const renderIcon = () => {
+    switch (type) {
+      case 'email':
+        return <EmailIcon />;
+      case 'tel':
+        return <PhoneIcon />;
+      default:
+        return null;
+    }
+  };
+
   if (editing) {
     return (
       <ClickAwayListener onClickAway={onClose}>
         <Box position="relative">
-          <CustomInput
-            id={id}
-            name={name}
-            label={label}
-            type={type}
-            {...rest}
-            value={inputValue}
-            onChange={onChange}
-            onBlur={onClose}
-            error={error}
-            onKeyDown={onKeyDown}
-          />
+          {!isText ? (
+            <CustomInput
+              id={id}
+              name={name}
+              label={label}
+              type={type}
+              {...rest}
+              value={inputValue}
+              onChange={onChange}
+              onBlur={onClose}
+              error={error}
+              onKeyDown={onKeyDown}
+            />
+          ) : (
+            <CustomTextArea
+              id="accountDescription"
+              name="accountDescription"
+              label={<Typography variant="labelRegular12">{label}</Typography>}
+              placeholder={`Add ${label}`}
+              minRows={4}
+              maxRows={8}
+              value={inputValue}
+              onChange={onChange}
+              onBlur={onClose}
+            />
+          )}
         </Box>
       </ClickAwayListener>
     );
   }
 
   return (
-    <Container small={small}>
-      <UserDetail label={label} value={success ? inputValue : value} type={type} small={small} />
+    <DetailContainer>
+      <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
+        {label}
+      </Typography>
 
-      <EditButton
-        onClick={() => {
-          setEditing(true);
-          setSuccess(false);
-        }}
-        small={small}
-        data-testid={`edit-${id}`}
-      >
-        <EditIcon />
-      </EditButton>
-    </Container>
+      <DetailValueContainer small={small}>
+        {renderIcon()}
+
+        <TextValue small={small}>{success ? inputValue : value}</TextValue>
+        <EditButton
+          onClick={() => {
+            setEditing(true);
+            setSuccess(false);
+          }}
+          small={small}
+          data-testid={`edit-${id}`}
+        >
+          <EditIcon />
+        </EditButton>
+      </DetailValueContainer>
+    </DetailContainer>
   );
 };
 

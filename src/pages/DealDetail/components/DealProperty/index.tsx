@@ -18,6 +18,7 @@ import StageBar from 'components/StageBar';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
 import { Loader } from 'components/Loader';
+import { EditableInput } from 'components/EditableInput';
 
 interface Props {
   dealId: number;
@@ -54,17 +55,26 @@ const DealProperty: FC<Props> = ({ dealId }) => {
         {'Back to Deals'}
       </BackToRoute>
       <ProfileHead>
-        <DealRoundIcon />
-        <div className="main-profile">
-          <div className="main-profile-content">
-            <Typography variant="p12">Name</Typography>
-            <Typography variant="h3">{deal?.dealName ?? ''}</Typography>
+        <div>
+          <DealRoundIcon />
+        </div>
+        <div className="profile-head">
+          <div className="popover-wrapper">
+            <PopoverWrapper icon={<DotsIcon />}>
+              <DeleteButton startIcon={<DeleteIcon />} onClick={() => setModalOpen(true)}>
+                {'Delete deal'}
+              </DeleteButton>
+            </PopoverWrapper>
           </div>
-          <PopoverWrapper icon={<DotsIcon />}>
-            <DeleteButton startIcon={<DeleteIcon />} onClick={() => setModalOpen(true)}>
-              {'Delete deal'}
-            </DeleteButton>
-          </PopoverWrapper>
+          <EditableInput
+            id="dealName"
+            name="dealName"
+            label="Name"
+            value={deal?.dealName ?? ''}
+            small={false}
+            fullWidth
+            onSave={async (value) => handleUpdate({ dealName: value })}
+          />
           <DeleteModal
             open={modalOpen}
             toggleOpen={toggleModalOpen}
@@ -91,31 +101,47 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <StageBar stage={4} />
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
-          <TitleContainer label="Deam Name">
-            <Typography variant="p14">{deal?.dealName ?? '-'}</Typography>
-          </TitleContainer>
-          <TitleContainer label="Account Name">
-            <Typography variant="p14">{deal?.dealAccountName ?? '-'}</Typography>
-          </TitleContainer>
-          <TitleContainer label="Description">
-            <Typography variant="p14">{deal?.dealDescription ?? '-'}</Typography>
-          </TitleContainer>
+          <EditableInput
+            id="dealAccountName"
+            name="dealAccountName"
+            label="Account name"
+            value={deal?.dealAccountName ?? ''}
+            fullWidth
+            onSave={async (value) => handleUpdate({ dealAccountName: value })}
+          />
+          <EditableInput
+            id="dealDescription"
+            name="dealDescription"
+            label="Description"
+            value={deal?.dealDescription ?? ''}
+            fullWidth
+            isText
+            onSave={async (value) => handleUpdate({ dealDescription: value })}
+          />
           <TitleContainer label="Amount">
             <Typography variant="p14" sx={{ fontFamily: 600 }}>
               {deal?.dealAmount ?? '-'}
             </Typography>
           </TitleContainer>
-          <TitleContainer label="Company Name">
-            <Typography variant="p14">{deal?.dealCampaignName ?? '-'}</Typography>
-          </TitleContainer>
+          <EditableInput
+            id="dealCampaignName"
+            name="dealCampaignName"
+            label="Compaign Name"
+            value={deal?.dealCampaignName ?? ''}
+            fullWidth
+            onSave={async (value) => handleUpdate({ dealCampaignName: value })}
+          />
+
           <TitleContainer label="Close Date">
             <Typography variant="p14">
               {deal?.dealCloseDate ? format(new Date(deal?.dealCloseDate), 'PP') : '-'}
             </Typography>
           </TitleContainer>
+
           <TitleContainer label="Contact Name">
             <Typography variant="p14">{deal?.dealContactName ?? '-'}</Typography>
           </TitleContainer>
+
           <TitleContainer label="Forecast category">
             <Typography variant="p14">{deal?.dealForecastCategory ?? '-'}</Typography>
           </TitleContainer>
