@@ -34,4 +34,5 @@ export interface AccountReturnHook extends AccountState {
   setSuccess: (success: string | boolean) => void;
   getAccounts: () => void;
   getAccount: (id: number) => void;
+  deleteAccount: (id: number) => void;
 }

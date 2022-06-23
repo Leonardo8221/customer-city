@@ -1,6 +1,6 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useState } from 'react';
-import { BackToRoute, Container, DeleteButton, ProfileHead } from './ui';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
 import format from 'date-fns/format';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
@@ -8,42 +8,39 @@ import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
 // import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as AccountRoundIcon } from 'assets/icons/accountRound.svg';
 import { Divider, Typography } from '@mui/material';
-import { deleteAccount as deleteAccountApi } from 'http/account';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
-import { Account } from 'store/account/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
+import { useAccount } from 'store/account/hooks';
 
 interface Props {
-  account: Account | null;
+  accountId: number;
 }
 
-const AccountProfile: FC<Props> = ({ account }) => {
+const AccountProperty: FC<Props> = ({ accountId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [error, setError] = useState<string | boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const { loading, error, account, getAccount, deleteAccount } = useAccount();
+
+  useEffect(() => {
+    getAccount(accountId);
+  }, [accountId, getAccount]);
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
   }, []);
 
   const handleDelete = async () => {
-    setError(false);
-    setLoading(true);
-    try {
-      account && (await deleteAccountApi(account?.accountId));
-      toggleModalOpen();
-      navigate(PRIVATE_ABS_ROUTE_PATHS.accounts);
-    } catch (err) {
-      setError((err as Error)?.message ?? true);
-    }
-    setLoading(false);
+    account && deleteAccount(account.accountId);
+    toggleModalOpen();
+    navigate(PRIVATE_ABS_ROUTE_PATHS.accounts);
   };
 
   console.log('account', account);
+
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.accounts}>
@@ -74,7 +71,7 @@ const AccountProfile: FC<Props> = ({ account }) => {
       </ProfileHead>
       <Divider />
 
-      <div>
+      <PropertyContainer>
         <StyledDropDownPanel title={'Core Information'}>
           <TitleContainer label="Account Name">
             <Typography variant="p14">{account?.accountName ?? '-'}</Typography>
@@ -158,9 +155,9 @@ const AccountProfile: FC<Props> = ({ account }) => {
             <Typography variant="p14">{account?.accountModifiedBy ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
-      </div>
+      </PropertyContainer>
     </Container>
   );
 };
 
-export default AccountProfile;
+export default AccountProperty;

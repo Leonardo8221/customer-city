@@ -40,7 +40,7 @@ export const DeleteButton = styled(Button)(({ theme }) => ({
 export const ProfileHead = styled(Box)(() => ({
   display: 'flex',
   gap: 24,
-  padding: 24,
+  padding: '32px 24px',
   '& .main-profile': {
     flex: 1,
     display: 'flex',
@@ -57,5 +57,5 @@ export const ProfileHead = styled(Box)(() => ({
 export const PropertyContainer = styled(Box)(() => ({
   padding: 24,
   overflowY: 'auto',
-  height: 'calc(100vh - 16rem)',
+  height: 'calc(100vh - 17rem)',
 }));

@@ -3,49 +3,44 @@ import { Link } from 'react-router-dom';
 
 export const Container = styled(Box)(() => ({
   flex: 5,
-  padding: 24,
   display: 'flex',
   flexDirection: 'column',
-  gap: 32,
-  overflowY: 'auto',
-  height: 'calc(100vh - 3.5rem)',
+  gap: 2,
 }));
 
 export const BackToRoute = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
   fontSize: 12,
+  marginTop: 24,
+  marginLeft: 24,
   gap: 12,
   color: 'black',
 }));
 
-export const DeleteButton = styled(Button)(() => ({
+export const DeleteButton = styled(Button)(({ theme }) => ({
   fontWeight: 400,
-  color: '#FB4E6D',
+  color: theme.palette.red.main,
   padding: '0 16px',
   '&:hover': {
-    color: '#FB4E6D',
+    color: theme.palette.red.main,
     backgroundColor: '#00000005',
   },
 
   '& svg': {
     '& path:last-child,rect': {
-      stroke: '#FB4E6D',
+      stroke: theme.palette.red.main,
     },
     '& path:first-of-type': {
-      fill: '#FB4E6D',
+      fill: theme.palette.red.main,
     },
   },
-}));
-export const PropertyHead = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
 }));
 
 export const ProfileHead = styled(Box)(() => ({
   display: 'flex',
   gap: 24,
+  padding: '32px 24px',
   '& .main-profile': {
     flex: 1,
     display: 'flex',
@@ -57,4 +52,13 @@ export const ProfileHead = styled(Box)(() => ({
       justifyContent: 'space-evenly',
     },
   },
+}));
+
+export const PropertyContainer = styled(Box)(() => ({
+  padding: 24,
+  overflowY: 'auto',
+  height: 'calc(100vh - 17rem)',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 24,
 }));

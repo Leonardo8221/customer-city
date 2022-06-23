@@ -39,4 +39,5 @@ export interface DealReturnHook extends DealState {
   setSuccess: (success: string | boolean) => void;
   getDeals: () => void;
   getDeal: (id: number) => void;
+  deleteDeal: (id: number) => void;
 }
