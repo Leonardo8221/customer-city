@@ -12,10 +12,17 @@ import { deleteContact as deleteContactApi } from 'http/contact';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
-import { Contact } from 'store/contact/types';
+import {
+  Contact,
+  CONTACT_SOURCE_OPTIONS,
+  CONTACT_STAGE_OPTIONS,
+  CONTACT_STATUS_OPTIONS,
+  CONTACT_TYPE_OPTIONS,
+} from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { SecondaryButton } from 'components/ui';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
+import { CustomSelect } from 'components/CustomSelect';
 
 interface Props {
   contact: Contact | null;
@@ -104,16 +111,52 @@ const ContactProfile: FC<Props> = ({ contact }) => {
             <Typography variant="p14">{contact?.contactRole ?? '-'}</Typography>
           </TitleContainer>
 
+          <TitleContainer label="Contact Source">
+            <CustomSelect<string>
+              value={'website'}
+              options={CONTACT_SOURCE_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+            />
+          </TitleContainer>
+
           <TitleContainer label="Contact Type">
-            <Typography variant="p14">{contact?.contactType ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={'active'}
+              options={CONTACT_TYPE_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+            />
           </TitleContainer>
 
           <TitleContainer label="Contact Status">
-            <Typography variant="p14">{contact?.contactStatus ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={'raw'}
+              options={CONTACT_STATUS_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+            />
           </TitleContainer>
 
           <TitleContainer label="Contact Stage">
-            <Typography variant="p14">{contact?.contactStage ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={'Cold'}
+              options={CONTACT_STAGE_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+            />
           </TitleContainer>
         </StyledDropDownPanel>
 

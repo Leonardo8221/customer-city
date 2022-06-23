@@ -1,3 +1,37 @@
+export const CONTACT_SOURCE_OPTIONS = [
+  { label: 'Website', value: 'website' },
+  { label: 'Referral', value: 'referral' },
+  { label: 'Webinar', value: 'webinar' },
+  { label: 'Social', value: 'social' },
+  { label: 'Media', value: 'media' },
+  { label: 'Tradeshow', value: 'tradeshow' },
+  { label: 'Campaign', value: 'campaign' },
+];
+
+export const CONTACT_TYPE_OPTIONS = [
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' },
+];
+
+export const CONTACT_STATUS_OPTIONS = [
+  { label: 'Raw', value: 'raw' },
+  { label: 'Assigned', value: 'assigned' },
+  { label: 'Working', value: 'working' },
+  { label: 'Qualified', value: 'qualified' },
+  { label: 'Nurtured', value: 'nurtured' },
+  { label: 'Unqualified', value: 'unqualified' },
+];
+
+export const CONTACT_STAGE_OPTIONS = [
+  { label: 'Cold', value: 'Cold' },
+  { label: 'Warm', value: 'Warm' },
+  { label: 'Hot', value: 'Hot' },
+  { label: 'MQL', value: 'MQL' },
+  { label: 'SQL', value: 'SQL' },
+  { label: 'SAL', value: 'SAL' },
+  { label: 'Customer', value: 'Customer' },
+];
+
 export interface Contact {
   contactId: number;
   contactFirstName: string;
