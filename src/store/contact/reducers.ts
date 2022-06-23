@@ -1,6 +1,6 @@
-import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getContacts, getContact } from './actions';
+import { setError, setSuccess, getContacts, getContact, updateContact, deleteContact } from './actions';
 import { ContactState } from './types';
 
 export const initialState: ContactState = {
@@ -45,6 +45,34 @@ const contactReducer = createSlice({
       state.loading = false;
       state.contact = payload;
     });
+
+    builder.addCase(updateContact.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Company updated successfully!';
+    });
+
+    builder.addCase(deleteContact.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Company deleted successfully!';
+    });
+
+    builder.addMatcher(
+      isAnyOf(getContacts.pending, updateContact.pending, getContact.pending, deleteContact.pending),
+      (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      },
+    );
+
+    builder.addMatcher(
+      isAnyOf(getContacts.rejected, updateContact.rejected, getContact.rejected, deleteContact.rejected),
+      (state, { error }) => {
+        state.loading = false;
+        state.error = error?.message ?? true;
+        state.success = false;
+      },
+    );
   },
 });
 

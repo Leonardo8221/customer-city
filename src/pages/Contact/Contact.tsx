@@ -22,7 +22,9 @@ const ContactPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, contacts, getContacts } = useContact();
+
   console.log(filterValue);
+
   useEffect(() => {
     getContacts();
     // eslint-disable-next-line react-hooks/exhaustive-deps

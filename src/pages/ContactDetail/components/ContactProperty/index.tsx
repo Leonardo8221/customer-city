@@ -1,6 +1,6 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useState } from 'react';
-import { BackToRoute, Container, DeleteButton, ProfileHead } from './ui';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
 import format from 'date-fns/format';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
@@ -8,7 +8,6 @@ import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
 // import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
 import { Divider, Typography } from '@mui/material';
-import { deleteContact as deleteContactApi } from 'http/contact';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
@@ -23,35 +22,36 @@ import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { SecondaryButton } from 'components/ui';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { CustomSelect } from 'components/CustomSelect';
+import { useContact } from 'store/contact/hooks';
 
 interface Props {
-  contact: Contact | null;
+  contactId: number;
 }
 
-const ContactProfile: FC<Props> = ({ contact }) => {
+const ContactProperty: FC<Props> = ({ contactId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [error, setError] = useState<string | boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const { loading, error, contact, getContact, updateContact, deleteContact } = useContact();
+
+  useEffect(() => {
+    getContact(contactId);
+  }, [contactId, getContact]);
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
   }, []);
 
   const handleDelete = async () => {
-    setError(false);
-    setLoading(true);
-    try {
-      contact && (await deleteContactApi(contact?.contactId));
-      toggleModalOpen();
-      navigate(PRIVATE_ABS_ROUTE_PATHS.contacts);
-    } catch (err) {
-      setError((err as Error)?.message ?? true);
-    }
-    setLoading(false);
+    contact && deleteContact(contact.contactId);
+    toggleModalOpen();
+    navigate(PRIVATE_ABS_ROUTE_PATHS.contacts);
   };
 
-  console.log('contact', contact);
+  const handleUpdate = (data: Partial<Contact>) => {
+    contact && updateContact({ contactId: contact.contactId, data });
+  };
+
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.contacts}>
@@ -83,9 +83,9 @@ const ContactProfile: FC<Props> = ({ contact }) => {
         </div>
       </ProfileHead>
 
-      <Divider />
+      <Divider sx={{ mx: 3 }} />
 
-      <div>
+      <PropertyContainer>
         <StyledDropDownPanel title={'Core Information'}>
           <TitleContainer label="First Name">
             <Typography variant="p14">{contact?.contactFirstName ?? '-'}</Typography>
@@ -113,49 +113,53 @@ const ContactProfile: FC<Props> = ({ contact }) => {
 
           <TitleContainer label="Contact Source">
             <CustomSelect<string>
-              value={'website'}
+              value={contact?.contactSource ?? '-'}
               options={CONTACT_SOURCE_OPTIONS}
               sx={{
                 '& .MuiSelect-select': {
                   padding: 0,
                 },
               }}
+              onSelect={async (value) => handleUpdate({ contactSource: value })}
             />
           </TitleContainer>
 
           <TitleContainer label="Contact Type">
             <CustomSelect<string>
-              value={'active'}
+              value={contact?.contactType ?? '-'}
               options={CONTACT_TYPE_OPTIONS}
               sx={{
                 '& .MuiSelect-select': {
                   padding: 0,
                 },
               }}
+              onSelect={async (value) => handleUpdate({ contactType: value })}
             />
           </TitleContainer>
 
           <TitleContainer label="Contact Status">
             <CustomSelect<string>
-              value={'raw'}
+              value={contact?.contactStatus ?? '-'}
               options={CONTACT_STATUS_OPTIONS}
               sx={{
                 '& .MuiSelect-select': {
                   padding: 0,
                 },
               }}
+              onSelect={async (value) => handleUpdate({ contactStatus: value })}
             />
           </TitleContainer>
 
           <TitleContainer label="Contact Stage">
             <CustomSelect<string>
-              value={'Cold'}
+              value={contact?.contactStage ?? '-'}
               options={CONTACT_STAGE_OPTIONS}
               sx={{
                 '& .MuiSelect-select': {
                   padding: 0,
                 },
               }}
+              onSelect={async (value) => handleUpdate({ contactStage: value })}
             />
           </TitleContainer>
         </StyledDropDownPanel>
@@ -217,10 +221,10 @@ const ContactProfile: FC<Props> = ({ contact }) => {
             <Typography variant="p14">{contact?.contactModifiedBy ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
-      </div>
-      <SecondaryButton>Enrich contact details</SecondaryButton>
+      </PropertyContainer>
+      {/* <SecondaryButton>Enrich contact details</SecondaryButton> */}
     </Container>
   );
 };
 
-export default ContactProfile;
+export default ContactProperty;

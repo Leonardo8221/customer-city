@@ -44,6 +44,8 @@ export interface Contact {
   contactSecondaryEmail: string;
   contactPhoneNumber: string;
   contactMobileNumber: string;
+
+  contactSource: string;
   contactStage: string;
   contactType: string;
   contactStatus: string;
@@ -66,9 +68,16 @@ export interface ContactState {
   contact: Contact | null;
 }
 
+export interface UpdateContactData {
+  contactId: number;
+  data: Partial<Contact>;
+}
+
 export interface ContactReturnHook extends ContactState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getContacts: () => void;
   getContact: (id: number) => void;
+  updateContact: (data: UpdateContactData) => void;
+  deleteContact: (id: number) => void;
 }

@@ -8,7 +8,7 @@ export const Select = styled(MuiSelect, {
   fontSize: small ? 12 : 14,
   lineHeight: small ? '16px' : '24px',
   fontWeight: small ? 400 : 500,
-  padding: '4px 0',
+  padding: '4px 8px 4px 0',
   position: 'relative',
   '& svg': {
     marginTop: 2,
