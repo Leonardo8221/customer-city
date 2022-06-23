@@ -34,10 +34,15 @@ export interface DealState {
   deal: Deal | null;
 }
 
+export interface UpdateDealData {
+  dealId: number;
+  data: Partial<Deal>;
+}
 export interface DealReturnHook extends DealState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getDeals: () => void;
   getDeal: (id: number) => void;
+  updateDeal: (data: UpdateDealData) => void;
   deleteDeal: (id: number) => void;
 }

@@ -1,28 +1,38 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getDeals as getDealsApi, getDeal as getDealApi, deleteDeal as deleteDealApi } from 'http/deal';
-import { Deal } from './types';
+import {
+  getDeals as getDealsApi,
+  getDeal as getDealApi,
+  deleteDeal as deleteDealApi,
+  updateDeal as updateDealApi,
+} from 'http/deal';
+import { Deal, UpdateDealData } from './types';
 
 const SET_ERROR = 'deal/SET_ERROR';
 const SET_SUCCESS = 'deal/SET_SUCCESS';
-const GET_ACCOUNTS = 'deal/GET_ACCOUNTS';
-const GET_ACCOUNT = 'deal/GET_ACCOUNT';
-const DELETE_ACCOUNT = 'deal/DELETE_ACCOUNT';
+const GET_DEALS = 'deal/GET_DEALS';
+const GET_DEAL = 'deal/GET_DEAL';
+const DELETE_DEAL = 'deal/DELETE_DEAL';
+const UPDATE_DEAL = 'deal/UPDATE_DEAL';
 
 export const setError = createAction<string | boolean>(SET_ERROR);
 
 export const setSuccess = createAction<string | boolean>(SET_SUCCESS);
 
-export const getDeals = createAsyncThunk<Deal[]>(GET_ACCOUNTS, async () => {
+export const getDeals = createAsyncThunk<Deal[]>(GET_DEALS, async () => {
   const deals = await getDealsApi();
   return deals;
 });
 
-export const getDeal = createAsyncThunk<Deal, number>(GET_ACCOUNT, async (id) => {
+export const getDeal = createAsyncThunk<Deal, number>(GET_DEAL, async (id) => {
   const deal = await getDealApi(id);
   return deal;
 });
 
-export const deleteDeal = createAsyncThunk<void, number>(DELETE_ACCOUNT, async (id) => {
+export const updateDeal = createAsyncThunk<void, UpdateDealData>(UPDATE_DEAL, async ({ dealId, data }) => {
+  await updateDealApi(dealId, data);
+});
+
+export const deleteDeal = createAsyncThunk<void, number>(DELETE_DEAL, async (id) => {
   await deleteDealApi(id);
 });

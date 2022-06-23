@@ -29,9 +29,13 @@ export const getContact = createAsyncThunk<Contact, number>(GET_CONTACT, async (
   return contact;
 });
 
-export const updateContact = createAsyncThunk<void, UpdateContactData>(UPDATE_CONTACT, async ({ contactId, data }) => {
-  await updateContactApi(contactId, data);
-});
+export const updateContact = createAsyncThunk<Contact, UpdateContactData>(
+  UPDATE_CONTACT,
+  async ({ contactId, data }) => {
+    const contact = await updateContactApi(contactId, data);
+    return contact;
+  },
+);
 
 export const deleteContact = createAsyncThunk<void, number>(DELETE_CONTACT, async (id) => {
   await deleteContactApi(id);

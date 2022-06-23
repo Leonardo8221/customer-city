@@ -46,14 +46,15 @@ const contactReducer = createSlice({
       state.contact = payload;
     });
 
-    builder.addCase(updateContact.fulfilled, (state) => {
+    builder.addCase(updateContact.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.success = 'Company updated successfully!';
+      state.contact = payload;
+      state.success = 'Contact updated successfully!';
     });
 
     builder.addCase(deleteContact.fulfilled, (state) => {
       state.loading = false;
-      state.success = 'Company deleted successfully!';
+      state.success = 'Contact deleted successfully!';
     });
 
     builder.addMatcher(

@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getAccounts, getAccount, deleteAccount } from './actions';
+import { setError, setSuccess, getAccounts, getAccount, deleteAccount, updateAccount } from './actions';
 import { AccountState } from './types';
 
 export const initialState: AccountState = {
@@ -34,14 +34,28 @@ const accountReducer = createSlice({
       state.account = payload;
     });
 
-    builder.addMatcher(isAnyOf(getAccounts.pending, getAccount.pending, deleteAccount.pending), (state) => {
-      state.loading = true;
-      state.error = false;
-      state.success = false;
+    builder.addCase(updateAccount.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.account = payload;
+      state.success = 'Account updated successfully!';
+    });
+
+    builder.addCase(deleteAccount.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Account deleted successfully!';
     });
 
     builder.addMatcher(
-      isAnyOf(getAccounts.rejected, getAccount.rejected, deleteAccount.rejected),
+      isAnyOf(getAccounts.pending, updateAccount.pending, getAccount.pending, deleteAccount.pending),
+      (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      },
+    );
+
+    builder.addMatcher(
+      isAnyOf(getAccounts.rejected, updateAccount.rejected, getAccount.rejected, deleteAccount.rejected),
       (state, { error }) => {
         state.loading = false;
         state.error = error?.message ?? true;

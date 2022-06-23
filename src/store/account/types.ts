@@ -1,3 +1,22 @@
+export const ACCOUNT_INDUSTRY_OPTIONS = [{ label: 'Banking', value: 'Banking' }];
+
+export const ACCOUNT_STAGE_OPTIONS = [
+  { label: 'Cold', value: 'Cold' },
+  { label: 'Warm', value: 'Warm' },
+  { label: 'Hot', value: 'Hot' },
+  { label: 'MQL', value: 'MQL' },
+  { label: 'SQL', value: 'SQL' },
+  { label: 'SAL', value: 'SAL' },
+  { label: 'Customer', value: 'Customer' },
+];
+
+export const ACCOUNT_STATUS_OPTIONS = [
+  { label: 'Active', value: 1 },
+  { label: 'Inactive', value: 0 },
+];
+
+export const ACCOUNT_TYPE_OPTIONS = [{ label: 'Startup', value: 'Startup' }];
+
 export interface Account {
   accountId: number;
   accountName: string;
@@ -29,10 +48,16 @@ export interface AccountState {
   account: Account | null;
 }
 
+export interface UpdateAccountData {
+  accountId: number;
+  data: Partial<Account>;
+}
+
 export interface AccountReturnHook extends AccountState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getAccounts: () => void;
   getAccount: (id: number) => void;
+  updateAccount: (data: UpdateAccountData) => void;
   deleteAccount: (id: number) => void;
 }

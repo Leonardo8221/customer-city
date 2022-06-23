@@ -14,6 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useAccount } from 'store/account/hooks';
+import { CustomSelect } from 'components/CustomSelect';
+import {
+  Account,
+  ACCOUNT_INDUSTRY_OPTIONS,
+  ACCOUNT_STAGE_OPTIONS,
+  ACCOUNT_STATUS_OPTIONS,
+  ACCOUNT_TYPE_OPTIONS,
+} from 'store/account/types';
 
 interface Props {
   accountId: number;
@@ -23,7 +31,7 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { loading, error, account, getAccount, deleteAccount } = useAccount();
+  const { loading, error, account, getAccount, deleteAccount, updateAccount } = useAccount();
 
   useEffect(() => {
     getAccount(accountId);
@@ -39,7 +47,9 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
     navigate(PRIVATE_ABS_ROUTE_PATHS.accounts);
   };
 
-  console.log('account', account);
+  const handleUpdate = (data: Partial<Account>) => {
+    account && updateAccount({ accountId: account.accountId, data });
+  };
 
   return (
     <Container>
@@ -100,7 +110,16 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
 
           <TitleContainer label="Industry">
-            <Typography variant="p14">{account?.accountIndustry ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={account?.accountIndustry ?? '-'}
+              options={ACCOUNT_INDUSTRY_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+              onSelect={async (value) => handleUpdate({ accountIndustry: value })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Primary Contact">
@@ -108,11 +127,42 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
 
           <TitleContainer label="Account Stage">
-            <Typography variant="p14">{account?.accountStage ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={account?.accountStage ?? '-'}
+              options={ACCOUNT_STAGE_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+              onSelect={async (value) => handleUpdate({ accountStage: value })}
+            />
+          </TitleContainer>
+
+          <TitleContainer label="Account Status">
+            <CustomSelect<number>
+              value={account?.accountStatus ?? 0}
+              options={ACCOUNT_STATUS_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+              onSelect={async (value) => handleUpdate({ accountStatus: value })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Account Type">
-            <Typography variant="p14">{account?.accountType ?? '-'}</Typography>
+            <CustomSelect<string>
+              value={account?.accountType ?? '-'}
+              options={ACCOUNT_TYPE_OPTIONS}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+              onSelect={async (value) => handleUpdate({ accountType: value })}
+            />
           </TitleContainer>
         </StyledDropDownPanel>
 

@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getDeals, getDeal, deleteDeal } from './actions';
+import { setError, setSuccess, getDeals, getDeal, deleteDeal, updateDeal } from './actions';
 import { DealState } from './types';
 
 export const initialState: DealState = {
@@ -34,17 +34,30 @@ const dealReducer = createSlice({
       state.deal = payload;
     });
 
-    builder.addMatcher(isAnyOf(getDeals.pending, getDeal.pending, deleteDeal.pending), (state) => {
+    builder.addCase(updateDeal.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Deal updated successfully!';
+    });
+
+    builder.addCase(deleteDeal.fulfilled, (state) => {
+      state.loading = false;
+      state.success = 'Deal deleted successfully!';
+    });
+
+    builder.addMatcher(isAnyOf(getDeals.pending, updateDeal.pending, getDeal.pending, deleteDeal.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.success = false;
     });
 
-    builder.addMatcher(isAnyOf(getDeals.rejected, getDeal.rejected, deleteDeal.rejected), (state, { error }) => {
-      state.loading = false;
-      state.error = error?.message ?? true;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getDeals.rejected, updateDeal.rejected, getDeal.rejected, deleteDeal.rejected),
+      (state, { error }) => {
+        state.loading = false;
+        state.error = error?.message ?? true;
+        state.success = false;
+      },
+    );
   },
 });
 
