@@ -1,10 +1,18 @@
+export const DEAL_STAGE_OPTIONS = [
+  { label: 'Prospect', value: 'prospect' },
+  { label: 'Engagement', value: 'engagement' },
+  { label: 'Discovery', value: 'discovery' },
+  { label: 'Negotiation', value: 'negotiation' },
+  { label: 'Closed Won', value: 'closed_won' },
+  { label: 'Closed Lost', value: 'closed_lost' },
+];
 export interface Deal {
   dealId: number;
   dealName: string;
   dealAccountName: string;
   dealDescription: string;
   dealAmount: number;
-  dealCampanignName: string;
+  dealCampaignName: string;
   dealCloseDate: Date;
   dealContactName: string;
   dealForecastCategory: string;
