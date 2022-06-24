@@ -1,3 +1,5 @@
+import { User } from 'store/user/types';
+
 export const DEAL_STAGE_OPTIONS = [
   { label: 'Prospect', value: 'prospect' },
   { label: 'Engagement', value: 'engagement' },
@@ -24,6 +26,7 @@ export interface Deal {
   dealCreatedAt: Date;
   dealUpdatedAt: Date;
   dealModifiedBy: number;
+  dealModifier: User;
 }
 
 export interface DealState {

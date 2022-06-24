@@ -19,6 +19,8 @@ import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
 import { Loader } from 'components/Loader';
 import { EditableInput } from 'components/EditableInput';
+import EditableDate from 'components/EditableDate';
+import { EditableAutoComplete } from 'components/EditableAutoComplete';
 
 interface Props {
   dealId: number;
@@ -132,11 +134,14 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             onSave={async (value) => handleUpdate({ dealCampaignName: value })}
           />
 
-          <TitleContainer label="Close Date">
-            <Typography variant="p14">
-              {deal?.dealCloseDate ? format(new Date(deal?.dealCloseDate), 'PP') : '-'}
-            </Typography>
-          </TitleContainer>
+          <EditableDate
+            id="dealCloseDate"
+            name="dealCloseDate"
+            label="Close Date"
+            value={deal?.dealCloseDate}
+            fullWidth
+            onSave={async (value) => handleUpdate({ dealCloseDate: value })}
+          />
 
           <TitleContainer label="Contact Name">
             <Typography variant="p14">{deal?.dealContactName ?? '-'}</Typography>
@@ -148,9 +153,16 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <TitleContainer label="Deal Type">
             <Typography variant="p14">{deal?.dealType ?? '-'}</Typography>
           </TitleContainer>
-          <TitleContainer label="Owner">
-            <Typography variant="p14">{deal?.dealOwner ?? '-'}</Typography>
-          </TitleContainer>
+
+          <EditableAutoComplete
+            id="dealOwner"
+            name="dealOwner"
+            label="Owner"
+            value={deal?.dealOwner ?? '-'}
+            fullWidth
+            onSave={async (value) => handleUpdate({ dealOwner: value })}
+          />
+
           <TitleContainer label="Pipeline">
             <Typography variant="p14">{deal?.dealPipelineName ?? '-'}</Typography>
           </TitleContainer>
@@ -173,7 +185,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           </TitleContainer>
 
           <TitleContainer label="Last Updated by">
-            <Typography variant="p14">{deal?.dealModifiedBy ?? '-'}</Typography>
+            <Typography variant="p14">{deal?.dealModifier?.userName ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>
