@@ -11,28 +11,12 @@ const DealItem: FC = () => {
       <DealContainer>
         <Grid item xs={12} sm={6}>
           <TitleContainer label="Deal Name" icon="deal">
-            <CustomSelect<string>
-              value={'aronda'}
-              options={[{ label: 'Aronda', value: 'aronda' }]}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
-            />
+            <CustomSelect<string> value={'aronda'} options={[{ label: 'Aronda', value: 'aronda' }]} />
           </TitleContainer>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TitleContainer label="Stage">
-            <CustomSelect<string>
-              value={'engagement'}
-              options={[{ label: 'Engagement', value: 'engagement' }]}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
-            />
+            <CustomSelect<string> value={'engagement'} options={[{ label: 'Engagement', value: 'engagement' }]} />
             <StageBar stage={6} />
           </TitleContainer>
         </Grid>

@@ -93,11 +93,6 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <CustomSelect<string>
             value={deal?.dealStage ?? '-'}
             options={DEAL_STAGE_OPTIONS}
-            sx={{
-              '& .MuiSelect-select': {
-                padding: 0,
-              },
-            }}
             onSelect={async (value) => handleUpdate({ dealStage: value })}
           />
           <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} />

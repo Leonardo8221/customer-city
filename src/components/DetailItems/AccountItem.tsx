@@ -9,15 +9,7 @@ const AccountItem: FC = () => {
     <>
       <AccountContainer>
         <TitleContainer label="Account Name" icon="deal">
-          <CustomSelect<string>
-            value={'aronda'}
-            options={[{ label: 'Aronda', value: 'aronda' }]}
-            sx={{
-              '& .MuiSelect-select': {
-                padding: 0,
-              },
-            }}
-          />
+          <CustomSelect<string> value={'aronda'} options={[{ label: 'Aronda', value: 'aronda' }]} />
         </TitleContainer>
         <TitleContainer label="Office">
           <Typography variant="p14">{'Aronda Office - Albuquerque, NM, USA'}</Typography>

@@ -114,11 +114,6 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             <CustomSelect<string>
               value={account?.accountIndustry ?? '-'}
               options={ACCOUNT_INDUSTRY_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ accountIndustry: value })}
             />
           </TitleContainer>
@@ -131,11 +126,6 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             <CustomSelect<string>
               value={account?.accountStage ?? '-'}
               options={ACCOUNT_STAGE_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ accountStage: value })}
             />
           </TitleContainer>
@@ -144,11 +134,6 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             <CustomSelect<string>
               value={account?.accountStatus ?? '-'}
               options={ACCOUNT_STATUS_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ accountStatus: value })}
             />
           </TitleContainer>
@@ -157,11 +142,6 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             <CustomSelect<string>
               value={account?.accountType ?? '-'}
               options={ACCOUNT_TYPE_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ accountType: value })}
             />
           </TitleContainer>

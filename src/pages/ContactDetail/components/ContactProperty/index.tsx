@@ -115,11 +115,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
             <CustomSelect<string>
               value={contact?.contactSource ?? '-'}
               options={CONTACT_SOURCE_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ contactSource: value })}
             />
           </TitleContainer>
@@ -128,11 +123,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
             <CustomSelect<string>
               value={contact?.contactType ?? '-'}
               options={CONTACT_TYPE_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ contactType: value })}
             />
           </TitleContainer>
@@ -141,11 +131,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
             <CustomSelect<string>
               value={contact?.contactStatus ?? '-'}
               options={CONTACT_STATUS_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ contactStatus: value })}
             />
           </TitleContainer>
@@ -154,11 +139,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
             <CustomSelect<string>
               value={contact?.contactStage ?? '-'}
               options={CONTACT_STAGE_OPTIONS}
-              sx={{
-                '& .MuiSelect-select': {
-                  padding: 0,
-                },
-              }}
               onSelect={async (value) => handleUpdate({ contactStage: value })}
             />
           </TitleContainer>

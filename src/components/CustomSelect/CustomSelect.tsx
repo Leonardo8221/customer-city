@@ -67,11 +67,6 @@ const CustomSelect = <T extends OptionValue>({
       sx={{
         width: fullWidth ? '100%' : 'fit-content',
         height: 40,
-        '& .MuiSelect-select': {
-          paddingLeft: 1,
-          paddingTop: 1,
-          paddingBottom: 1,
-        },
         ':hover svg path': {
           fill: '#1554FF',
           stroke: '#1554FF',

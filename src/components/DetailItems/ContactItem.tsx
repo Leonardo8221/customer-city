@@ -9,15 +9,7 @@ const ContactItem: FC = () => {
     <>
       <ContactContainer>
         <TitleContainer label="Contact Name" icon="user">
-          <CustomSelect<string>
-            value={'Olivia'}
-            options={[{ label: 'Olivia Piterson', value: 'Olivia' }]}
-            sx={{
-              '& .MuiSelect-select': {
-                padding: 0,
-              },
-            }}
-          />
+          <CustomSelect<string> value={'Olivia'} options={[{ label: 'Olivia Piterson', value: 'Olivia' }]} />
         </TitleContainer>
         <TitleContainer label="Work email">
           <Typography variant="p14">{'olivia.piterson@gmail.com'}</Typography>
