@@ -100,7 +100,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             }}
             onSelect={async (value) => handleUpdate({ dealStage: value })}
           />
-          <StageBar stage={4} />
+          <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} />
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
           <EditableInput
