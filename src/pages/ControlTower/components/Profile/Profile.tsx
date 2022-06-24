@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 import { updateCompany as updateCompanyApi } from 'http/company';
 import { updateUser as updateUserApi } from 'http/user';
 import { TextLinkButton } from 'components/ui';
-import { EditableInput } from 'components/EditableInput';
+import { EditableInput } from 'components/Editable/EditableInput';
 import { Loader } from 'components/Loader';
 import { useCompany } from 'store/company/hooks';
 import { useUser } from 'store/user/hooks';

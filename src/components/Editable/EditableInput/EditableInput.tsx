@@ -4,7 +4,7 @@ import { OutlinedTextFieldProps, ClickAwayListener, Box, Typography } from '@mui
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
 import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
-import { CustomInput } from '../CustomInput';
+import { CustomInput } from 'components/CustomInput';
 import { EditButton, DetailContainer, DetailValueContainer, TextValue } from './ui';
 import { CustomTextArea } from 'components/CustomTextarea';
 

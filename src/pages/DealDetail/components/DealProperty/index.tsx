@@ -18,9 +18,9 @@ import StageBar from 'components/StageBar';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
 import { Loader } from 'components/Loader';
-import { EditableInput } from 'components/EditableInput';
-import EditableDate from 'components/EditableDate';
-import { EditableAutoComplete } from 'components/EditableAutoComplete';
+import { EditableInput } from 'components/Editable/EditableInput';
+import EditableDate from 'components/Editable/EditableDate';
+import { EditableAutoComplete } from 'components/Editable/EditableAutoComplete';
 
 interface Props {
   dealId: number;
