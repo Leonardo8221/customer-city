@@ -217,7 +217,7 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
             </Typography>
           </TitleContainer>
 
-          <TitleContainer label="Last Updated by">
+          <TitleContainer label="Last Updated by" icon="user">
             <Typography variant="p14">{contact?.contactModifiedBy ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
