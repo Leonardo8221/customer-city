@@ -46,7 +46,7 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({ id, label, value,
       <ClickAwayListener onClickAway={onClose}>
         <Box position="relative">
           <CustomDropdown<string>
-            id="accountType"
+            id={id}
             label={label}
             placeholder={`Select the ${label}`}
             value={inputValue}

@@ -11,7 +11,6 @@ import { Modal, ModalContainer, ModalHeader, ModalMain, TextButton, PaginatedMod
 import { CustomInput } from 'components/CustomInput';
 import { AddressBox, GridItem, Paper } from './ui';
 import { Contact } from 'store/contact/types';
-import { IconAutoComplete } from 'components/IconAutoComplete';
 import { useNavigate, generatePath } from 'react-router-dom';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { CustomDropdown } from 'components/CustomDropdown';
@@ -239,7 +238,7 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                           error={touched.contactMobileNumber && !!errors.contactMobileNumber}
                         />
 
-                        <IconAutoComplete<string>
+                        <CustomDropdown<string>
                           id="contact-associates"
                           label="Associated Account"
                           placeholder="Select Associated Account"
@@ -247,7 +246,7 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                           options={[]}
                           onSelect={(value) => setFieldValue('contactAssociate', value)}
                           InputProps={{
-                            error: touched.contactAssociate && !!errors.contactAssociate,
+                            error: touched.contactStage && !!errors.contactStage,
                             onBlur: handleBlur,
                           }}
                           PaperComponent={Paper}
