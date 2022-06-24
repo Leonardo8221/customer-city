@@ -18,9 +18,7 @@ import StageBar from 'components/StageBar';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
 import { Loader } from 'components/Loader';
-import { EditableInput } from 'components/Editable/EditableInput';
-import EditableDate from 'components/Editable/EditableDate';
-import { EditableAutoComplete } from 'components/Editable/EditableAutoComplete';
+import { EditableDate, EditableDropDown, EditableInput } from 'components/Editable';
 
 interface Props {
   dealId: number;
@@ -149,7 +147,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             <Typography variant="p14">{deal?.dealType ?? '-'}</Typography>
           </TitleContainer>
 
-          <EditableAutoComplete
+          <EditableDropDown
             id="dealOwner"
             name="dealOwner"
             label="Owner"

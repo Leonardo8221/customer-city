@@ -6,7 +6,7 @@ import { inactivateUser as inactivateUserApi, reactivateUser as reactivateUserAp
 import { updateUser as updateUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedLoadingButton } from 'components/ui';
-import { EditableInput } from 'components/Editable/EditableInput';
+import { EditableInput } from 'components/Editable';
 import { CustomSelect } from 'components/CustomSelect';
 import { UserRole } from 'core/types';
 import { USER_ROLE_OPTIONS } from 'core/constants';
