@@ -202,7 +202,7 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             </Typography>
           </TitleContainer>
 
-          <TitleContainer label="Last Updated by">
+          <TitleContainer label="Last Updated by" icon="user">
             <Typography variant="p14">{account?.accountModifiedBy ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>

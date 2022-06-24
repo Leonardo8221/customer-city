@@ -1,8 +1,7 @@
-import { Box, Divider, Grid } from '@mui/material';
+import { Divider, Grid } from '@mui/material';
 import { CustomSelect } from 'components/CustomSelect';
 import StageBar from 'components/StageBar';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
-import { ReactComponent as DealRoundIcon } from 'assets/icons/dealRound.svg';
 import { FC } from 'react';
 import { DealContainer } from './ui';
 
@@ -11,19 +10,16 @@ const DealItem: FC = () => {
     <>
       <DealContainer>
         <Grid item xs={12} sm={6}>
-          <TitleContainer label="Deal Name">
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <DealRoundIcon />
-              <CustomSelect<string>
-                value={'aronda'}
-                options={[{ label: 'Aronda', value: 'aronda' }]}
-                sx={{
-                  '& .MuiSelect-select': {
-                    padding: 0,
-                  },
-                }}
-              />
-            </Box>
+          <TitleContainer label="Deal Name" icon="deal">
+            <CustomSelect<string>
+              value={'aronda'}
+              options={[{ label: 'Aronda', value: 'aronda' }]}
+              sx={{
+                '& .MuiSelect-select': {
+                  padding: 0,
+                },
+              }}
+            />
           </TitleContainer>
         </Grid>
         <Grid item xs={12} sm={6}>

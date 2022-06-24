@@ -184,7 +184,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             </Typography>
           </TitleContainer>
 
-          <TitleContainer label="Last Updated by">
+          <TitleContainer label="Last Updated by" icon="user">
             <Typography variant="p14">{deal?.dealModifier?.userName ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
