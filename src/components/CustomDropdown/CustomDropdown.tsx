@@ -21,7 +21,7 @@ interface CustomDropdownProps<T extends OptionValue> {
   labelSx?: SxProps<Theme>;
   withPopupIcon?: boolean;
   InputProps?: Partial<InputProps>;
-  onSelect: (value: T) => void;
+  onSelect: (value: Option<T> | null) => void;
   PaperComponent?: JSXElementConstructor<HTMLAttributes<HTMLElement>>;
   disableClearable?: boolean;
 }
@@ -63,7 +63,7 @@ const CustomDropdown = <T extends OptionValue>({
         PaperComponent={PaperComponent || Paper}
         ListboxProps={{ style: { maxHeight: 300 } }}
         value={options.find((options) => options.value === value)}
-        onChange={(e, value) => onSelect((value?.value ?? '') as T)}
+        onChange={(e, value) => onSelect(value)}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         popupIcon={withPopupIcon ? <TraingleDownIcon /> : null}
         clearIcon={<CrossIcon />}

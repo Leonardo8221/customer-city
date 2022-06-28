@@ -1,3 +1,4 @@
+import { Account } from 'store/account/types';
 import { User } from 'store/user/types';
 
 export const DEAL_STAGE_OPTIONS = [
@@ -11,6 +12,7 @@ export const DEAL_STAGE_OPTIONS = [
 export interface Deal {
   dealId: number;
   dealName: string;
+  dealAccountId: number;
   dealAccountName: string;
   dealDescription: string;
   dealAmount: number;
@@ -20,13 +22,15 @@ export interface Deal {
   dealForecastCategory: string;
   dealStage: string;
   dealType: string;
-  dealOwner: string;
+  dealOwnerId: number;
+  dealOwner: User;
   dealPipelineName: string;
   dealTouchPoint: string;
   dealCreatedAt: Date;
   dealUpdatedAt: Date;
   dealModifiedBy: number;
   dealModifier: User;
+  dealAccount: Account;
 }
 
 export interface DealState {

@@ -36,7 +36,7 @@ const SearchDropdown: FC<SearchDropdownProps> = ({
       placeholder={placeholder}
       value=""
       options={options}
-      onSelect={(value) => onSelect(value)}
+      onSelect={(value) => onSelect(value?.value ?? '')}
       labelSx={{ color: 'neutral.main' }}
       withPopupIcon={false}
       InputProps={{

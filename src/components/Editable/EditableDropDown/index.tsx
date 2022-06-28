@@ -1,41 +1,45 @@
-import { FC, useState, useEffect } from 'react';
-import { OutlinedTextFieldProps, ClickAwayListener, Box, Typography, Paper } from '@mui/material';
+import { FC, useState } from 'react';
+import { OutlinedTextFieldProps, Box, Typography, Paper } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
+import { ReactComponent as AccountIcon } from 'assets/icons/menuAccounts.svg';
+import { ReactComponent as ContactIcon } from 'assets/icons/menuContacts.svg';
+import { ReactComponent as DealIcon } from 'assets/icons/menuDeal.svg';
 import { EditButton, DetailContainer, DetailValueContainer, TextValue } from './ui';
 import { CustomDropdown } from 'components/CustomDropdown';
+import { OptionValue } from 'core/types';
+
+type IconType = 'contact' | 'account' | 'deal';
 
 interface EditableAutoCompleteProps extends Partial<OutlinedTextFieldProps> {
   id: string;
   label: string;
-  value: string;
+  icon?: IconType;
+  value: OptionValue<number>;
   small?: boolean;
-  onSave?: (value: string) => Promise<void>;
+  options?: OptionValue<number>[];
+  onSave?: (value: number) => Promise<void>;
 }
 
-const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({ id, label, value, small = true, onSave }) => {
+const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
+  id,
+  label,
+  icon,
+  value,
+  small = true,
+  options = [],
+  onSave,
+}) => {
   const [editing, setEditing] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [inputValue, setInputValue] = useState<OptionValue<number> | null>();
 
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
-  const onClose = async () => {
-    if (!inputValue) {
-      setError(true);
-      return;
-    }
-
+  const onClose = async (inputValue: OptionValue<number> | null) => {
     setEditing(false);
 
-    if (!onSave) return;
+    if (!inputValue || !onSave) return;
 
     try {
-      await onSave(inputValue);
-      setSuccess(true);
+      await onSave(inputValue.value);
     } catch (err) {
       // TODO: How should we handle loading and error states if needed
     }
@@ -43,23 +47,29 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({ id, label, value,
 
   if (editing) {
     return (
-      <ClickAwayListener onClickAway={onClose}>
-        <Box position="relative">
-          <CustomDropdown<string>
-            id={id}
-            label={label}
-            placeholder={`Select the ${label}`}
-            value={inputValue}
-            options={[]}
-            onSelect={(value) => setInputValue(value)}
-            InputProps={{
-              error,
-              onBlur: onClose,
-            }}
-            PaperComponent={Paper}
-          />
-        </Box>
-      </ClickAwayListener>
+      <Box position="relative">
+        <CustomDropdown<number>
+          id={id}
+          label={label}
+          placeholder={`Select the ${label}`}
+          value={value?.value || null}
+          options={options}
+          onSelect={(value) => {
+            onClose(value);
+          }}
+          InputProps={{
+            startAdornment: icon ? (
+              <Box display="flex" justifyContent="center" alignItems="center" marginLeft="6px" marginRight="3px">
+                {icon === 'account' && <AccountIcon />}
+                {icon === 'contact' && <ContactIcon />}
+                {icon === 'deal' && <DealIcon />}
+              </Box>
+            ) : null,
+            onBlur: () => onClose(null),
+          }}
+          PaperComponent={Paper}
+        />
+      </Box>
     );
   }
 
@@ -70,15 +80,13 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({ id, label, value,
       </Typography>
 
       <DetailValueContainer small={small}>
-        <TextValue small={small}>{success ? inputValue : value}</TextValue>
-        <EditButton
-          onClick={() => {
-            setEditing(true);
-            setSuccess(false);
-          }}
-          small={small}
-          data-testid={`edit-${id}`}
-        >
+        <TextValue small={small}>
+          {icon === 'account' && <AccountIcon />}
+          {icon === 'contact' && <ContactIcon />}
+          {icon === 'deal' && <DealIcon />}
+          {value.label}
+        </TextValue>
+        <EditButton onClick={() => setEditing(true)} small={small} data-testid={`edit-${id}`}>
           <EditIcon />
         </EditButton>
       </DetailValueContainer>

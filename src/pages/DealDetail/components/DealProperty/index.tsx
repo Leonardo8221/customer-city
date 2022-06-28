@@ -1,5 +1,5 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import format from 'date-fns/format';
 import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
@@ -19,6 +19,9 @@ import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useDeal } from 'store/deal/hooks';
 import { Loader } from 'components/Loader';
 import { EditableDate, EditableDropDown, EditableInput } from 'components/Editable';
+import { useAccount } from 'store/account/hooks';
+import { OptionValue } from 'core/types';
+import { useUser } from 'store/user/hooks';
 
 interface Props {
   dealId: number;
@@ -30,9 +33,16 @@ const DealProperty: FC<Props> = ({ dealId }) => {
 
   const { loading, error, deal, getDeal, deleteDeal, updateDeal } = useDeal();
 
+  const { accounts, getAccounts } = useAccount();
+  const { users, getUsers } = useUser();
+
+  console.log(accounts);
+
   useEffect(() => {
     getDeal(Number(dealId));
-  }, [dealId, getDeal]);
+    getAccounts();
+    getUsers();
+  }, [dealId, getDeal, getAccounts, getUsers]);
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
@@ -47,6 +57,20 @@ const DealProperty: FC<Props> = ({ dealId }) => {
   const handleUpdate = (data: Partial<Deal>) => {
     deal && updateDeal({ dealId: deal.dealId, data });
   };
+
+  const userSuggestions = useMemo(() => {
+    return users.reduce((acc, val) => {
+      acc.push({ label: val.userName, value: val.userId });
+      return acc;
+    }, [] as OptionValue<number>[]);
+  }, [users]);
+
+  const accountSuggestions = useMemo(() => {
+    return accounts.reduce((acc, val) => {
+      acc.push({ label: val.accountName, value: val.accountId });
+      return acc;
+    }, [] as OptionValue<number>[]);
+  }, [accounts]);
 
   return (
     <Container>
@@ -96,13 +120,15 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} />
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
-          <EditableInput
+          <EditableDropDown
             id="dealAccountName"
             name="dealAccountName"
+            icon="account"
+            options={accountSuggestions}
             label="Account name"
-            value={deal?.dealAccountName ?? ''}
+            value={{ label: deal?.dealAccount?.accountName ?? '-', value: deal?.dealAccountId ?? 0 }}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealAccountName: value })}
+            onSave={async (value) => handleUpdate({ dealAccountId: value })}
           />
           <EditableInput
             id="dealDescription"
@@ -150,10 +176,12 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <EditableDropDown
             id="dealOwner"
             name="dealOwner"
+            icon="contact"
+            options={userSuggestions}
             label="Owner"
-            value={deal?.dealOwner ?? '-'}
+            value={{ label: deal?.dealOwner?.userName ?? '-', value: deal?.dealOwnerId ?? 0 }}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealOwner: value })}
+            onSave={async (value) => handleUpdate({ dealOwnerId: value })}
           />
 
           <TitleContainer label="Pipeline">
