@@ -2,8 +2,8 @@ import { FC, useState } from 'react';
 import { OutlinedTextFieldProps, Box, Typography, Paper } from '@mui/material';
 
 import { ReactComponent as EditIcon } from 'assets/icons/edit.svg';
-import { ReactComponent as AccountIcon } from 'assets/icons/menuAccounts.svg';
-import { ReactComponent as ContactIcon } from 'assets/icons/menuContacts.svg';
+import { ReactComponent as AccountIcon } from 'assets/icons/accountIcon.svg';
+import { ReactComponent as ContactIcon } from 'assets/icons/avatar.svg';
 import { ReactComponent as DealIcon } from 'assets/icons/menuDeal.svg';
 import { EditButton, DetailContainer, DetailValueContainer, TextValue } from './ui';
 import { CustomDropdown } from 'components/CustomDropdown';
@@ -80,12 +80,10 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
       </Typography>
 
       <DetailValueContainer small={small}>
-        <TextValue small={small}>
-          {icon === 'account' && <AccountIcon />}
-          {icon === 'contact' && <ContactIcon />}
-          {icon === 'deal' && <DealIcon />}
-          {value.label}
-        </TextValue>
+        {icon === 'account' && <AccountIcon />}
+        {icon === 'contact' && <ContactIcon />}
+        {icon === 'deal' && <DealIcon />}
+        <TextValue small={small}>{value.label}</TextValue>
         <EditButton onClick={() => setEditing(true)} small={small} data-testid={`edit-${id}`}>
           <EditIcon />
         </EditButton>

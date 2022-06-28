@@ -162,7 +162,7 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             onSave={async (value) => handleUpdate({ dealCloseDate: value })}
           />
 
-          <TitleContainer label="Contact Name">
+          <TitleContainer label="Contact Name" icon="user">
             <Typography variant="p14">{deal?.dealContactName ?? '-'}</Typography>
           </TitleContainer>
 
