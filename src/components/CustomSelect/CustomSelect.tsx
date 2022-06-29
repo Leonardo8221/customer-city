@@ -11,6 +11,8 @@ interface Option<T extends OptionValue> {
 }
 
 interface CustomSelectProps<T extends OptionValue> {
+  id?: string;
+  name?: string;
   value: T;
   options: Option<T>[];
   onSelect?: (value: T) => Promise<void>;
@@ -22,6 +24,7 @@ interface CustomSelectProps<T extends OptionValue> {
 }
 
 const CustomSelect = <T extends OptionValue>({
+  id,
   value,
   options,
   onSelect,
@@ -53,6 +56,7 @@ const CustomSelect = <T extends OptionValue>({
 
   return (
     <Select
+      id={id}
       value={selectedOption?.value ?? ''}
       onChange={onChange}
       MenuProps={{

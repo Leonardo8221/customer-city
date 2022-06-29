@@ -2,7 +2,7 @@ import { styled, Box } from '@mui/material';
 import { TextButton } from 'components/ui';
 
 export const Container = styled(Box)(() => ({
-  flex: 8,
+  flex: 7,
   padding: 24,
   display: 'flex',
   flexDirection: 'column',

@@ -36,8 +36,6 @@ const DealProperty: FC<Props> = ({ dealId }) => {
   const { accounts, getAccounts } = useAccount();
   const { users, getUsers } = useUser();
 
-  console.log(accounts);
-
   useEffect(() => {
     getDeal(Number(dealId));
     getAccounts();

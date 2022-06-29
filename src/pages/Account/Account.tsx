@@ -32,7 +32,7 @@ const AccountPage: FC = () => {
     if (modalOpen && selectedAccount) setSelectedAccount(undefined);
     setModalOpen((prevState) => !prevState);
   };
-
+  console.log('filtervalue', filterValue);
   const suggestions = useMemo(() => {
     if (!searchTerm) return [];
     const regex = new RegExp(searchTerm, 'i');
@@ -43,7 +43,6 @@ const AccountPage: FC = () => {
     }, [] as OptionValue<string>[]);
   }, [accounts, searchTerm]);
 
-  console.log(filterValue);
   // const data = useMemo(() => {
   //   if (!filterValue) return accounts;
   //   return accounts.filter((account) => account.accountFirstName === filterValue);

@@ -12,7 +12,7 @@ interface Props {
   icon?: IconType;
 }
 
-const CustomTextArea: FC<Props> = ({ label, children, icon }) => {
+const TitleContainer: FC<Props> = ({ label, children, icon }) => {
   return (
     <div>
       {label && <InputLabel sx={{ marginBottom: 0.5 }}>{label}</InputLabel>}
@@ -32,4 +32,4 @@ const CustomTextArea: FC<Props> = ({ label, children, icon }) => {
   );
 };
 
-export default CustomTextArea;
+export default TitleContainer;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const Container = styled(Box)(() => ({
   position: 'relative',
-  flex: 5,
+  flex: 7,
   display: 'flex',
   flexDirection: 'column',
   gap: 2,

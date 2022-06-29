@@ -39,8 +39,6 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
   const { user } = useUser();
   const { company } = useCompany();
 
-  console.log('user', user);
-
   return (
     <AppBar position="fixed" elevation={0}>
       <Toolbar>

@@ -23,12 +23,12 @@ const ContactPage: FC = () => {
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, contacts, getContacts } = useContact();
 
-  console.log(filterValue);
-
   useEffect(() => {
     getContacts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log('filterValue', filterValue);
 
   const toggleModal = () => {
     if (modalOpen && selectedContact) setSelectedContact(undefined);
