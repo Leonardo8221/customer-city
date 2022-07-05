@@ -1,4 +1,4 @@
-import { styled, Button as MuiButton, alpha, darken } from '@mui/material';
+import { styled, Box, Button as MuiButton, alpha, darken } from '@mui/material';
 import { LoadingButton as MuiLoadingButton } from '@mui/lab';
 
 export const Button = styled(MuiButton)(({ theme }) => ({
@@ -170,4 +170,31 @@ export const SecondaryRedButton = styled(SecondaryButton)(({ theme }) => ({
   ':active': {
     backgroundColor: theme.palette.red.light,
   },
+}));
+
+export const NotificationButton = styled(MuiButton)(({ theme }) => ({
+  backgroundColor: theme.palette.lightBg.main,
+  width: 24,
+  height: 24,
+  minWidth: 24,
+  minHeight: 24,
+  padding: 0,
+  borderRadius: 4,
+  fontWeight: 500,
+  fontSize: 12,
+}));
+
+export const Notification = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.neutral.white,
+  width: 24,
+  height: 24,
+  minWidth: 24,
+  minHeight: 24,
+  padding: 0,
+  borderRadius: 4,
+  fontWeight: 500,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: 12,
 }));

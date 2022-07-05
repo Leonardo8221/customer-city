@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Typography, IconButton, Box } from '@mui/material';
+import { Typography, IconButton } from '@mui/material';
 
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ReactComponent as EmailIcon } from 'assets/icons/emailCircleBlue.svg';

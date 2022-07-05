@@ -17,6 +17,7 @@ import DummyPage from './DummyPage';
 import { AccountDetail } from 'pages/AccountDetail';
 import { DealDetail } from 'pages/DealDetail';
 import { Deal } from 'pages/Deal';
+import { HyperFunnel } from 'pages/HyperFunnel';
 
 interface AppRoute {
   path?: string;
@@ -36,7 +37,7 @@ export const dashboardRoutes: AppRoute[] = [
       { path: PRIVATE_ROUTE_PATHS.accounts, element: <Account /> },
       { path: PRIVATE_ROUTE_PATHS.accountDetail, element: <AccountDetail /> },
       { path: PRIVATE_ROUTE_PATHS.productDefiner, element: <ProductDefiner /> },
-      { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <HyperFunnel /> },
       { path: PRIVATE_ROUTE_PATHS.dealScape, element: <Deal /> },
       { path: PRIVATE_ROUTE_PATHS.dealScapeDetail, element: <DealDetail /> },
       { path: PRIVATE_ROUTE_PATHS.controlTower, element: <ControlTower /> },

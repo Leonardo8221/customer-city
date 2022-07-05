@@ -1,15 +1,9 @@
 import { FC, useState, SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
-import { Container, TitleContainer, VerticalDivider, Tabs, Tab, TabPanel } from './ui';
+import { Container, TitleContainer, VerticalDivider } from './ui';
 import { Profile, Team } from './components';
-
-const a11yProps = (index: number) => {
-  return {
-    id: `tab-${index}`,
-    'aria-controls': `tabpanel-${index}`,
-  };
-};
+import { Tab, TabPanel, Tabs, a11yProps } from 'components/ui/tab';
 
 const ControlTower: FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);

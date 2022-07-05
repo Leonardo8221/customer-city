@@ -1,32 +1,32 @@
 import { styled, Box } from '@mui/material';
 
-export const Container = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.lightBg.main,
-  width: '100%',
+export const Container = styled(Box)(() => ({
+  flex: 1,
   display: 'flex',
   flexDirection: 'column',
-}));
-
-export const TitleContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'flex-end',
-  padding: '24px 32px',
-  backgroundColor: theme.palette.neutral.white,
 }));
 
 export const VerticalDivider = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   marginRight: theme.spacing(2),
   width: 1,
-  height: 16,
+  height: 24,
   position: 'relative',
   '&::before': {
     content: '" "',
-    height: 16,
+    height: 24,
     position: 'absolute',
-    top: '-50%',
+    top: 8,
     width: 1,
     backgroundColor: theme.palette.neutral.n200,
-    marginBottom: -4,
   },
+}));
+
+export const HyperFunnelContainer = styled(Box)(() => ({
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  gap: '2.5rem',
 }));

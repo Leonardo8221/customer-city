@@ -125,3 +125,12 @@ export const CONTACT_ASSOCIATES_DEMO = [
   { label: 'Alan', value: '1' },
   { label: 'Beil', value: '2' },
 ];
+
+export const s3Config = {
+  bucketName: 'customercity-uploads',
+  dirName: 'documents' /* Optional */,
+  region: 'us-east-1',
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_ID ?? '',
+  secretAccessKey: process.env.REACT_APP_AWS_SECURITY_KEY ?? '',
+  s3Url: process.env.REACT_APP_S3_URL,
+};
