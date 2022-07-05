@@ -12,6 +12,7 @@ import { s3Config } from 'core/constants';
 import { useUser } from 'store/user/hooks';
 import FileItem from './FileItem';
 import { Loader } from 'components/Loader';
+import LinkItem from './LinkItem';
 
 window.Buffer = window.Buffer || Buffer;
 
@@ -29,6 +30,7 @@ const DocumentPage: FC = () => {
   const { user } = useUser();
   const s3 = new ReactS3Client(s3Config);
   const [files, setFiles] = useState<FileProperty[]>([]);
+  const [links, setLinks] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -39,7 +41,6 @@ const DocumentPage: FC = () => {
   const handleFileChange = async (file: any) => {
     try {
       const fileList = Object.keys(file).map((key) => file[key]);
-      console.log('fileList', fileList);
       setLoading(() => true);
 
       await Promise.all(
@@ -64,8 +65,21 @@ const DocumentPage: FC = () => {
     }
   };
 
-  const handleDelete = (idx: number) => {
+  const handleFileDelete = (idx: number) => {
     setFiles(files.filter((file, i) => i !== idx));
+  };
+
+  const handleAddLink = () => {
+    console.log('handleAddLink');
+    setLinks((l) => [...l, '']);
+  };
+  const handleLinkChange = (val: string, idx: number) => {
+    const newLinks = [...links];
+    newLinks[idx] = val;
+    setLinks(newLinks);
+  };
+  const handleLinkDelete = (idx: number) => {
+    setLinks(links.filter((link, i) => i !== idx));
   };
 
   return (
@@ -88,7 +102,7 @@ const DocumentPage: FC = () => {
 
       <TabPanel hidden={activeIndex !== 0} sx={{ py: 3, height: '100%' }}>
         {files.map((file, idx) => (
-          <FileItem key={idx} file={file} onDelete={() => handleDelete(idx)} />
+          <FileItem key={idx} file={file} onDelete={() => handleFileDelete(idx)} />
         ))}
         <FileUploader
           classes="file-drop-zone"
@@ -118,10 +132,32 @@ const DocumentPage: FC = () => {
       </TabPanel>
 
       <TabPanel hidden={activeIndex !== 1} sx={{ py: 3, height: '100%' }}>
-        <DropDownArea>
-          <Typography variant="p12">{'You have not added any links yet'}</Typography>
-          <SecondaryButton startIcon={<PlusIcon />}>Add link</SecondaryButton>
-        </DropDownArea>
+        {links.length === 0 ? (
+          <DropDownArea>
+            <Typography variant="p12">{'You have not added any links yet'}</Typography>
+            <SecondaryButton startIcon={<PlusIcon />} onClick={handleAddLink}>
+              Add link
+            </SecondaryButton>
+          </DropDownArea>
+        ) : (
+          <>
+            {links.map((link, idx) => (
+              <LinkItem
+                key={idx}
+                link={link}
+                onChange={(val) => handleLinkChange(val, idx)}
+                onDelete={() => handleLinkDelete(idx)}
+              />
+            ))}
+            <TextButton
+              startIcon={<PlusIcon />}
+              sx={{ fontSize: 12, fontWeight: 400, color: 'primary.main', '&:hover': { color: 'primary.main' } }}
+              onClick={handleAddLink}
+            >
+              Add new link
+            </TextButton>
+          </>
+        )}
       </TabPanel>
 
       <Divider />

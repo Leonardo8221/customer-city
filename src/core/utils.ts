@@ -171,3 +171,10 @@ export const humanFileSize = (bytes: number, si = true, dp = 1): string => {
 
   return bytes.toFixed(dp) + ' ' + units[u];
 };
+
+export const isUrlValid = (userInput: string) => {
+  const regex = '/(http(s)?://.)?(www.)?[-a-zA-Z0-9@:%._+~#=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g';
+  const res = userInput.match(regex);
+  if (res == null) return false;
+  else return true;
+};

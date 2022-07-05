@@ -39,6 +39,13 @@ export const FileItemContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
+export const LinkItemContainer = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  marginBottom: 4,
+}));
+
 export const VerticalDivider = styled(Box)(({ theme }) => ({
   width: 1,
   height: 16,
