@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import CustomMenu from './CustomMenu';
+import CustomMenu from '../../../../../../components/CustomMenu/CustomMenu';
 import PDFIcon from 'assets/icons/pdf.png';
 import TXTIcon from 'assets/icons/txt.png';
 import XLSIcon from 'assets/icons/xls.png';

@@ -8,6 +8,7 @@ import { ModalContainer, ModalHeader, ModalFooter, ButtonGroup, BackTo } from '.
 import FirstPage, { ActionType } from './pages/First';
 import SecondPage, { DetailType } from './pages/Second';
 import Documents from './pages/Documents';
+import ThirdPage from './pages/Third';
 
 interface ProductModalProps {
   open: boolean;
@@ -21,7 +22,7 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
 
   return (
     <Modal open={open} onClose={toggleOpen}>
-      <ModalContainer sx={{ width: 640 }}>
+      <ModalContainer sx={{ width: 900 }}>
         <ModalHeader>
           <Typography variant="h3" sx={{ color: 'neutral.main' }}>
             {pageIndex === 0 && 'New Pipeline'}
@@ -48,6 +49,7 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
               {detailType === 'documents' && <Documents />}
             </>
           )}
+          {pageIndex === 2 && <ThirdPage />}
         </Box>
 
         <ModalFooter>

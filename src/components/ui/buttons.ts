@@ -198,3 +198,14 @@ export const Notification = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   fontSize: 12,
 }));
+
+export const CustomIconButton = styled(TextButton)(({ theme }) => ({
+  marginTop: 8,
+  color: theme.palette.primary.main,
+  fontSize: 12,
+  fontWeight: 400,
+  height: 32,
+  '& .MuiButton-startIcon': {
+    marginRight: 8,
+  },
+}));

@@ -2,7 +2,8 @@ import { Divider, Typography } from '@mui/material';
 import DropDownPanel from 'components/DropDownPanel';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { FC } from 'react';
-import { AddButton, Container } from './ui';
+import { Container } from './ui';
+import { CustomIconButton } from 'components/ui';
 
 const DealDetails: FC = () => {
   return (
@@ -12,11 +13,11 @@ const DealDetails: FC = () => {
       <Divider />
 
       <DropDownPanel title={'Deals Connection'}>
-        <AddButton startIcon={<PlusIcon />}>Add new Deal</AddButton>
+        <CustomIconButton startIcon={<PlusIcon />}>Add new Deal</CustomIconButton>
       </DropDownPanel>
 
       <DropDownPanel title={'Contacts'}>
-        <AddButton startIcon={<PlusIcon />}>Add new Contact</AddButton>
+        <CustomIconButton startIcon={<PlusIcon />}>Add new Contact</CustomIconButton>
       </DropDownPanel>
     </Container>
   );
