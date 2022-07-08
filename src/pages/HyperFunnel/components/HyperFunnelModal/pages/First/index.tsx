@@ -42,14 +42,14 @@ const Selections: SelectionType[] = [
 
 interface Props {
   selected: ActionType;
-  onSelect: (type: ActionType) => void;
+  onSelect?: (type: ActionType) => void;
 }
 
 const FirstPage: FC<Props> = ({ selected, onSelect }) => {
   return (
     <FirstMain>
       {Selections.map((selection, idx) => (
-        <ActionSelect key={idx} onClick={() => onSelect(selection.type)} selected={selection.type === selected}>
+        <ActionSelect key={idx} onClick={() => onSelect?.(selection.type)} selected={selection.type === selected}>
           <SelectionIcon color={selection.icon.color} backgroundColor={selection.icon.backgroundColor}>
             {selection.icon.shape}
           </SelectionIcon>

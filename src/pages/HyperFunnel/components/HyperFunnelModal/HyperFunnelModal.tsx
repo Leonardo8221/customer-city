@@ -36,7 +36,12 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
         </ModalHeader>
 
         <Box sx={{ height: 496 }}>
-          {pageIndex === 0 && <FirstPage selected={actionType} onSelect={(type) => setActionType(type)} />}
+          {pageIndex === 0 && (
+            <FirstPage
+              selected={actionType}
+              // onSelect={(type) => setActionType(type)} // currently grayed out
+            />
+          )}
           {pageIndex === 1 && (
             <>
               {detailType === undefined && (

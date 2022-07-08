@@ -34,5 +34,5 @@ export const CardContainer = styled(Box)(() => ({
   padding: 4,
   margin: '4px 0',
   '& .card-header': { display: 'flex', alignItems: 'center' },
-  '& .card-content': { margin: '16px 8px 8px 40px', display: 'flex', flexDirection: 'column', gap: '16px' },
+  '& .card-content': { margin: '12px 12px 12px 40px', display: 'flex', flexDirection: 'column', gap: '16px' },
 }));
