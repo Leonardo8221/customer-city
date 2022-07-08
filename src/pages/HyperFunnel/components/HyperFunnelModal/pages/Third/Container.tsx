@@ -1,7 +1,9 @@
 import { Box, Divider, Typography } from '@mui/material';
 import update from 'immutability-helper';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useDrop } from 'react-dnd';
+import { useDealStage } from 'store/dealStage/hooks';
+import { DealStage } from 'store/dealStage/types';
 
 import { Card, Item, ItemTypes } from './Card';
 import { ThirdMain, CardPanel, CardAddBox } from './ui';
@@ -10,37 +12,30 @@ export interface ContainerState {
   cards: any[];
 }
 
-export interface CardItem {
-  id: number;
-  text: string;
+export interface CardItem extends DealStage {
+  customDealStageName?: string;
+  createdAt?: Date;
 }
 
-const ITEMS: CardItem[] = [
-  {
-    id: 1,
-    text: 'Prospecting',
-  },
-  {
-    id: 2,
-    text: 'Outreach',
-  },
-  {
-    id: 3,
-    text: 'Engagement',
-  },
-  {
-    id: 4,
-    text: 'Discovery',
-  },
-  {
-    id: 5,
-    text: 'Qualificiation',
-  },
+interface DealStageType {
+  value: string;
+  color: string;
+}
+
+export const DEAL_STAGE_TYPES: DealStageType[] = [
+  { value: 'Pre-Sales', color: 'primary.main' },
+  { value: 'Sales', color: 'green.main' },
+  { value: 'Post-Sales', color: 'orange.main' },
 ];
 
 export const Container: FC = memo(function Container() {
   const [cards, setCards] = useState<CardItem[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
+  const { dealStages, getDealStages } = useDealStage();
+
+  useEffect(() => {
+    getDealStages();
+  }, [getDealStages]);
 
   const findCard = useCallback(
     (cardItem: CardItem) => {
@@ -78,7 +73,12 @@ export const Container: FC = memo(function Container() {
 
   const addCard = useCallback(
     (card: CardItem, index: number) => {
-      setCards((oldCards) => [...oldCards.slice(0, index), card, ...oldCards.slice(index)]);
+      console.log('addCard,', index);
+      setCards((oldCards) => [
+        ...oldCards.slice(0, index),
+        { ...card, createdAt: new Date() },
+        ...oldCards.slice(index),
+      ]);
     },
     [setCards],
   );
@@ -87,7 +87,7 @@ export const Container: FC = memo(function Container() {
     () => ({
       accept: ItemTypes.CARD,
       drop: ({ card, isDemo }: Item) => {
-        if (!isDemo || !hoverIndex) return;
+        if (!isDemo || hoverIndex === undefined) return;
         addCard(card, hoverIndex);
       },
       collect: (monitor: any) => ({
@@ -102,7 +102,7 @@ export const Container: FC = memo(function Container() {
       accept: ItemTypes.CARD,
       drop: ({ card, isDemo }: Item) => {
         if (!isDemo) return;
-        setCards((oldCards) => [...oldCards, card]);
+        setCards((oldCards) => [...oldCards, { ...card, createdAt: new Date() }]);
       },
     }),
     [hoverIndex],
@@ -125,8 +125,28 @@ export const Container: FC = memo(function Container() {
         <Typography variant="b16" sx={{ mb: 1 }}>
           Stages
         </Typography>
-        {ITEMS.map((card, idx) => (
-          <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
+        {DEAL_STAGE_TYPES.map((stageType) => (
+          <>
+            <Typography
+              variant="p12"
+              sx={{
+                textTransform: 'uppercase',
+                py: '12px',
+                mt: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <Box sx={{ width: 6, height: 6, backgroundColor: stageType.color, borderRadius: '50%' }}>{''}</Box>
+              {stageType.value} {'STAGE'}
+            </Typography>
+            {dealStages
+              .filter((stage) => stage.dealStageType === stageType.value)
+              .map((card, idx) => (
+                <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
+              ))}
+          </>
         ))}
       </CardPanel>
 

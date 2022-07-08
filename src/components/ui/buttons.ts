@@ -200,7 +200,6 @@ export const Notification = styled(Box)(({ theme }) => ({
 }));
 
 export const CustomIconButton = styled(TextButton)(({ theme }) => ({
-  marginTop: 8,
   color: theme.palette.primary.main,
   fontSize: 12,
   fontWeight: 400,

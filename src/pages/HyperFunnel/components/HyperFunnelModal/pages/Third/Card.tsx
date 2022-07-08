@@ -2,14 +2,16 @@ import { FC, useState } from 'react';
 import { memo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
+import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { ReactComponent as DragHandleIcon } from 'assets/icons/drag-handle.svg';
 import { ReactComponent as ChevronDownIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ChevronUpIcon } from 'assets/icons/chevronUp.svg';
-import { CardItem } from './Container';
+import { CardItem, DEAL_STAGE_TYPES } from './Container';
 import { Box, IconButton, Typography } from '@mui/material';
 import { CardContainer } from './ui';
 import { CustomInput } from 'components/CustomInput';
 import { CustomMenu } from 'components/CustomMenu';
+import { CustomIconButton } from 'components/ui';
 
 export const ItemTypes = {
   CARD: 'card',
@@ -53,7 +55,7 @@ export const Card: FC<CardProps> = memo(function Card({
       end: (item, monitor) => {
         const { card: droppedCard, originalIndex } = item;
         const didDrop = monitor.didDrop();
-        if (!didDrop) {
+        if (!didDrop && !isDemo) {
           moveCard(droppedCard, originalIndex);
         }
       },
@@ -89,9 +91,33 @@ export const Card: FC<CardProps> = memo(function Card({
           <DragHandleIcon />
         </IconButton>
 
-        <Typography variant="p14" sx={{ mr: 'auto' }}>
-          {card.text}
+        <Typography variant="p14" sx={{ mr: 'auto', color: isDemo ? 'neutral.main' : 'neutral.n400' }}>
+          {card.dealStageName}
         </Typography>
+
+        {!isDemo && (
+          <Typography
+            variant="labelRegular10"
+            sx={{
+              textTransform: 'uppercase',
+              color: 'neutral.n400',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <Box
+              sx={{
+                width: 6,
+                height: 6,
+                backgroundColor:
+                  DEAL_STAGE_TYPES.find((type) => type.value === card.dealStageType)?.color ?? 'primary.main',
+                borderRadius: '50%',
+              }}
+            ></Box>
+            {card.dealStageType}
+          </Typography>
+        )}
 
         <IconButton onClick={() => setOpen((o) => !o)}>{open ? <ChevronUpIcon /> : <ChevronDownIcon />}</IconButton>
 
@@ -99,23 +125,27 @@ export const Card: FC<CardProps> = memo(function Card({
           <CustomMenu icon={<DotsIcon />} childItems={['Duplicate', 'Delete']} onSelect={handleActionSelect} />
         )}
       </Box>
-      {open && (
-        <Box className="card-content">
-          {isDemo ? (
+      {isDemo ? (
+        open && (
+          <Box className="card-content">
             <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-              {'card description goes here'}
+              {card.dealStageDescription}
             </Typography>
-          ) : (
-            <>
-              <CustomInput
-                id="stageName"
-                name="stageName"
-                title="Stage name"
-                label="Stage name"
-                placeholder="Enter the Stage name"
-                fullWidth
-              />
+          </Box>
+        )
+      ) : (
+        <Box className="card-content">
+          <CustomInput
+            id="stageName"
+            name="stageName"
+            title="Stage name"
+            label="Stage name"
+            placeholder="Enter the Stage name"
+            fullWidth
+          />
 
+          {open && (
+            <>
               <CustomInput id="goal" name="goal" title="Goal" label="Goal" placeholder="Enter the goal" fullWidth />
 
               <CustomInput
@@ -135,6 +165,10 @@ export const Card: FC<CardProps> = memo(function Card({
                 placeholder="Enter the forecast category"
                 fullWidth
               />
+
+              <CustomIconButton startIcon={<PlusIcon />} sx={{ p: 0.5, height: 20 }}>
+                Attach Documents
+              </CustomIconButton>
             </>
           )}
         </Box>
