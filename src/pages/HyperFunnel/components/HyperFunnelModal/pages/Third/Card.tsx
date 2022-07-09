@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import { memo } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
@@ -6,12 +6,18 @@ import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { ReactComponent as DragHandleIcon } from 'assets/icons/drag-handle.svg';
 import { ReactComponent as ChevronDownIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ChevronUpIcon } from 'assets/icons/chevronUp.svg';
-import { CardItem, DEAL_STAGE_TYPES } from './Container';
+import { DEAL_STAGE_TYPES } from './Container';
 import { Box, IconButton, Typography } from '@mui/material';
 import { CardContainer } from './ui';
 import { CustomInput } from 'components/CustomInput';
 import { CustomMenu } from 'components/CustomMenu';
 import { CustomIconButton } from 'components/ui';
+import { CustomMultiDropdown } from 'components/CustomDropdown';
+import { User } from 'store/user/types';
+import { OptionValue } from 'core/types';
+import { useFormikContext } from 'formik';
+import { Pipeline, PipelineStage } from '../../HyperFunnelModal.context';
+import { useUser } from 'store/user/hooks';
 
 export const ItemTypes = {
   CARD: 'card',
@@ -19,18 +25,19 @@ export const ItemTypes = {
 
 export interface Item {
   originalIndex: number;
-  card: CardItem;
+  card: PipelineStage;
   isDemo: boolean;
 }
 
 export interface CardProps {
-  card: CardItem;
-  moveCard: (card: CardItem, to: number) => void;
-  findCard: (card: CardItem) => { index: number };
+  card: PipelineStage;
+  moveCard: (card: PipelineStage, to: number) => void;
+  findCard: (card: PipelineStage) => { index: number };
   hoverCard?: () => void;
   deleteCard?: () => void;
   duplicateCard?: () => void;
   isDemo?: boolean;
+  order?: number;
 }
 
 export const Card: FC<CardProps> = memo(function Card({
@@ -41,9 +48,13 @@ export const Card: FC<CardProps> = memo(function Card({
   deleteCard,
   duplicateCard,
   isDemo = false,
+  order,
 }: CardProps) {
   const originalIndex = findCard(card).index;
   const [open, setOpen] = useState<boolean>(false);
+  const { users } = useUser();
+
+  const { values, touched, errors, handleBlur, handleChange, setFieldValue } = useFormikContext<Pipeline>();
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -83,6 +94,13 @@ export const Card: FC<CardProps> = memo(function Card({
     if (idx === 0) duplicateCard?.();
     else if (idx === 1) deleteCard?.();
   };
+
+  const userSuggestions = useMemo(() => {
+    return users.reduce((acc, val) => {
+      acc.push({ label: val.userName, value: val });
+      return acc;
+    }, [] as OptionValue<User>[]);
+  }, [users]);
 
   return (
     <CardContainer ref={drop} sx={{ backgroundColor: isDemo ? 'lightBg.main' : 'neutral.white' }}>
@@ -125,54 +143,78 @@ export const Card: FC<CardProps> = memo(function Card({
           <CustomMenu icon={<DotsIcon />} childItems={['Duplicate', 'Delete']} onSelect={handleActionSelect} />
         )}
       </Box>
-      {isDemo ? (
-        open && (
-          <Box className="card-content">
-            <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-              {card.dealStageDescription}
-            </Typography>
-          </Box>
-        )
-      ) : (
-        <Box className="card-content">
-          <CustomInput
-            id="stageName"
-            name="stageName"
-            title="Stage name"
-            label="Stage name"
-            placeholder="Enter the Stage name"
-            fullWidth
-          />
-
-          {open && (
-            <>
-              <CustomInput id="goal" name="goal" title="Goal" label="Goal" placeholder="Enter the goal" fullWidth />
-
+      {isDemo
+        ? open && (
+            <Box className="card-content">
+              <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
+                {card.dealStageDescription}
+              </Typography>
+            </Box>
+          )
+        : order !== undefined && (
+            <Box className="card-content">
               <CustomInput
-                id="teamOwner"
-                name="teamOwner"
-                title="Team ownership"
-                label="Team ownership"
-                placeholder="Enter the Team ownership"
+                id="pipelineStageName"
+                name={`pipelineStages[${order}].pipelineStageName`}
+                title="Stage name"
+                label="Stage name"
+                placeholder="Enter the Stage name"
                 fullWidth
+                value={values.pipelineStages?.[order]?.pipelineStageName}
+                onChange={handleChange}
               />
 
-              <CustomInput
-                id="forecastCategory"
-                name="forecastCategory"
-                title="Forecast Category"
-                label="Forecast Category"
-                placeholder="Enter the forecast category"
-                fullWidth
-              />
+              {open && (
+                <>
+                  <CustomInput
+                    id="goal"
+                    name={`pipelineStages[${order}].pipelineStageDescription`}
+                    title="Goal"
+                    label="Goal"
+                    placeholder="Enter the goal"
+                    fullWidth
+                    value={values.pipelineStages?.[order]?.pipelineStageDescription}
+                    onChange={handleChange}
+                  />
 
-              <CustomIconButton startIcon={<PlusIcon />} sx={{ p: 0.5, height: 20 }}>
-                Attach Documents
-              </CustomIconButton>
-            </>
+                  <CustomMultiDropdown<User>
+                    id="pipelineOwners"
+                    label="Owners"
+                    placeholder="Enter the Team ownership"
+                    value={(values.pipelineStages?.[order]?.pipelineStageOwners ?? []).map((user) => {
+                      return { label: user.userName, value: user };
+                    })}
+                    options={userSuggestions}
+                    onSelect={(value) =>
+                      setFieldValue(
+                        `pipelineStages[${order}].pipelineStageOwners`,
+                        value.map((o) => o.value),
+                      )
+                    }
+                    InputProps={{
+                      error: touched.pipelineOwners && !!errors.pipelineOwners,
+                      onBlur: handleBlur,
+                    }}
+                  />
+
+                  <CustomInput
+                    id="forecastCategory"
+                    name={`pipelineStages[${order}].pipelineStageCategory`}
+                    title="Forecast Category"
+                    label="Forecast Category"
+                    placeholder="Enter the forecast category"
+                    fullWidth
+                    value={values.pipelineStages?.[order]?.pipelineStageCategory}
+                    onChange={handleChange}
+                  />
+
+                  <CustomIconButton startIcon={<PlusIcon />} sx={{ p: 0.5, height: 20 }}>
+                    Attach Documents
+                  </CustomIconButton>
+                </>
+              )}
+            </Box>
           )}
-        </Box>
-      )}
     </CardContainer>
   );
 });

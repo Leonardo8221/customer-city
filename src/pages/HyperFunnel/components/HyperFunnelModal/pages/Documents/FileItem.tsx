@@ -5,14 +5,14 @@ import TXTIcon from 'assets/icons/txt.png';
 import XLSIcon from 'assets/icons/xls.png';
 import DOCIcon from 'assets/icons/doc.png';
 import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
-import { FileProperty } from '.';
 import ReactS3Client from 'react-aws-s3-typescript';
 import { FileItemContainer, VerticalDivider } from './ui';
 import { Typography } from '@mui/material';
 import { humanFileSize } from 'core/utils';
 import { s3Config } from 'core/constants';
+import { PipelineDocument } from '../../HyperFunnelModal.context';
 
-const FileItem: FC<{ file: FileProperty; onDelete: () => void }> = ({ file, onDelete }) => {
+const FileItem: FC<{ file: PipelineDocument; onDelete: () => void }> = ({ file, onDelete }) => {
   let icon = PDFIcon;
   switch (file.extention) {
     case 'PDF':
@@ -32,7 +32,6 @@ const FileItem: FC<{ file: FileProperty; onDelete: () => void }> = ({ file, onDe
   }
 
   const handleActionSelect = (idx: number) => {
-    console.log('file', file);
     if (idx === 0) window.open(file.location);
     else if (idx === 1) deleteFile();
   };
@@ -42,7 +41,7 @@ const FileItem: FC<{ file: FileProperty; onDelete: () => void }> = ({ file, onDe
     const s3 = new ReactS3Client(s3Config);
 
     try {
-      await s3.deleteFile(file.fileKey);
+      file.fileKey && (await s3.deleteFile(file.fileKey));
 
       console.log('File deleted');
       onDelete();
@@ -58,7 +57,7 @@ const FileItem: FC<{ file: FileProperty; onDelete: () => void }> = ({ file, onDe
       <Typography variant="p12"> {file.name}</Typography>
       <VerticalDivider />
       <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-        {humanFileSize(file.size)}
+        {humanFileSize(file.size ?? 0)}
       </Typography>
       <CustomMenu
         icon={<DotsIcon />}

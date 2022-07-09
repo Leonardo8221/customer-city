@@ -1,11 +1,13 @@
 import { Tab, TabPanel, Tabs, a11yProps } from 'components/ui/tab';
-import { FC, useState, SyntheticEvent } from 'react';
+import { FC, useState, SyntheticEvent, useContext, useEffect } from 'react';
+
+import update from 'immutability-helper';
 import { DropDownArea, DocumentMain, FileNotification } from './ui';
 import { FileUploader } from 'react-drag-drop-files';
 import { ReactComponent as UploadIcon } from 'assets/icons/upload.svg';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
-import { Divider, Typography } from '@mui/material';
-import { SecondaryButton, TextButton } from 'components/ui';
+import { Divider, Typography, IconButton } from '@mui/material';
+import { SecondaryButton, TextButton, LoadingButton } from 'components/ui';
 import ReactS3Client from 'react-aws-s3-typescript';
 import { Buffer } from 'buffer';
 import { s3Config } from 'core/constants';
@@ -13,26 +15,32 @@ import { useUser } from 'store/user/hooks';
 import FileItem from './FileItem';
 import { Loader } from 'components/Loader';
 import LinkItem from './LinkItem';
+import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
+import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
+import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
+import { Pipeline, PipelineDocument, PipelineFormContext, PipelineFormSteps } from '../../HyperFunnelModal.context';
+import { useFormikContext } from 'formik';
 
 window.Buffer = window.Buffer || Buffer;
 
 const fileTypes = ['PDF', 'DOC', 'DOCX', 'TXT', 'XLSX', 'XLS'];
 
-export interface FileProperty {
-  extention: string;
-  size: number;
-  name: string;
-  location: string;
-  fileKey: string;
-}
-
 const DocumentPage: FC = () => {
   const { user } = useUser();
   const s3 = new ReactS3Client(s3Config);
-  const [files, setFiles] = useState<FileProperty[]>([]);
-  const [links, setLinks] = useState<string[]>([]);
+  const [files, setFiles] = useState<PipelineDocument[]>([]);
+  const [links, setLinks] = useState<PipelineDocument[]>([]);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const { onClose, setStep } = useContext(PipelineFormContext);
+  const { values, setValues } = useFormikContext<Pipeline>();
+
+  useEffect(() => {
+    setFiles(values.pipelineDocuments.filter((d) => d.type === 'document'));
+    setLinks(values.pipelineDocuments.filter((d) => d.type === 'link'));
+  }, [values]);
 
   const onTabChange = (event: SyntheticEvent, newValue: number) => {
     setActiveIndex(newValue);
@@ -47,12 +55,13 @@ const DocumentPage: FC = () => {
         fileList.map(async (file) => {
           const newFileName = file.name.replace(/\..+$/, '');
           const { location, key } = await s3.uploadFile(file, `${user?.userId}/${newFileName}`);
-          const fileProperty: FileProperty = {
+          const fileProperty: PipelineDocument = {
             extention: String(file.name.split('.').pop()).toUpperCase(),
             size: file.size,
             name: file.name,
             location,
             fileKey: key,
+            type: 'document',
           };
           setFiles((f) => [...f, fileProperty]);
         }),
@@ -70,98 +79,131 @@ const DocumentPage: FC = () => {
   };
 
   const handleAddLink = () => {
-    console.log('handleAddLink');
-    setLinks((l) => [...l, '']);
+    setLinks(update(links, { $push: [{ type: 'link', location: '' }] }));
   };
   const handleLinkChange = (val: string, idx: number) => {
-    const newLinks = [...links];
-    newLinks[idx] = val;
-    setLinks(newLinks);
+    setLinks(update(links, { [idx]: { $merge: { location: val } } }));
   };
   const handleLinkDelete = (idx: number) => {
-    setLinks(links.filter((link, i) => i !== idx));
+    setLinks(update(links, { $splice: [[idx, 1]] }));
+  };
+
+  const handleSave = () => {
+    setValues(update(values, { $merge: { pipelineDocuments: [...files, ...links] } }));
+    setStep(PipelineFormSteps.SECOND);
   };
 
   return (
-    <DocumentMain>
-      {loading && <Loader />}
-      <Tabs
-        value={activeIndex}
-        onChange={onTabChange}
-        aria-label="sales documents"
-        sx={{ '& .MuiTabs-scroller': { borderBottom: '1px solid #EEEFF1' } }}
-      >
-        <Tab
-          label="Files"
-          {...a11yProps(0)}
-          icon={files.length > 0 ? <FileNotification>{files.length}</FileNotification> : undefined}
-          iconPosition="end"
-        />
-        <Tab label="Links" {...a11yProps(1)} />
-      </Tabs>
+    <ModalContainer>
+      <ModalHeader>
+        <Typography variant="h3" sx={{ color: 'neutral.main' }}>
+          {'Sales Documentation'}
+        </Typography>
 
-      <TabPanel hidden={activeIndex !== 0} sx={{ py: 3, height: '100%' }}>
-        {files.map((file, idx) => (
-          <FileItem key={idx} file={file} onDelete={() => handleFileDelete(idx)} />
-        ))}
-        <FileUploader
-          classes="file-drop-zone"
-          handleChange={handleFileChange}
-          name="file"
-          types={fileTypes}
-          multiple
-          onTypeError={(err: any) => console.error(err)}
-          onSizeError={(err: any) => console.error(err)}
+        <IconButton onClick={onClose}>
+          <CrossIcon />
+        </IconButton>
+      </ModalHeader>
+      <DocumentMain sx={{ height: 496 }}>
+        {loading && <Loader />}
+        <Tabs
+          value={activeIndex}
+          onChange={onTabChange}
+          aria-label="sales documents"
+          sx={{ '& .MuiTabs-scroller': { borderBottom: '1px solid #EEEFF1' } }}
         >
-          {files.length === 0 ? (
+          <Tab
+            label="Files"
+            {...a11yProps(0)}
+            icon={files.length > 0 ? <FileNotification>{files.length}</FileNotification> : undefined}
+            iconPosition="end"
+          />
+          <Tab
+            label="Links"
+            {...a11yProps(1)}
+            icon={files.length > 0 ? <FileNotification>{links.length}</FileNotification> : undefined}
+            iconPosition="end"
+          />
+        </Tabs>
+
+        <TabPanel hidden={activeIndex !== 0} sx={{ py: 3, height: '100%' }}>
+          {files.map((file, idx) => (
+            <FileItem key={idx} file={file} onDelete={() => handleFileDelete(idx)} />
+          ))}
+          <FileUploader
+            classes="file-drop-zone"
+            handleChange={handleFileChange}
+            name="file"
+            types={fileTypes}
+            multiple
+            onTypeError={(err: any) => console.error(err)}
+            onSizeError={(err: any) => console.error(err)}
+          >
+            {files.length === 0 ? (
+              <DropDownArea>
+                <Typography variant="p12">{'You have not added any files yet'}</Typography>
+                <SecondaryButton startIcon={<UploadIcon />}>Upload Documents</SecondaryButton>
+                <Typography variant="p12">{'or'}</Typography>
+                <Typography variant="p12">{'Drag&Drop here'}</Typography>
+              </DropDownArea>
+            ) : (
+              <TextButton
+                startIcon={<PlusIcon />}
+                sx={{ fontSize: 12, fontWeight: 400, color: 'primary.main', '&:hover': { color: 'primary.main' } }}
+              >
+                Upload Documents
+              </TextButton>
+            )}
+          </FileUploader>
+        </TabPanel>
+
+        <TabPanel hidden={activeIndex !== 1} sx={{ py: 3, height: '100%' }}>
+          {links.length === 0 ? (
             <DropDownArea>
-              <Typography variant="p12">{'You have not added any files yet'}</Typography>
-              <SecondaryButton startIcon={<UploadIcon />}>Upload Documents</SecondaryButton>
-              <Typography variant="p12">{'or'}</Typography>
-              <Typography variant="p12">{'Drag&Drop here'}</Typography>
+              <Typography variant="p12">{'You have not added any links yet'}</Typography>
+              <SecondaryButton startIcon={<PlusIcon />} onClick={handleAddLink}>
+                Add link
+              </SecondaryButton>
             </DropDownArea>
           ) : (
-            <TextButton
-              startIcon={<PlusIcon />}
-              sx={{ fontSize: 12, fontWeight: 400, color: 'primary.main', '&:hover': { color: 'primary.main' } }}
-            >
-              Upload Documents
-            </TextButton>
+            <>
+              {links.map((link, idx) => (
+                <LinkItem
+                  key={idx}
+                  link={link.location}
+                  onChange={(val) => handleLinkChange(val, idx)}
+                  onDelete={() => handleLinkDelete(idx)}
+                />
+              ))}
+              <TextButton
+                startIcon={<PlusIcon />}
+                sx={{ fontSize: 12, fontWeight: 400, color: 'primary.main', '&:hover': { color: 'primary.main' } }}
+                onClick={handleAddLink}
+              >
+                Add new link
+              </TextButton>
+            </>
           )}
-        </FileUploader>
-      </TabPanel>
+        </TabPanel>
 
-      <TabPanel hidden={activeIndex !== 1} sx={{ py: 3, height: '100%' }}>
-        {links.length === 0 ? (
-          <DropDownArea>
-            <Typography variant="p12">{'You have not added any links yet'}</Typography>
-            <SecondaryButton startIcon={<PlusIcon />} onClick={handleAddLink}>
-              Add link
-            </SecondaryButton>
-          </DropDownArea>
-        ) : (
-          <>
-            {links.map((link, idx) => (
-              <LinkItem
-                key={idx}
-                link={link}
-                onChange={(val) => handleLinkChange(val, idx)}
-                onDelete={() => handleLinkDelete(idx)}
-              />
-            ))}
-            <TextButton
-              startIcon={<PlusIcon />}
-              sx={{ fontSize: 12, fontWeight: 400, color: 'primary.main', '&:hover': { color: 'primary.main' } }}
-              onClick={handleAddLink}
-            >
-              Add new link
-            </TextButton>
-          </>
-        )}
-      </TabPanel>
+        <Divider />
+      </DocumentMain>
+      <ModalFooter>
+        <BackTo onClick={() => setStep(PipelineFormSteps.SECOND)}>
+          <ArrowLeft />
+          <Typography variant="p12">Back to Pipeline creating</Typography>
+        </BackTo>
 
-      <Divider />
-    </DocumentMain>
+        <ButtonGroup>
+          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+            Cancel
+          </TextButton>
+          <LoadingButton variant="contained" onClick={handleSave}>
+            {'Save and back to Pipeline'}
+          </LoadingButton>
+        </ButtonGroup>
+      </ModalFooter>
+    </ModalContainer>
   );
 };
 

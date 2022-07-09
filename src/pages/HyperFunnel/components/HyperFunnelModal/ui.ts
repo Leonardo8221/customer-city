@@ -3,8 +3,8 @@ import { styled, Box, Paper as MuiPaper } from '@mui/material';
 export const ModalContainer = styled(Box)(({ theme }) => ({
   maxHeight: '90%',
   overflowY: 'auto',
+  width: 640,
   maxWidth: 980,
-  width: '100%',
   backgroundColor: theme.palette.neutral.white,
   borderRadius: 4,
   padding: '16px 0',

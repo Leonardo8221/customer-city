@@ -1,20 +1,20 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography, IconButton } from '@mui/material';
 import update from 'immutability-helper';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useState, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDealStage } from 'store/dealStage/hooks';
-import { DealStage } from 'store/dealStage/types';
 
 import { Card, Item, ItemTypes } from './Card';
 import { ThirdMain, CardPanel, CardAddBox } from './ui';
+import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
+import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
+import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
+import { LoadingButton, TextButton } from 'components/ui';
+import { Pipeline, PipelineFormContext, PipelineFormSteps, PipelineStage } from '../../HyperFunnelModal.context';
+import { useFormikContext } from 'formik';
 
 export interface ContainerState {
   cards: any[];
-}
-
-export interface CardItem extends DealStage {
-  customDealStageName?: string;
-  createdAt?: Date;
 }
 
 interface DealStageType {
@@ -29,16 +29,15 @@ export const DEAL_STAGE_TYPES: DealStageType[] = [
 ];
 
 export const Container: FC = memo(function Container() {
-  const [cards, setCards] = useState<CardItem[]>([]);
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
-  const { dealStages, getDealStages } = useDealStage();
-
-  useEffect(() => {
-    getDealStages();
-  }, [getDealStages]);
+  const { dealStages } = useDealStage();
+  const { onClose, setStep } = useContext(PipelineFormContext);
+  const { values, setValues, setFieldValue } = useFormikContext<Pipeline>();
+  const cards = values.pipelineStages;
+  console.log('cards', values);
 
   const findCard = useCallback(
-    (cardItem: CardItem) => {
+    (cardItem: PipelineStage) => {
       setHoverIndex(undefined);
       return {
         card: cardItem,
@@ -49,19 +48,21 @@ export const Container: FC = memo(function Container() {
   );
 
   const moveCard = useCallback(
-    (cardItem: CardItem, atIndex: number) => {
+    (cardItem: PipelineStage, atIndex: number) => {
       const { card, index } = findCard(cardItem);
       setHoverIndex(undefined);
-      setCards(
-        update(cards, {
-          $splice: [
-            [index, 1],
-            [atIndex, 0, card],
-          ],
+      setValues(
+        update(values, {
+          pipelineStages: {
+            $splice: [
+              [index, 1],
+              [atIndex, 0, card],
+            ],
+          },
         }),
       );
     },
-    [findCard, cards, setCards],
+    [findCard, values, setValues],
   );
 
   const hoverCard = useCallback(
@@ -72,15 +73,11 @@ export const Container: FC = memo(function Container() {
   );
 
   const addCard = useCallback(
-    (card: CardItem, index: number) => {
-      console.log('addCard,', index);
-      setCards((oldCards) => [
-        ...oldCards.slice(0, index),
-        { ...card, createdAt: new Date() },
-        ...oldCards.slice(index),
-      ]);
+    (card: PipelineStage, index: number) => {
+      const newCards = [...cards.slice(0, index), { ...card, createdAt: new Date() }, ...cards.slice(index)];
+      setFieldValue('pipelineStages', newCards);
     },
-    [setCards],
+    [setFieldValue, cards],
   );
 
   const [{ isOver }, drop] = useDrop(
@@ -102,17 +99,17 @@ export const Container: FC = memo(function Container() {
       accept: ItemTypes.CARD,
       drop: ({ card, isDemo }: Item) => {
         if (!isDemo) return;
-        setCards((oldCards) => [...oldCards, { ...card, createdAt: new Date() }]);
+        setValues(update(values, { pipelineStages: { $push: [{ ...card, createdAt: new Date() }] } }));
       },
     }),
-    [hoverIndex],
+    [values],
   );
 
   const handleDelete = useCallback(
     (index: number) => {
-      setCards(update(cards, { $splice: [[index, 1]] }));
+      setValues(update(values, { pipelineStages: { $splice: [[index, 1]] } }));
     },
-    [cards, setCards],
+    [values, setValues],
   );
 
   const DIVIDER = <Divider sx={{ backgroundColor: 'primary.main', my: 1, height: 2 }} />;
@@ -120,69 +117,103 @@ export const Container: FC = memo(function Container() {
   const isEmpty = cards.length === 0;
 
   return (
-    <ThirdMain>
-      <CardPanel className="left-card-panel">
-        <Typography variant="b16" sx={{ mb: 1 }}>
-          Stages
+    <ModalContainer sx={{ width: 960 }}>
+      <ModalHeader>
+        <Typography variant="h3" sx={{ color: 'neutral.main' }}>
+          {'Pipeline Stages'}
         </Typography>
-        {DEAL_STAGE_TYPES.map((stageType) => (
-          <>
-            <Typography
-              variant="p12"
-              sx={{
-                textTransform: 'uppercase',
-                py: '12px',
-                mt: '4px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              <Box sx={{ width: 6, height: 6, backgroundColor: stageType.color, borderRadius: '50%' }}>{''}</Box>
-              {stageType.value} {'STAGE'}
-            </Typography>
-            {dealStages
-              .filter((stage) => stage.dealStageType === stageType.value)
-              .map((card, idx) => (
-                <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
-              ))}
-          </>
-        ))}
-      </CardPanel>
 
-      <CardPanel className="right-card-panel" sx={{ backgroundColor: 'darkBg.main' }}>
-        <Typography variant="b16" sx={{ mb: 1 }}>
-          Configure your Stages
-        </Typography>
-        <Box ref={drop} className="first">
-          {cards.map((card, idx) => (
+        <IconButton onClick={onClose}>
+          <CrossIcon />
+        </IconButton>
+      </ModalHeader>
+      <ThirdMain sx={{ height: 496 }}>
+        <CardPanel className="left-card-panel">
+          <Typography variant="b16" sx={{ mb: 1 }}>
+            Stages
+          </Typography>
+          {DEAL_STAGE_TYPES.map((stageType) => (
             <>
-              {hoverIndex === idx && isOver && DIVIDER}
-              <Card
-                card={card}
-                moveCard={moveCard}
-                findCard={findCard}
-                hoverCard={() => hoverCard(idx)}
-                deleteCard={() => handleDelete(idx)}
-                duplicateCard={() => addCard(card, idx)}
-                key={idx}
-              />
+              <Typography
+                variant="p12"
+                sx={{
+                  textTransform: 'uppercase',
+                  py: '12px',
+                  mt: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+              >
+                <Box sx={{ width: 6, height: 6, backgroundColor: stageType.color, borderRadius: '50%' }}>{''}</Box>
+                {stageType.value} {'STAGE'}
+              </Typography>
+              {dealStages
+                .filter((stage) => stage.dealStageType === stageType.value)
+                .map((card, idx) => (
+                  <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
+                ))}
             </>
           ))}
+        </CardPanel>
+
+        <CardPanel className="right-card-panel" sx={{ backgroundColor: 'darkBg.main' }}>
+          <Typography variant="b16" sx={{ mb: 1 }}>
+            Configure your Stages
+          </Typography>
+          <Box ref={drop} className="first">
+            {cards.map((card, idx) => (
+              <>
+                {hoverIndex === idx && isOver && DIVIDER}
+                <Card
+                  card={card}
+                  moveCard={moveCard}
+                  findCard={findCard}
+                  hoverCard={() => hoverCard(idx)}
+                  deleteCard={() => handleDelete(idx)}
+                  duplicateCard={() => addCard(card, idx)}
+                  key={idx}
+                  order={idx}
+                />
+              </>
+            ))}
+          </Box>
+          <CardAddBox ref={otherDrop} sx={isEmpty ? { border: '1px dashed #CDD2DF', borderRadius: '4px' } : {}}>
+            {isEmpty && (
+              <>
+                <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
+                  {'You have not added any stages yet'}
+                </Typography>
+                <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
+                  {'Drag&Drop stages from the left side here'}
+                </Typography>
+              </>
+            )}
+          </CardAddBox>
+        </CardPanel>
+      </ThirdMain>
+      <ModalFooter>
+        <BackTo onClick={() => setStep(PipelineFormSteps.SECOND)}>
+          <ArrowLeft />
+          <Typography variant="p12">Back to Step 2</Typography>
+        </BackTo>
+
+        <Box>
+          <Typography variant="p14">{3}</Typography>
+          <Typography variant="p14" sx={{ color: 'neutral.n400' }}>
+            {' / 3'}
+          </Typography>
         </Box>
-        <CardAddBox ref={otherDrop} sx={isEmpty ? { border: '1px dashed #CDD2DF', borderRadius: '4px' } : {}}>
-          {isEmpty && (
-            <>
-              <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-                {'You have not added any stages yet'}
-              </Typography>
-              <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-                {'Drag&Drop stages from the left side here'}
-              </Typography>
-            </>
-          )}
-        </CardAddBox>
-      </CardPanel>
-    </ThirdMain>
+
+        <ButtonGroup>
+          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+            Cancel
+          </TextButton>
+          <LoadingButton variant="contained" onClick={console.log}>
+            {'Create Pipeline'}
+          </LoadingButton>
+        </ButtonGroup>
+      </ModalFooter>
+    </ModalContainer>
   );
 });

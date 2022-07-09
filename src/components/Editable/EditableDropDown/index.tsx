@@ -33,13 +33,13 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
   const [editing, setEditing] = useState(false);
   // const [inputValue, setInputValue] = useState<OptionValue<number> | null>();
 
-  const onClose = async (inputValue: OptionValue<number> | null) => {
+  const onClose = async (inputValue: number) => {
     setEditing(false);
 
-    if (!inputValue || !onSave) return;
+    if (!onSave) return;
 
     try {
-      await onSave(inputValue.value);
+      await onSave(inputValue);
     } catch (err) {
       // TODO: How should we handle loading and error states if needed
     }
@@ -65,7 +65,7 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
                 {icon === 'deal' && <DealIcon />}
               </Box>
             ) : null,
-            onBlur: () => onClose(null),
+            onBlur: () => onClose,
           }}
           PaperComponent={Paper}
         />

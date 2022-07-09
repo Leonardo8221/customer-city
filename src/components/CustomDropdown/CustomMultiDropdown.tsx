@@ -4,29 +4,27 @@ import { Autocomplete, TextField, InputLabel, SxProps, Theme, InputProps, Box } 
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ReactComponent as TraingleDownIcon } from 'assets/icons/triangleDown.svg';
 import { Paper } from './ui';
+import { User } from 'store/user/types';
+import { OptionValue } from 'core/types';
+import { Product } from 'store/product/types';
 
-type OptionValue = string | number;
+type OptionValueType = string | number | User | Product;
 
-interface Option<T extends OptionValue> {
-  label: string;
-  value: T;
-}
-
-interface CustomMultiDropdownProps<T extends OptionValue> {
-  value: Option<T>[];
-  options: Option<T>[];
+interface CustomMultiDropdownProps<T extends OptionValueType> {
+  value: OptionValue<T>[];
+  options: OptionValue<T>[];
   placeholder: string;
   id: string;
   label?: string;
   labelSx?: SxProps<Theme>;
   withPopupIcon?: boolean;
   InputProps?: Partial<InputProps>;
-  onSelect: (value: Option<T>[]) => void;
+  onSelect: (value: OptionValue<T>[]) => void;
   PaperComponent?: JSXElementConstructor<HTMLAttributes<HTMLElement>>;
   disableClearable?: boolean;
 }
 
-const CustomMultiDropdown = <T extends OptionValue>({
+const CustomMultiDropdown = <T extends OptionValueType>({
   value,
   options,
   placeholder,
