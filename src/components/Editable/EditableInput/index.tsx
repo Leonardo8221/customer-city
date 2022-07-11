@@ -80,36 +80,19 @@ const EditableInput: FC<EditableInputProps> = ({
 
   if (editing) {
     return (
-      <ClickAwayListener onClickAway={onClose}>
-        <Box position="relative">
-          {!isText ? (
-            <CustomInput
-              id={id}
-              name={name}
-              label={label}
-              type={type}
-              {...rest}
-              value={inputValue}
-              onChange={onChange}
-              onBlur={onClose}
-              error={error}
-              onKeyDown={onKeyDown}
-            />
-          ) : (
-            <CustomTextArea
-              id="accountDescription"
-              name="accountDescription"
-              label={<Typography variant="labelRegular12">{label}</Typography>}
-              placeholder={`Add ${label}`}
-              minRows={4}
-              maxRows={8}
-              value={inputValue}
-              onChange={onChange}
-              onBlur={onClose}
-            />
-          )}
-        </Box>
-      </ClickAwayListener>
+      <Box position="relative">
+        <CustomTextArea
+          id="accountDescription"
+          name="accountDescription"
+          label={<Typography variant="labelRegular12">{label}</Typography>}
+          placeholder={`Add ${label}`}
+          minRows={4}
+          maxRows={8}
+          value={inputValue}
+          onChange={onChange}
+          onBlur={onClose}
+        />
+      </Box>
     );
   }
 
