@@ -18,6 +18,8 @@ import { AccountDetail } from 'pages/AccountDetail';
 import { DealDetail } from 'pages/DealDetail';
 import { Deal } from 'pages/Deal';
 import { HyperFunnel } from 'pages/HyperFunnel';
+import { Integration } from 'pages/Integration';
+import { IntegrationDetail } from 'pages/IntegrationDetail';
 
 interface AppRoute {
   path?: string;
@@ -41,7 +43,8 @@ export const dashboardRoutes: AppRoute[] = [
       { path: PRIVATE_ROUTE_PATHS.dealScape, element: <Deal /> },
       { path: PRIVATE_ROUTE_PATHS.dealScapeDetail, element: <DealDetail /> },
       { path: PRIVATE_ROUTE_PATHS.controlTower, element: <ControlTower /> },
-      { path: PRIVATE_ROUTE_PATHS.integration, element: <DummyPage /> },
+      { path: PRIVATE_ROUTE_PATHS.integration, element: <Integration /> },
+      { path: PRIVATE_ROUTE_PATHS.integrationDetail, element: <IntegrationDetail /> },
       {
         path: PRIVATE_ROUTE_PATHS.lightSquare,
         element: <DummyPage />,
