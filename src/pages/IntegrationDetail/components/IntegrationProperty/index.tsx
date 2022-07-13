@@ -1,45 +1,45 @@
-import { Box, Divider, Typography } from '@mui/material';
-// import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
+import { Box, Divider } from '@mui/material';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
-import { PrimaryButton, SecondaryButton } from 'components/ui';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { FC } from 'react';
-import { BackToRoute, Container, ProfileHead, PropertyContainer } from './ui';
+import { Integration } from 'store/integration/types';
+import DataPrivacy from './components/DataPrivacy';
+import Detail from './components/Detail';
+import PropertyHead from './components/PropertyHead';
+import Requirement from './components/Requirement';
+import Resources from './components/Resources';
+import Support from './components/Support';
+import { BackToRoute, Container, PropertyContainer, PropertyHeadContainer } from './ui';
 
-interface Props {
-  appId: string;
-}
+type Props = Partial<Integration>;
 
-const IntegrationProperty: FC<Props> = ({ appId }) => {
-  const appName = 'Gmail';
-  const appDescription =
-    'Et consectetur tempora ipsa hic animi. Omnis eos aperiam omnis omnis et magni. Vitae tenetur vitae sed sapiente';
-  const appIcon = 'https://cdn-icons-png.flaticon.com/32/281/281769.png';
+const IntegrationProperty: FC<Props> = ({ appName, appIcon, appDescription, isInstalled, property }) => {
+  const { details: detailProps } = property || {};
+  const { requirements: requirementProps } = property || {};
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.integration}>
         <ArrowLeft />
         {'Back to Integration'}
       </BackToRoute>
-      <ProfileHead>
-        <Box className="app-icon">
-          <img width="72" src={appIcon}></img>
-        </Box>
-        <Box display="flex" flexDirection="column">
-          <Typography variant="h4" sx={{ mr: 'auto' }}>
-            {appName}
-          </Typography>
-          <Typography variant="subtitle1" sx={{ color: 'neutral.n400' }}>
-            {appDescription}
-          </Typography>
-        </Box>
-      </ProfileHead>
-      <Box width="100%" display="flex" flexDirection="row" justifyContent="space-between">
-        <SecondaryButton sx={{ width: '168px', marginLeft: '24px' }}>View Setup Guide</SecondaryButton>
-        <PrimaryButton sx={{ width: '168px', marginRight: '24px' }}>Install</PrimaryButton>
+      {/* <PropertyHeadContainer>
+      </PropertyHeadContainer> */}
+      <PropertyHead appIcon={String(appIcon)} appName={String(appName)} appDescription={String(appDescription)} />
+      <Box padding="31px 24px">
+        <Divider />
       </Box>
-      <Divider />
-      <PropertyContainer></PropertyContainer>
+      <PropertyContainer>
+        {detailProps && <Detail {...detailProps} />}
+        <Divider />
+        {requirementProps && <Requirement {...requirementProps} />}
+        <Divider />
+        <Resources />
+        <Divider />
+        <Support />
+        <Divider />
+        <DataPrivacy />
+        <Divider />
+      </PropertyContainer>
       {/* {loading && <Loader />} */}
     </Container>
   );

@@ -88,6 +88,25 @@ export interface Integration {
   appDescription: string;
   appIcon: string;
   isInstalled: boolean;
+  property?: {
+    details?: {
+      provider: {
+        name: string;
+        link: string;
+      };
+      totalInstalls: string;
+      categories: string[];
+      features: string[];
+      language: string;
+    };
+    requirements?: {
+      isCompatiblePlan: boolean;
+      permissions: string;
+      subscriptionTitle: string;
+      subscriptions: string;
+      subscriptionPageLink: string;
+    };
+  };
 }
 
 export interface IntegrationState {
