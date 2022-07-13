@@ -26,7 +26,7 @@ const ControlTower: FC = () => {
         </Typography>
       </TitleContainer>
 
-      <Tabs value={activeIndex} onChange={onTabChange} aria-label="control tower tabs">
+      <Tabs value={activeIndex} onChange={onTabChange} aria-label="control tower tabs" sx={{ px: 3 }}>
         <Tab label="Profile" {...a11yProps(0)} />
         <Tab label="Team" {...a11yProps(1)} />
       </Tabs>
