@@ -44,7 +44,7 @@ export const ContentFooter = styled(Box)(({ theme }) => ({
   color: theme.palette.neutral.n400,
   padding: theme.spacing(4),
   [theme.breakpoints.down('md')]: {
-    color: theme.palette.neutral.white,
+    color: theme.palette.neutral.main,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
