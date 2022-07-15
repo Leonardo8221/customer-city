@@ -1,9 +1,8 @@
 import { FC, useEffect } from 'react';
-import { Container } from './ui';
-
 import { useParams } from 'react-router-dom';
-import { IntegrationProperty, IntegrationDetail } from './components';
 import { useIntegration } from 'store/integration/hooks';
+import { IntegrationDetail, IntegrationProperty } from './components';
+import { Container } from './ui';
 
 const IntegrationDetailPage: FC = () => {
   const { id: appId } = useParams();
