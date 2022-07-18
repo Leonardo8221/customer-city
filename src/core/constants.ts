@@ -136,3 +136,9 @@ export const s3Config = {
   secretAccessKey: process.env.REACT_APP_AWS_SECURITY_KEY ?? '',
   s3Url: process.env.REACT_APP_S3_URL,
 };
+
+export const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+}; // from Firebase Console
