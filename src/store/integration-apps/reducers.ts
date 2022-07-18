@@ -3,23 +3,26 @@ import { createGenericSlice, GenericState } from '../../slices/generic';
 import { setError, setSuccess } from './actions';
 import { Integration } from './types';
 
-export const initialState: GenericState<Integration[]> = {
+export const initialState: GenericState<Integration> = {
   error: false,
   loading: false,
   success: false,
-  data: [],
+  data: <Integration[]>[],
 };
 
 const slice = createGenericSlice({
   name: 'integration-apps',
-  initialState: initialState as GenericState<Integration[]>,
+  initialState: initialState as GenericState<Integration>,
   reducers: {},
-  extraReducers: (builder: ActionReducerMapBuilder<GenericState<Integration[]>>): void => {
+  extraReducers: (builder: ActionReducerMapBuilder<GenericState<Integration>>): void => {
     builder.addCase(setError, (state, { payload }) => {
-      state.error = payload;
+      console.log('FIRESTORE ERROR STATE', payload);
+      state.error = true;
     });
     builder.addCase(setSuccess, (state, { payload }) => {
-      state.success = payload;
+      console.log('FIRESTORE SUCCESS STATE', payload);
+      state.success = true;
+      state.data = payload;
     });
   },
 });

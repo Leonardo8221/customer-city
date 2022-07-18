@@ -31,9 +31,8 @@ export const useFirestore = <T extends DocumentData>(path: string) => {
 
   const dispatch = useDispatch();
 
-  const collection = (actions: GenericActions, options?: CollectionOptions) => {
+  const collection = (actions: GenericActions<T>, options?: CollectionOptions) => {
     let query = getQuery(path, options);
-
     collectionApi<T>(query, actions, dispatch, collectionListenersRef, lastDocRef, options);
 
     if (options?.lazyLoad) {
@@ -47,7 +46,7 @@ export const useFirestore = <T extends DocumentData>(path: string) => {
     }
   };
 
-  const doc = async (id: string, actions: GenericActions, options?: DocumentOptions) => {
+  const doc = async (id: string, actions: GenericActions<T>, options?: DocumentOptions) => {
     docApi<T>(path, id, actions, dispatch, docListenersRef, options);
   };
 

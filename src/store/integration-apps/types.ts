@@ -26,5 +26,5 @@ export interface IntegrationState {
 
 export interface IntegrationReturnHook extends IntegrationState {
   setError: (error: string | boolean) => void;
-  setSuccess: (success: string | boolean) => void;
+  setSuccess: (success: Integration[] | boolean) => void;
 }

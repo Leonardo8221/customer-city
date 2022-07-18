@@ -9,7 +9,7 @@ type AnyFunc = (...args: any[]) => any;
 const docApi = <T>(
   path: string,
   id: string,
-  actions: GenericActions,
+  actions: GenericActions<T>,
   dispatch: AnyFunc,
   docListenersRef: MutableRefObject<ListenerState[]>,
   options?: DocumentOptions,
@@ -23,9 +23,8 @@ const docApi = <T>(
         dispatch(actions.setError('Document does not exists.'));
         return;
       }
-      console.log('pelod', { id: doc.id, ...doc.data() });
-      // (dispatch as Function)(actions.setSuccess({ id: doc.id, ...doc.data() } as unknown as T));
-      dispatch(actions.setSuccess(true));
+      console.log('firestore payload', { id: doc.id, ...doc.data() });
+      dispatch(actions.setSuccess({ id: doc.id, ...doc.data() } as unknown as T));
     });
     docListenersRef.current.push({ name: options.listenerName, unsubscribe: listener });
   } else {
@@ -38,9 +37,8 @@ const docApi = <T>(
           return;
         }
 
-        const result: DocumentData = { id: doc.id, ...doc.data() };
-        // (dispatch as Function)(actions.setSuccess(result as T));
-        dispatch(actions.setSuccess(true));
+        const data: DocumentData = { id: doc.id, ...doc.data() };
+        dispatch(actions.setSuccess(data as T));
 
         for (const subcoll of options?.subcollections || []) {
           doc.ref
@@ -48,11 +46,10 @@ const docApi = <T>(
             .get()
             .then((snap) => {
               if (!snap.empty || snap.docs.length) {
-                result[subcoll.storeAs] = snap.docs.map((doc) => {
+                data[subcoll.storeAs] = snap.docs.map((doc) => {
                   return { id: doc.id, ...doc.data() };
                 });
-                // (dispatch as Function)(actions.setSuccess(result as T));
-                dispatch(actions.setSuccess(true));
+                dispatch(actions.setSuccess(data as T));
               }
             });
         }

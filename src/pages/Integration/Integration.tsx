@@ -8,17 +8,20 @@ import { ReactComponent as FilterIcon } from 'assets/icons/filterBlue.svg';
 import { useSelector } from 'store';
 import { useFirestore } from 'hooks/useFirestore';
 import * as actions from 'store/integration-apps/actions';
+import { Integration } from 'store/integration-apps/types';
 
 const IntegrationPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, integrations, getIntegrations } = useIntegration();
 
-  useSelector((state: any) => {
-    console.log('firestore state >>>>>>>>>>>>>>>>>>', state);
-  });
+  const { integrationApps, loadingIntegrationApps, errorIntegrationApps } = useSelector((state) => ({
+    integrationApps: state.integrationApps.data,
+    loadingIntegrationApps: state.integrationApps.loading,
+    errorIntegrationApps: state.integrationApps.error,
+  }));
 
-  const firestore = useFirestore<any[]>('integration-apps');
+  const firestore = useFirestore<Integration[]>('IntegrationApps');
 
   useEffect(() => {
     getIntegrations();
@@ -27,8 +30,6 @@ const IntegrationPage: FC = () => {
     }
     // this will update the store on every change
     firestore.collection(actions, { listen: true });
-    // this will get the data once
-    firestore.collection(actions);
   }, []);
 
   return (
