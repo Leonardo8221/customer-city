@@ -14,6 +14,7 @@ import { BackToRoute, Container, PropertyContainer } from './ui';
 type Props = Partial<Integration>;
 
 const IntegrationProperty: FC<Props> = ({
+  integrationId,
   applicationName,
   applicationIcon,
   applicationDescription,
@@ -41,6 +42,7 @@ const IntegrationProperty: FC<Props> = ({
         {'Back to Integration'}
       </BackToRoute>
       <PropertyHead
+        integrationId={Number(integrationId)}
         applicationIcon={String(applicationIcon)}
         applicationName={String(applicationName)}
         applicationDescription={String(applicationDescription)}

@@ -1,20 +1,27 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { PrimaryButton, SecondaryButton } from 'components/ui';
 import { FC } from 'react';
 import { useAuth } from 'store/auth/hooks';
 import { Profile } from './ui';
 
 interface Props {
+  integrationId: number;
   applicationIcon: string;
   applicationName: string;
   applicationDescription: string;
   applicationStatus: string;
 }
-const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, applicationDescription, applicationStatus }) => {
+const PropertyHead: FC<Props> = ({
+  integrationId,
+  applicationIcon,
+  applicationName,
+  applicationDescription,
+  applicationStatus,
+}) => {
   const { accessToken } = useAuth();
-  const install = () => {
-    window.location.href = `http://localhost:3001/integration/1/authorize?token=${accessToken}`;
-  };
+  const isInstalled = applicationStatus === 'installed';
+  const primaryActionUrl = `${process.env.REACT_APP_API_URL}/integration/${integrationId}/authorize?token=${accessToken}`;
+
   return (
     <Box>
       <Profile>
@@ -32,13 +39,14 @@ const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, application
       </Profile>
       <Box>
         <SecondaryButton sx={{ width: '168px', marginLeft: '24px' }}>View Setup Guide</SecondaryButton>
-        <PrimaryButton
-          variant={!applicationStatus ? 'contained' : 'outlined'}
-          sx={{ width: '168px', marginLeft: '15px', marginRight: '24px' }}
-          onClick={install}
-        >
-          {!applicationStatus ? 'Install' : 'Uninstall'}
-        </PrimaryButton>
+        <Link href={primaryActionUrl} target="blank" rel="noreferrer">
+          <PrimaryButton
+            variant={isInstalled ? 'outlined' : 'contained'}
+            sx={{ width: '168px', marginLeft: '15px', marginRight: '24px' }}
+          >
+            {isInstalled ? 'Uninstall' : 'Install'}
+          </PrimaryButton>
+        </Link>
       </Box>
     </Box>
   );

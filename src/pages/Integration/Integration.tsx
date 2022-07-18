@@ -5,17 +5,30 @@ import { Container, IntegrationsSection, TabItem } from './ui';
 import { IntegrationCard } from './components/IntegrationCard';
 import { useIntegration } from 'store/integration/hooks';
 import { ReactComponent as FilterIcon } from 'assets/icons/filterBlue.svg';
+import { useSelector } from 'store';
+import { useFirestore } from 'hooks/useFirestore';
+import * as actions from 'store/integration-apps/actions';
 
 const IntegrationPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const { loading, error, integrations, getIntegrations } = useIntegration();
 
+  useSelector((state: any) => {
+    console.log('firestore state >>>>>>>>>>>>>>>>>>', state);
+  });
+
+  const firestore = useFirestore<any[]>('integration-apps');
+
   useEffect(() => {
     getIntegrations();
     if (integrations.length > 0) {
       console.log('********************************************', integrations);
     }
+    // this will update the store on every change
+    firestore.collection(actions, { listen: true });
+    // this will get the data once
+    firestore.collection(actions);
   }, []);
 
   return (
