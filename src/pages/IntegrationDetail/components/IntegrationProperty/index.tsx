@@ -13,9 +13,27 @@ import { BackToRoute, Container, PropertyContainer, PropertyHeadContainer } from
 
 type Props = Partial<Integration>;
 
-const IntegrationProperty: FC<Props> = ({ appName, appIcon, appDescription, isInstalled, property }) => {
-  const { details: detailProps } = property || {};
-  const { requirements: requirementProps } = property || {};
+const IntegrationProperty: FC<Props> = ({
+  applicationName,
+  applicationIcon,
+  applicationDescription,
+  applicationStatus,
+  ...property
+}) => {
+  const {
+    providerName = '',
+    providerLink = '',
+    categories = [],
+    features = [],
+    languages = '',
+    totalInstalls = '',
+    subscriptionTitle = '',
+    subscriptions = '',
+    subscriptionLink = '',
+    requirementPermissions = '',
+  } = property;
+  const detailProps = { providerName, providerLink, totalInstalls, categories, features, languages };
+  const requirementProps = { subscriptionTitle, subscriptions, subscriptionLink, requirementPermissions };
   return (
     <Container>
       <BackToRoute to={PRIVATE_ABS_ROUTE_PATHS.integration}>
@@ -24,7 +42,11 @@ const IntegrationProperty: FC<Props> = ({ appName, appIcon, appDescription, isIn
       </BackToRoute>
       {/* <PropertyHeadContainer>
       </PropertyHeadContainer> */}
-      <PropertyHead appIcon={String(appIcon)} appName={String(appName)} appDescription={String(appDescription)} />
+      <PropertyHead
+        applicationIcon={String(applicationIcon)}
+        applicationName={String(applicationName)}
+        applicationDescription={String(applicationDescription)}
+      />
       <Box padding="31px 24px">
         <Divider />
       </Box>

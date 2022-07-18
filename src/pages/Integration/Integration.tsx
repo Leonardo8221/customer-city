@@ -9,10 +9,13 @@ import { ReactComponent as FilterIcon } from 'assets/icons/filterBlue.svg';
 const IntegrationPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const { integrations, getIntegrations } = useIntegration();
+  const { loading, error, integrations, getIntegrations } = useIntegration();
 
   useEffect(() => {
     getIntegrations();
+    if (integrations.length > 0) {
+      console.log('=============================', integrations);
+    }
   }, []);
 
   return (
@@ -56,11 +59,11 @@ const IntegrationPage: FC = () => {
         {integrations.map((integration, index) => (
           <IntegrationCard
             key={index}
-            appId={integration.appId}
-            appName={integration.appName}
-            appDescription={integration.appDescription}
-            appIcon={integration.appIcon}
-            isInstalled={integration.isInstalled}
+            integrationId={integration.integrationId}
+            applicationName={integration.applicationName}
+            applicationDescription={integration.applicationDescription}
+            applicationIcon={integration.applicationIcon}
+            applicationStatus={integration.applicationStatus}
           />
         ))}
       </IntegrationsSection>

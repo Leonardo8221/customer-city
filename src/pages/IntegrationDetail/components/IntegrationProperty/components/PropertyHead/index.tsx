@@ -5,11 +5,11 @@ import { useAuth } from 'store/auth/hooks';
 import { Profile } from './ui';
 
 interface Props {
-  appIcon: string;
-  appName: string;
-  appDescription: string;
+  applicationIcon: string;
+  applicationName: string;
+  applicationDescription: string;
 }
-const PropertyHead: FC<Props> = ({ appIcon, appName, appDescription }) => {
+const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, applicationDescription }) => {
   const { accessToken } = useAuth();
   const install = () => {
     window.location.href = `http://localhost:3001/integration/gmail/authorize?token=${accessToken}`;
@@ -17,15 +17,15 @@ const PropertyHead: FC<Props> = ({ appIcon, appName, appDescription }) => {
   return (
     <Box>
       <Profile>
-        <Box className="app-icon">
-          <img width="72" src={appIcon}></img>
+        <Box className="application-icon">
+          <img width="72" src={applicationIcon}></img>
         </Box>
         <Box display="flex" flexDirection="column">
           <Typography variant="h2" sx={{ mr: 'auto', mb: '10px', weight: 600, lineHeight: '24px' }}>
-            {appName}
+            {applicationName}
           </Typography>
           <Typography component="p" variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
-            {appDescription}
+            {applicationDescription}
           </Typography>
         </Box>
       </Profile>

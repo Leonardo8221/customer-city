@@ -7,17 +7,15 @@ import { arrayChunck } from 'utils';
 import { FieldContainer, FieldValue, PropertyTitle } from '../../../ui';
 
 interface Props {
-  provider: {
-    name: string;
-    link: string;
-  };
+  providerName: string;
+  providerLink: string;
   totalInstalls: string;
   categories: string[];
   features: string[];
-  language: string;
+  languages: string;
 }
 
-const Detail: FC<Props> = ({ provider: { name, link }, totalInstalls, categories, features, language }) => {
+const Detail: FC<Props> = ({ providerName, providerLink, totalInstalls, categories, features, languages }) => {
   const FieldTitle: FC<{ children: string }> = ({ children }) => (
     <Typography component="p" variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
       {children}
@@ -30,7 +28,7 @@ const Detail: FC<Props> = ({ provider: { name, link }, totalInstalls, categories
       <PropertyTitle>Details</PropertyTitle>
       <FieldContainer>
         <FieldTitle>Provider</FieldTitle>
-        <CustomLinkLabel href={link} linkText={name} withIcon />
+        <CustomLinkLabel href={providerLink} linkText={providerName} withIcon />
       </FieldContainer>
       <FieldContainer>
         <FieldTitle>Total Installs</FieldTitle>
@@ -50,7 +48,7 @@ const Detail: FC<Props> = ({ provider: { name, link }, totalInstalls, categories
       </FieldContainer>
       <FieldContainer>
         <FieldTitle>Languages this app is available in</FieldTitle>
-        <FieldValue>{language}</FieldValue>
+        <FieldValue>{languages}</FieldValue>
       </FieldContainer>
     </Box>
   );

@@ -6,27 +6,20 @@ import { FC } from 'react';
 import { FieldContainer, PropertyTitle } from '../../../ui';
 
 interface Props {
-  isCompatiblePlan: boolean;
-  permissions: string;
+  requirementPermissions: string;
   subscriptionTitle: string;
   subscriptions: string;
-  subscriptionPageLink: string;
+  subscriptionLink: string;
 }
 
-const Requirement: FC<Props> = ({
-  isCompatiblePlan,
-  permissions,
-  subscriptionTitle,
-  subscriptions,
-  subscriptionPageLink,
-}) => {
+const Requirement: FC<Props> = ({ requirementPermissions, subscriptionTitle, subscriptions, subscriptionLink }) => {
   const FieldTitle: FC<{ children: string }> = ({ children }) => (
     <Typography component="p" variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
       {children}
     </Typography>
   );
   const FieldValue = TextValue;
-
+  const isCompatiblePlan = true;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
       <PropertyTitle>Requirements</PropertyTitle>
@@ -45,11 +38,11 @@ const Requirement: FC<Props> = ({
       </FieldContainer>
       <FieldContainer>
         <FieldTitle>CustomerCity Account Permissions</FieldTitle>
-        <FieldValue>{permissions}</FieldValue>
+        <FieldValue>{requirementPermissions}</FieldValue>
       </FieldContainer>
       <FieldContainer>
         <FieldTitle>{subscriptionTitle}</FieldTitle>
-        <CustomLinkLabel href={subscriptionPageLink} linkText={subscriptions} withIcon />
+        <CustomLinkLabel href={subscriptionLink} linkText={subscriptions} withIcon />
       </FieldContainer>
     </Box>
   );

@@ -83,30 +83,21 @@ export interface ContactReturnHook extends ContactState {
 }
 
 export interface Integration {
-  appId: string;
-  appName: string;
-  appDescription: string;
-  appIcon: string;
-  isInstalled: boolean;
-  property?: {
-    details?: {
-      provider: {
-        name: string;
-        link: string;
-      };
-      totalInstalls: string;
-      categories: string[];
-      features: string[];
-      language: string;
-    };
-    requirements?: {
-      isCompatiblePlan: boolean;
-      permissions: string;
-      subscriptionTitle: string;
-      subscriptions: string;
-      subscriptionPageLink: string;
-    };
-  };
+  integrationId: number;
+  applicationName: string;
+  applicationDescription: string;
+  applicationIcon: string;
+  applicationStatus: string;
+  providerName?: string;
+  providerLink?: string;
+  totalInstalls?: string;
+  categories?: string[];
+  features?: string[];
+  languages?: string;
+  requirementPermissions?: string;
+  subscriptionTitle?: string;
+  subscriptions?: string;
+  subscriptionLink?: string;
 }
 
 export interface IntegrationState {
@@ -121,5 +112,5 @@ export interface IntegrationReturnHook extends IntegrationState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getIntegrations: () => void;
-  getIntegration: (name: string) => void;
+  getIntegration: (id: number) => void;
 }

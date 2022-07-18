@@ -8,7 +8,7 @@ const IntegrationDetailPage: FC = () => {
   const { id: appId } = useParams();
   const { getIntegration, integration } = useIntegration();
   useEffect(() => {
-    getIntegration(String(appId));
+    getIntegration(Number(appId));
   }, [getIntegration, appId, integration]);
   return (
     <Container>
