@@ -9,7 +9,7 @@ const IntegrationDetailPage: FC = () => {
   const { getIntegration, integration } = useIntegration();
   useEffect(() => {
     getIntegration(Number(appId));
-  }, [getIntegration, appId, integration]);
+  }, []);
   return (
     <Container>
       <IntegrationProperty {...integration} />

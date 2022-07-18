@@ -14,7 +14,7 @@ const IntegrationPage: FC = () => {
   useEffect(() => {
     getIntegrations();
     if (integrations.length > 0) {
-      console.log('=============================', integrations);
+      console.log('********************************************', integrations);
     }
   }, []);
 

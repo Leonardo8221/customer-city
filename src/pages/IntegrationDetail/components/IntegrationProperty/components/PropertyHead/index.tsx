@@ -8,11 +8,12 @@ interface Props {
   applicationIcon: string;
   applicationName: string;
   applicationDescription: string;
+  applicationStatus: string;
 }
-const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, applicationDescription }) => {
+const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, applicationDescription, applicationStatus }) => {
   const { accessToken } = useAuth();
   const install = () => {
-    window.location.href = `http://localhost:3001/integration/gmail/authorize?token=${accessToken}`;
+    window.location.href = `http://localhost:3001/integration/1/authorize?token=${accessToken}`;
   };
   return (
     <Box>
@@ -31,8 +32,12 @@ const PropertyHead: FC<Props> = ({ applicationIcon, applicationName, application
       </Profile>
       <Box>
         <SecondaryButton sx={{ width: '168px', marginLeft: '24px' }}>View Setup Guide</SecondaryButton>
-        <PrimaryButton sx={{ width: '168px', marginLeft: '15px', marginRight: '24px' }} onClick={install}>
-          Install
+        <PrimaryButton
+          variant={!applicationStatus ? 'contained' : 'outlined'}
+          sx={{ width: '168px', marginLeft: '15px', marginRight: '24px' }}
+          onClick={install}
+        >
+          {!applicationStatus ? 'Install' : 'Uninstall'}
         </PrimaryButton>
       </Box>
     </Box>

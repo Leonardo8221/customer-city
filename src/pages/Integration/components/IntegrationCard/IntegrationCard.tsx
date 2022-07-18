@@ -24,6 +24,7 @@ const IntegrationCard: FC<IntegrationCardProps> = ({
     const path = generatePath(PRIVATE_ABS_ROUTE_PATHS.integrationDetail, { id: String(integrationId) });
     navigate(path);
   };
+  console.log('=======================', applicationStatus);
   const isInstalled = applicationStatus === 'installed';
   return (
     <CardContainer sx={{ backgroundColor: 'neutral.white' }} onClick={openDetail}>

@@ -9,7 +9,7 @@ import PropertyHead from './components/PropertyHead';
 import Requirement from './components/Requirement';
 import Resources from './components/Resources';
 import Support from './components/Support';
-import { BackToRoute, Container, PropertyContainer, PropertyHeadContainer } from './ui';
+import { BackToRoute, Container, PropertyContainer } from './ui';
 
 type Props = Partial<Integration>;
 
@@ -40,12 +40,11 @@ const IntegrationProperty: FC<Props> = ({
         <ArrowLeft />
         {'Back to Integration'}
       </BackToRoute>
-      {/* <PropertyHeadContainer>
-      </PropertyHeadContainer> */}
       <PropertyHead
         applicationIcon={String(applicationIcon)}
         applicationName={String(applicationName)}
         applicationDescription={String(applicationDescription)}
+        applicationStatus={String(applicationStatus)}
       />
       <Box padding="31px 24px">
         <Divider />
