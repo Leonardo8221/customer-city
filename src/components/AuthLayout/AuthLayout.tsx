@@ -1,14 +1,12 @@
 import { FC, ReactNode } from 'react';
 import { Grid, Typography, Box, Link as MuiLink, useMediaQuery, useTheme } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import './AuthLayout.css';
 
 import { PUBLIC_ABS_ROUTE_PATHS } from 'core/constants';
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
 import { ReactComponent as WhiteLogo } from 'assets/icons/whiteLogo.svg';
-import { ReactComponent as CheckWhiteIcon } from 'assets/icons/checkWhite.svg';
 import {
   Container,
   ContentContainer,
@@ -16,23 +14,10 @@ import {
   ContentHeader,
   BackButton,
   CenteredContainer,
-  Divider,
-  RollItem,
   GridContainer,
   HeaderLeftContent,
   VerticalDivider,
 } from './ui';
-
-const features = [
-  'Analytics',
-  'Drag-and-drop editor',
-  'SEO recommendations',
-  'Programmable automation',
-  'Knowledge base',
-  'Marketing automation',
-  'Lead generation',
-  'Advanced CRM',
-];
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -95,7 +80,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
             <CenteredContainer flex="1">
               {smallDevice && (
                 <Box marginBottom={5}>
-                  <WhiteLogo width={248} height={40} />
+                  <WhiteLogo />
                 </Box>
               )}
 
@@ -120,37 +105,21 @@ const AuthLayout: FC<AuthLayoutProps> = ({
             <ContentContainer>
               <ContentHeader>
                 <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.white' }}>
-                  Unified Revenue Operations Platform. The Future of Sales Technology for B2B SaaS Companies
+                  The #1 RevOps CRM. The Future of Sales Technology for B2B SaaS Companies
                 </Typography>
-
-                <Divider />
               </ContentHeader>
 
-              <CenteredContainer flex="1" style={{ marginTop: '-8rem' }}>
-                <WhiteLogo width={248} height={40} />
-
-                <CenteredContainer marginTop={5}>
-                  <Slider
-                    vertical
-                    autoplay
-                    infinite
-                    slidesToShow={5}
-                    slidesToScroll={1}
-                    className="cc_carousel-container"
-                    arrows={false}
-                    dots={false}
-                  >
-                    {features.map((feat) => {
-                      return (
-                        <RollItem key={feat}>
-                          <CheckWhiteIcon />
-                          <Typography variant="p14">{feat}</Typography>
-                        </RollItem>
-                      );
-                    })}
-                  </Slider>
-                </CenteredContainer>
-              </CenteredContainer>
+              <ContentContainer marginTop={9}>
+                <WhiteLogo />
+                <Typography
+                  variant="p12"
+                  component="p"
+                  sx={{ color: 'primary.subtone2', width: '254px', textAlign: 'center', marginTop: '4px' }}
+                >
+                  Unified Revenue Operations Platform. <br />
+                  The Future of Sales Technology for B2B SaaS Companies
+                </Typography>
+              </ContentContainer>
             </ContentContainer>
           </Grid>
         )}
