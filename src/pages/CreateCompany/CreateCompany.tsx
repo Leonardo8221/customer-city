@@ -4,69 +4,69 @@ import { useLocation } from 'react-router-dom';
 import omitBy from 'lodash.omitby';
 
 import { Form, Input, LoadingButton } from 'components/ui';
-import { useCompany } from 'store/company/hooks';
-import { Company } from 'store/company/types';
+import { useTenant } from 'store/tenant/hooks';
+import { Tenant } from 'store/tenant/types';
 
-interface CompanyValues {
-  companyName: string;
-  companyAddress?: string;
-  companyBillingAddress?: string;
+interface TenantValues {
+  tenantName: string;
+  tenantAddress?: string;
+  tenantBillingAddress?: string;
   ownerName: string;
   ownerEmail: string;
 }
 
-const initialCompany = {
-  companyName: '',
-  companyAddress: '',
-  companyBillingAddress: '',
+const initialTenant = {
+  tenantName: '',
+  tenantAddress: '',
+  tenantBillingAddress: '',
   ownerName: '',
   ownerEmail: '',
 };
 
-const CreateCompany: FC = () => {
+const CreateTenant: FC = () => {
   const location = useLocation();
-  const state = location.state as Company | null;
-  const [company, setCompany] = useState<CompanyValues>({
-    ...initialCompany,
+  const state = location.state as Tenant | null;
+  const [tenant, setTenant] = useState<TenantValues>({
+    ...initialTenant,
     ...omitBy(state ?? {}, (value) => !value),
   });
-  const { loading, error, success, createCompany, updateCompany } = useCompany();
+  const { loading, error, success, createTenant, updateTenant } = useTenant();
 
   useEffect(() => {
-    if (success && !state) setCompany(initialCompany);
+    if (success && !state) setTenant(initialTenant);
   }, [state, success]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCompany((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
+    setTenant((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
   };
 
   const onSubmit = (event: MouseEvent) => {
     event.preventDefault();
 
-    if (!company.companyName || !company.ownerName || !company.ownerEmail) return;
+    if (!tenant.tenantName || !tenant.ownerName || !tenant.ownerEmail) return;
 
     if (!state) {
-      const data: Partial<Company> = {
-        companyName: company.companyName,
-        ownerName: company.ownerName,
-        ownerEmail: company.ownerEmail,
+      const data: Partial<Tenant> = {
+        tenantName: tenant.tenantName,
+        ownerName: tenant.ownerName,
+        ownerEmail: tenant.ownerEmail,
       };
-      if (company.companyAddress) data.companyAddress = company.companyAddress;
-      if (company.companyBillingAddress) data.companyBillingAddress = company.companyBillingAddress;
+      if (tenant.tenantAddress) data.tenantAddress = tenant.tenantAddress;
+      if (tenant.tenantBillingAddress) data.tenantBillingAddress = tenant.tenantBillingAddress;
 
-      createCompany(data);
+      createTenant(data);
       return;
     }
 
-    const data: Partial<Company> = {};
-    if (company.companyName !== state.companyName) data.companyName = company.companyName;
-    if (company.companyAddress !== state.companyAddress) data.companyAddress = company.companyAddress;
-    if (company.companyBillingAddress !== state.companyBillingAddress)
-      data.companyBillingAddress = company.companyBillingAddress;
-    if (company.ownerName !== state.ownerName) data.ownerName = company.ownerName;
-    if (company.ownerEmail !== state.ownerEmail) data.ownerEmail = company.ownerEmail;
+    const data: Partial<Tenant> = {};
+    if (tenant.tenantName !== state.tenantName) data.tenantName = tenant.tenantName;
+    if (tenant.tenantAddress !== state.tenantAddress) data.tenantAddress = tenant.tenantAddress;
+    if (tenant.tenantBillingAddress !== state.tenantBillingAddress)
+      data.tenantBillingAddress = tenant.tenantBillingAddress;
+    if (tenant.ownerName !== state.ownerName) data.ownerName = tenant.ownerName;
+    if (tenant.ownerEmail !== state.ownerEmail) data.ownerEmail = tenant.ownerEmail;
 
-    updateCompany({ companyId: state.companyId, data });
+    updateTenant({ tenantId: state.tenantId, data });
   };
 
   return (
@@ -75,34 +75,34 @@ const CreateCompany: FC = () => {
         <Grid item xs={12} md={6}>
           <Form noValidate style={{ minHeight: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
             <Input
-              id="companyName"
-              name="companyName"
+              id="tenantName"
+              name="tenantName"
               type="text"
               label="Company Name*"
               variant="standard"
-              value={company.companyName}
+              value={tenant.tenantName}
               onChange={onChange}
               fullWidth
             />
 
             <Input
-              id="companyAddress"
-              name="companyAddress"
+              id="tenantAddress"
+              name="tenantAddress"
               type="text"
               label="Company Address"
               variant="standard"
-              value={company.companyAddress}
+              value={tenant.tenantAddress}
               onChange={onChange}
               fullWidth
             />
 
             <Input
-              id="companyBillingAddress"
-              name="companyBillingAddress"
+              id="tenantBillingAddress"
+              name="tenantBillingAddress"
               type="text"
               label="Billing Address"
               variant="standard"
-              value={company.companyBillingAddress}
+              value={tenant.tenantBillingAddress}
               onChange={onChange}
               fullWidth
             />
@@ -113,7 +113,7 @@ const CreateCompany: FC = () => {
               type="text"
               label="Account Owner*"
               variant="standard"
-              value={company.ownerName}
+              value={tenant.ownerName}
               onChange={onChange}
               fullWidth
             />
@@ -124,7 +124,7 @@ const CreateCompany: FC = () => {
               type="email"
               label="E-mail address*"
               variant="standard"
-              value={company.ownerEmail}
+              value={tenant.ownerEmail}
               onChange={onChange}
               fullWidth
             />
@@ -136,7 +136,7 @@ const CreateCompany: FC = () => {
               type="submit"
               sx={{ marginTop: 4, alignSelf: 'flex-end' }}
             >
-              {state ? 'Update company' : 'Add & Send e-mail'}
+              {state ? 'Update tenant' : 'Add & Send e-mail'}
             </LoadingButton>
 
             {error && (
@@ -155,4 +155,4 @@ const CreateCompany: FC = () => {
   );
 };
 
-export default CreateCompany;
+export default CreateTenant;
