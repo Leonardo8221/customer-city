@@ -42,11 +42,10 @@ const IntegrationProperty: FC<Props> = ({
         {'Back to Integration'}
       </BackToRoute>
       <PropertyHead
-        integrationId={Number(integrationId)}
+        integrationId={String(integrationId)}
         applicationIcon={String(applicationIcon)}
         applicationName={String(applicationName)}
         applicationDescription={String(applicationDescription)}
-        applicationStatus={String(applicationStatus)}
       />
       <Box padding="31px 24px">
         <Divider />

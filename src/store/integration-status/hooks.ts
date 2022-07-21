@@ -5,7 +5,7 @@ import { setError, setSuccess } from './actions';
 import { IntegrationReturnHook } from './types';
 
 export const useIntegration = (): IntegrationReturnHook => {
-  const integrationState = useSelector((state: RootState) => state.integration, shallowEqual);
+  const integrationState = useSelector((state: RootState) => state.integrationStatus, shallowEqual);
 
   return {
     ...integrationState,

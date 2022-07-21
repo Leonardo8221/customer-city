@@ -1,12 +1,12 @@
+import { DocumentData, QueryDocumentSnapshot } from '@firebase/firestore-types';
+import { GenericActions } from 'firebase-redux/generic';
+import getQuery from 'firebase-redux/getQuery';
 import { useEffect, useRef } from 'react';
-import { QueryDocumentSnapshot, DocumentData } from '@firebase/firestore-types';
-import { GenericActions } from 'slices/generic';
-import { CollectionOptions, DocumentOptions } from '../../firebase/queryOptions';
-import getFirestoreRef from '../../firebase/getFirestoreRef';
+import { useDispatch } from 'store';
+import getFirestoreRef from '../getFirestoreRef';
+import { CollectionOptions, DocumentOptions } from '../queryOptions';
 import collectionApi from './collectionApi';
 import docApi from './docApi';
-import getQuery from '../../firebase/getQuery';
-import { useDispatch } from '../../store';
 
 export interface ListenerState {
   name?: string;

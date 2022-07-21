@@ -1,28 +1,28 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
-import { createGenericSlice, GenericState } from '../../slices/generic';
+import { createGenericSlice, GenericState } from '../../firebase-redux/generic';
 import { setError, setSuccess } from './actions';
-import { Integration } from './types';
+import { IntegrationStatus } from './types';
 
-export const initialState: GenericState<Integration> = {
+export const initialState: GenericState<IntegrationStatus> = {
   error: false,
   loading: false,
   success: false,
-  data: <Integration[]>[],
+  data: <IntegrationStatus>{},
 };
 
 const slice = createGenericSlice({
   name: 'integration-apps',
-  initialState: initialState as GenericState<Integration>,
+  initialState: initialState,
   reducers: {},
-  extraReducers: (builder: ActionReducerMapBuilder<GenericState<Integration>>): void => {
+  extraReducers: (builder: ActionReducerMapBuilder<GenericState<IntegrationStatus>>): void => {
     builder.addCase(setError, (state, { payload }) => {
-      console.log('FIRESTORE ERROR STATE', payload);
       state.error = true;
+      state.success = false;
     });
     builder.addCase(setSuccess, (state, { payload }) => {
-      console.log('FIRESTORE SUCCESS STATE', payload);
+      state.data = payload.applicationStatus;
       state.success = true;
-      state.data = payload;
+      state.error = false;
     });
   },
 });

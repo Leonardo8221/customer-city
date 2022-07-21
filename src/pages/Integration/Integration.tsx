@@ -1,35 +1,19 @@
-import { Box, Grid, Typography, Tabs, Button } from '@mui/material';
+import { Box, Button, Grid, Tabs, Typography } from '@mui/material';
+import { ReactComponent as FilterIcon } from 'assets/icons/filterBlue.svg';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { FC, useEffect, useState } from 'react';
-import { Container, IntegrationsSection, TabItem } from './ui';
-import { IntegrationCard } from './components/IntegrationCard';
 import { useIntegration } from 'store/integration/hooks';
-import { ReactComponent as FilterIcon } from 'assets/icons/filterBlue.svg';
-import { useSelector } from 'store';
-import { useFirestore } from 'hooks/useFirestore';
-import * as actions from 'store/integration-apps/actions';
-import { Integration } from 'store/integration-apps/types';
+import { IntegrationCard } from './components/IntegrationCard';
+import { Container, IntegrationsSection, TabItem } from './ui';
 
 const IntegrationPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const { loading, error, integrations, getIntegrations } = useIntegration();
 
-  const { integrationApps, loadingIntegrationApps, errorIntegrationApps } = useSelector((state) => ({
-    integrationApps: state.integrationApps.data,
-    loadingIntegrationApps: state.integrationApps.loading,
-    errorIntegrationApps: state.integrationApps.error,
-  }));
-
-  const firestore = useFirestore<Integration[]>('IntegrationApps');
+  const { integrations, getIntegrations } = useIntegration();
 
   useEffect(() => {
     getIntegrations();
-    if (integrations.length > 0) {
-      console.log('********************************************', integrations);
-    }
-    // this will update the store on every change
-    firestore.collection(actions, { listen: true });
   }, []);
 
   return (

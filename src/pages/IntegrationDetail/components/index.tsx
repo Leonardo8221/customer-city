@@ -1,2 +1,2 @@
-export { default as IntegrationDetail } from './IntegrationDetail';
+export { default as IntegrationOverview } from './IntegrationOverview';
 export { default as IntegrationProperty } from './IntegrationProperty';

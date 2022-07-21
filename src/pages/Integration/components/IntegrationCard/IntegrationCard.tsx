@@ -5,6 +5,7 @@ import { PrimaryButton } from 'components/ui';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { FC } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
+import { APPLICATION_STATUS } from 'store/integration-status/types';
 import { Integration } from 'store/integration/types';
 import { CardContainer } from './ui';
 
@@ -24,7 +25,7 @@ const IntegrationCard: FC<IntegrationCardProps> = ({
     const path = generatePath(PRIVATE_ABS_ROUTE_PATHS.integrationDetail, { id: String(integrationId) });
     navigate(path);
   };
-  const isInstalled = applicationStatus === 'installed';
+  const isInstalled = applicationStatus === APPLICATION_STATUS.INSTALLED;
   return (
     <CardContainer sx={{ backgroundColor: 'neutral.white' }} onClick={openDetail}>
       <Box className="card-header">

@@ -20,6 +20,7 @@ import { Deal } from 'pages/Deal';
 import { HyperFunnel } from 'pages/HyperFunnel';
 import { Integration } from 'pages/Integration';
 import { IntegrationDetail } from 'pages/IntegrationDetail';
+import { IntegrationRedirect } from 'pages/IntegrationRedirect';
 
 interface AppRoute {
   path?: string;
@@ -45,6 +46,7 @@ export const dashboardRoutes: AppRoute[] = [
       { path: PRIVATE_ROUTE_PATHS.controlTower, element: <ControlTower /> },
       { path: PRIVATE_ROUTE_PATHS.integration, element: <Integration /> },
       { path: PRIVATE_ROUTE_PATHS.integrationDetail, element: <IntegrationDetail /> },
+      { path: PRIVATE_ROUTE_PATHS.integrationRedirect, element: <IntegrationRedirect /> },
       {
         path: PRIVATE_ROUTE_PATHS.lightSquare,
         element: <DummyPage />,

@@ -1,6 +1,15 @@
 import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getIntegrations, getIntegration } from './actions';
+import {
+  setError,
+  setSuccess,
+  getIntegrations,
+  getIntegration,
+  uninstall,
+  setIntegrationStatus,
+  authorize,
+  authCallback,
+} from './actions';
 import { IntegrationState } from './types';
 
 export const initialState: IntegrationState = {
@@ -9,6 +18,8 @@ export const initialState: IntegrationState = {
   success: false,
   integrations: [],
   integration: null,
+  integrationStatus: 'not-installed',
+  authorizeRedirectUrl: '',
 };
 
 const integrationReducer = createSlice({
@@ -29,34 +40,48 @@ const integrationReducer = createSlice({
       state.integrations = payload;
     });
 
-    builder.addCase(getIntegrations.pending, (state) => {
-      state.loading = true;
-      state.error = false;
-      state.success = false;
-    });
-
-    builder.addCase(getIntegrations.rejected, (state, { error }) => {
-      state.loading = false;
-      state.error = error?.message ?? true;
-      state.success = false;
-    });
-
     builder.addCase(getIntegration.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.integration = payload;
+      state.integrationStatus = payload.applicationStatus;
     });
 
-    builder.addMatcher(isAnyOf(getIntegrations.pending, getIntegration.pending), (state) => {
+    builder.addCase(setIntegrationStatus.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.integrationStatus = payload;
+    });
+
+    builder.addCase(authorize.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.success = true;
+      state.authorizeRedirectUrl = payload;
+    });
+
+    builder.addCase(authCallback.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+
+    builder.addCase(uninstall.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+
+    builder.addMatcher(isAnyOf(getIntegrations.pending, getIntegration.pending, uninstall.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.success = false;
     });
 
-    builder.addMatcher(isAnyOf(getIntegrations.rejected, getIntegration.rejected), (state, { error }) => {
-      state.loading = false;
-      state.error = error?.message ?? true;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getIntegrations.rejected, getIntegration.rejected, uninstall.rejected),
+      (state, { error }) => {
+        state.loading = false;
+        state.error = error?.message ?? true;
+        state.success = false;
+      },
+    );
   },
 });
 

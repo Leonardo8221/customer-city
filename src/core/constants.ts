@@ -34,6 +34,8 @@ export const PRIVATE_ROUTE_PATHS = {
   controlTower: 'control-tower',
   integration: 'integration',
   integrationDetail: 'integration/:id',
+  integrationRedirect: 'integration-redirect/:id',
+
   lightSquare: 'light-square',
   dashboard: 'dashboard',
   goalsAndMilestones: 'goals-milestones',
@@ -61,6 +63,7 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
   controlTower: '/d/control-tower',
   integration: '/d/integration',
   integrationDetail: '/d/integration/:id',
+  integrationRedirect: '/d/integration-redirect/:id',
   lightSquare: '/d/light-square',
   dashboard: '/d/light-square/dashboard',
   goalsMilestones: '/d/light-square/goals-milestones',
@@ -142,3 +145,5 @@ export const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
 }; // from Firebase Console
+
+export const firestoreBasePath = 'development/main';

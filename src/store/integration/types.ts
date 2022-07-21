@@ -22,11 +22,17 @@ export interface IntegrationState {
   success: boolean | string;
   integrations: Integration[];
   integration: Integration | null;
+  authorizeRedirectUrl: string;
+  integrationStatus: string;
 }
 
 export interface IntegrationReturnHook extends IntegrationState {
   setError: (error: string | boolean) => void;
   setSuccess: (success: string | boolean) => void;
   getIntegrations: () => void;
-  getIntegration: (id: number) => void;
+  getIntegration: (id: string) => void;
+  setIntegrationStatus: (newStatus: string) => void;
+  authorize: (id: string) => void;
+  authCallback: (payload: string) => void;
+  uninstall: (id: string) => void;
 }

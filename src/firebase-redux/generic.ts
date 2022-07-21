@@ -11,7 +11,8 @@ export interface GenericState<T> {
   loading: boolean;
   error: boolean | string;
   success: boolean | string;
-  [key: string]: T | T[] | any;
+  data: T | any;
+  [key: string]: T | any;
 }
 
 export const createGenericSlice = <T, Reducers extends SliceCaseReducers<GenericState<T>>>({
@@ -34,6 +35,6 @@ export const createGenericSlice = <T, Reducers extends SliceCaseReducers<Generic
 };
 
 export type GenericActions<T> = {
-  setSuccess: ActionCreatorWithPayload<T | boolean, string>;
+  setSuccess: ActionCreatorWithPayload<T | any, string>;
   setError: ActionCreatorWithPayload<string | boolean, string>;
 };

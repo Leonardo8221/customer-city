@@ -1,7 +1,7 @@
 import { DocumentData, Query, QueryDocumentSnapshot } from '@firebase/firestore-types';
 import { MutableRefObject } from 'react';
-import { CollectionOptions } from '../../firebase/queryOptions';
-import { GenericActions } from '../../slices/generic';
+import { CollectionOptions } from '../queryOptions';
+import { GenericActions } from '../generic';
 import { ListenerState } from './index';
 
 type AnyFunc = (...args: any[]) => any;

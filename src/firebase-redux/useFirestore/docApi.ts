@@ -1,8 +1,8 @@
 import { DocumentData } from '@firebase/firestore-types';
 import { MutableRefObject } from 'react';
-import { GenericActions } from 'slices/generic';
-import getFirestoreRef from '../../firebase/getFirestoreRef';
-import { DocumentOptions } from '../../firebase/queryOptions';
+import { GenericActions } from 'firebase-redux/generic';
+import getFirestoreRef from '../getFirestoreRef';
+import { DocumentOptions } from '../queryOptions';
 import { ListenerState } from './index';
 
 type AnyFunc = (...args: any[]) => any;
@@ -16,6 +16,7 @@ const docApi = <T>(
 ) => {
   const docRef = getFirestoreRef(path).doc(id);
 
+  console.log('FIRESTORE PATH IS:', docRef.path);
   // (dispatch as Function)(actions?.loading());
   if (options?.listen) {
     const listener = docRef.onSnapshot((doc) => {
@@ -23,12 +24,10 @@ const docApi = <T>(
         dispatch(actions.setError('Document does not exists.'));
         return;
       }
-      console.log('firestore payload', { id: doc.id, ...doc.data() });
       dispatch(actions.setSuccess({ id: doc.id, ...doc.data() } as unknown as T));
     });
     docListenersRef.current.push({ name: options.listenerName, unsubscribe: listener });
   } else {
-    console.log(docRef.path);
     docRef
       .get()
       .then((doc) => {
