@@ -31,7 +31,7 @@ const columns: GridColDef[] = [
     field: 'contactName',
     headerName: 'Name',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => `${params.row.contactFirstName} ${params.row.contactLastName}`,
+    valueGetter: (params: GridValueGetterParams) => `${params.row.firstName} ${params.row.lastName}`,
   },
   {
     field: 'contactAssociate',
@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
     field: 'contactUpdatedAt',
     headerName: 'Last Activity',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.contactUpdatedAt), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.createdDate), 'PP'),
   },
 ];
 

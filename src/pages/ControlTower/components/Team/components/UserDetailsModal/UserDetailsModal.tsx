@@ -117,7 +117,7 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               id="workPhoneNumber"
               name="workPhoneNumber"
               label="Work phone number"
-              value={user?.profile.workPhoneNumber ?? ''}
+              value={user?.profile?.workPhoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
