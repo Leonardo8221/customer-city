@@ -33,25 +33,10 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: 'dealType',
-    headerName: 'Type',
-    flex: 1,
-  },
-  {
-    field: 'dealRevenue',
-    headerName: 'Revenue',
-    flex: 1,
-  },
-  {
-    field: 'dealProduct',
-    headerName: 'Product',
-    flex: 1,
-  },
-  {
-    field: 'dealUpdatedAt',
+    field: 'createdDate',
     headerName: 'Last Activity',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.dealUpdatedAt), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.createdDate), 'PP'),
   },
 ];
 

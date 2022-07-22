@@ -110,15 +110,15 @@ const DealProperty: FC<Props> = ({ dealId }) => {
       <Divider />
       <PropertyContainer>
         <TitleContainer label="Stage">
-          <CustomSelect<string>
+          {/* <CustomSelect<string>
             value={deal?.dealStage ?? '-'}
             options={DEAL_STAGE_OPTIONS}
             onSelect={async (value) => handleUpdate({ dealStage: value })}
           />
-          <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} />
+          <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} /> */}
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
-          <EditableDropDown
+          {/* <EditableDropDown
             id="dealAccountName"
             name="dealAccountName"
             icon="account"
@@ -127,48 +127,48 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             value={{ label: deal?.dealAccount?.accountName ?? '-', value: deal?.dealAccountId ?? 0 }}
             fullWidth
             onSave={async (value) => handleUpdate({ dealAccountId: value })}
-          />
+          /> */}
           <EditableInput
-            id="dealDescription"
-            name="dealDescription"
+            id="description"
+            name="description"
             label="Description"
-            value={deal?.dealDescription ?? ''}
+            value={deal?.description ?? ''}
             fullWidth
             isText
-            onSave={async (value) => handleUpdate({ dealDescription: value })}
+            onSave={async (value) => handleUpdate({ description: value })}
           />
           <TitleContainer label="Amount">
             <Typography variant="p14" sx={{ fontFamily: 600 }}>
-              {deal?.dealAmount ?? '-'}
+              {deal?.totalAmount ?? '-'}
             </Typography>
           </TitleContainer>
-          <EditableInput
-            id="dealCampaignName"
-            name="dealCampaignName"
+          {/* <EditableInput
+            id="campaignId"
+            name="campaignId"
             label="Compaign Name"
-            value={deal?.dealCampaignName ?? ''}
+            value={deal?.campaignId ?? ''}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealCampaignName: value })}
-          />
+            onSave={async (value) => handleUpdate({ campaignId: value })}
+          /> */}
 
           <EditableDate
-            id="dealCloseDate"
-            name="dealCloseDate"
+            id="endDate"
+            name="endDate"
             label="Close Date"
-            value={deal?.dealCloseDate}
+            value={deal?.endDate}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealCloseDate: value })}
+            onSave={async (value) => handleUpdate({ endDate: value })}
           />
 
           <TitleContainer label="Contact Name" icon="user">
-            <Typography variant="p14">{deal?.dealContactName ?? '-'}</Typography>
+            <Typography variant="p14">{deal?.contactId ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Forecast category">
-            <Typography variant="p14">{deal?.dealForecastCategory ?? '-'}</Typography>
+            {/* <Typography variant="p14">{deal?.dealForecastCategory ?? '-'}</Typography> */}
           </TitleContainer>
           <TitleContainer label="Deal Type">
-            <Typography variant="p14">{deal?.dealType ?? '-'}</Typography>
+            {/* <Typography variant="p14">{deal?.dealType ?? '-'}</Typography> */}
           </TitleContainer>
 
           <EditableDropDown
@@ -177,34 +177,35 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             icon="contact"
             options={userSuggestions}
             label="Owner"
-            value={{ label: deal?.dealOwner?.userName ?? '-', value: deal?.dealOwnerId ?? 0 }}
+            value={{ label: '-', value: 0 }}
+            // value={{ label: deal?.dealOwner?.userName ?? '-', value: deal?.dealOwnerId ?? 0 }}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealOwnerId: value })}
+            onSave={async (value) => handleUpdate({ createdBy: value })}
           />
 
           <TitleContainer label="Pipeline">
-            <Typography variant="p14">{deal?.dealPipelineName ?? '-'}</Typography>
+            {/* <Typography variant="p14">{deal?.dealPipelineName ?? '-'}</Typography> */}
           </TitleContainer>
           <TitleContainer label="Touchpoint">
-            <Typography variant="p14">{deal?.dealTouchPoint ?? '-'}</Typography>
+            {/* <Typography variant="p14">{deal?.dealTouchPoint ?? '-'}</Typography> */}
           </TitleContainer>
         </StyledDropDownPanel>
 
         <StyledDropDownPanel title={'System Information'}>
           <TitleContainer label="Created Date">
             <Typography variant="p14">
-              {deal?.dealUpdatedAt ? format(new Date(deal?.dealCreatedAt), 'MM/dd/yyyy') : '-'}
+              {deal?.createdDate ? format(new Date(deal?.createdDate), 'MM/dd/yyyy') : '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated on">
             <Typography variant="p14">
-              {deal?.dealUpdatedAt ? format(new Date(deal?.dealUpdatedAt), 'MM/dd/yyyy, hh:mm aa') : '-'}
+              {/* {deal?.dealUpdatedAt ? format(new Date(deal?.dealUpdatedAt), 'MM/dd/yyyy, hh:mm aa') : '-'} */}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated by" icon="user">
-            <Typography variant="p14">{deal?.dealModifier?.userName ?? '-'}</Typography>
+            {/* <Typography variant="p14">{deal?.dealModifier?.userName ?? '-'}</Typography> */}
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>

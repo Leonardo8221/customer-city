@@ -16,7 +16,7 @@ import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 
 interface FormValues {
   dealName: string;
-  dealAccountName: string;
+  // dealAccountName: string;
 }
 
 const validationSchema = yup.object({
@@ -62,7 +62,7 @@ const DealModal: FC<DealModalProps> = ({ open, deal, toggleOpen }) => {
 
   const initialValues: FormValues = {
     dealName: deal?.dealName ?? '',
-    dealAccountName: deal?.dealAccountName ?? '',
+    // dealAccountName: deal?.dealAccountName ?? '',
   };
 
   return (
@@ -102,7 +102,7 @@ const DealModal: FC<DealModalProps> = ({ open, deal, toggleOpen }) => {
                     error={touched.dealName && !!errors.dealName}
                   />
 
-                  <CustomDropdown<string>
+                  {/* <CustomDropdown<string>
                     id="dealAccountName"
                     label="Account Type"
                     placeholder="Select the Account type"
@@ -114,7 +114,7 @@ const DealModal: FC<DealModalProps> = ({ open, deal, toggleOpen }) => {
                       onBlur: handleBlur,
                     }}
                     PaperComponent={Paper}
-                  />
+                  /> */}
                 </ModalMain>
               </form>
 
