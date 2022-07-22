@@ -33,23 +33,19 @@ const HyperFunnel: FC = () => {
       </Typography>
 
       <HyperFunnelContainer>
-        {(isAdmin || isSuperAdmin) && (
-          <>
-            <Typography variant="h3" component="p" sx={{ color: 'neutral.main' }}>
-              What Pipelines & Funnels need for?
-            </Typography>
-            <BlocksIcon />
-            <Typography variant="p14" component="p" sx={{ color: 'neutral.main', width: 560, textAlign: 'center' }}>
-              A sales pipeline represents the stages a consumer goes through to become a customer. The sales funnel
-              represents the number of prospects who make it through those stages. A sales pipeline looks at the
-              different steps in the sales process, from gaining the lead to closing the sale.
-            </Typography>
-            <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
-              You have not added any products yet
-            </Typography>
-            <PrimaryButton onClick={toggleModal}>Create a Pipeline</PrimaryButton>
-          </>
-        )}
+        <Typography variant="h3" component="p" sx={{ color: 'neutral.main' }}>
+          What Pipelines & Funnels need for?
+        </Typography>
+        <BlocksIcon />
+        <Typography variant="p14" component="p" sx={{ color: 'neutral.main', width: 560, textAlign: 'center' }}>
+          A sales pipeline represents the stages a consumer goes through to become a customer. The sales funnel
+          represents the number of prospects who make it through those stages. A sales pipeline looks at the different
+          steps in the sales process, from gaining the lead to closing the sale.
+        </Typography>
+        <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.n400' }}>
+          You have not added any products yet
+        </Typography>
+        <PrimaryButton onClick={toggleModal}>Create a Pipeline</PrimaryButton>
       </HyperFunnelContainer>
 
       <HyperFunnelModal open={modalOpen} toggleOpen={toggleModal} />
