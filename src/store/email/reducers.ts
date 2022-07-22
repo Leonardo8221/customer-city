@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
 
-import { setError, setSuccess, getEmails, getEmail, deleteEmail } from './actions';
+import { setError, setSuccess, getEmails, getEmail, deleteEmail, getConnectedAccount } from './actions';
 import { EmailState } from './types';
 
 export const initialState: EmailState = {
@@ -9,6 +9,7 @@ export const initialState: EmailState = {
   success: false,
   emails: [],
   email: null,
+  connectedAccount: '',
 };
 
 const emailReducer = createSlice({
@@ -37,6 +38,11 @@ const emailReducer = createSlice({
     builder.addCase(deleteEmail.fulfilled, (state) => {
       state.loading = false;
       state.success = 'Email deleted successfully!';
+    });
+
+    builder.addCase(getConnectedAccount.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.connectedAccount = payload;
     });
 
     builder.addMatcher(isAnyOf(getEmails.pending, getEmail.pending, deleteEmail.pending), (state) => {

@@ -8,3 +8,5 @@ export const getEmails = (): Promise<Email[]> => apiCall({ method: 'get', url: '
 export const deleteEmail = (id: number): Promise<null> => apiCall({ method: 'delete', url: `/email/${id}` });
 
 export const getEmail = (id: number): Promise<Email> => apiCall({ method: 'get', url: `/email/${id}` });
+
+export const getGmailAccount = (): Promise<string> => apiCall({ method: 'get', url: `/email/gmail/account` });

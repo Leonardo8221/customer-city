@@ -11,6 +11,7 @@ export interface EmailState {
   success: boolean | string;
   emails: Email[];
   email: Email | null;
+  connectedAccount: string;
 }
 
 export interface EmailReturnHook extends EmailState {
@@ -20,4 +21,5 @@ export interface EmailReturnHook extends EmailState {
   getEmails: () => void;
   getEmail: (id: number) => void;
   deleteEmail: (id: number) => void;
+  getConnectedAccount: () => void;
 }
