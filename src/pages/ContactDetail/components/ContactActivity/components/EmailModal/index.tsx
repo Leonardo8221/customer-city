@@ -69,7 +69,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
 
   const emailToSuggestions = useMemo(() => {
     return contacts.reduce((acc, val) => {
-      acc.push({ label: val.contactPrimaryEmail, value: val.contactPrimaryEmail });
+      acc.push({ label: val.contactInfo?.email ?? '', value: val.contactInfo?.email ?? '' });
       return acc;
     }, [] as OptionValue<string>[]);
   }, [contacts]);

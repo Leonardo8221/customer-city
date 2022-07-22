@@ -8,7 +8,7 @@ import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { SecondaryRedLoadingButton } from 'components/ui';
 import { EditableInput } from 'components/Editable';
 import { CustomSelect } from 'components/CustomSelect';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { USER_ROLE_OPTIONS } from 'core/constants';
 import { userSelector, useUser } from 'store/user/hooks';
 import { RootState } from 'store/types';
@@ -83,13 +83,13 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
               Role
             </Typography>
 
-            <CustomSelect<UserRole>
-              value={user?.userRole as UserRole}
+            <CustomSelect<UserType>
+              value={user?.userType as UserType}
               options={USER_ROLE_OPTIONS}
               onSelect={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { userRole: value });
-                updateUser({ userId: user.userId, user: { userRole: value } });
+                await updateUserApi(user.userId, { userType: value });
+                updateUser({ userId: user.userId, user: { userType: value } });
               }}
             />
           </RoleSelectContainer>
@@ -114,32 +114,32 @@ const UserDetailsModal: FC<UserDetailsModalProps> = ({ open, toggleOpen, userId 
 
           <Box marginTop={2}>
             <EditableInput
-              id="workPhoneNumber"
-              name="workPhoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
               label="Work phone number"
-              value={user?.profile.workPhoneNumber ?? ''}
+              value={user?.contactInfo?.phoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { workPhoneNumber: value });
-                updateUser({ userId: user.userId, profile: { workPhoneNumber: value } });
+                await updateUserApi(user.userId, { phoneNumber: value });
+                updateUser({ userId: user.userId, contactInfo: { phoneNumber: value } });
               }}
             />
           </Box>
 
           <Box marginTop={2}>
             <EditableInput
-              id="additionalPhoneNumber"
-              name="additionalPhoneNumber"
+              id="mobileNumber"
+              name="mobileNumber"
               label="Additional number"
-              value={user?.profile.additionalPhoneNumber ?? ''}
+              value={user?.contactInfo.mobileNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { additionalPhoneNumber: value });
-                updateUser({ userId: user.userId, profile: { additionalPhoneNumber: value } });
+                await updateUserApi(user.userId, { mobileNumber: value });
+                updateUser({ userId: user.userId, contactInfo: { mobileNumber: value } });
               }}
             />
           </Box>

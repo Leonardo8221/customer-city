@@ -12,25 +12,19 @@ export const DEAL_STAGE_OPTIONS = [
 export interface Deal {
   dealId: number;
   dealName: string;
-  dealAccountId: number;
-  dealAccountName: string;
-  dealDescription: string;
-  dealAmount: number;
-  dealCampaignName: string;
-  dealCloseDate: Date;
-  dealContactName: string;
-  dealForecastCategory: string;
-  dealStage: string;
-  dealType: string;
-  dealOwnerId: number;
-  dealOwner: User;
-  dealPipelineName: string;
-  dealTouchPoint: string;
-  dealCreatedAt: Date;
-  dealUpdatedAt: Date;
-  dealModifiedBy: number;
-  dealModifier: User;
-  dealAccount: Account;
+  description: string;
+  pipelineId: number;
+  tenantId: number;
+  tenantUserId: number;
+  accountId: number;
+  contactId: number;
+  campaignId: number;
+  createdBy: number;
+  totalAmount: number;
+  currency: string;
+  startDate: Date;
+  endDate: Date;
+  createdDate: Date;
 }
 
 export interface DealState {

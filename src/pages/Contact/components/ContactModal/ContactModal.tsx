@@ -14,29 +14,23 @@ import { Contact } from 'store/contact/types';
 import { useNavigate, generatePath } from 'react-router-dom';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { CustomDropdown } from 'components/CustomDropdown';
+import { ContactInformation, defaultContactInfo } from 'store/types';
 
 interface FormValues {
-  contactFirstName: string;
-  contactMiddleName: string;
-  contactLastName: string;
-  contactTitle: string;
-  contactAssociate: string;
-  contactPrimaryEmail: string;
-  contactSecondaryEmail: string;
-  contactPhoneNumber: string;
-  contactMobileNumber: string;
-  contactRole: string;
-  contactStage: string;
-  contactType: string;
-  contactStreet: string;
-  contactState: string;
-  contactCity: string;
-  contactCountry: string;
-  contactZipCode: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  title: string;
+  // contactAssociate: string;
+  // contactRole: string;
+  // contactStage: string;
+  // contactType: string;
+  contactInfo: ContactInformation;
 }
 
 const validationSchema = yup.object({
-  contactLastName: yup.string().required('Required').min(2, 'Invalid Last Name'),
+  firstName: yup.string().required('Required').min(2, 'Invalid Last Name'),
+  lastName: yup.string().required('Required').min(2, 'Invalid Last Name'),
 });
 
 interface ContactModalProps {
@@ -78,23 +72,15 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
   };
 
   const initialValues: FormValues = {
-    contactFirstName: contact?.contactFirstName ?? '',
-    contactMiddleName: contact?.contactMiddleName ?? '',
-    contactLastName: contact?.contactLastName ?? '',
-    contactTitle: contact?.contactTitle ?? '',
-    contactAssociate: contact?.contactAssociate ?? '',
-    contactRole: contact?.contactRole ?? '',
-    contactPrimaryEmail: contact?.contactPrimaryEmail ?? '',
-    contactSecondaryEmail: contact?.contactSecondaryEmail ?? '',
-    contactPhoneNumber: contact?.contactPhoneNumber ?? '',
-    contactMobileNumber: contact?.contactMobileNumber ?? '',
-    contactStage: contact?.contactStage ?? '',
-    contactType: contact?.contactType ?? '',
-    contactStreet: contact?.contactStreet ?? '',
-    contactState: contact?.contactState ?? '',
-    contactCity: contact?.contactCity ?? '',
-    contactCountry: contact?.contactCountry ?? '',
-    contactZipCode: contact?.contactZipCode ?? '',
+    firstName: contact?.firstName ?? '',
+    middleName: contact?.middleName ?? '',
+    lastName: contact?.lastName ?? '',
+    title: contact?.title ?? '',
+    // contactAssociate: contact?.contactAssociate ?? '',
+    // contactRole: contact?.contactRole ?? '',
+    // contactStage: contact?.contactStage ?? '',
+    // contactType: contact?.contactType ?? '',
+    contactInfo: contact?.contactInfo ?? defaultContactInfo,
   };
 
   return (
@@ -126,56 +112,56 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                     <Grid container spacing={3}>
                       <GridItem item xs={6}>
                         <CustomInput
-                          id="contactFirstName"
-                          name="contactFirstName"
-                          label="First name"
+                          id="firstName"
+                          name="firstName"
+                          label="First name *"
                           placeholder="Enter the First name"
                           fullWidth
-                          value={values.contactFirstName}
+                          value={values.firstName}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactFirstName && !!errors.contactFirstName}
+                          error={touched.firstName && !!errors.firstName}
                         />
 
                         <CustomInput
-                          id="contactMiddleName"
-                          name="contactMiddleName"
+                          id="middleName"
+                          name="middleName"
                           label="Middle name"
                           placeholder="Enter the Middle name"
                           fullWidth
-                          value={values.contactMiddleName}
+                          value={values.middleName}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactMiddleName && !!errors.contactMiddleName}
+                          error={touched.middleName && !!errors.middleName}
                         />
 
                         <CustomInput
-                          id="contact-last-name"
-                          name="contactLastName"
+                          id="lastName"
+                          name="lastName"
                           label="Last name *"
                           placeholder="Enter the Last name"
                           fullWidth
-                          value={values.contactLastName}
+                          value={values.lastName}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactLastName && !!errors.contactLastName}
+                          error={touched.lastName && !!errors.lastName}
                         />
 
                         <CustomInput
                           id="contact-title"
-                          name="contactTitle"
+                          name="title"
                           label="Title"
                           placeholder="Enter the title"
                           fullWidth
-                          value={values.contactTitle}
+                          value={values.title}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactTitle && !!errors.contactTitle}
+                          error={touched.title && !!errors.title}
                         />
                       </GridItem>
 
                       <GridItem item xs={6}>
-                        <CustomInput
+                        {/* <CustomInput
                           id="contactRole"
                           name="contactRole"
                           label="Role"
@@ -185,20 +171,20 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={touched.contactRole && !!errors.contactRole}
-                        />
+                        /> */}
                         <CustomInput
-                          id="contactPrimaryEmail"
-                          name="contactPrimaryEmail"
+                          id="email"
+                          name="contactInfo.email"
                           label="Primary Email"
                           placeholder="Enter the Primary Email"
                           fullWidth
-                          value={values.contactPrimaryEmail}
+                          value={values.contactInfo.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactPrimaryEmail && !!errors.contactPrimaryEmail}
+                          error={touched.contactInfo?.email && !!errors.contactInfo?.email}
                         />
 
-                        <CustomInput
+                        {/* <CustomInput
                           id="contactSecondaryEmail"
                           name="contactSecondaryEmail"
                           label="Secondary Email"
@@ -208,18 +194,18 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={touched.contactSecondaryEmail && !!errors.contactSecondaryEmail}
-                        />
+                        /> */}
 
                         <CustomInput
-                          id="contactPhoneNumber"
-                          name="contactPhoneNumber"
+                          id="phoneNumber"
+                          name="contactInfo.phoneNumber"
                           label="Phone number"
                           placeholder="Enter the Phone number"
                           fullWidth
-                          value={values.contactPhoneNumber}
+                          value={values.contactInfo.phoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactPhoneNumber && !!errors.contactPhoneNumber}
+                          error={touched.contactInfo?.phoneNumber && !!errors.contactInfo?.phoneNumber}
                         />
                       </GridItem>
                     </Grid>
@@ -227,18 +213,18 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                     <Grid container spacing={3}>
                       <GridItem item xs={6}>
                         <CustomInput
-                          id="contactMobileNumber"
-                          name="contactMobileNumber"
+                          id="mobileNumber"
+                          name="contactInfo.mobileNumber"
                           label="Mobile number"
                           placeholder="Enter the Mobile number"
                           fullWidth
-                          value={values.contactMobileNumber}
+                          value={values.contactInfo.mobileNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.contactMobileNumber && !!errors.contactMobileNumber}
+                          error={touched.contactInfo?.mobileNumber && !!errors.contactInfo?.mobileNumber}
                         />
 
-                        <CustomDropdown<string>
+                        {/* <CustomDropdown<string>
                           id="contact-associates"
                           label="Associated Account"
                           placeholder="Select Associated Account"
@@ -250,9 +236,9 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                             onBlur: handleBlur,
                           }}
                           PaperComponent={Paper}
-                        />
+                        /> */}
 
-                        <CustomDropdown<string>
+                        {/* <CustomDropdown<string>
                           id="contactStage"
                           label="Contact Stage"
                           placeholder="Select the Contact stage"
@@ -264,9 +250,9 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                             onBlur: handleBlur,
                           }}
                           PaperComponent={Paper}
-                        />
+                        /> */}
 
-                        <CustomDropdown<string>
+                        {/* <CustomDropdown<string>
                           id="contactType"
                           label="Contact Type"
                           placeholder="Select the Contact type"
@@ -278,70 +264,70 @@ const ContactModal: FC<ContactModalProps> = ({ open, contact, toggleOpen }) => {
                             onBlur: handleBlur,
                           }}
                           PaperComponent={Paper}
-                        />
+                        /> */}
                       </GridItem>
 
                       <Grid item xs={6}>
                         <InputLabel sx={{ mb: 1 }}>Address</InputLabel>
                         <AddressBox>
                           <CustomInput
-                            id="contactStreet"
-                            name="contactStreet"
+                            id="street"
+                            name="contactInfo.street"
                             label="Street"
                             placeholder="Type the Street"
                             fullWidth
-                            value={values.contactStreet}
+                            value={values.contactInfo.street}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={touched.contactStreet && !!errors.contactStreet}
+                            error={touched.contactInfo?.street && !!errors.contactInfo?.street}
                           />
                           <Grid container spacing={3}>
                             <GridItem item xs={6}>
                               <CustomInput
-                                id="contactCity"
-                                name="contactCity"
+                                id="city"
+                                name="contactInfo.city"
                                 label="City"
                                 placeholder="Type the City"
                                 fullWidth
-                                value={values.contactCity}
+                                value={values.contactInfo.city}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                error={touched.contactCity && !!errors.contactCity}
+                                error={touched.contactInfo?.city && !!errors.contactInfo?.city}
                               />
                               <CustomInput
-                                id="contactZipCode"
-                                name="contactZipCode"
+                                id="zip"
+                                name="contactInfo.zip"
                                 label="Zip code"
                                 placeholder="Type the Zip code"
                                 fullWidth
-                                value={values.contactZipCode}
+                                value={values.contactInfo.zip}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                error={touched.contactZipCode && !!errors.contactZipCode}
+                                error={touched.contactInfo?.zip && !!errors.contactInfo?.zip}
                               />
                             </GridItem>
                             <GridItem item xs={6}>
                               <CustomInput
-                                id="contactState"
-                                name="contactState"
+                                id="addressState"
+                                name="contactInfo.addressState"
                                 label="State/Province"
                                 placeholder="Type the State/Province"
                                 fullWidth
-                                value={values.contactState}
+                                value={values.contactInfo.addressState}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                error={touched.contactState && !!errors.contactState}
+                                error={touched.contactInfo?.addressState && !!errors.contactInfo?.addressState}
                               />
                               <CustomInput
-                                id="contactCountry"
-                                name="contactCountry"
+                                id="country"
+                                name="contactInfo.country"
                                 label="Country"
                                 placeholder="Type the Country"
                                 fullWidth
-                                value={values.contactCountry}
+                                value={values.contactInfo.country}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                error={touched.contactCountry && !!errors.contactCountry}
+                                error={touched.contactInfo?.country && !!errors.contactInfo?.country}
                               />
                             </GridItem>
                           </Grid>

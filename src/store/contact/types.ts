@@ -1,3 +1,5 @@
+import { ContactInformation } from 'store/types';
+
 export const CONTACT_SOURCE_OPTIONS = [
   { label: 'Website', value: 'website' },
   { label: 'Referral', value: 'referral' },
@@ -34,30 +36,19 @@ export const CONTACT_STAGE_OPTIONS = [
 
 export interface Contact {
   contactId: number;
-  contactFirstName: string;
-  contactMiddleName: string;
-  contactLastName: string;
-  contactTitle: string;
-  contactAssociate: string;
-  contactRole: string;
-  contactPrimaryEmail: string;
-  contactSecondaryEmail: string;
-  contactPhoneNumber: string;
-  contactMobileNumber: string;
-
-  contactSource: string;
-  contactStage: string;
-  contactType: string;
-  contactStatus: string;
-  //address
-  contactStreet: string;
-  contactState: string;
-  contactZipCode: string;
-  contactCity: string;
-  contactCountry: string;
-  contactCreatedAt: string;
-  contactUpdatedAt: string;
-  contactModifiedBy: number;
+  ssid: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  title: string;
+  image: string;
+  createdDate: Date;
+  workDepartmentId: number;
+  reportsTo: number;
+  createdBy: number;
+  tenantUserId: number;
+  //contactInfo
+  contactInfo: ContactInformation;
 }
 
 export interface ContactState {

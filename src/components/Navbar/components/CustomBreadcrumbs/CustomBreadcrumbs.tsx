@@ -38,7 +38,7 @@ const CustomBreadcrumbs: FC = () => {
 
           // Contact Name
           if (matchPath(PRIVATE_ABS_ROUTE_PATHS.contactDetail, breadcrumb.key)) {
-            label = (contact?.contactFirstName ?? '') + ' ' + (contact?.contactLastName ?? '');
+            label = (contact?.firstName ?? '') + ' ' + (contact?.lastName ?? '');
           }
           // Account Name
           if (matchPath(PRIVATE_ABS_ROUTE_PATHS.accountDetail, breadcrumb.key)) {

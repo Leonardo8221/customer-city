@@ -39,7 +39,7 @@ const ContactPage: FC = () => {
     if (!searchTerm) return [];
     const regex = new RegExp(searchTerm, 'i');
     return contacts.reduce((acc, val) => {
-      const contactFirstName = val.contactFirstName;
+      const contactFirstName = val.firstName;
       if (contactFirstName.match(regex)) acc.push({ label: contactFirstName, value: contactFirstName });
       return acc;
     }, [] as OptionValue<string>[]);

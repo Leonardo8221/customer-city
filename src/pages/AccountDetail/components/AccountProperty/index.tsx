@@ -89,101 +89,101 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
 
           <TitleContainer label="Account Description">
-            <Typography variant="p14">{account?.accountDescription ?? '-'}</Typography>
+            <Typography variant="p14">{account?.description ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Parent of">
-            <Typography variant="p14">{account?.accountParentOf ?? '-'}</Typography>
+            {/* <Typography variant="p14">{account?.accountParentOf ?? '-'}</Typography> */}
           </TitleContainer>
 
           <TitleContainer label="Child of">
-            <Typography variant="p14">{account?.accountChildOf ?? '-'}</Typography>
+            <Typography variant="p14">{account?.childOf ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Website">
-            <Typography variant="p14">{account?.accountWebSite ?? '-'}</Typography>
+            {/* <Typography variant="p14">{account?.accountWebSite ?? '-'}</Typography> */}
           </TitleContainer>
 
           <TitleContainer label="Account Revenue">
             <Typography variant="p14" sx={{ fontWeight: 600 }}>
-              {account?.accountRevenue ?? '-'}
+              {account?.revenuePerYear ?? '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Industry">
-            <CustomSelect<string>
-              value={account?.accountIndustry ?? '-'}
+            <CustomSelect<number>
+              value={account?.industryId ?? 0}
               options={ACCOUNT_INDUSTRY_OPTIONS}
-              onSelect={async (value) => handleUpdate({ accountIndustry: value })}
+              onSelect={async (value) => handleUpdate({ industryId: value })}
             />
           </TitleContainer>
 
           <TitleContainer label="Primary Contact">
-            <Typography variant="p14">{account?.accountPrimaryContact ?? '-'}</Typography>
+            {/* <Typography variant="p14">{account?.accountPrimaryContact ?? '-'}</Typography> */}
           </TitleContainer>
 
           <TitleContainer label="Account Stage">
-            <CustomSelect<string>
+            {/* <CustomSelect<string>
               value={account?.accountStage ?? '-'}
               options={ACCOUNT_STAGE_OPTIONS}
               onSelect={async (value) => handleUpdate({ accountStage: value })}
-            />
+            /> */}
           </TitleContainer>
 
           <TitleContainer label="Account Status">
-            <CustomSelect<string>
+            {/* <CustomSelect<string>
               value={account?.accountStatus ?? '-'}
               options={ACCOUNT_STATUS_OPTIONS}
               onSelect={async (value) => handleUpdate({ accountStatus: value })}
-            />
+            /> */}
           </TitleContainer>
 
           <TitleContainer label="Account Type">
-            <CustomSelect<string>
+            {/* <CustomSelect<string>
               value={account?.accountType ?? '-'}
               options={ACCOUNT_TYPE_OPTIONS}
               onSelect={async (value) => handleUpdate({ accountType: value })}
-            />
+            /> */}
           </TitleContainer>
         </StyledDropDownPanel>
 
         <StyledDropDownPanel title={'Billing Address'}>
           <TitleContainer label="Billing Street">
-            <Typography variant="p14">{account?.accountBillingStreet ?? '-'}</Typography>
+            <Typography variant="p14">{account?.contactInfo?.street ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Billing City">
-            <Typography variant="p14">{account?.accountBillingCity ?? '-'}</Typography>
+            <Typography variant="p14">{account?.contactInfo?.city ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Billing State">
-            <Typography variant="p14">{account?.accountBillingState ?? '-'}</Typography>
+            <Typography variant="p14">{account?.contactInfo?.addressState ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Billing Country">
-            <Typography variant="p14">{account?.accountBillingCountry ?? '-'}</Typography>
+            <Typography variant="p14">{account?.contactInfo?.country ?? '-'}</Typography>
           </TitleContainer>
 
           <TitleContainer label="Billing Zip Code">
-            <Typography variant="p14">{account?.accountBillingZipCode ?? '-'}</Typography>
+            <Typography variant="p14">{account?.contactInfo?.zip ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
 
         <StyledDropDownPanel title={'System Information'}>
           <TitleContainer label="Created Date">
             <Typography variant="p14">
-              {account?.accountUpdatedAt ? format(new Date(account?.accountCreatedAt), 'PP') : '-'}
+              {account?.createDate ? format(new Date(account?.createDate), 'PP') : '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated on">
             <Typography variant="p14">
-              {account?.accountUpdatedAt ? format(new Date(account?.accountUpdatedAt), 'PP') : '-'}
+              {/* {account?.accountUpdatedAt ? format(new Date(account?.accountUpdatedAt), 'PP') : '-'} */}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated by" icon="user">
-            <Typography variant="p14">{account?.accountModifiedBy ?? '-'}</Typography>
+            {/* <Typography variant="p14">{account?.accountModifiedBy ?? '-'}</Typography> */}
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>

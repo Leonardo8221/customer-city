@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 
 import { getCurrentUser as getCurrentUserApi, getUsers as getUsersApi } from 'http/user/index';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { AuthState } from 'store/auth/types';
-import { getCompany } from 'store/company/actions';
 import { UpdateUserData, User } from './types';
 import { RootState } from '../types';
+import { getTenant } from 'store/tenant/actions';
 
 const SET_ERROR = 'user/SET_ERROR';
 const SET_SUCCESS = 'user/SET_SUCCESS';
@@ -24,12 +24,12 @@ export const getCurrentUser = createAsyncThunk<User | null, void, { state: { aut
       auth: { role },
     } = getState();
 
-    if (role === UserRole.SUPER_AMIN) return null;
+    if (role === UserType.SUPER_AMIN) return null;
 
     const currentUser = await getCurrentUserApi();
 
-    if (currentUser.companyId) {
-      dispatch(getCompany(currentUser.companyId));
+    if (currentUser.tenantId) {
+      dispatch(getTenant(currentUser.tenantId));
     }
 
     return currentUser;
@@ -54,9 +54,12 @@ export const updateUserAction = (data: UpdateUserData) => (dispatch: Dispatch<an
 
   const user = users[userIndex];
   const userUpdate = data.user ?? {};
-  const profileUpdate = data.profile ?? {};
+  const profileUpdate = data.contactInfo ?? {};
 
   dispatch(
-    updateUser({ index: userIndex, user: { ...user, ...userUpdate, profile: { ...user.profile, ...profileUpdate } } }),
+    updateUser({
+      index: userIndex,
+      user: { ...user, ...userUpdate, contactInfo: { ...user.contactInfo, ...profileUpdate } },
+    }),
   );
 };

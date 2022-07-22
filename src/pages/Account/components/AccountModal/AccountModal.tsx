@@ -17,10 +17,10 @@ import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 
 interface FormValues {
   accountName: string;
-  accountType: string;
-  accountRevenue: string;
-  accountIndustry: string;
-  accountDescription: string;
+  description: string;
+  // industryId: number;
+  revenuePerYear: number;
+  // accountType: string;
 }
 
 const validationSchema = yup.object({
@@ -66,10 +66,9 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
 
   const initialValues: FormValues = {
     accountName: account?.accountName ?? '',
-    accountType: account?.accountType ?? '',
-    accountRevenue: account?.accountRevenue ?? '',
-    accountIndustry: account?.accountIndustry ?? '',
-    accountDescription: account?.accountDescription ?? '',
+    revenuePerYear: account?.revenuePerYear ?? 0,
+    // industryId: account?.industryId ?? 0,
+    description: account?.description ?? '',
   };
 
   return (
@@ -109,8 +108,8 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
                     error={touched.accountName && !!errors.accountName}
                   />
                   <CustomTextArea
-                    id="accountDescription"
-                    name="accountDescription"
+                    id="description"
+                    name="description"
                     label={
                       <Typography variant="labelRegular12">
                         Description{' '}
@@ -122,12 +121,12 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
                     placeholder="Add description to the account"
                     minRows={4}
                     maxRows={8}
-                    value={values.accountDescription}
+                    value={values.description}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
-                  <CustomDropdown<string>
+                  {/* <CustomDropdown<string>
                     id="accountType"
                     label="Account Type"
                     placeholder="Select the Account type"
@@ -139,31 +138,33 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
                       onBlur: handleBlur,
                     }}
                     PaperComponent={Paper}
-                  />
+                  /> */}
 
                   <CustomInput
                     id="accountRevenue"
-                    name="accountRevenue"
+                    name="revenuePerYear"
                     label="Company revenue"
+                    type="number"
                     placeholder="Add company revenue"
                     fullWidth
-                    value={values.accountRevenue}
+                    value={values.revenuePerYear}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={touched.accountRevenue && !!errors.accountRevenue}
+                    error={touched.revenuePerYear && !!errors.revenuePerYear}
                   />
 
-                  <CustomInput
-                    id="accountIndustry"
-                    name="accountIndustry"
+                  {/* <CustomInput
+                    id="industryId"
+                    name="industryId"
+                    type="number"
                     label="Company industry"
                     placeholder="Add company industry"
                     fullWidth
-                    value={values.accountIndustry}
+                    value={values.industryId}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={touched.accountIndustry && !!errors.accountIndustry}
-                  />
+                    error={touched.industryId && !!errors.industryId}
+                  /> */}
                 </ModalMain>
               </form>
 

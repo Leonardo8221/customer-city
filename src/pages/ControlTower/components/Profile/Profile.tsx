@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import { Grid } from '@mui/material';
 
-import { updateCompany as updateCompanyApi } from 'http/company';
+import { updateTenant as updateTenantApi } from 'http/tenant';
 import { updateUser as updateUserApi } from 'http/user';
 import { TextLinkButton } from 'components/ui';
 import { EditableInput } from 'components/Editable';
 import { Loader } from 'components/Loader';
-import { useCompany } from 'store/company/hooks';
+import { useTenant } from 'store/tenant/hooks';
 import { useUser } from 'store/user/hooks';
 import { Container } from './ui';
 
 const Profile: FC = () => {
   const { loading: userLoading, user } = useUser();
-  const { loading: companyLoading, company } = useCompany();
+  const { loading: tenantLoading, tenant } = useTenant();
 
   return (
     <Container position="relative">
@@ -34,14 +34,14 @@ const Profile: FC = () => {
 
           <Grid item xs={4}>
             <EditableInput
-              id="companyName"
-              name="companyName"
+              id="tenantName"
+              name="tenantName"
               label="Company Name"
-              value={company?.companyName ?? ''}
+              value={tenant?.tenantName ?? ''}
               fullWidth
               onSave={async (value) => {
-                if (!company?.companyId) return;
-                await updateCompanyApi(company.companyId, { companyName: value });
+                if (!tenant?.tenantId) return;
+                await updateTenantApi(tenant.tenantId, { tenantName: value });
               }}
             />
           </Grid>
@@ -68,11 +68,11 @@ const Profile: FC = () => {
               id="address"
               name="address"
               label="Address"
-              value={company?.companyAddress ?? ''}
+              value={tenant?.tenantAddress ?? ''}
               fullWidth
               onSave={async (value) => {
-                if (!company?.companyId) return;
-                await updateCompanyApi(company.companyId, { companyAddress: value });
+                if (!tenant?.tenantId) return;
+                await updateTenantApi(tenant.tenantId, { tenantAddress: value });
               }}
             />
           </Grid>
@@ -81,29 +81,29 @@ const Profile: FC = () => {
         <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
-              id="workPhoneNumber"
-              name="workPhoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
               label="Work phone number"
-              value={user?.profile.workPhoneNumber ?? ''}
+              value={user?.contactInfo?.phoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { workPhoneNumber: value });
+                await updateUserApi(user.userId, { phoneNumber: value });
               }}
             />
           </Grid>
 
           <Grid item xs={4}>
             <EditableInput
-              id="companyEmail"
-              name="companyEmail"
+              id="tenantEmail"
+              name="tenantEmail"
               label="Company e-mail"
-              value={company?.companyEmail ?? ''}
+              value={tenant?.tenantEmail ?? ''}
               fullWidth
               onSave={async (value) => {
-                if (!company?.companyId) return;
-                await updateCompanyApi(company.companyId, { companyEmail: value });
+                if (!tenant?.tenantId) return;
+                await updateTenantApi(tenant.tenantId, { tenantEmail: value });
               }}
             />
           </Grid>
@@ -112,29 +112,29 @@ const Profile: FC = () => {
         <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
-              id="additionalPhoneNumber"
-              name="additionalPhoneNumber"
-              label="Additional number"
-              value={user?.profile.additionalPhoneNumber ?? ''}
+              id="mobileNumber"
+              name="mobileNumber"
+              label="Mobile number"
+              value={user?.contactInfo.mobileNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { additionalPhoneNumber: value });
+                await updateUserApi(user.userId, { mobileNumber: value });
               }}
             />
           </Grid>
 
           <Grid item xs={4}>
             <EditableInput
-              id="companyUrl"
-              name="companyUrl"
+              id="tenantUrl"
+              name="tenantUrl"
               label="Company URL"
-              value={company?.companyWebsite ?? ''}
+              value={tenant?.tenantWebsite ?? ''}
               fullWidth
               onSave={async (value) => {
-                if (!company?.companyId) return;
-                await updateCompanyApi(company.companyId, { companyWebsite: value });
+                if (!tenant?.tenantId) return;
+                await updateTenantApi(tenant.tenantId, { tenantWebsite: value });
               }}
             />
           </Grid>
@@ -145,7 +145,7 @@ const Profile: FC = () => {
         </Grid>
       </Grid>
 
-      {(userLoading || companyLoading) && <Loader />}
+      {(userLoading || tenantLoading) && <Loader />}
     </Container>
   );
 };

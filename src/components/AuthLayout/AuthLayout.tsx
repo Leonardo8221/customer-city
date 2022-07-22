@@ -105,7 +105,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
             <ContentContainer>
               <ContentHeader>
                 <Typography variant="labelRegular12" component="p" sx={{ color: 'neutral.white' }}>
-                  The #1 RevOps CRM. The Future of Sales Technology for B2B SaaS Companies
+                  Unified Revenue Operations Platform. The Future of Sales Technology for B2B SaaS Companies
                 </Typography>
               </ContentHeader>
 
@@ -114,10 +114,9 @@ const AuthLayout: FC<AuthLayoutProps> = ({
                 <Typography
                   variant="p12"
                   component="p"
-                  sx={{ color: 'primary.subtone2', width: '254px', textAlign: 'center', marginTop: '4px' }}
+                  sx={{ color: 'primary.subtone2', width: '254px', textAlign: 'center', marginTop: '12px' }}
                 >
-                  Unified Revenue Operations Platform. <br />
-                  The Future of Sales Technology for B2B SaaS Companies
+                  The #1 RevOps CRM.
                 </Typography>
               </ContentContainer>
             </ContentContainer>

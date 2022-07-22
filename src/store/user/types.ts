@@ -1,22 +1,16 @@
-import { UserRole } from 'core/types';
-
-export interface Profile {
-  profileId: number;
-  workPhoneNumber: string;
-  additionalPhoneNumber?: string;
-  profileJobRole?: string;
-}
+import { UserType } from 'core/types';
+import { ContactInformation } from 'store/types';
 
 export interface User {
   userId: number;
   userName: string;
   userEmail: string;
-  userRole: UserRole;
+  userType: UserType;
   userActive: boolean;
-  companyId?: number;
+  tenantId?: number;
   userCreatedAt: Date;
   userUpdatedAt: Date;
-  profile: Profile;
+  contactInfo: ContactInformation;
 }
 
 export interface UserState {
@@ -38,14 +32,14 @@ export interface UserReturnHook extends UserState {
 export interface CreateUserData {
   userName: string;
   userEmail: string;
-  userRole: UserRole;
-  workPhoneNumber: string;
-  additionalPhoneNumber?: string;
+  userType: UserType;
+  phoneNumber: string;
+  mobileNumber?: string;
   profileJobRole?: string;
 }
 
 export interface UpdateUserData {
   userId: number;
-  user?: Partial<Omit<User, 'profile'>>;
-  profile?: Partial<Profile>;
+  user?: Partial<Omit<User, 'contactInfo'>>;
+  contactInfo?: Partial<ContactInformation>;
 }

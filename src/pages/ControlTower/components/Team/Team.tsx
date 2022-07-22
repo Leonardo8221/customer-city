@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { updateUser as updateUserApi, deleteUser as deleteUserApi } from 'http/user';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { TableFooter } from 'components/TableFooter';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { SecondaryButton } from 'components/ui';
 import { CustomSelect } from 'components/CustomSelect';
 import { USER_ROLE_OPTIONS } from 'core/constants';
@@ -49,13 +49,13 @@ const UserRoleCell: FC<{ userId: number }> = ({ userId }) => {
   const user = useSelector((state: RootState) => userSelector(state, userId));
 
   return (
-    <CustomSelect<UserRole>
-      value={user?.userRole as UserRole}
+    <CustomSelect<UserType>
+      value={user?.userType as UserType}
       options={USER_ROLE_OPTIONS}
       onSelect={async (value) => {
         if (!user?.userId) return;
-        await updateUserApi(user.userId, { userRole: value });
-        updateUser({ userId: user.userId, user: { userRole: value } });
+        await updateUserApi(user.userId, { userType: value });
+        updateUser({ userId: user.userId, user: { userType: value } });
       }}
     />
   );

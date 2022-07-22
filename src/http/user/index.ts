@@ -1,9 +1,10 @@
-import { CreateUserData, Profile, User } from 'store/user/types';
+import { ContactInformation } from 'store/types';
+import { CreateUserData, User } from 'store/user/types';
 import { apiCall } from '../index';
 
 export const getCurrentUser = (): Promise<User> => apiCall({ method: 'get', url: '/user/auth/current' });
 
-export const updateUser = (id: number, data: Partial<User> | Partial<Profile>) =>
+export const updateUser = (id: number, data: Partial<User> | Partial<ContactInformation>) =>
   apiCall({ method: 'put', url: `/user/${id}`, data });
 
 export const getUsers = (): Promise<User[]> => apiCall({ method: 'get', url: '/user' });
