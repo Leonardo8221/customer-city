@@ -23,6 +23,7 @@ import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { CustomSelect } from 'components/CustomSelect';
 import { useContact } from 'store/contact/hooks';
 import { Loader } from 'components/Loader';
+import { useEmail } from 'store/email/hooks';
 
 interface Props {
   contactId: number;
@@ -33,10 +34,15 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const { loading, error, contact, getContact, updateContact, deleteContact } = useContact();
+  const { connectedAccount, getConnectedAccount } = useEmail();
 
   useEffect(() => {
     getContact(contactId);
   }, [contactId, getContact]);
+
+  useEffect(() => {
+    getConnectedAccount();
+  }, []);
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);

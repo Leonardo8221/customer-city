@@ -41,7 +41,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const editor = useRef(null);
   const { user } = useUser();
   const { contacts, getContacts } = useContact();
-  const { loading, createEmail } = useEmail();
+  const { loading, createEmail, connectedAccount } = useEmail();
 
   const config = useMemo(() => {
     getContacts();
@@ -56,10 +56,12 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
       ...values,
     };
     await createEmail(data);
+    toggleOpen();
   };
 
+  console.log('CONNECTED EMAIL', connectedAccount);
   const initialValues: FormValues = {
-    emailFrom: user?.userEmail ?? '',
+    emailFrom: connectedAccount ?? user?.userEmail ?? '',
     emailTo: '',
     emailSubject: '',
     emailContent: '',
@@ -90,7 +92,12 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
                     id="emailFrom"
                     name="emailFrom"
                     value={values.emailFrom}
-                    options={[{ label: user?.userEmail ?? '', value: user?.userEmail ?? '' }]}
+                    options={[
+                      {
+                        label: connectedAccount ?? user?.userEmail ?? '',
+                        value: connectedAccount ?? user?.userEmail ?? '',
+                      },
+                    ]}
                     onSelect={async (value) => setFieldValue('emailFrom', value)}
                   />
                 </InlineTitleContainer>
