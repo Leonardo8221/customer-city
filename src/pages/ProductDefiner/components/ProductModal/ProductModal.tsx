@@ -17,20 +17,20 @@ import { PriceCurrencyContainer, Paper } from './ui';
 
 interface FormValues {
   productName: string;
-  productDescription: string;
-  productCategory: string;
-  productRateChargeType: string;
-  productPrice: string;
-  productCurrency: string;
+  description: string;
+  category: string;
+  rateChargeType: string;
+  price: string;
+  currency: string;
 }
 
 const validationSchema = yup.object({
   productName: yup.string().required('Required').min(2, 'Invalid name'),
-  productDescription: yup.string(),
-  productCategory: yup.string().required('Required'),
-  productRateChargeType: yup.string().required('Required'),
-  productPrice: yup.string().required('Required'),
-  productCurrency: yup.string().required('Required'),
+  description: yup.string(),
+  category: yup.string().required('Required'),
+  rateChargeType: yup.string().required('Required'),
+  price: yup.string().required('Required'),
+  currency: yup.string().required('Required'),
 });
 
 interface ProductModalProps {
@@ -55,9 +55,9 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
     try {
       const data: Partial<Product> = {
         ...values,
-        productCategory: values.productCategory as ProductCategory,
-        productRateChargeType: values.productRateChargeType as ProductRateChargeType,
-        productPrice: parseFloat(values.productPrice),
+        category: values.category as ProductCategory,
+        rateChargeType: values.rateChargeType as ProductRateChargeType,
+        price: parseFloat(values.price),
       };
 
       if (product) await updateProductApi(product.productId, data);
@@ -74,11 +74,11 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
 
   const initialValues: FormValues = {
     productName: product?.productName ?? '',
-    productDescription: product?.productDescription ?? '',
-    productCategory: product?.productCategory ?? '',
-    productRateChargeType: product?.productRateChargeType ?? '',
-    productPrice: product?.productPrice.toString() ?? '',
-    productCurrency: ProductCurrency.USD,
+    description: product?.description ?? '',
+    category: product?.category ?? '',
+    rateChargeType: product?.rateChargeType ?? '',
+    price: product?.price.toString() ?? '',
+    currency: ProductCurrency.USD,
   };
 
   return (
@@ -123,8 +123,8 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
 
                     <Grid item xs={12}>
                       <CustomTextArea
-                        id="productDescription"
-                        name="productDescription"
+                        id="description"
+                        name="description"
                         label={
                           <Typography variant="labelRegular12">
                             Description{' '}
@@ -136,7 +136,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                         placeholder="Add description to the product"
                         minRows={4}
                         maxRows={8}
-                        value={values.productDescription}
+                        value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
@@ -144,14 +144,14 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
 
                     <Grid item xs={12} sm={6}>
                       <CustomDropdown<string>
-                        id="productCategory"
+                        id="category"
                         label="Category"
                         placeholder="Not selected"
-                        value={values.productCategory}
+                        value={values.category}
                         options={PRODUCT_CATEGORY_OPTIONS}
-                        onSelect={(value) => setFieldValue('productCategory', value)}
+                        onSelect={(value) => setFieldValue('category', value)}
                         InputProps={{
-                          error: touched.productCategory && !!errors.productCategory,
+                          error: touched.category && !!errors.category,
                           onBlur: handleBlur,
                         }}
                         PaperComponent={Paper}
@@ -160,14 +160,14 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
 
                     <Grid item xs={12} sm={6}>
                       <CustomDropdown<string>
-                        id="productRateChargeType"
+                        id="rateChargeType"
                         label="Rate Charge Type"
                         placeholder="Not selected"
-                        value={values.productRateChargeType}
+                        value={values.rateChargeType}
                         options={PRODUCT_RATE_CHARGE_TYPE_OPTIONS}
-                        onSelect={(value) => setFieldValue('productRateChargeType', value)}
+                        onSelect={(value) => setFieldValue('rateChargeType', value)}
                         InputProps={{
-                          error: touched.productRateChargeType && !!errors.productRateChargeType,
+                          error: touched.rateChargeType && !!errors.rateChargeType,
                           onBlur: handleBlur,
                         }}
                         PaperComponent={Paper}
@@ -177,25 +177,25 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
                     <Grid item xs={12} sm={6}>
                       <PriceCurrencyContainer>
                         <CustomInput
-                          id="productPrice"
-                          name="productPrice"
+                          id="price"
+                          name="price"
                           label="Standard Prices/Fees"
                           placeholder="Ex. 100"
                           type="number"
                           fullWidth
-                          value={values.productPrice}
+                          value={values.price}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.productPrice && !!errors.productPrice}
+                          error={touched.price && !!errors.price}
                         />
 
                         <CustomDropdown<string>
-                          id="productCurrency"
+                          id="currency"
                           label="Currency"
                           placeholder="Not selected"
-                          value={values.productCurrency}
+                          value={values.currency}
                           options={PRODUCT_CURRENCY_OPTIONS}
-                          onSelect={(value) => setFieldValue('productCurrency', value)}
+                          onSelect={(value) => setFieldValue('currency', value)}
                         />
                       </PriceCurrencyContainer>
                     </Grid>

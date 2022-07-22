@@ -1,5 +1,5 @@
 import { ProductCategory, ProductCurrency, ProductRateChargeType } from 'store/product/types';
-import { OptionValue, UserRole } from './types';
+import { OptionValue, UserType } from './types';
 import {
   mapUserRoleToLabel,
   mapProductRateChargeTypeToLabel,
@@ -73,9 +73,9 @@ export const PRIVATE_ABS_ROUTE_PATHS = {
 
 export const PHONE_REGEX = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
-export const USER_ROLE_OPTIONS = Object.values(UserRole).reduce(
-  (acc: OptionValue<UserRole>[], role): OptionValue<UserRole>[] => {
-    if (role === UserRole.SUPER_AMIN) return acc;
+export const USER_ROLE_OPTIONS = Object.values(UserType).reduce(
+  (acc: OptionValue<UserType>[], role): OptionValue<UserType>[] => {
+    if (role === UserType.SUPER_AMIN) return acc;
     return [...acc, { label: mapUserRoleToLabel(role), value: role }];
   },
   [],

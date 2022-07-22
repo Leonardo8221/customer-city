@@ -32,26 +32,26 @@ const columns: GridColDef[] = [
     headerName: 'Name',
     flex: 1,
   },
+  // {
+  //   field: 'accountType',
+  //   headerName: 'Type',
+  //   flex: 1,
+  // },
   {
-    field: 'accountType',
-    headerName: 'Type',
-    flex: 1,
-  },
-  {
-    field: 'accountRevenue',
+    field: 'revenuePerYear',
     headerName: 'Revenue',
     flex: 1,
   },
   {
-    field: 'accountProduct',
-    headerName: 'Product',
+    field: 'employeesNumber',
+    headerName: 'Employees Number',
     flex: 1,
   },
   {
-    field: 'accountUpdatedAt',
+    field: 'createDate',
     headerName: 'Last Activity',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.accountUpdatedAt), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.createDate), 'PP'),
   },
 ];
 

@@ -79,7 +79,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
               <Link to={'#'}>{'Profile & Preferences'}</Link>
             </AvatarMenuItem>
             <Divider />
-            {!!user && <AvatarMenuItem>{mapUserRoleToLabel(user.userRole)}</AvatarMenuItem>}
+            {!!user && <AvatarMenuItem>{mapUserRoleToLabel(user.userType)}</AvatarMenuItem>}
             <AvatarMenuItem>{company?.companyName}</AvatarMenuItem>
             <Divider />
             <AvatarMenuFooter>

@@ -8,7 +8,7 @@ import { createUser as createUserApi } from 'http/user';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { TextButton, Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter } from 'components/ui';
 import { CustomDropdown } from 'components/CustomDropdown';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { CustomInput } from 'components/CustomInput';
 import { PHONE_REGEX } from 'core/constants';
 import { useUser } from 'store/user/hooks';
@@ -21,25 +21,25 @@ interface AddNewUserModalProps {
 interface FormValues {
   userName: string;
   userEmail: string;
-  workPhoneNumber: string;
-  additionalPhoneNumber: string;
-  userRole: UserRole;
+  phoneNumber: string;
+  mobileNumber: string;
+  userType: UserType;
 }
 
 const validationSchema = yup.object({
   userName: yup.string().required('Required').min(3, 'Invalid name'),
   userEmail: yup.string().required('Required').email('Invalid email'),
-  workPhoneNumber: yup.string().required('Required').matches(PHONE_REGEX, 'Invalid phone number'),
-  additionalPhoneNumber: yup.string(),
-  userRole: yup.string().oneOf(Object.values(UserRole), 'Invalid role'),
+  phoneNumber: yup.string().required('Required').matches(PHONE_REGEX, 'Invalid phone number'),
+  mobileNumber: yup.string(),
+  userType: yup.string().oneOf(Object.values(UserType), 'Invalid role'),
 });
 
 const initialValues: FormValues = {
   userName: '',
   userEmail: '',
-  workPhoneNumber: '',
-  additionalPhoneNumber: '',
-  userRole: UserRole.USER,
+  phoneNumber: '',
+  mobileNumber: '',
+  userType: UserType.USER,
 };
 
 const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
@@ -125,46 +125,46 @@ const AddNewUserModal: FC<AddNewUserModalProps> = ({ open, toggleOpen }) => {
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
                         <CustomInput
-                          id="workPhoneNumber"
-                          name="workPhoneNumber"
+                          id="phoneNumber"
+                          name="phoneNumber"
                           type="tel"
                           label="Work phone number"
                           fullWidth
-                          value={values.workPhoneNumber}
+                          value={values.phoneNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.workPhoneNumber && !!errors.workPhoneNumber}
+                          error={touched.phoneNumber && !!errors.phoneNumber}
                         />
                       </Grid>
 
                       <Grid item xs={6}>
                         <CustomInput
-                          id="additionalPhoneNumber"
-                          name="additionalPhoneNumber"
+                          id="mobileNumber"
+                          name="mobileNumber"
                           type="tel"
                           label="Additional number (optional)"
                           fullWidth
-                          value={values.additionalPhoneNumber}
+                          value={values.mobileNumber}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.additionalPhoneNumber && !!errors.additionalPhoneNumber}
+                          error={touched.mobileNumber && !!errors.mobileNumber}
                         />
                       </Grid>
                     </Grid>
 
                     <Grid item xs={12} container spacing={2}>
                       <Grid item xs={6}>
-                        <CustomDropdown<UserRole>
-                          id="userRole"
+                        <CustomDropdown<UserType>
+                          id="userType"
                           label="Role"
                           placeholder="Role"
-                          value={values.userRole}
+                          value={values.userType}
                           options={[
-                            { label: 'Administrator', value: UserRole.ADMIN },
-                            { label: 'Owner', value: UserRole.OWNER },
-                            { label: 'Business User', value: UserRole.USER },
+                            { label: 'Administrator', value: UserType.ADMIN },
+                            { label: 'Owner', value: UserType.OWNER },
+                            { label: 'Business User', value: UserType.USER },
                           ]}
-                          onSelect={(value) => setFieldValue('userRole', value)}
+                          onSelect={(value) => setFieldValue('userType', value)}
                         />
                       </Grid>
                     </Grid>

@@ -34,28 +34,28 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: 'productCategory',
+    field: 'category',
     headerName: 'Category',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => mapProductCategoryToLabel(params.row.productCategory),
+    valueGetter: (params: GridValueGetterParams) => mapProductCategoryToLabel(params.row.category),
   },
   {
-    field: 'productRateChargeType',
+    field: 'rateChargeType',
     headerName: 'Rate Change Type',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => mapProductRateChargeTypeToLabel(params.row.productRateChargeType),
+    valueGetter: (params: GridValueGetterParams) => mapProductRateChargeTypeToLabel(params.row.rateChargeType),
   },
   {
-    field: 'productPrice',
+    field: 'price',
     headerName: 'Price/Fees',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => `$ ${params.row.productPrice}`,
+    valueGetter: (params: GridValueGetterParams) => `$ ${params.row.price}`,
   },
   {
-    field: 'productUpdatedAt',
-    headerName: 'Last Activity',
+    field: 'createDate',
+    headerName: 'Create Date',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.productUpdatedAt), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.createDate), 'PP'),
   },
 ];
 

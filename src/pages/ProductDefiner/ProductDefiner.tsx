@@ -67,15 +67,13 @@ const ProductDefiner: FC = () => {
           </Box>
         </Grid>
 
-        {(isAdmin || isSuperAdmin) && (
-          <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
-            <SecondaryButton>Import</SecondaryButton>
+        <Grid item xs={12} sm={6} display="flex" justifyContent="flex-end">
+          <SecondaryButton>Import</SecondaryButton>
 
-            <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
-              Add product
-            </PrimaryButton>
-          </Grid>
-        )}
+          <PrimaryButton startIcon={<PlusIcon />} sx={{ marginLeft: 2 }} onClick={toggleModal}>
+            Add product
+          </PrimaryButton>
+        </Grid>
       </Grid>
 
       <ProductsSection>

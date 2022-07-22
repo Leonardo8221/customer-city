@@ -1,13 +1,12 @@
 export interface Product {
   productId: number;
   productName: string;
-  productDescription: string;
-  productCategory: ProductCategory;
-  productRateChargeType: ProductRateChargeType;
-  productPrice: number;
-  productCurrency: string;
-  productCreatedAt: string;
-  productUpdatedAt: string;
+  description: string;
+  category: ProductCategory;
+  rateChargeType: ProductRateChargeType;
+  price: number;
+  currency: string;
+  createDate: Date;
 }
 
 export interface ProductState {

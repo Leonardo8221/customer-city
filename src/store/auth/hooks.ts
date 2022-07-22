@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { useActionCreator } from 'hooks';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { AuthReturnHook } from './types';
 import { RootState } from '../types';
 import {
@@ -23,10 +23,10 @@ export const useAuth = (): AuthReturnHook => {
 
   const roles = useMemo(() => {
     const userRoles = { isSuperAdmin: false, isAdmin: false, isOwner: false, isBusinessUser: false };
-    if (authState.role === UserRole.SUPER_AMIN) userRoles.isSuperAdmin = true;
-    else if (authState.role === UserRole.ADMIN) userRoles.isAdmin = true;
-    else if (authState.role === UserRole.OWNER) userRoles.isOwner = true;
-    else if (authState.role === UserRole.USER) userRoles.isBusinessUser = true;
+    if (authState.role === UserType.SUPER_AMIN) userRoles.isSuperAdmin = true;
+    else if (authState.role === UserType.ADMIN) userRoles.isAdmin = true;
+    else if (authState.role === UserType.OWNER) userRoles.isOwner = true;
+    else if (authState.role === UserType.USER) userRoles.isBusinessUser = true;
     return userRoles;
   }, [authState.role]);
 

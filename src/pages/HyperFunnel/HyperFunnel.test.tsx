@@ -5,13 +5,13 @@ import { server } from 'test/server';
 import { getApiPath } from 'test/server-handlers';
 import { render, screen, within, waitFor } from 'test/test-utils';
 import { initialRootState } from 'store/reducers';
-import { UserRole } from 'core/types';
+import { UserType } from 'core/types';
 import { productsData } from 'test/data';
 import { mapProductCategoryToLabel, mapProductRateChargeTypeToLabel, mapProductCurrencyToLabel } from 'core/utils';
 import { ProductCategory, ProductRateChargeType, ProductCurrency } from 'store/product/types';
 import HyperFunnel from './HyperFunnel';
 
-const initialState = { ...initialRootState, auth: { ...initialRootState.auth, role: UserRole.ADMIN } };
+const initialState = { ...initialRootState, auth: { ...initialRootState.auth, role: UserType.ADMIN } };
 
 test('renders product definer with no products', async () => {
   server.use(

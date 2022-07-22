@@ -1,7 +1,7 @@
 import { ProductCategory, ProductCurrency } from 'store/product/types';
 import { ProductRateChargeType } from 'store/product/types';
 import { PRIVATE_ABS_ROUTE_PATHS } from './constants';
-import { UserRole } from './types';
+import { UserType } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (): void => {};
@@ -55,29 +55,29 @@ export const mapAbsRoutePathToLabel = (path: string): string => {
   }
 };
 
-export const mapUserRoleToLabel = (role: UserRole): string => {
+export const mapUserRoleToLabel = (role: UserType): string => {
   switch (role) {
-    case UserRole.ADMIN:
+    case UserType.ADMIN:
       return 'Administrator';
-    case UserRole.OWNER:
+    case UserType.OWNER:
       return 'Owner';
-    case UserRole.USER:
+    case UserType.USER:
       return 'Business User';
     default:
       return 'Super Admin';
   }
 };
 
-export const mapLabelToUserRole = (label: string): UserRole => {
+export const mapLabelToUserRole = (label: string): UserType => {
   switch (label) {
     case 'Administrator':
-      return UserRole.ADMIN;
+      return UserType.ADMIN;
     case 'Owner':
-      return UserRole.OWNER;
+      return UserType.OWNER;
     case 'Business User':
-      return UserRole.USER;
+      return UserType.USER;
     default:
-      return UserRole.SUPER_AMIN;
+      return UserType.SUPER_AMIN;
   }
 };
 

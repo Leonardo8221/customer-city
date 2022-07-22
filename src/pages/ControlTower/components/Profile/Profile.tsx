@@ -81,15 +81,15 @@ const Profile: FC = () => {
         <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
-              id="workPhoneNumber"
-              name="workPhoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
               label="Work phone number"
-              value={user?.profile?.workPhoneNumber ?? ''}
+              value={user?.contactInfo?.phoneNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { workPhoneNumber: value });
+                await updateUserApi(user.userId, { phoneNumber: value });
               }}
             />
           </Grid>
@@ -112,15 +112,15 @@ const Profile: FC = () => {
         <Grid item xs={12} container spacing={3}>
           <Grid item xs={4}>
             <EditableInput
-              id="additionalPhoneNumber"
-              name="additionalPhoneNumber"
-              label="Additional number"
-              value={user?.profile.additionalPhoneNumber ?? ''}
+              id="mobileNumber"
+              name="mobileNumber"
+              label="Mobile number"
+              value={user?.contactInfo.mobileNumber ?? ''}
               fullWidth
               type="tel"
               onSave={async (value) => {
                 if (!user?.userId) return;
-                await updateUserApi(user.userId, { additionalPhoneNumber: value });
+                await updateUserApi(user.userId, { mobileNumber: value });
               }}
             />
           </Grid>
