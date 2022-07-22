@@ -27,7 +27,7 @@ import AvatarDropDown from './components/DropdownMenu/AvatarDropDownMenu';
 import { AvatarMenuItem } from './components/DropdownMenu/ui';
 import { useUser } from 'store/user/hooks';
 import { mapUserRoleToLabel } from 'core/utils';
-import { useCompany } from 'store/company/hooks';
+import { useTenant } from 'store/tenant/hooks';
 interface NavbarProps {
   toggleDrawer: () => void;
 }
@@ -37,7 +37,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
   const { pathname } = useLocation();
   const { isSuperAdmin } = useAuth();
   const { user } = useUser();
-  const { company } = useCompany();
+  const { tenant } = useTenant();
 
   return (
     <AppBar position="fixed" elevation={0}>
@@ -80,7 +80,7 @@ const Navbar: FC<NavbarProps> = ({ toggleDrawer }) => {
             </AvatarMenuItem>
             <Divider />
             {!!user && <AvatarMenuItem>{mapUserRoleToLabel(user.userType)}</AvatarMenuItem>}
-            <AvatarMenuItem>{company?.companyName}</AvatarMenuItem>
+            <AvatarMenuItem>{tenant?.tenantName}</AvatarMenuItem>
             <Divider />
             <AvatarMenuFooter>
               <LogoutButton />

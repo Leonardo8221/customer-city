@@ -3,9 +3,9 @@ import { createAction, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import { getCurrentUser as getCurrentUserApi, getUsers as getUsersApi } from 'http/user/index';
 import { UserType } from 'core/types';
 import { AuthState } from 'store/auth/types';
-import { getCompany } from 'store/company/actions';
 import { UpdateUserData, User } from './types';
 import { RootState } from '../types';
+import { getTenant } from 'store/tenant/actions';
 
 const SET_ERROR = 'user/SET_ERROR';
 const SET_SUCCESS = 'user/SET_SUCCESS';
@@ -29,7 +29,7 @@ export const getCurrentUser = createAsyncThunk<User | null, void, { state: { aut
     const currentUser = await getCurrentUserApi();
 
     if (currentUser.tenantId) {
-      dispatch(getCompany(currentUser.tenantId));
+      dispatch(getTenant(currentUser.tenantId));
     }
 
     return currentUser;

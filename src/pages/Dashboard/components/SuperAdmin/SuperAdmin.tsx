@@ -4,15 +4,15 @@ import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui
 import { useNavigate } from 'react-router-dom';
 
 import { PRIVATE_ROUTE_PATHS } from 'core/constants';
-import { deleteCompany as deleteCompanyApi } from 'http/company';
 import { Button } from 'components/ui';
-import { useCompany } from 'store/company/hooks';
 import { TableFooter } from 'components/TableFooter';
-import { Company } from 'store/company/types';
+import { deleteTenant as deleteTenantApi } from 'http/tenant';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
+import { useTenant } from 'store/tenant/hooks';
+import { Tenant } from 'store/tenant/types';
 
 const CompanyFooter: FC = () => {
-  const { getCompanies } = useCompany();
+  const { getTenants } = useTenant();
 
   return (
     <TableFooter
@@ -20,16 +20,16 @@ const CompanyFooter: FC = () => {
       pluralEntity="companies"
       idProp="companyId"
       onDelete={async (ids: number[]) => {
-        await Promise.all(ids.map((id) => deleteCompanyApi(id)));
+        await Promise.all(ids.map((id) => deleteTenantApi(id)));
       }}
-      onSuccess={getCompanies}
+      onSuccess={getTenants}
     />
   );
 };
 
 const columns: GridColDef[] = [
   {
-    field: 'companyName',
+    field: 'tenantName',
     headerName: 'Company Name',
     flex: 1,
   },
@@ -39,7 +39,7 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: 'companyCreatedAt',
+    field: 'createDate',
     headerName: 'Created',
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => new Date(params.row.companyCreatedAt).toLocaleDateString(),
@@ -48,10 +48,10 @@ const columns: GridColDef[] = [
 
 const SuperAdmin: FC = () => {
   const navigate = useNavigate();
-  const { loading, error, companies, getCompanies } = useCompany();
+  const { loading, error, tenants, getTenants } = useTenant();
 
   useEffect(() => {
-    getCompanies();
+    getTenants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -68,7 +68,7 @@ const SuperAdmin: FC = () => {
 
         <Grid item xs={12} style={{ height: 480, width: '100%' }}>
           <DataGrid
-            rows={companies}
+            rows={tenants}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10]}
@@ -76,7 +76,7 @@ const SuperAdmin: FC = () => {
             disableSelectionOnClick
             loading={loading}
             onRowClick={onRowClick}
-            getRowId={(row: Company) => row.companyId}
+            getRowId={(row: Tenant) => row.tenantId}
             headerHeight={40}
             rowHeight={64}
             components={{
