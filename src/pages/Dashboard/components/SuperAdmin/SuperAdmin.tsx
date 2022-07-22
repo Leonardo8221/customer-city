@@ -42,7 +42,7 @@ const columns: GridColDef[] = [
     field: 'createDate',
     headerName: 'Created',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => new Date(params.row.companyCreatedAt).toLocaleDateString(),
+    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createDate).toLocaleDateString(),
   },
 ];
 
