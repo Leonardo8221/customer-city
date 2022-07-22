@@ -17,7 +17,7 @@ const docApi = <T>(
   const docRef = getFirestoreRef(path).doc(id);
 
   console.log('FIRESTORE PATH IS:', docRef.path);
-  // (dispatch as Function)(actions?.loading());
+  dispatch(actions.setLoading(true));
   if (options?.listen) {
     const listener = docRef.onSnapshot((doc) => {
       if (!doc.exists) {

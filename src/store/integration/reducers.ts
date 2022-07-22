@@ -52,6 +52,12 @@ const integrationReducer = createSlice({
       state.integrationStatus = payload;
     });
 
+    builder.addCase(authorize.pending, (state, { payload }) => {
+      state.loading = true;
+      state.success = false;
+      state.authorizeRedirectUrl = '';
+    });
+
     builder.addCase(authorize.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.success = true;

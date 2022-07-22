@@ -1,5 +1,5 @@
 export interface Integration {
-  integrationId: number;
+  integrationId: string;
   applicationName: string;
   applicationDescription: string;
   applicationIcon: string;

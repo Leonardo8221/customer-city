@@ -13,7 +13,7 @@ const collectionApi = <T>(
   lastDocRef: MutableRefObject<QueryDocumentSnapshot<DocumentData> | undefined>,
   options?: CollectionOptions,
 ) => {
-  // (dispatch as Function)(actions.loading());
+  dispatch(actions.setLoading(true));
   if (options && options?.listen) {
     const listener = query.onSnapshot(
       (querySnapshot) => {

@@ -8,7 +8,7 @@ import {
 import { NoInfer } from '@reduxjs/toolkit/dist/tsHelpers';
 
 export interface GenericState<T> {
-  loading: boolean;
+  loading: boolean | string;
   error: boolean | string;
   success: boolean | string;
   data: T | any;
@@ -37,4 +37,5 @@ export const createGenericSlice = <T, Reducers extends SliceCaseReducers<Generic
 export type GenericActions<T> = {
   setSuccess: ActionCreatorWithPayload<T | any, string>;
   setError: ActionCreatorWithPayload<string | boolean, string>;
+  setLoading: ActionCreatorWithPayload<string | boolean, string>;
 };
