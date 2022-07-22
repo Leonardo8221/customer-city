@@ -78,6 +78,7 @@ const integrationReducer = createSlice({
       state.loading = true;
       state.error = false;
       state.success = false;
+      state.authorizeRedirectUrl = '';
     });
 
     builder.addMatcher(

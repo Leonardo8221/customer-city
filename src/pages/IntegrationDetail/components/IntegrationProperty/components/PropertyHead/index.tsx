@@ -101,11 +101,9 @@ const PropertyHead: FC<Props> = ({
       <Box>
         <SecondaryButton sx={{ width: '168px', marginLeft: '24px' }}>View Setup Guide</SecondaryButton>
         <PrimaryButton
-          disabled={[
-            APPLICATION_STATUS_LABEL.LOADING,
-            APPLICATION_STATUS_LABEL.INSTALLING,
-            APPLICATION_STATUS_LABEL.UNINSTALLING,
-          ].includes(statusLabel as APPLICATION_STATUS_LABEL)}
+          disabled={[APPLICATION_STATUS_LABEL.LOADING, APPLICATION_STATUS_LABEL.UNINSTALLING].includes(
+            statusLabel as APPLICATION_STATUS_LABEL,
+          )}
           variant={isInstalled ? 'outlined' : 'contained'}
           sx={{ width: '168px', marginLeft: '15px', marginRight: '24px' }}
           onClick={installOrUninstall}
