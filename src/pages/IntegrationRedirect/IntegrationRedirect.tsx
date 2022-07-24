@@ -1,29 +1,33 @@
 import { Container } from '@mui/material';
-import { PrimaryButton } from 'components/ui';
 import { FC, useEffect } from 'react';
+import { useIntegration } from 'store/integration/hooks';
 
 const IntegrationRedirectPage: FC = () => {
+  const { authCallback, success } = useIntegration();
+
   const close = () => {
     window.close();
   };
+
+  const params = window.location.search;
   useEffect(() => {
     // get the URL parameters which will include the auth token
-    const params = window.location.search;
     console.log('AUTH PARAMS =====================', params);
     console.log('WINDOW OPENER =====================', window.opener);
+    if (params) {
+      authCallback(String(params));
+    }
+  }, []);
 
-    if (window.opener) {
-      // send them to the opening window
-      window.opener.postMessage(params);
-      // close the popup
+  useEffect(() => {
+    if (success) {
       window.close();
     }
-  });
+  }, [success]);
 
   return (
     <Container maxWidth="lg">
-      <h1>Installing please wait ...</h1>
-      <PrimaryButton onClick={close}>Close</PrimaryButton>
+      <h1 onClick={close}>Installing please wait ...</h1>
     </Container>
   );
 };
