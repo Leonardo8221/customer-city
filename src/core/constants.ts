@@ -146,4 +146,4 @@ export const firebaseConfig = {
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
 }; // from Firebase Console
 
-export const firestoreBasePath = 'development/main';
+export const firestoreBasePath = `${process.env.REACT_APP_ENV || 'production'}/main`;
