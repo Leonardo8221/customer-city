@@ -1,20 +1,11 @@
 import { ContactInformation } from 'store/types';
+import { User } from 'store/user/types';
 
 export const ACCOUNT_INDUSTRY_OPTIONS = [{ label: 'Banking', value: 0 }];
 
-export const ACCOUNT_STAGE_OPTIONS = [
-  { label: 'Cold', value: 'Cold' },
-  { label: 'Warm', value: 'Warm' },
-  { label: 'Hot', value: 'Hot' },
-  { label: 'MQL', value: 'MQL' },
-  { label: 'SQL', value: 'SQL' },
-  { label: 'SAL', value: 'SAL' },
-  { label: 'Customer', value: 'Customer' },
-];
-
 export const ACCOUNT_STATUS_OPTIONS = [
-  { label: 'Active', value: 'Active' },
-  { label: 'Inactive', value: 'Inactive' },
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' },
 ];
 
 export const ACCOUNT_TYPE_OPTIONS = [{ label: 'Startup', value: 'Startup' }];
@@ -25,13 +16,18 @@ export interface Account {
   description: string;
   company: string;
   webURL: string;
+  accountStageId: number;
+  accountTypeId: number;
+  accountStatus: boolean;
   industryId: number;
   foundedDate: Date;
   employeesNumber: number;
   revenuePerYear: number;
   childOf: number;
   createDate: Date;
+  updateDate: Date;
   createdBy: number;
+  tenantUser: User;
   contactInfo: ContactInformation;
 
   // accountBillingStreet: string;

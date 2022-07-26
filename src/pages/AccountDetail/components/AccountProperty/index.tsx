@@ -1,11 +1,10 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
 import format from 'date-fns/format';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
 import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
-// import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as AccountRoundIcon } from 'assets/icons/accountRound.svg';
 import { Divider, Typography } from '@mui/material';
 import PopoverWrapper from 'components/PopoverWrapper';
@@ -15,14 +14,11 @@ import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { useAccount } from 'store/account/hooks';
 import { CustomSelect } from 'components/CustomSelect';
-import {
-  Account,
-  ACCOUNT_INDUSTRY_OPTIONS,
-  ACCOUNT_STAGE_OPTIONS,
-  ACCOUNT_STATUS_OPTIONS,
-  ACCOUNT_TYPE_OPTIONS,
-} from 'store/account/types';
+import { Account, ACCOUNT_INDUSTRY_OPTIONS, ACCOUNT_STATUS_OPTIONS } from 'store/account/types';
 import { Loader } from 'components/Loader';
+import { useAccountStage } from 'store/accountStage/hooks';
+import { useAccountType } from 'store/accountType/hooks';
+import { EditableInput } from 'components/Editable';
 
 interface Props {
   accountId: number;
@@ -32,11 +28,42 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { loading, error, account, getAccount, deleteAccount, updateAccount } = useAccount();
+  const { loading, error, account, accounts, getAccount, getAccounts, deleteAccount, updateAccount } = useAccount();
+  const { accountStages, getAccountStages } = useAccountStage();
+  const { accountTypes, getAccountTypes } = useAccountType();
 
   useEffect(() => {
     getAccount(accountId);
-  }, [accountId, getAccount]);
+    getAccounts();
+    getAccountStages();
+    getAccountTypes();
+  }, [accountId, getAccount, getAccounts, getAccountStages, getAccountTypes]);
+
+  const accountStageSuggestions = useMemo(
+    () =>
+      accountStages.map((acc) => {
+        return { label: acc.accountStageName, value: acc.accountStageId };
+      }),
+    [accountStages],
+  );
+
+  const accountTypeSuggestions = useMemo(
+    () =>
+      accountTypes.map((acc) => {
+        return { label: acc.accountTypeName, value: acc.accountTypeId };
+      }),
+    [accountTypes],
+  );
+
+  const accountSuggestions = useMemo(
+    () =>
+      accounts
+        .filter((acc) => acc.accountId !== account?.accountId)
+        .map((acc) => {
+          return { label: acc.accountName, value: acc.accountId };
+        }),
+    [accounts, account],
+  );
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
@@ -92,17 +119,22 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
             <Typography variant="p14">{account?.description ?? '-'}</Typography>
           </TitleContainer>
 
-          <TitleContainer label="Parent of">
-            {/* <Typography variant="p14">{account?.accountParentOf ?? '-'}</Typography> */}
-          </TitleContainer>
-
           <TitleContainer label="Child of">
-            <Typography variant="p14">{account?.childOf ?? '-'}</Typography>
+            <CustomSelect<number>
+              value={account?.childOf ?? 0}
+              options={accountSuggestions}
+              onSelect={async (value) => handleUpdate({ childOf: value })}
+            />
           </TitleContainer>
 
-          <TitleContainer label="Website">
-            {/* <Typography variant="p14">{account?.accountWebSite ?? '-'}</Typography> */}
-          </TitleContainer>
+          <EditableInput
+            id="webURL"
+            name="webURL"
+            label="Website"
+            value={account?.webURL ?? ''}
+            fullWidth
+            onSave={async (value) => handleUpdate({ webURL: value })}
+          />
 
           <TitleContainer label="Account Revenue">
             <Typography variant="p14" sx={{ fontWeight: 600 }}>
@@ -123,27 +155,27 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           </TitleContainer>
 
           <TitleContainer label="Account Stage">
-            {/* <CustomSelect<string>
-              value={account?.accountStage ?? '-'}
-              options={ACCOUNT_STAGE_OPTIONS}
-              onSelect={async (value) => handleUpdate({ accountStage: value })}
-            /> */}
+            <CustomSelect<number>
+              value={account?.accountStageId ?? 0}
+              options={accountStageSuggestions}
+              onSelect={async (value) => handleUpdate({ accountStageId: value })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Account Status">
-            {/* <CustomSelect<string>
-              value={account?.accountStatus ?? '-'}
+            <CustomSelect<string>
+              value={account?.accountStatus ? 'active' : 'inactive'}
               options={ACCOUNT_STATUS_OPTIONS}
-              onSelect={async (value) => handleUpdate({ accountStatus: value })}
-            /> */}
+              onSelect={async (value) => handleUpdate({ accountStatus: value === 'active' })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Account Type">
-            {/* <CustomSelect<string>
-              value={account?.accountType ?? '-'}
-              options={ACCOUNT_TYPE_OPTIONS}
-              onSelect={async (value) => handleUpdate({ accountType: value })}
-            /> */}
+            <CustomSelect<number>
+              value={account?.accountTypeId ?? 0}
+              options={accountTypeSuggestions}
+              onSelect={async (value) => handleUpdate({ accountTypeId: value })}
+            />
           </TitleContainer>
         </StyledDropDownPanel>
 
@@ -178,12 +210,12 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
 
           <TitleContainer label="Last Updated on">
             <Typography variant="p14">
-              {/* {account?.accountUpdatedAt ? format(new Date(account?.accountUpdatedAt), 'PP') : '-'} */}
+              {account?.updateDate ? format(new Date(account?.updateDate), 'PP') : '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated by" icon="user">
-            {/* <Typography variant="p14">{account?.accountModifiedBy ?? '-'}</Typography> */}
+            <Typography variant="p14">{account?.tenantUser?.userName ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>
