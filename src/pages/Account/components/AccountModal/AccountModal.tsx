@@ -6,14 +6,21 @@ import * as yup from 'yup';
 
 import { createAccount as createAccountApi, updateAccount as updateAccountApi } from 'http/account';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
-import { Modal, ModalContainer, ModalFooter, ModalHeader, ModalMain, TextButton } from 'components/ui';
+import {
+  AddressBox,
+  GridItem,
+  Modal,
+  ModalContainer,
+  ModalFooter,
+  ModalHeader,
+  ModalMain,
+  TextButton,
+} from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
-import { GridItem } from './ui';
 import { Account } from 'store/account/types';
 import { CustomTextArea } from 'components/CustomTextarea';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { AddressBox } from 'pages/Contact/components/ContactModal/ui';
 import { ContactInformation, defaultContactInfo } from 'store/types';
 
 interface FormValues {

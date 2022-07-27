@@ -1,4 +1,4 @@
-import { styled, Modal as MuiModal, Box, alpha } from '@mui/material';
+import { styled, Modal as MuiModal, Box, alpha, Grid } from '@mui/material';
 
 export const Modal = styled(MuiModal)(({ theme }) => ({
   display: 'flex',
@@ -46,4 +46,19 @@ export const ModalMain = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '24px',
+}));
+
+export const GridItem = styled(Grid)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 18,
+}));
+
+export const AddressBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 22,
+  backgroundColor: '#F0F3F8',
+  borderRadius: 4,
+  padding: 24,
 }));

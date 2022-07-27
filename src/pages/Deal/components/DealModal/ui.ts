@@ -27,18 +27,3 @@ export const Paper = styled(MuiPaper)(({ theme }) => ({
     height: 48,
   },
 }));
-
-export const GridItem = styled(Grid)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 18,
-}));
-
-export const AddressBox = styled(Box)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 22,
-  backgroundColor: '#F0F3F8',
-  borderRadius: 4,
-  padding: 24,
-}));

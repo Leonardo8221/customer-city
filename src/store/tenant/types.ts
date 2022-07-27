@@ -1,8 +1,10 @@
+import { ContactInformation } from 'store/types';
+
 export interface Tenant {
   tenantId: number;
   tenantName: string;
-  tenantAddress?: string;
-  tenantBillingAddress?: string;
+  contactInfo: ContactInformation;
+  billingContactInfo: ContactInformation;
   tenantIndustry?: string;
   tenantEmployees?: string;
   tenantWebsite?: string;

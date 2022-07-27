@@ -64,7 +64,7 @@ const Profile: FC = () => {
           </Grid>
 
           <Grid item xs={4}>
-            <EditableInput
+            {/* <EditableInput
               id="address"
               name="address"
               label="Address"
@@ -74,7 +74,7 @@ const Profile: FC = () => {
                 if (!tenant?.tenantId) return;
                 await updateTenantApi(tenant.tenantId, { tenantAddress: value });
               }}
-            />
+            /> */}
           </Grid>
         </Grid>
 

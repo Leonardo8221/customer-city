@@ -16,9 +16,9 @@ const CompanyFooter: FC = () => {
 
   return (
     <TableFooter
-      entity="company"
-      pluralEntity="companies"
-      idProp="companyId"
+      entity="tenant"
+      pluralEntity="tenants"
+      idProp="tenantId"
       onDelete={async (ids: number[]) => {
         await Promise.all(ids.map((id) => deleteTenantApi(id)));
       }}
@@ -30,7 +30,7 @@ const CompanyFooter: FC = () => {
 const columns: GridColDef[] = [
   {
     field: 'tenantName',
-    headerName: 'Company Name',
+    headerName: 'Tenant Name',
     flex: 1,
   },
   {

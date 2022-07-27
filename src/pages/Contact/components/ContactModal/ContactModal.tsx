@@ -7,9 +7,17 @@ import * as yup from 'yup';
 import { createContact as createContactApi, updateContact as updateContactApi } from 'http/contact';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ReactComponent as NavBackIcon } from 'assets/icons/navBack.svg';
-import { Modal, ModalContainer, ModalHeader, ModalMain, TextButton, PaginatedModalFooter } from 'components/ui';
+import {
+  Modal,
+  ModalContainer,
+  ModalHeader,
+  ModalMain,
+  TextButton,
+  PaginatedModalFooter,
+  GridItem,
+  AddressBox,
+} from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
-import { AddressBox, GridItem, Paper } from './ui';
 import { Contact } from 'store/contact/types';
 import { useNavigate, generatePath } from 'react-router-dom';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
