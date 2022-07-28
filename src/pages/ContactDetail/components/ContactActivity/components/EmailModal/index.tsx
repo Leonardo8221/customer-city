@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { ModalTemplate } from 'components/ModalTemplate';
-import { FC, useMemo, useRef } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { ReactComponent as TemplateIcon } from 'assets/icons/template.svg';
 import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
@@ -43,6 +43,15 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const { contacts, getContacts } = useContact();
   const { loading, createEmail, connectedAccount } = useEmail();
 
+  const [emailFrom, setEmailFrom] = useState<string>(user?.userEmail || '');
+
+  useEffect(() => {
+    console.log('EMAIL COMPOSER: CONNECTED EMAIL', connectedAccount);
+    if (connectedAccount) {
+      setEmailFrom(connectedAccount);
+    }
+  }, [connectedAccount]);
+
   const config = useMemo(() => {
     getContacts();
 
@@ -59,9 +68,8 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
     toggleOpen();
   };
 
-  console.log('CONNECTED EMAIL', connectedAccount);
   const initialValues: FormValues = {
-    emailFrom: connectedAccount ?? user?.userEmail ?? '',
+    emailFrom: emailFrom,
     emailTo: '',
     emailSubject: '',
     emailContent: '',
@@ -94,8 +102,8 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
                     value={values.emailFrom}
                     options={[
                       {
-                        label: connectedAccount ?? user?.userEmail ?? '',
-                        value: connectedAccount ?? user?.userEmail ?? '',
+                        label: emailFrom,
+                        value: emailFrom,
                       },
                     ]}
                     onSelect={async (value) => setFieldValue('emailFrom', value)}

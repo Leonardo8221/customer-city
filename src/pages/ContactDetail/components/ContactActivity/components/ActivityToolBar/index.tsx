@@ -6,16 +6,16 @@ import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
 import { ReactComponent as SMSIcon } from 'assets/icons/sms.svg';
 import { EmailProviderModal } from 'pages/ContactDetail/components/EmailProviderModal';
-import { FC, useCallback, useState } from 'react';
-import { APPLICATION_STATUS } from 'store/integration-status/types';
-import { useIntegration } from 'store/integration/hooks';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { useEmail } from 'store/email/hooks';
 import EmailModal from '../EmailModal';
 import { ActionButton, Container, VirticalDivider } from './ui';
 
 const ActivityToolBar: FC = () => {
   const [emailOpen, setEmailOpen] = useState<boolean>(false);
   const [emailProviderOpen, setEmailProviderOpen] = useState<boolean>(false);
-  const { integration } = useIntegration();
+  const [postAction, setPostAction] = useState<boolean>(false);
+  const { connectedAccount, getConnectedAccount, loading } = useEmail();
 
   const toggleEmailOpen = useCallback(() => {
     setEmailOpen((prevState) => !prevState);
@@ -25,17 +25,26 @@ const ActivityToolBar: FC = () => {
     setEmailProviderOpen((prevState) => !prevState);
   }, []);
 
+  const openEmailAction = loading ? () => true : connectedAccount ? toggleEmailOpen : toggleEmailProviderOpen;
+
+  useEffect(() => {
+    if (!emailProviderOpen) {
+      getConnectedAccount();
+    }
+  }, [emailProviderOpen]);
+
+  useEffect(() => {
+    if (postAction && connectedAccount) {
+      setEmailOpen(true);
+    }
+  }, [postAction, connectedAccount]);
+
   return (
     <Container>
       <ActionButton startIcon={<CheckCircleIcon />}>Note</ActionButton>
       <ActionButton startIcon={<EditCircleIcon />}>Task</ActionButton>
       <VirticalDivider />
-      <ActionButton
-        startIcon={<EmailIcon />}
-        onClick={
-          integration?.applicationStatus === APPLICATION_STATUS.INSTALLED ? toggleEmailOpen : toggleEmailProviderOpen
-        }
-      >
+      <ActionButton startIcon={<EmailIcon />} onClick={openEmailAction}>
         Email
       </ActionButton>
       <ActionButton startIcon={<PhoneIcon />}>Call</ActionButton>
@@ -44,7 +53,13 @@ const ActivityToolBar: FC = () => {
       <ActionButton startIcon={<DotsIcon />} />
       <>
         <EmailModal open={emailOpen} toggleOpen={toggleEmailOpen} />
-        <EmailProviderModal open={emailProviderOpen} toggleOpen={toggleEmailProviderOpen} />
+        <EmailProviderModal
+          open={emailProviderOpen}
+          toggleOpen={toggleEmailProviderOpen}
+          postAction={() => {
+            setPostAction(true);
+          }}
+        />
       </>
     </Container>
   );

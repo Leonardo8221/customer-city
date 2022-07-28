@@ -1,4 +1,5 @@
 import { createSlice, ActionReducerMapBuilder, isAnyOf } from '@reduxjs/toolkit';
+import { APPLICATION_STATUS } from 'store/integration-status/types';
 
 import {
   setError,
@@ -60,13 +61,22 @@ const integrationReducer = createSlice({
 
     builder.addCase(authorize.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.success = true;
+      state.success = false;
       state.authorizeRedirectUrl = payload;
     });
 
     builder.addCase(authCallback.fulfilled, (state) => {
       state.loading = false;
       state.success = true;
+      state.integrationStatus = APPLICATION_STATUS.INSTALLED;
+      state.authorizeRedirectUrl = '';
+    });
+
+    builder.addCase(authCallback.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
+      state.error = true;
+      state.authorizeRedirectUrl = '';
     });
 
     builder.addCase(uninstall.fulfilled, (state) => {

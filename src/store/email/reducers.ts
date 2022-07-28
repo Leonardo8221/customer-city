@@ -45,11 +45,14 @@ const emailReducer = createSlice({
       state.connectedAccount = payload;
     });
 
-    builder.addMatcher(isAnyOf(getEmails.pending, getEmail.pending, deleteEmail.pending), (state) => {
-      state.loading = true;
-      state.error = false;
-      state.success = false;
-    });
+    builder.addMatcher(
+      isAnyOf(getEmails.pending, getEmail.pending, deleteEmail.pending, getConnectedAccount.pending),
+      (state) => {
+        state.loading = true;
+        state.error = false;
+        state.success = false;
+      },
+    );
 
     builder.addMatcher(isAnyOf(getEmails.rejected, getEmail.rejected, deleteEmail.rejected), (state, { error }) => {
       state.loading = false;

@@ -1,27 +1,27 @@
-import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
-import format from 'date-fns/format';
-import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
-import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
-import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
+import { Divider, Typography } from '@mui/material';
 // import { ReactComponent as ControlIcon } from 'assets/icons/controls.svg';
 import { ReactComponent as ContactAvatarIcon } from 'assets/icons/contactAvatar.svg';
-import { Divider, Typography } from '@mui/material';
-import PopoverWrapper from 'components/PopoverWrapper';
+import { ReactComponent as DeleteIcon } from 'assets/icons/delete.svg';
+import { ReactComponent as DotsIcon } from 'assets/icons/dots.svg';
+import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import { Contact, ContactType, CONTACT_TYPE_OPTIONS } from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
-import { CustomSelect } from 'components/CustomSelect';
-import { useContact } from 'store/contact/hooks';
 import { Loader } from 'components/Loader';
 import { useEmail } from 'store/email/hooks';
 import { OptionValue } from 'core/types';
 import { getContactStages as getContactStagesApi } from 'http/contact/contactStage';
 import { getContactStatuss as getContactStatussApi } from 'http/contact/contactStatus';
 import { getContactSources as getContactSourcesApi } from 'http/contact/contactSource';
+import PopoverWrapper from 'components/PopoverWrapper';
+import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { useContact } from 'store/contact/hooks';
+import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
+import { CustomSelect } from 'components/CustomSelect';
+import { format } from 'date-fns';
 
 interface Props {
   contactId: number;
@@ -36,7 +36,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const [contSources, setContSources] = useState<OptionValue<number>[]>([]);
 
   const { loading, error, contact, getContact, updateContact, deleteContact } = useContact();
-  const { connectedAccount, getConnectedAccount } = useEmail();
 
   useEffect(() => {
     getContactStagesApi().then((res) => {
@@ -62,10 +61,6 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
     });
     getContact(contactId);
   }, [contactId, getContact]);
-
-  useEffect(() => {
-    getConnectedAccount();
-  }, []);
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
