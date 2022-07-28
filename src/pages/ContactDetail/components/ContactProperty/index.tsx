@@ -10,7 +10,6 @@ import { Contact, ContactType, CONTACT_TYPE_OPTIONS } from 'store/contact/types'
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { Loader } from 'components/Loader';
-import { useEmail } from 'store/email/hooks';
 import { OptionValue } from 'core/types';
 import { getContactStages as getContactStagesApi } from 'http/contact/contactStage';
 import { getContactStatuss as getContactStatussApi } from 'http/contact/contactStatus';
