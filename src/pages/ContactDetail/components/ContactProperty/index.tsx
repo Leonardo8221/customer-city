@@ -11,19 +11,17 @@ import { Divider, Typography } from '@mui/material';
 import PopoverWrapper from 'components/PopoverWrapper';
 import { DeleteModal } from 'components/DeleteModal';
 import { useNavigate } from 'react-router-dom';
-import {
-  Contact,
-  CONTACT_SOURCE_OPTIONS,
-  CONTACT_STAGE_OPTIONS,
-  CONTACT_STATUS_OPTIONS,
-  CONTACT_TYPE_OPTIONS,
-} from 'store/contact/types';
+import { Contact, ContactType, CONTACT_TYPE_OPTIONS } from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { StyledDropDownPanel } from 'components/DropDownPanel';
 import { CustomSelect } from 'components/CustomSelect';
 import { useContact } from 'store/contact/hooks';
 import { Loader } from 'components/Loader';
 import { useEmail } from 'store/email/hooks';
+import { OptionValue } from 'core/types';
+import { getContactStages as getContactStagesApi } from 'http/contact/contactStage';
+import { getContactStatuss as getContactStatussApi } from 'http/contact/contactStatus';
+import { getContactSources as getContactSourcesApi } from 'http/contact/contactSource';
 
 interface Props {
   contactId: number;
@@ -33,10 +31,35 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
+  const [contStages, setContStages] = useState<OptionValue<number>[]>([]);
+  const [contStatuss, setContStatuss] = useState<OptionValue<number>[]>([]);
+  const [contSources, setContSources] = useState<OptionValue<number>[]>([]);
+
   const { loading, error, contact, getContact, updateContact, deleteContact } = useContact();
   const { connectedAccount, getConnectedAccount } = useEmail();
 
   useEffect(() => {
+    getContactStagesApi().then((res) => {
+      setContStages(
+        res.map((stage) => {
+          return { label: stage.contactStageName, value: stage.contactStageId };
+        }),
+      );
+    });
+    getContactStatussApi().then((res) => {
+      setContStatuss(
+        res.map((stage) => {
+          return { label: stage.contactStatusName, value: stage.contactStatusId };
+        }),
+      );
+    });
+    getContactSourcesApi().then((res) => {
+      setContSources(
+        res.map((stage) => {
+          return { label: stage.contactSourceName, value: stage.contactSourceId };
+        }),
+      );
+    });
     getContact(contactId);
   }, [contactId, getContact]);
 
@@ -118,35 +141,35 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
           </TitleContainer>
 
           <TitleContainer label="Contact Source">
-            {/* <CustomSelect<string>
-              value={contact?.contactSource ?? '-'}
-              options={CONTACT_SOURCE_OPTIONS}
-              onSelect={async (value) => handleUpdate({ contactSource: value })}
-            /> */}
+            <CustomSelect<number>
+              value={contact?.contactSourceId ?? 0}
+              options={contSources}
+              onSelect={async (value) => handleUpdate({ contactSourceId: value })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Contact Type">
-            {/* <CustomSelect<string>
+            <CustomSelect<string>
               value={contact?.contactType ?? '-'}
               options={CONTACT_TYPE_OPTIONS}
-              onSelect={async (value) => handleUpdate({ contactType: value })}
-            /> */}
+              onSelect={async (value) => handleUpdate({ contactType: value as ContactType })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Contact Status">
-            {/* <CustomSelect<string>
-              value={contact?.contactStatus ?? '-'}
-              options={CONTACT_STATUS_OPTIONS}
-              onSelect={async (value) => handleUpdate({ contactStatus: value })}
-            /> */}
+            <CustomSelect<number>
+              value={contact?.contactStatusId ?? 0}
+              options={contStatuss}
+              onSelect={async (value) => handleUpdate({ contactStatusId: value })}
+            />
           </TitleContainer>
 
           <TitleContainer label="Contact Stage">
-            {/* <CustomSelect<string>
-              value={contact?.contactStage ?? '-'}
-              options={CONTACT_STAGE_OPTIONS}
-              onSelect={async (value) => handleUpdate({ contactStage: value })}
-            /> */}
+            <CustomSelect<number>
+              value={contact?.contactStageId ?? 0}
+              options={contStages}
+              onSelect={async (value) => handleUpdate({ contactStageId: value })}
+            />
           </TitleContainer>
         </StyledDropDownPanel>
 
@@ -189,18 +212,18 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
         <StyledDropDownPanel title={'System Information'}>
           <TitleContainer label="Created Date">
             <Typography variant="p14">
-              {/* {contact?.contactUpdatedAt ? format(new Date(contact?.contactCreatedAt), 'PP') : '-'} */}
+              {contact?.createDate ? format(new Date(contact?.createDate), 'PP') : '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated on">
             <Typography variant="p14">
-              {/* {contact?.contactUpdatedAt ? format(new Date(contact?.contactUpdatedAt), 'PP') : '-'} */}
+              {contact?.updateDate ? format(new Date(contact?.updateDate), 'PP') : '-'}
             </Typography>
           </TitleContainer>
 
           <TitleContainer label="Last Updated by" icon="user">
-            {/* <Typography variant="p14">{contact?.contactModifiedBy ?? '-'}</Typography> */}
+            <Typography variant="p14">{contact?.tenantUser?.userName ?? '-'}</Typography>
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>

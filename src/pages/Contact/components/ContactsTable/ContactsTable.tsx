@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
     field: 'createdDate',
     headerName: 'Last Activity',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.createdDate), 'PP'),
+    valueGetter: (params: GridValueGetterParams) => format(new Date(params.row.updateDate), 'PP'),
   },
 ];
 

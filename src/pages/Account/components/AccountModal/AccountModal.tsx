@@ -1,5 +1,5 @@
-import { FC, useState, useRef } from 'react';
-import { Typography, Divider, IconButton, Grid, InputLabel } from '@mui/material';
+import { FC, useState, useRef, useEffect } from 'react';
+import { Typography, Divider, IconButton, Grid, InputLabel, Paper } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
@@ -22,13 +22,16 @@ import { CustomTextArea } from 'components/CustomTextarea';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 import { ContactInformation, defaultContactInfo } from 'store/types';
+import { getAccountTypes as getAccountTypesApi } from 'http/account/accountType';
+import { CustomDropdown } from 'components/CustomDropdown';
+import { OptionValue } from 'core/types';
 
 interface FormValues {
   accountName: string;
   description: string;
   // industryId: number;
   revenuePerYear: number;
-  // accountType: string;
+  accountTypeId: number;
   contactInfo: ContactInformation;
 }
 
@@ -46,6 +49,17 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
+  const [accTypes, setAccTypes] = useState<OptionValue<number>[]>([]);
+
+  useEffect(() => {
+    getAccountTypesApi().then((res) => {
+      setAccTypes(
+        res.map((acc) => {
+          return { label: acc.accountTypeName, value: acc.accountTypeId };
+        }),
+      );
+    });
+  }, []);
 
   const closeModal = () => {
     formRef.current?.resetForm();
@@ -78,6 +92,7 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
     revenuePerYear: account?.revenuePerYear ?? 0,
     // industryId: account?.industryId ?? 0,
     description: account?.description ?? '',
+    accountTypeId: account?.accountTypeId ?? 0,
     contactInfo: account?.contactInfo ?? defaultContactInfo,
   };
 
@@ -138,19 +153,19 @@ const AccountModal: FC<AccountModalProps> = ({ open, account, toggleOpen }) => {
                         onBlur={handleBlur}
                       />
 
-                      {/* <CustomDropdown<string>
-                    id="accountType"
-                    label="Account Type"
-                    placeholder="Select the Account type"
-                    value={values.accountType}
-                    options={[]}
-                    onSelect={(value) => setFieldValue('accountType', value)}
-                    InputProps={{
-                      error: touched.accountType && !!errors.accountType,
-                      onBlur: handleBlur,
-                    }}
-                    PaperComponent={Paper}
-                  /> */}
+                      <CustomDropdown<number>
+                        id="accountTypeId"
+                        label="Account Type"
+                        placeholder="Select the Account type"
+                        value={values.accountTypeId}
+                        options={accTypes}
+                        onSelect={(value) => setFieldValue('accountTypeId', value)}
+                        InputProps={{
+                          error: touched.accountTypeId && !!errors.accountTypeId,
+                          onBlur: handleBlur,
+                        }}
+                        PaperComponent={Paper}
+                      />
 
                       <CustomInput
                         id="accountRevenue"

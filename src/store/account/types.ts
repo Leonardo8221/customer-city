@@ -29,17 +29,6 @@ export interface Account {
   createdBy: number;
   tenantUser: User;
   contactInfo: ContactInformation;
-
-  // accountBillingStreet: string;
-  // accountBillingCity: string;
-  // accountBillingState: string;
-  // accountBillingCountry: string;
-  // accountBillingZipCode: string;
-  // accountWebSite: string;
-  // accountPrimaryContact: string;
-  // accountStage: string;
-  // accountStatus: string;
-  // accountType: string;
 }
 
 export interface AccountState {

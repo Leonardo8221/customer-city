@@ -5,8 +5,6 @@ import userReducer, { initialState as userState } from './user/reducers';
 import productReducer, { initialState as productState } from './product/reducers';
 import contactReducer, { initialState as contactState } from './contact/reducers';
 import accountReducer, { initialState as accountState } from './account/reducers';
-import accountStageReducer, { initialState as accountStageState } from './accountStage/reducers';
-import accountTypeReducer, { initialState as accountTypeState } from './accountType/reducers';
 import dealReducer, { initialState as dealState } from './deal/reducers';
 import dealStageReducer, { initialState as dealStageState } from './dealStage/reducers';
 import emailReducer, { initialState as emailState } from './email/reducers';
@@ -20,8 +18,6 @@ export const initialRootState = {
   product: productState,
   contact: contactState,
   account: accountState,
-  accountStage: accountStageState,
-  accountType: accountTypeState,
   deal: dealState,
   email: emailState,
   dealStage: dealStageState,
@@ -36,8 +32,6 @@ const rootReducer = combineReducers({
   product: productReducer,
   contact: contactReducer,
   account: accountReducer,
-  accountStage: accountStageReducer,
-  accountType: accountTypeReducer,
   deal: dealReducer,
   email: emailReducer,
   dealStage: dealStageReducer,

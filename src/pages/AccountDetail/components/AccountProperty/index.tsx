@@ -16,9 +16,10 @@ import { useAccount } from 'store/account/hooks';
 import { CustomSelect } from 'components/CustomSelect';
 import { Account, ACCOUNT_INDUSTRY_OPTIONS, ACCOUNT_STATUS_OPTIONS } from 'store/account/types';
 import { Loader } from 'components/Loader';
-import { useAccountStage } from 'store/accountStage/hooks';
-import { useAccountType } from 'store/accountType/hooks';
 import { EditableInput } from 'components/Editable';
+import { getAccountStages as getAccountStagesApi } from 'http/account/accountStage';
+import { getAccountTypes as getAccountTypesApi } from 'http/account/accountType';
+import { OptionValue } from 'core/types';
 
 interface Props {
   accountId: number;
@@ -27,33 +28,29 @@ interface Props {
 const AccountProperty: FC<Props> = ({ accountId }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [accStages, setAccStages] = useState<OptionValue<number>[]>([]);
+  const [accTypes, setAccTypes] = useState<OptionValue<number>[]>([]);
 
   const { loading, error, account, accounts, getAccount, getAccounts, deleteAccount, updateAccount } = useAccount();
-  const { accountStages, getAccountStages } = useAccountStage();
-  const { accountTypes, getAccountTypes } = useAccountType();
 
   useEffect(() => {
+    getAccountStagesApi().then((res) => {
+      setAccStages(
+        res.map((acc) => {
+          return { label: acc.accountStageName, value: acc.accountStageId };
+        }),
+      );
+    });
+    getAccountTypesApi().then((res) => {
+      setAccTypes(
+        res.map((acc) => {
+          return { label: acc.accountTypeName, value: acc.accountTypeId };
+        }),
+      );
+    });
     getAccount(accountId);
     getAccounts();
-    getAccountStages();
-    getAccountTypes();
-  }, [accountId, getAccount, getAccounts, getAccountStages, getAccountTypes]);
-
-  const accountStageSuggestions = useMemo(
-    () =>
-      accountStages.map((acc) => {
-        return { label: acc.accountStageName, value: acc.accountStageId };
-      }),
-    [accountStages],
-  );
-
-  const accountTypeSuggestions = useMemo(
-    () =>
-      accountTypes.map((acc) => {
-        return { label: acc.accountTypeName, value: acc.accountTypeId };
-      }),
-    [accountTypes],
-  );
+  }, [accountId, getAccount, getAccounts]);
 
   const accountSuggestions = useMemo(
     () =>
@@ -157,7 +154,7 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           <TitleContainer label="Account Stage">
             <CustomSelect<number>
               value={account?.accountStageId ?? 0}
-              options={accountStageSuggestions}
+              options={accStages}
               onSelect={async (value) => handleUpdate({ accountStageId: value })}
             />
           </TitleContainer>
@@ -173,7 +170,7 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
           <TitleContainer label="Account Type">
             <CustomSelect<number>
               value={account?.accountTypeId ?? 0}
-              options={accountTypeSuggestions}
+              options={accTypes}
               onSelect={async (value) => handleUpdate({ accountTypeId: value })}
             />
           </TitleContainer>

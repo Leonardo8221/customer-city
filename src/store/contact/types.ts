@@ -1,4 +1,5 @@
 import { ContactInformation } from 'store/types';
+import { User } from 'store/user/types';
 
 export const CONTACT_SOURCE_OPTIONS = [
   { label: 'Website', value: 'website' },
@@ -8,11 +9,6 @@ export const CONTACT_SOURCE_OPTIONS = [
   { label: 'Media', value: 'media' },
   { label: 'Tradeshow', value: 'tradeshow' },
   { label: 'Campaign', value: 'campaign' },
-];
-
-export const CONTACT_TYPE_OPTIONS = [
-  { label: 'Active', value: 'active' },
-  { label: 'Inactive', value: 'inactive' },
 ];
 
 export const CONTACT_STATUS_OPTIONS = [
@@ -34,6 +30,15 @@ export const CONTACT_STAGE_OPTIONS = [
   { label: 'Customer', value: 'Customer' },
 ];
 
+export enum ContactType {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+}
+
+export const CONTACT_TYPE_OPTIONS = [
+  { label: 'Active', value: ContactType.ACTIVE },
+  { label: 'Inactive', value: ContactType.INACTIVE },
+];
 export interface Contact {
   contactId: number;
   ssid: string;
@@ -42,11 +47,16 @@ export interface Contact {
   lastName: string;
   title: string;
   image: string;
-  createdDate: Date;
+  contactStageId: number;
+  contactSourceId: number;
+  contactStatusId: number;
+  createDate: Date;
+  updateDate: Date;
+  contactType: ContactType;
   workDepartmentId: number;
   reportsTo: number;
   createdBy: number;
-  tenantUserId: number;
+  tenantUser: User;
   //contactInfo
   contactInfo: ContactInformation;
 }

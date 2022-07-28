@@ -1,5 +1,10 @@
-import { AccountType } from 'store/accountType/types';
 import { apiCall } from '../index';
+
+export interface AccountType {
+  accountTypeId: number;
+  accountTypeName: string;
+  description: string;
+}
 
 export const createAccountType = (data: Partial<AccountType>): Promise<AccountType> =>
   apiCall({ method: 'post', url: '/accountType', data });

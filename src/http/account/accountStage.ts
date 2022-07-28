@@ -1,5 +1,10 @@
-import { AccountStage } from 'store/accountStage/types';
 import { apiCall } from '../index';
+
+export interface AccountStage {
+  accountStageId: number;
+  accountStageName: string;
+  description: string;
+}
 
 export const createAccountStage = (data: Partial<AccountStage>): Promise<AccountStage> =>
   apiCall({ method: 'post', url: '/accountStage', data });
