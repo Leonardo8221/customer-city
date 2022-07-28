@@ -11,6 +11,7 @@ import emailReducer, { initialState as emailState } from './email/reducers';
 import tenantReducer, { initialState as tenantState } from './tenant/reducers';
 import integrationReducer, { initialState as integrationState } from './integration/reducers';
 import integrationStatusReducer, { initialState as integrationStatusState } from './integration-status/reducers';
+import activityReducer, { initialState as activityState } from './activity/reducers';
 
 export const initialRootState = {
   auth: authState,
@@ -24,6 +25,7 @@ export const initialRootState = {
   tenant: tenantState,
   integration: integrationState,
   integrationStatus: integrationStatusState,
+  activity: activityState,
 };
 
 const rootReducer = combineReducers({
@@ -38,6 +40,7 @@ const rootReducer = combineReducers({
   tenant: tenantReducer,
   integration: integrationReducer,
   integrationStatus: integrationStatusReducer,
+  activity: activityReducer,
 });
 
 export default rootReducer;
