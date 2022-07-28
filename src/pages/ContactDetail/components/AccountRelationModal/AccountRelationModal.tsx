@@ -22,7 +22,7 @@ const AccountRelationModal: FC<AccountRelationModalProps> = ({ open, onSelect, t
       accounts.map((acc) => {
         return { label: acc.accountName, value: acc.accountId } as OptionValue<number>;
       }),
-    [accounts, accountId],
+    [accounts],
   );
 
   const handleSubmit = () => {

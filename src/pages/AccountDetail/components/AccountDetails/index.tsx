@@ -15,19 +15,24 @@ const AccountDetails: FC = () => {
   const [openAddContact, setOpenAddContact] = useState<boolean>(false);
   const [accountContacts, setAccountContacts] = useState<AccountContact[]>([]);
 
-  useEffect(() => {
+  const getContactsByAccount = () => {
     if (!account) return;
     getContactsByAccountId(account.accountId).then((res: AccountContact[]) => setAccountContacts(res));
-  }, [account]);
+  };
+
+  useEffect(getContactsByAccount, [account]);
 
   const toggleModal = () => {
     setOpenAddContact((prevState: boolean) => !prevState);
   };
 
   const handleAddContact = (id: number) => {
-    createAccountContact({ accountId: account?.accountId, contactId: id });
+    createAccountContact({ accountId: account?.accountId, contactId: id }).then((res) => {
+      getContactsByAccount();
+    });
     toggleModal();
   };
+
   return (
     <Container>
       <Typography variant="h3">{'Details'}</Typography>
