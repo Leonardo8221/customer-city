@@ -5,7 +5,7 @@ import { ReactComponent as EditCircleIcon } from 'assets/icons/editCircleBlue.sv
 import { ReactComponent as EmailIcon } from 'assets/icons/email.svg';
 import { ReactComponent as PhoneIcon } from 'assets/icons/phone.svg';
 import { ReactComponent as SMSIcon } from 'assets/icons/sms.svg';
-import { EmailProviderModal } from 'pages/ContactDetail/components/EmailProviderModal';
+import { EmailProviderModal } from 'pages/ContactDetail/components/ContactActivity/components/EmailProviderModal';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useEmail } from 'store/email/hooks';
 import EmailModal from '../EmailModal';
