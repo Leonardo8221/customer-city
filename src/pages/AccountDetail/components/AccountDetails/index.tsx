@@ -1,12 +1,38 @@
 import { Divider, Typography } from '@mui/material';
 import DropDownPanel from 'components/DropDownPanel';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Container } from './ui';
 import { ContactItem, DealItem } from 'components/DetailItems';
 import { CustomIconButton } from 'components/ui';
+import { AccountContact, createAccountContact, getContactsByAccountId } from 'http/account/accountContact';
+import { useAccount } from 'store/account/hooks';
+import ContactRelationModal from '../ContactRelationModal/ContactRelationModal';
+import { Contact } from 'store/contact/types';
 
 const AccountDetails: FC = () => {
+  const { account } = useAccount();
+  const [openAddContact, setOpenAddContact] = useState<boolean>(false);
+  const [accountContacts, setAccountContacts] = useState<AccountContact[]>([]);
+
+  const getContactsByAccount = () => {
+    if (!account) return;
+    getContactsByAccountId(account.accountId).then((res: AccountContact[]) => setAccountContacts(res));
+  };
+
+  useEffect(getContactsByAccount, [account]);
+
+  const toggleModal = () => {
+    setOpenAddContact((prevState: boolean) => !prevState);
+  };
+
+  const handleAddContact = (id: number) => {
+    createAccountContact({ accountId: account?.accountId, contactId: id }).then((res) => {
+      getContactsByAccount();
+    });
+    toggleModal();
+  };
+
   return (
     <Container>
       <Typography variant="h3">{'Details'}</Typography>
@@ -20,11 +46,14 @@ const AccountDetails: FC = () => {
       </DropDownPanel>
 
       <DropDownPanel title={'Contacts'}>
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <CustomIconButton startIcon={<PlusIcon />}>Add new Contact</CustomIconButton>
+        {accountContacts.map((accountContact) => (
+          <ContactItem key={accountContact.accountContactId} item={accountContact} />
+        ))}
+        <CustomIconButton startIcon={<PlusIcon />} onClick={() => toggleModal()}>
+          Add new Contact
+        </CustomIconButton>
       </DropDownPanel>
+      <ContactRelationModal open={openAddContact} toggleOpen={() => toggleModal()} onSelect={handleAddContact} />
     </Container>
   );
 };

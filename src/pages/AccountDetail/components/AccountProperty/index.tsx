@@ -21,17 +21,15 @@ import { getAccountStages as getAccountStagesApi } from 'http/account/accountSta
 import { getAccountTypes as getAccountTypesApi } from 'http/account/accountType';
 import { OptionValue } from 'core/types';
 
-interface Props {
-  accountId: number;
-}
-
-const AccountProperty: FC<Props> = ({ accountId }) => {
+const AccountProperty: FC = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [accStages, setAccStages] = useState<OptionValue<number>[]>([]);
   const [accTypes, setAccTypes] = useState<OptionValue<number>[]>([]);
 
-  const { loading, error, account, accounts, getAccount, getAccounts, deleteAccount, updateAccount } = useAccount();
+  const { loading, error, account, accounts, getAccounts, deleteAccount, updateAccount } = useAccount();
+
+  const accountId = account?.accountId;
 
   useEffect(() => {
     getAccountStagesApi().then((res) => {
@@ -48,9 +46,8 @@ const AccountProperty: FC<Props> = ({ accountId }) => {
         }),
       );
     });
-    getAccount(accountId);
     getAccounts();
-  }, [accountId, getAccount, getAccounts]);
+  }, [accountId, getAccounts]);
 
   const accountSuggestions = useMemo(
     () =>
