@@ -1,7 +1,7 @@
 import { useActionCreator } from 'hooks';
 import { shallowEqual, useSelector } from 'react-redux';
 import { RootState } from 'store/types';
-import { getActivities, setError, setLoading, setSuccessRead, setSuccessWrite } from './actions';
+import { createActivity, getActivities, setError, setLoading, setSuccessRead, setSuccessWrite } from './actions';
 import { ActivityReturnHook } from './types';
 
 export const useActivity = (): ActivityReturnHook => {
@@ -14,5 +14,6 @@ export const useActivity = (): ActivityReturnHook => {
     setSuccessWrite: useActionCreator(setSuccessWrite),
     setLoading: useActionCreator(setLoading),
     getActivities: useActionCreator(getActivities),
+    createActivity: useActionCreator(createActivity),
   };
 };

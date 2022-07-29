@@ -18,6 +18,11 @@ import { useContact } from 'store/contact/hooks';
 import { OptionValue } from 'core/types';
 import { useEmail } from 'store/email/hooks';
 import { Email } from 'store/email/types';
+import { useActivity } from 'store/activity/hooks';
+import { Activity } from 'store/activity/types';
+import { ACTIVITY_TYPE_ID } from 'types';
+import { Contact } from 'store/contact/types';
+import { CreateActivityDto } from 'http/activity';
 
 interface EmailModalProps {
   open: boolean;
@@ -40,8 +45,9 @@ const validationSchema = yup.object({
 const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const editor = useRef(null);
   const { user } = useUser();
-  const { contacts, getContacts } = useContact();
+  const { contacts, getContacts, contact } = useContact();
   const { loading, createEmail, connectedAccount } = useEmail();
+  const { createActivity } = useActivity();
 
   const [emailFrom, setEmailFrom] = useState<string>(user?.userEmail || '');
 
@@ -61,10 +67,20 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const formRef = useRef<FormikProps<FormValues> | null>(null);
 
   const onSubmit = async (values: FormValues) => {
-    const data: Partial<Email> = {
+    const email: Partial<Email> = {
       ...values,
     };
-    await createEmail(data);
+    createEmail(email);
+    const activity: Partial<CreateActivityDto> = {
+      activityTypeId: ACTIVITY_TYPE_ID.EMAIL,
+      contactStageId: (contact as Contact).contactStageId,
+      status: 'send',
+      emailActivityDetail: {
+        emailSubject: email.emailSubject,
+        emailBody: email.emailContent,
+      },
+    };
+    createActivity(activity);
     toggleOpen();
   };
 

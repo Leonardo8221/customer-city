@@ -32,12 +32,6 @@ const activityReducer = createSlice({
       state.successWrite = payload;
     });
 
-    builder.addCase(getActivities.fulfilled, (state, { payload }) => {
-      state.activities = payload;
-      state.successRead = true;
-      state.loading = false;
-    });
-
     builder.addMatcher(isAnyOf(getActivities.pending), (state) => {
       state.loading = true;
       state.error = false;
@@ -51,6 +45,18 @@ const activityReducer = createSlice({
       state.loading = false;
       state.successRead = false;
       state.successWrite = false;
+    });
+
+    builder.addMatcher(isAnyOf(getActivities.fulfilled), (state, { payload }) => {
+      if (payload instanceof Array) {
+        state.activities = payload;
+      } else {
+        state.activity = payload;
+      }
+      state.successRead = true;
+      state.successWrite = false;
+      state.loading = false;
+      state.error = false;
     });
   },
 });

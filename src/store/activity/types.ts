@@ -1,18 +1,22 @@
+import { CreateActivityDto } from 'http/activity';
+import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID } from 'types';
+
 export interface EmailActivityDetail {
-  activityId: number;
-  email_subject: string;
-  email_body: string;
-  email_date: Date;
-  email_time: Date;
+  emailSubject: string;
+  emailBody: string;
+  emailDate: Date;
+  emailTime: Date;
+  emailTypeId?: EMAIL_TYPE_ID;
   hasAttachment: boolean;
 }
 
 export interface Activity {
   activityId: number;
-  activityType: string;
+  activityTypeId: ACTIVITY_TYPE_ID;
   status: string;
   startDate: Date;
   dueDate: Date;
+  contactStageId: CONTACT_STAGE_ID;
   emailActivityDetails?: EmailActivityDetail[];
   // callActivityDetails?: [],
 }
@@ -33,4 +37,5 @@ export interface ActivityReturnHook extends ActivityState {
   setSuccessRead: (success: boolean) => void;
   setSuccessWrite: (success: boolean) => void;
   getActivities: () => void;
+  createActivity: (data: Partial<CreateActivityDto>) => void;
 }
