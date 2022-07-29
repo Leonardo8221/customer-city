@@ -59,6 +59,9 @@ export interface Contact {
   tenantUser: User;
   //contactInfo
   contactInfo: ContactInformation;
+  accountContacts?: {
+    accountId: number;
+  }[];
 }
 
 export interface ContactState {

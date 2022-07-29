@@ -1,9 +1,13 @@
 import { Activity, EmailActivityDetail } from 'store/activity/types';
-import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID } from 'types';
+import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, SALE_PHASE_ID } from 'types';
 import { apiCall } from '../index';
 
-export interface CreateActivityDto extends Partial<Activity> {
+export interface CreateActivityDto {
   activityTypeId: ACTIVITY_TYPE_ID;
+  salePhaseId: SALE_PHASE_ID;
+  tenantId: number;
+  accountId: number;
+  contactId: number;
   status: string;
   startDate: Date;
   dueDate: Date;
