@@ -131,7 +131,7 @@ const DealProperty: FC = () => {
             id="contactId"
             name="contactId"
             icon="contact"
-            options={accountSuggestions}
+            options={contactSuggestions}
             label="Contact name"
             value={deal?.contactId ?? 0}
             fullWidth
