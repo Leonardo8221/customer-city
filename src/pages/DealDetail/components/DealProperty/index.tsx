@@ -117,20 +117,26 @@ const DealProperty: FC = () => {
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
           {/* <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} /> */}
-          <TitleContainer label="Account">
-            <CustomSelect<number>
-              value={deal?.accountId ?? 0}
-              options={accountSuggestions}
-              onSelect={async (value) => handleUpdate({ accountId: value })}
-            />
-          </TitleContainer>
-          <TitleContainer label="Contact">
-            <CustomSelect<number>
-              value={deal?.contactId ?? 0}
-              options={contactSuggestions}
-              onSelect={async (value) => handleUpdate({ contactId: value })}
-            />
-          </TitleContainer>
+          <EditableDropDown
+            id="accountId"
+            name="accountId"
+            icon="account"
+            options={accountSuggestions}
+            label="Account name"
+            value={deal?.accountId ?? 0}
+            fullWidth
+            onSave={async (value) => handleUpdate({ accountId: value })}
+          />
+          <EditableDropDown
+            id="contactId"
+            name="contactId"
+            icon="contact"
+            options={accountSuggestions}
+            label="Contact name"
+            value={deal?.contactId ?? 0}
+            fullWidth
+            onSave={async (value) => handleUpdate({ contactId: value })}
+          />
           <EditableInput
             id="description"
             name="description"
@@ -170,13 +176,16 @@ const DealProperty: FC = () => {
             {/* <Typography variant="p14">{deal?.dealType ?? '-'}</Typography> */}
           </TitleContainer>
 
-          <TitleContainer label="Owner">
-            <CustomSelect<number>
-              value={deal?.tenantUserId ?? 0}
-              options={userSuggestions}
-              onSelect={async (value) => handleUpdate({ tenantUserId: value })}
-            />
-          </TitleContainer>
+          <EditableDropDown
+            id="tenantUserId"
+            name="tenantUserId"
+            icon="account"
+            options={userSuggestions}
+            label="Owner"
+            value={deal?.tenantUserId ?? 0}
+            fullWidth
+            onSave={async (value) => handleUpdate({ tenantUserId: value })}
+          />
 
           <TitleContainer label="Pipeline">
             {/* <Typography variant="p14">{deal?.dealPipelineName ?? '-'}</Typography> */}

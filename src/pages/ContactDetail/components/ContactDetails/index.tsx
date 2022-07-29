@@ -3,22 +3,20 @@ import DropDownPanel from 'components/DropDownPanel';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { Container } from './ui';
-import { AccountItem, DealItem } from 'components/DetailItems';
+import { DealItem } from 'components/DetailItems';
 import { CustomIconButton } from 'components/ui';
 import { useContact } from 'store/contact/hooks';
-import { AccountContact, createAccountContact, getAccountsByContactId } from 'http/account/accountContact';
-import AccountRelationModal from '../AccountRelationModal/AccountRelationModal';
+import { AccountContact } from 'http/account/accountContact';
 import { CustomSelect } from 'components/CustomSelect';
 import { useAccount } from 'store/account/hooks';
 import { OptionValue } from 'core/types';
 import { Contact } from 'store/contact/types';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
+import { EditableDropDown } from 'components/Editable';
 
 const ContactDetails: FC = () => {
   const { contact, updateContact } = useContact();
   const { accounts, getAccounts } = useAccount();
-  const [openAddAccount, setOpenAddAccount] = useState<boolean>(false);
-  const [accountContacts, setAccountContacts] = useState<AccountContact[]>([]);
 
   useEffect(() => {
     getAccounts();
@@ -47,13 +45,16 @@ const ContactDetails: FC = () => {
       </DropDownPanel>
 
       <DropDownPanel title={'Account Relation'}>
-        <TitleContainer label="Account Name" icon="user">
-          <CustomSelect<number>
-            value={contact?.accountId ?? 0}
-            options={suggestions}
-            onSelect={async (value) => handleUpdate({ accountId: value })}
-          />
-        </TitleContainer>
+        <EditableDropDown
+          id="accountId"
+          name="accountId"
+          icon="account"
+          options={suggestions}
+          label="Account name"
+          value={contact?.accountId ?? 0}
+          fullWidth
+          onSave={async (value) => handleUpdate({ accountId: value })}
+        />
       </DropDownPanel>
     </Container>
   );

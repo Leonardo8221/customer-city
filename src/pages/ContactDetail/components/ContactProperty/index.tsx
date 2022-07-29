@@ -1,5 +1,5 @@
 import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { BackToRoute, Container, DeleteButton, ProfileHead, PropertyContainer } from './ui';
 import format from 'date-fns/format';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
@@ -22,9 +22,12 @@ import { OptionValue } from 'core/types';
 import { getContactStages as getContactStagesApi } from 'http/contact/contactStage';
 import { getContactStatuss as getContactStatussApi } from 'http/contact/contactStatus';
 import { getContactSources as getContactSourcesApi } from 'http/contact/contactSource';
+import { EditableDropDown } from 'components/Editable';
+import { useAccount } from 'store/account/hooks';
 
 const ContactProperty: FC = () => {
   const navigate = useNavigate();
+  const { accounts } = useAccount();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [contStages, setContStages] = useState<OptionValue<number>[]>([]);
@@ -33,6 +36,12 @@ const ContactProperty: FC = () => {
 
   const { loading, error, contact, updateContact, deleteContact } = useContact();
   const { connectedAccount, getConnectedAccount } = useEmail();
+
+  const suggestions: OptionValue<number>[] = useMemo(() => {
+    return accounts.map((acc, val) => {
+      return { label: acc.accountName, value: acc.accountId };
+    });
+  }, [accounts]);
 
   useEffect(() => {
     getContactStagesApi().then((res) => {
@@ -123,9 +132,16 @@ const ContactProperty: FC = () => {
             <Typography variant="p14">{contact?.lastName ?? '-'}</Typography>
           </TitleContainer>
 
-          <TitleContainer label="Account Name">
-            {/* <Typography variant="p14">{contact?.contactAssociate ?? '-'}</Typography> */}
-          </TitleContainer>
+          <EditableDropDown
+            id="accountId"
+            name="accountId"
+            icon="account"
+            options={suggestions}
+            label="Account name"
+            value={contact?.accountId ?? 0}
+            fullWidth
+            onSave={async (value) => handleUpdate({ accountId: value })}
+          />
 
           <TitleContainer label="Title">
             <Typography variant="p14">{contact?.title ?? '-'}</Typography>
