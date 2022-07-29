@@ -1,9 +1,17 @@
 import { Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Container } from './ui';
 import { ReactComponent as CheckBoxIcon } from 'assets/icons/boxCheckedGrey.svg';
+import { useActivity } from 'store/activity/hooks';
 
 const AllActivity: FC = () => {
+  const { getActivities, activities } = useActivity();
+
+  useEffect(() => {
+    console.log('here ====================================================================================');
+    getActivities();
+  }, []);
+
   return (
     <Container>
       <CheckBoxIcon />

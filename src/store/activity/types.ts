@@ -20,7 +20,8 @@ export interface Activity {
 export interface ActivityState {
   loading: boolean;
   error: boolean;
-  success: boolean;
+  successRead: boolean;
+  successWrite: boolean;
   statusMessage?: string;
   activities: Activity[];
   activity: Activity | null;
@@ -29,5 +30,7 @@ export interface ActivityState {
 export interface ActivityReturnHook extends ActivityState {
   setLoading: (loading: boolean) => void;
   setError: (error: boolean) => void;
-  setSuccess: (success: boolean) => void;
+  setSuccessRead: (success: boolean) => void;
+  setSuccessWrite: (success: boolean) => void;
+  getActivities: () => void;
 }
