@@ -9,28 +9,22 @@ import { AccountContact, createAccountContact, getContactsByAccountId } from 'ht
 import { useAccount } from 'store/account/hooks';
 import ContactRelationModal from '../ContactRelationModal/ContactRelationModal';
 import { Contact } from 'store/contact/types';
+import { useContact } from 'store/contact/hooks';
 
 const AccountDetails: FC = () => {
-  const { account } = useAccount();
+  const { account, getAccount } = useAccount();
+  const { updateContact } = useContact();
   const [openAddContact, setOpenAddContact] = useState<boolean>(false);
-  const [accountContacts, setAccountContacts] = useState<AccountContact[]>([]);
-
-  const getContactsByAccount = () => {
-    if (!account) return;
-    getContactsByAccountId(account.accountId).then((res: AccountContact[]) => setAccountContacts(res));
-  };
-
-  useEffect(getContactsByAccount, [account]);
 
   const toggleModal = () => {
     setOpenAddContact((prevState: boolean) => !prevState);
   };
 
-  const handleAddContact = (id: number) => {
-    createAccountContact({ accountId: account?.accountId, contactId: id }).then((res) => {
-      getContactsByAccount();
-    });
+  const handleAddContact = async (id: number) => {
+    const data: Partial<Contact> = { accountId: account?.accountId };
     toggleModal();
+    await updateContact({ contactId: id, data });
+    getAccount(account?.accountId ?? 0);
   };
 
   return (
@@ -46,8 +40,8 @@ const AccountDetails: FC = () => {
       </DropDownPanel>
 
       <DropDownPanel title={'Contacts'}>
-        {accountContacts.map((accountContact) => (
-          <ContactItem key={accountContact.accountContactId} item={accountContact} />
+        {account?.contacts?.map((contact) => (
+          <ContactItem key={contact.contactId} item={contact} />
         ))}
         <CustomIconButton startIcon={<PlusIcon />} onClick={() => toggleModal()}>
           Add new Contact

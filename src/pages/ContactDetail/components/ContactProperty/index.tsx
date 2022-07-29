@@ -23,11 +23,7 @@ import { getContactStages as getContactStagesApi } from 'http/contact/contactSta
 import { getContactStatuss as getContactStatussApi } from 'http/contact/contactStatus';
 import { getContactSources as getContactSourcesApi } from 'http/contact/contactSource';
 
-interface Props {
-  contactId: number;
-}
-
-const ContactProperty: FC<Props> = ({ contactId }) => {
+const ContactProperty: FC = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -35,7 +31,7 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
   const [contStatuss, setContStatuss] = useState<OptionValue<number>[]>([]);
   const [contSources, setContSources] = useState<OptionValue<number>[]>([]);
 
-  const { loading, error, contact, getContact, updateContact, deleteContact } = useContact();
+  const { loading, error, contact, updateContact, deleteContact } = useContact();
   const { connectedAccount, getConnectedAccount } = useEmail();
 
   useEffect(() => {
@@ -60,8 +56,7 @@ const ContactProperty: FC<Props> = ({ contactId }) => {
         }),
       );
     });
-    getContact(contactId);
-  }, [contactId, getContact]);
+  }, []);
 
   useEffect(() => {
     getConnectedAccount();

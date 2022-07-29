@@ -1,4 +1,4 @@
-import { Divider, Typography } from '@mui/material';
+import { Divider } from '@mui/material';
 import { CustomSelect } from 'components/CustomSelect';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { AccountContact } from 'http/account/accountContact';
@@ -18,12 +18,6 @@ const AccountItem: FC<AccountItemProps> = ({ item }) => {
             value={account?.accountId ?? 0}
             options={[{ label: account?.accountName ?? '', value: account?.accountId ?? 0 }]}
           />
-        </TitleContainer>
-        <TitleContainer label="Office">
-          <Typography variant="p14">{`${account?.contactInfo.city} ${account?.contactInfo.addressState} ${account?.contactInfo.country}`}</Typography>
-        </TitleContainer>
-        <TitleContainer label="Department">
-          <Typography variant="p14">{account?.webURL ?? '-'}</Typography>
         </TitleContainer>
       </AccountContainer>
       <Divider />

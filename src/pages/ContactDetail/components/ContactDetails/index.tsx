@@ -1,36 +1,39 @@
 import { Divider, Typography } from '@mui/material';
 import DropDownPanel from 'components/DropDownPanel';
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Container } from './ui';
 import { AccountItem, DealItem } from 'components/DetailItems';
 import { CustomIconButton } from 'components/ui';
 import { useContact } from 'store/contact/hooks';
 import { AccountContact, createAccountContact, getAccountsByContactId } from 'http/account/accountContact';
 import AccountRelationModal from '../AccountRelationModal/AccountRelationModal';
+import { CustomSelect } from 'components/CustomSelect';
+import { useAccount } from 'store/account/hooks';
+import { OptionValue } from 'core/types';
+import { Contact } from 'store/contact/types';
+import TitleContainer from 'components/TitileContainer/TitleContainer';
 
 const ContactDetails: FC = () => {
-  const { contact } = useContact();
+  const { contact, updateContact } = useContact();
+  const { accounts, getAccounts } = useAccount();
   const [openAddAccount, setOpenAddAccount] = useState<boolean>(false);
   const [accountContacts, setAccountContacts] = useState<AccountContact[]>([]);
 
-  const getAccountByContact = () => {
-    if (!contact) return;
-    getAccountsByContactId(contact.contactId).then((res: AccountContact[]) => setAccountContacts(res));
-  };
+  useEffect(() => {
+    getAccounts();
+  }, [contact]);
 
-  useEffect(getAccountByContact, [contact]);
-
-  const toggleModal = () => {
-    setOpenAddAccount((prevState: boolean) => !prevState);
-  };
-
-  const handleAddAccount = (id: number) => {
-    createAccountContact({ accountId: id, contactId: contact?.contactId }).then((res) => {
-      getAccountByContact();
+  const suggestions: OptionValue<number>[] = useMemo(() => {
+    return accounts.map((acc, val) => {
+      return { label: acc.accountName, value: acc.accountId };
     });
-    toggleModal();
+  }, [accounts]);
+
+  const handleUpdate = (data: Partial<Contact>) => {
+    contact && updateContact({ contactId: contact.contactId, data });
   };
+
   return (
     <Container>
       <Typography variant="h3">{'Details'}</Typography>
@@ -44,15 +47,14 @@ const ContactDetails: FC = () => {
       </DropDownPanel>
 
       <DropDownPanel title={'Account Relation'}>
-        {accountContacts.map((accountContact) => (
-          <AccountItem key={accountContact.accountContactId} item={accountContact} />
-        ))}
-
-        <CustomIconButton startIcon={<PlusIcon />} onClick={() => toggleModal()}>
-          Add Account
-        </CustomIconButton>
+        <TitleContainer label="Account Name" icon="user">
+          <CustomSelect<number>
+            value={contact?.accountId ?? 0}
+            options={suggestions}
+            onSelect={async (value) => handleUpdate({ accountId: value })}
+          />
+        </TitleContainer>
       </DropDownPanel>
-      <AccountRelationModal open={openAddAccount} toggleOpen={() => toggleModal()} onSelect={handleAddAccount} />
     </Container>
   );
 };

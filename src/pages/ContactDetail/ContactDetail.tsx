@@ -26,7 +26,7 @@ const ContactDetailPage: FC = () => {
 
   return (
     <Container>
-      <ContactProperty contactId={Number(contactId)} />
+      <ContactProperty />
 
       <ContactActivity />
 

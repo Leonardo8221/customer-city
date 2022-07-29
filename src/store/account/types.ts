@@ -1,3 +1,4 @@
+import { Contact } from 'store/contact/types';
 import { ContactInformation } from 'store/types';
 import { User } from 'store/user/types';
 
@@ -29,6 +30,7 @@ export interface Account {
   createdBy: number;
   tenantUser: User;
   contactInfo: ContactInformation;
+  contacts: Contact[];
 }
 
 export interface AccountState {

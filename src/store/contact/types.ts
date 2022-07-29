@@ -1,3 +1,4 @@
+import { Account } from 'store/account/types';
 import { ContactInformation } from 'store/types';
 import { User } from 'store/user/types';
 
@@ -50,6 +51,7 @@ export interface Contact {
   contactStageId: number;
   contactSourceId: number;
   contactStatusId: number;
+  accountId: number;
   createDate: Date;
   updateDate: Date;
   contactType: ContactType;
@@ -59,6 +61,7 @@ export interface Contact {
   tenantUser: User;
   //contactInfo
   contactInfo: ContactInformation;
+  accout: Account;
 }
 
 export interface ContactState {
