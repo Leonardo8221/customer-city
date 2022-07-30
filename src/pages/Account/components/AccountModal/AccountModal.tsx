@@ -37,6 +37,7 @@ interface FormValues {
 
 const validationSchema = yup.object({
   accountName: yup.string().required('Required').min(2, 'Invalid Last Name'),
+  accountTypeId: yup.number().required('Required').moreThan(0),
 });
 
 interface AccountModalProps {

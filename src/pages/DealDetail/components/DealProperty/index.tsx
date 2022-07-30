@@ -22,25 +22,16 @@ import { EditableDate, EditableDropDown, EditableInput } from 'components/Editab
 import { useAccount } from 'store/account/hooks';
 import { OptionValue } from 'core/types';
 import { useUser } from 'store/user/hooks';
+import { useContact } from 'store/contact/hooks';
 
-interface Props {
-  dealId: number;
-}
-
-const DealProperty: FC<Props> = ({ dealId }) => {
+const DealProperty: FC = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { loading, error, deal, getDeal, deleteDeal, updateDeal } = useDeal();
-
-  const { accounts, getAccounts } = useAccount();
-  const { users, getUsers } = useUser();
-
-  useEffect(() => {
-    getDeal(Number(dealId));
-    getAccounts();
-    getUsers();
-  }, [dealId, getDeal, getAccounts, getUsers]);
+  const { loading, error, deal, deleteDeal, updateDeal } = useDeal();
+  const { accounts } = useAccount();
+  const { contacts } = useContact();
+  const { users } = useUser();
 
   const toggleModalOpen = useCallback(() => {
     setModalOpen((prevState) => !prevState);
@@ -69,6 +60,13 @@ const DealProperty: FC<Props> = ({ dealId }) => {
       return acc;
     }, [] as OptionValue<number>[]);
   }, [accounts]);
+
+  const contactSuggestions = useMemo(() => {
+    return contacts.reduce((acc, val) => {
+      acc.push({ label: val.title, value: val.contactId });
+      return acc;
+    }, [] as OptionValue<number>[]);
+  }, [contacts]);
 
   return (
     <Container>
@@ -118,16 +116,27 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} /> */}
         </TitleContainer>
         <StyledDropDownPanel title={'Core Information'}>
-          {/* <EditableDropDown
-            id="dealAccountName"
-            name="dealAccountName"
+          {/* <StageBar stage={DEAL_STAGE_OPTIONS.findIndex((option) => option.value === deal?.dealStage) + 1} /> */}
+          <EditableDropDown
+            id="accountId"
+            name="accountId"
             icon="account"
             options={accountSuggestions}
             label="Account name"
-            value={{ label: deal?.dealAccount?.accountName ?? '-', value: deal?.dealAccountId ?? 0 }}
+            value={deal?.accountId ?? 0}
             fullWidth
-            onSave={async (value) => handleUpdate({ dealAccountId: value })}
-          /> */}
+            onSave={async (value) => handleUpdate({ accountId: value })}
+          />
+          <EditableDropDown
+            id="contactId"
+            name="contactId"
+            icon="contact"
+            options={contactSuggestions}
+            label="Contact name"
+            value={deal?.contactId ?? 0}
+            fullWidth
+            onSave={async (value) => handleUpdate({ contactId: value })}
+          />
           <EditableInput
             id="description"
             name="description"
@@ -160,10 +169,6 @@ const DealProperty: FC<Props> = ({ dealId }) => {
             onSave={async (value) => handleUpdate({ endDate: value })}
           />
 
-          <TitleContainer label="Contact Name" icon="user">
-            <Typography variant="p14">{deal?.contactId ?? '-'}</Typography>
-          </TitleContainer>
-
           <TitleContainer label="Forecast category">
             {/* <Typography variant="p14">{deal?.dealForecastCategory ?? '-'}</Typography> */}
           </TitleContainer>
@@ -172,15 +177,14 @@ const DealProperty: FC<Props> = ({ dealId }) => {
           </TitleContainer>
 
           <EditableDropDown
-            id="dealOwner"
-            name="dealOwner"
-            icon="contact"
+            id="tenantUserId"
+            name="tenantUserId"
+            icon="account"
             options={userSuggestions}
             label="Owner"
-            value={{ label: '-', value: 0 }}
-            // value={{ label: deal?.dealOwner?.userName ?? '-', value: deal?.dealOwnerId ?? 0 }}
+            value={deal?.tenantUserId ?? 0}
             fullWidth
-            onSave={async (value) => handleUpdate({ createdBy: value })}
+            onSave={async (value) => handleUpdate({ tenantUserId: value })}
           />
 
           <TitleContainer label="Pipeline">
@@ -200,12 +204,8 @@ const DealProperty: FC<Props> = ({ dealId }) => {
 
           <TitleContainer label="Last Updated on">
             <Typography variant="p14">
-              {/* {deal?.dealUpdatedAt ? format(new Date(deal?.dealUpdatedAt), 'MM/dd/yyyy, hh:mm aa') : '-'} */}
+              {deal?.updateDate ? format(new Date(deal?.updateDate), 'MM/dd/yyyy, hh:mm aa') : '-'}
             </Typography>
-          </TitleContainer>
-
-          <TitleContainer label="Last Updated by" icon="user">
-            {/* <Typography variant="p14">{deal?.dealModifier?.userName ?? '-'}</Typography> */}
           </TitleContainer>
         </StyledDropDownPanel>
       </PropertyContainer>

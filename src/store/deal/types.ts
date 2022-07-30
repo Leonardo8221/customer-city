@@ -25,6 +25,7 @@ export interface Deal {
   startDate: Date;
   endDate: Date;
   createdDate: Date;
+  updateDate: Date;
 }
 
 export interface DealState {

@@ -15,7 +15,7 @@ interface EditableAutoCompleteProps extends Partial<OutlinedTextFieldProps> {
   id: string;
   label: string;
   icon?: IconType;
-  value: OptionValue<number>;
+  value: number;
   small?: boolean;
   options?: OptionValue<number>[];
   onSave?: (value: number) => Promise<void>;
@@ -52,7 +52,7 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
           id={id}
           label={label}
           placeholder={`Select the ${label}`}
-          value={value?.value || null}
+          value={value || null}
           options={options}
           onSelect={(value) => {
             onClose(value);
@@ -83,7 +83,7 @@ const EditableAutoComplete: FC<EditableAutoCompleteProps> = ({
         {icon === 'account' && <AccountIcon />}
         {icon === 'contact' && <ContactIcon />}
         {icon === 'deal' && <DealIcon />}
-        <TextValue small={small}>{value.label}</TextValue>
+        <TextValue small={small}>{options.find((option) => option.value === value)?.label}</TextValue>
         <EditButton onClick={() => setEditing(true)} small={small} data-testid={`edit-${id}`}>
           <EditIcon />
         </EditButton>

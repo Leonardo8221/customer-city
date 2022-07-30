@@ -1,21 +1,23 @@
-import { Divider, Typography } from '@mui/material';
+import { Divider } from '@mui/material';
 import { CustomSelect } from 'components/CustomSelect';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
+import { AccountContact } from 'http/account/accountContact';
 import { FC } from 'react';
 import { AccountContainer } from './ui';
 
-const AccountItem: FC = () => {
+interface AccountItemProps {
+  item: AccountContact;
+}
+const AccountItem: FC<AccountItemProps> = ({ item }) => {
+  const account = item.account;
   return (
     <>
       <AccountContainer>
         <TitleContainer label="Account Name" icon="deal">
-          <CustomSelect<string> value={'aronda'} options={[{ label: 'Aronda', value: 'aronda' }]} />
-        </TitleContainer>
-        <TitleContainer label="Office">
-          <Typography variant="p14">{'Aronda Office - Albuquerque, NM, USA'}</Typography>
-        </TitleContainer>
-        <TitleContainer label="Department">
-          <Typography variant="p14">{'Finace Department'}</Typography>
+          <CustomSelect<number>
+            value={account?.accountId ?? 0}
+            options={[{ label: account?.accountName ?? '', value: account?.accountId ?? 0 }]}
+          />
         </TitleContainer>
       </AccountContainer>
       <Divider />

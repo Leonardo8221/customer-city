@@ -2,20 +2,28 @@ import { Divider, Typography } from '@mui/material';
 import { CustomSelect } from 'components/CustomSelect';
 import TitleContainer from 'components/TitileContainer/TitleContainer';
 import { FC } from 'react';
+import { Contact } from 'store/contact/types';
 import { ContactContainer } from './ui';
 
-const ContactItem: FC = () => {
+interface ContactItemProps {
+  item: Contact;
+}
+
+const ContactItem: FC<ContactItemProps> = ({ item }) => {
   return (
     <>
       <ContactContainer>
         <TitleContainer label="Contact Name" icon="user">
-          <CustomSelect<string> value={'Olivia'} options={[{ label: 'Olivia Piterson', value: 'Olivia' }]} />
+          <CustomSelect<number>
+            value={item?.contactId ?? 0}
+            options={[{ label: `${item?.firstName} ${item?.lastName}`, value: item?.contactId ?? 0 }]}
+          />
         </TitleContainer>
         <TitleContainer label="Work email">
-          <Typography variant="p14">{'olivia.piterson@gmail.com'}</Typography>
+          <Typography variant="p14">{item?.contactInfo?.email ?? '-'}</Typography>
         </TitleContainer>
         <TitleContainer label="Phone number" icon="phone">
-          <Typography variant="p14">{'+4 123 345 244'}</Typography>
+          <Typography variant="p14">{item?.contactInfo?.phoneNumber ?? '-'}</Typography>
         </TitleContainer>
       </ContactContainer>
       <Divider />
