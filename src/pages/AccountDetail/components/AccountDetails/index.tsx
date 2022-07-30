@@ -5,7 +5,6 @@ import { FC, useEffect, useState } from 'react';
 import { Container } from './ui';
 import { ContactItem, DealItem } from 'components/DetailItems';
 import { CustomIconButton } from 'components/ui';
-import { AccountContact, createAccountContact, getContactsByAccountId } from 'http/account/accountContact';
 import { useAccount } from 'store/account/hooks';
 import ContactRelationModal from '../ContactRelationModal/ContactRelationModal';
 import { Contact } from 'store/contact/types';

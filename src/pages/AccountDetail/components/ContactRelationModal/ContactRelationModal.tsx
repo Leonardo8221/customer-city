@@ -23,7 +23,7 @@ const ContactRelationModal: FC<ContactRelationModalProps> = ({ open, onSelect, t
   const contactSuggestions = useMemo(
     () =>
       contacts.map((acc) => {
-        return { label: acc.title, value: acc.contactId } as OptionValue<number>;
+        return { label: `${acc.firstName} ${acc.lastName}`, value: acc.contactId } as OptionValue<number>;
       }),
     [contacts, contactId],
   );
