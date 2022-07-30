@@ -63,7 +63,7 @@ const DealProperty: FC = () => {
 
   const contactSuggestions = useMemo(() => {
     return contacts.reduce((acc, val) => {
-      acc.push({ label: val.title, value: val.contactId });
+      acc.push({ label: `${val.firstName} ${val.lastName}`, value: val.contactId });
       return acc;
     }, [] as OptionValue<number>[]);
   }, [contacts]);
