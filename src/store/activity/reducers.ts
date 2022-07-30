@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { getActivities, setError, setLoading, setSuccessRead, setSuccessWrite } from './actions';
+import { createActivity, getActivities, setError, setLoading, setSuccessRead, setSuccessWrite } from './actions';
 import { ActivityState } from './types';
 
 export const initialState: ActivityState = {
@@ -32,14 +32,14 @@ const activityReducer = createSlice({
       state.successWrite = payload;
     });
 
-    builder.addMatcher(isAnyOf(getActivities.pending), (state) => {
+    builder.addMatcher(isAnyOf(getActivities.pending, createActivity.pending), (state) => {
       state.loading = true;
       state.error = false;
       state.successRead = false;
       state.successWrite = false;
     });
 
-    builder.addMatcher(isAnyOf(getActivities.rejected), (state, { payload }) => {
+    builder.addMatcher(isAnyOf(getActivities.rejected, createActivity.rejected), (state, { payload }) => {
       state.statusMessage = (payload as Error).message;
       state.error = true;
       state.loading = false;
@@ -54,9 +54,13 @@ const activityReducer = createSlice({
         state.activity = payload;
       }
       state.successRead = true;
-      state.successWrite = false;
       state.loading = false;
-      state.error = false;
+    });
+
+    builder.addMatcher(isAnyOf(createActivity.fulfilled), (state, { payload }) => {
+      state.activity = payload;
+      state.successWrite = true;
+      state.loading = false;
     });
   },
 });

@@ -15,12 +15,10 @@ import * as yup from 'yup';
 import { CustomInput } from 'components/CustomInput';
 import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { useContact } from 'store/contact/hooks';
-import { OptionValue } from 'core/types';
 import { useEmail } from 'store/email/hooks';
 import { Email } from 'store/email/types';
 import { useActivity } from 'store/activity/hooks';
-import { Activity } from 'store/activity/types';
-import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID, SALE_PHASE_ID } from 'types';
+import { ACTIVITY_STATUS, ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID, SALE_PHASE_ID } from 'types';
 import { Contact } from 'store/contact/types';
 import { CreateActivityDto } from 'http/activity';
 
@@ -76,7 +74,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
       salePhaseId: SALE_PHASE_ID.PRESALES,
       tenantId: (contact as Contact)?.tenantUser?.tenantId,
       contactStageId: (contact as Contact)?.contactStageId || CONTACT_STAGE_ID.COLD,
-      status: 'send',
+      status: ACTIVITY_STATUS.SPAM.toString(),
       emailActivityDetail: {
         emailSubject: email.emailSubject,
         emailBody: email.emailContent,

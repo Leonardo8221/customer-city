@@ -2,6 +2,13 @@ export enum ACTIVITY_TYPE_ID {
   EMAIL = 1,
 }
 
+export enum ACTIVITY_STATUS {
+  SENT = 'Sent',
+  REPLIED = 'Replied',
+  OPENED = 'Opend',
+  SPAM = 'In Spam',
+}
+
 export enum SALE_PHASE_ID {
   PRESALES = 1,
   DEAL = 2,
