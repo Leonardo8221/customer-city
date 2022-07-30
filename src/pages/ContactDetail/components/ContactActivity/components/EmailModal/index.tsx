@@ -69,7 +69,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
     createEmail(email);
     const activity: Partial<CreateActivityDto> = {
       activityTypeId: ACTIVITY_TYPE_ID.EMAIL,
-      accountId: (contact as Contact)?.accountContacts?.[0].accountId,
+      accountId: (contact as Contact)?.accountId,
       contactId: (contact as Contact)?.contactId,
       salePhaseId: SALE_PHASE_ID.PRESALES,
       tenantId: (contact as Contact)?.tenantUser?.tenantId,

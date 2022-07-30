@@ -39,8 +39,8 @@ const activityReducer = createSlice({
       state.successWrite = false;
     });
 
-    builder.addMatcher(isAnyOf(getActivities.rejected, createActivity.rejected), (state, { payload }) => {
-      state.statusMessage = (payload as Error).message;
+    builder.addMatcher(isAnyOf(getActivities.rejected, createActivity.rejected), (state, { error }) => {
+      state.statusMessage = error.message;
       state.error = true;
       state.loading = false;
       state.successRead = false;
