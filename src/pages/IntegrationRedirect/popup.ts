@@ -1,9 +1,9 @@
 let windowObjectReference: Window | null = null;
 let previousUrl: string | null = null;
 
-const openAuthWindow = (url: string, name: string, listener: (event: any) => void) => {
+const openAuthWindow = (url: string, name: string, listener?: (event: any) => void) => {
   // remove any existing event listeners
-  window.removeEventListener('message', listener);
+  listener && window.removeEventListener('message', listener);
 
   // window features
   const strWindowFeatures = 'toolbar=no, menubar=no, width=800, height=700, top=100, left=100, noopener=false';
@@ -30,7 +30,7 @@ const openAuthWindow = (url: string, name: string, listener: (event: any) => voi
   }
 
   // add the listener for receiving a message from the popup
-  window.addEventListener('message', (event) => listener(event), false);
+  listener && window.addEventListener('message', (event) => listener(event), false);
   // assign the previous URL
   previousUrl = url;
 };

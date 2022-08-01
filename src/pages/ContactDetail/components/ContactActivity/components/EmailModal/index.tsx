@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { ModalTemplate } from 'components/ModalTemplate';
-import { FC, useMemo, useRef } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import JoditEditor from 'jodit-react';
 import { ReactComponent as TemplateIcon } from 'assets/icons/template.svg';
 import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
@@ -15,9 +15,12 @@ import * as yup from 'yup';
 import { CustomInput } from 'components/CustomInput';
 import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { useContact } from 'store/contact/hooks';
-import { OptionValue } from 'core/types';
 import { useEmail } from 'store/email/hooks';
 import { Email } from 'store/email/types';
+import { useActivity } from 'store/activity/hooks';
+import { ACTIVITY_STATUS, ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID, SALE_PHASE_ID } from 'types';
+import { Contact } from 'store/contact/types';
+import { CreateActivityDto } from 'http/activity';
 
 interface EmailModalProps {
   open: boolean;
@@ -40,39 +43,55 @@ const validationSchema = yup.object({
 const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const editor = useRef(null);
   const { user } = useUser();
-  const { contacts, getContacts } = useContact();
+  const { contacts, getContacts, contact } = useContact();
   const { loading, createEmail, connectedAccount } = useEmail();
+  const { createActivity } = useActivity();
+
+  const [emailFrom, setEmailFrom] = useState<string>(user?.userEmail || '');
+
+  useEffect(() => {
+    console.log('EMAIL COMPOSER: CONNECTED EMAIL', connectedAccount);
+    if (connectedAccount) {
+      setEmailFrom(connectedAccount);
+    }
+  }, [connectedAccount]);
 
   const config = useMemo(() => {
-    getContacts();
-
     return { readonly: false, placeholder: 'Describe the email...' };
   }, [getContacts]);
 
   const formRef = useRef<FormikProps<FormValues> | null>(null);
 
   const onSubmit = async (values: FormValues) => {
-    const data: Partial<Email> = {
+    const email: Partial<Email> = {
       ...values,
     };
-    await createEmail(data);
+    createEmail(email);
+    const activity: Partial<CreateActivityDto> = {
+      activityTypeId: ACTIVITY_TYPE_ID.EMAIL,
+      accountId: (contact as Contact)?.accountId,
+      contactId: (contact as Contact)?.contactId,
+      salePhaseId: SALE_PHASE_ID.PRESALES,
+      tenantId: (contact as Contact)?.tenantUser?.tenantId,
+      contactStageId: (contact as Contact)?.contactStageId || CONTACT_STAGE_ID.COLD,
+      status: ACTIVITY_STATUS.SPAM.toString(),
+      emailActivityDetail: {
+        emailSubject: email.emailSubject,
+        emailBody: email.emailContent,
+        emailTypeId: EMAIL_TYPE_ID.OUTGOING,
+        hasAttachment: false, //TODO: future work on attachment
+      },
+    };
+    createActivity(activity);
     toggleOpen();
   };
 
-  console.log('CONNECTED EMAIL', connectedAccount);
   const initialValues: FormValues = {
-    emailFrom: connectedAccount ?? user?.userEmail ?? '',
-    emailTo: '',
+    emailFrom: emailFrom,
+    emailTo: (contact as Contact)?.contactInfo?.email || '',
     emailSubject: '',
     emailContent: '',
   };
-
-  const emailToSuggestions = useMemo(() => {
-    return contacts.reduce((acc, val) => {
-      acc.push({ label: val.contactInfo?.email ?? '', value: val.contactInfo?.email ?? '' });
-      return acc;
-    }, [] as OptionValue<string>[]);
-  }, [contacts]);
 
   return (
     <ModalTemplate open={open} toggleOpen={toggleOpen} icon="email" title="New Email">
@@ -94,8 +113,8 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
                     value={values.emailFrom}
                     options={[
                       {
-                        label: connectedAccount ?? user?.userEmail ?? '',
-                        value: connectedAccount ?? user?.userEmail ?? '',
+                        label: emailFrom,
+                        value: emailFrom,
                       },
                     ]}
                     onSelect={async (value) => setFieldValue('emailFrom', value)}
@@ -112,7 +131,12 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
                           })
                         : []
                     }
-                    options={emailToSuggestions}
+                    options={[
+                      {
+                        label: (contact as Contact)?.contactInfo?.email || '',
+                        value: (contact as Contact)?.contactInfo?.email || '',
+                      },
+                    ]}
                     onSelect={(value) => setFieldValue('emailTo', value.map((v) => v.value).join(','))}
                     InputProps={{
                       error: touched.emailTo && !!errors.emailTo,
