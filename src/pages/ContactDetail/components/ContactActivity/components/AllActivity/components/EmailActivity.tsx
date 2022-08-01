@@ -11,9 +11,7 @@ import Typography from '@mui/material/Typography';
 import { ReactComponent as ExpandMoreIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ContactIcon } from 'assets/icons/contactAvatar.svg';
 import { ReactComponent as EmailIcon } from 'assets/icons/emailCircleGreen.svg';
-import { CustomLinkLabel } from 'components/CustomLinkLabel';
 import { TextLinkButton } from 'components/ui';
-import theme from 'core/theme';
 import { format } from 'date-fns';
 import * as React from 'react';
 import { FC } from 'react';
@@ -68,14 +66,12 @@ const EmailActivity: FC<Props> = (props) => {
       ? 'replied'
       : 'send email';
 
-  const emailDate = format(new Date(String(lastEmailDetail?.emailDate)), 'dd MMMM');
-  const time = String(lastEmailDetail?.emailTime).split(':');
-  const hour = time[0],
-    minute = time[1];
-  const emailTime = format(new Date(0, 0, 0, parseInt(hour, 0), parseInt(minute, 0)), "hh:mm aaaaa'm'");
+  const dateYearAndTime = format(new Date(String(lastEmailDetail?.emailDate)), 'PPp').split(',');
+  const dateTime = `${dateYearAndTime[0]} ${dateYearAndTime[2]}`;
   const chipBgColor = status === ACTIVITY_STATUS.SPAM ? 'orange.main' : 'green.main';
+
   return (
-    <Box display="flex" flexDirection="row" justifyContent="flex-start" gap={1}>
+    <Box display="flex" flexDirection="row" justifyContent="center" gap={1}>
       <Avatar sx={{ bgcolor: 'green.main' }} aria-label="email">
         <EmailIcon />
       </Avatar>
@@ -97,7 +93,7 @@ const EmailActivity: FC<Props> = (props) => {
               </Box>
               <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" width={'30%'}>
                 <Typography variant="labelRegular12" sx={{ color: 'neutral.n400' }}>
-                  {`${emailDate} ${emailTime}`}
+                  {dateTime}
                 </Typography>
               </Box>
             </Box>

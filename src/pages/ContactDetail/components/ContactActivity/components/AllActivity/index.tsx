@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import { ReactComponent as CheckBoxIcon } from 'assets/icons/boxCheckedGrey.svg';
 import { FC, useEffect } from 'react';
 import { useActivity } from 'store/activity/hooks';
@@ -7,24 +7,30 @@ import EmailActivity from './components/EmailActivity';
 import { ActivityContainer, EmptyContainer } from './ui';
 
 const AllActivity: FC = () => {
-  const { getActivities, activities, successWrite } = useActivity();
+  const { getActivities, activities, successWrite, loading } = useActivity();
 
   useEffect(() => {
     getActivities();
   }, [successWrite]);
 
   return (
-    <>
-      {activities?.length > 0 ? (
-        <ActivityContainer>
+    <ActivityContainer>
+      {loading ? (
+        <Box sx={{ padding: 4 }}>
+          <Skeleton variant="text" width={520} />
+          <Skeleton variant="circular" width={40} height={40} />
+          <Skeleton variant="rectangular" width={520} height={118} />
+        </Box>
+      ) : activities?.length > 0 ? (
+        <>
           {activities.map((activity, index) => {
-            return activity?.activityTypeId === ACTIVITY_TYPE_ID.EMAIL ? (
+            return activity?.activityTypeId === ACTIVITY_TYPE_ID.EMAIL && activity?.emailActivityDetails?.length ? (
               <EmailActivity key={index} {...activity} />
             ) : (
-              <Box component="div">NOT IMPLEMENTED YET</Box>
+              <></>
             );
           })}
-        </ActivityContainer>
+        </>
       ) : (
         <EmptyContainer>
           <CheckBoxIcon />
@@ -33,7 +39,7 @@ const AllActivity: FC = () => {
           </Typography>
         </EmptyContainer>
       )}
-    </>
+    </ActivityContainer>
   );
 };
 
