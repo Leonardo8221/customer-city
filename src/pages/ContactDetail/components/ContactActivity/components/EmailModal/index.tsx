@@ -74,7 +74,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
       salePhaseId: SALE_PHASE_ID.PRESALES,
       tenantId: (contact as Contact)?.tenantUser?.tenantId,
       contactStageId: (contact as Contact)?.contactStageId || CONTACT_STAGE_ID.COLD,
-      status: ACTIVITY_STATUS.SPAM.toString(),
+      status: ACTIVITY_STATUS.SENT.toString(),
       emailActivityDetail: {
         emailSubject: email.emailSubject,
         emailBody: email.emailContent,
