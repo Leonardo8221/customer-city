@@ -18,8 +18,8 @@ export const setError = createAction<boolean>(SET_ERROR);
 export const setSuccessRead = createAction<boolean>(SET_SUCCESS_READ);
 export const setSuccessWrite = createAction<boolean>(SET_SUCCESS_WRITE);
 
-export const getActivities = createAsyncThunk<Activity[]>(GET_ACTIVITIES, async () => {
-  return await getActivitiesApi();
+export const getActivities = createAsyncThunk<Activity[], number>(GET_ACTIVITIES, async (contactId: number) => {
+  return await getActivitiesApi(contactId);
 });
 
 export const createActivity = createAsyncThunk<Activity, Partial<CreateActivityDto>>(CREATE_ACTIVITY, async (data) => {

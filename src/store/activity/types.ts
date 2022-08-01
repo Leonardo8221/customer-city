@@ -36,6 +36,6 @@ export interface ActivityReturnHook extends ActivityState {
   setError: (error: boolean) => void;
   setSuccessRead: (success: boolean) => void;
   setSuccessWrite: (success: boolean) => void;
-  getActivities: () => void;
+  getActivities: (contactId: number) => void;
   createActivity: (data: Partial<CreateActivityDto>) => void;
 }

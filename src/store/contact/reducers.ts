@@ -30,6 +30,7 @@ const contactReducer = createSlice({
     });
 
     builder.addCase(getContacts.pending, (state) => {
+      state.contact = null;
       state.loading = true;
       state.error = false;
       state.success = false;
@@ -39,6 +40,11 @@ const contactReducer = createSlice({
       state.loading = false;
       state.error = error?.message ?? true;
       state.success = false;
+    });
+
+    builder.addCase(getContact.pending, (state, { payload }) => {
+      state.contact = null;
+      state.loading = true;
     });
 
     builder.addCase(getContact.fulfilled, (state, { payload }) => {
@@ -57,14 +63,11 @@ const contactReducer = createSlice({
       state.success = 'Contact deleted successfully!';
     });
 
-    builder.addMatcher(
-      isAnyOf(getContacts.pending, updateContact.pending, getContact.pending, deleteContact.pending),
-      (state) => {
-        state.loading = true;
-        state.error = false;
-        state.success = false;
-      },
-    );
+    builder.addMatcher(isAnyOf(updateContact.pending, deleteContact.pending), (state) => {
+      state.loading = true;
+      state.error = false;
+      state.success = false;
+    });
 
     builder.addMatcher(
       isAnyOf(getContacts.rejected, updateContact.rejected, getContact.rejected, deleteContact.rejected),

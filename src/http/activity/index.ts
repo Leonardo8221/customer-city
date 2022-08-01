@@ -16,6 +16,9 @@ export interface CreateActivityDto {
   // callActivityDetail?: {}
 }
 
-export const getActivities = (): Promise<Activity[]> => apiCall({ method: 'get', url: '/activity' });
+export const getActivities = (contactId: number): Promise<Activity[]> => {
+  const url = `/activity?contactId=${contactId}`;
+  return apiCall({ method: 'get', url });
+};
 export const createActivity = (data: Partial<CreateActivityDto>): Promise<Activity> =>
   apiCall({ method: 'post', url: '/activity', data });
