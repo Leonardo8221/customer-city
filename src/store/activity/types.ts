@@ -10,6 +10,16 @@ export interface EmailActivityDetail {
   hasAttachment: boolean;
 }
 
+export type EmailData = {
+  from: string;
+  to: string;
+  subject: string;
+  body: string;
+  dateTime: string;
+  actionText: string;
+  statusText: string;
+};
+
 export interface Activity {
   activityId: number;
   activityTypeId: ACTIVITY_TYPE_ID;

@@ -10,15 +10,10 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as ExpandMoreIcon } from 'assets/icons/chevronDown.svg';
 import { ReactComponent as ContactIcon } from 'assets/icons/contactAvatar.svg';
-import { ReactComponent as EmailIcon } from 'assets/icons/emailCircleGreen.svg';
 import { TextLinkButton } from 'components/ui';
-import { format } from 'date-fns';
 import * as React from 'react';
 import { FC } from 'react';
-import { Activity } from 'store/activity/types';
-import { useContact } from 'store/contact/hooks';
-import { useUser } from 'store/user/hooks';
-import { ACTIVITY_STATUS, EMAIL_TYPE_ID } from 'types';
+import { ACTIVITY_STATUS } from 'types';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -36,6 +31,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 type Props = {
+  toggleThread?: () => void;
+  threadLength?: number | null;
   from: string;
   to: string;
   subject: string;
@@ -43,7 +40,6 @@ type Props = {
   actionText: string;
   statusText?: string;
   dateTime: string;
-  threads?: number;
 };
 
 const EmailCard: FC<Props> = (props) => {
@@ -52,7 +48,7 @@ const EmailCard: FC<Props> = (props) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const { from, to, subject, body, actionText, statusText, dateTime, threads } = props;
+  const { toggleThread, threadLength, from, to, subject, body, actionText, statusText, dateTime } = props;
   const chipBgColor = statusText === ACTIVITY_STATUS.SPAM ? 'orange.main' : 'green.main';
 
   return (
@@ -96,9 +92,9 @@ const EmailCard: FC<Props> = (props) => {
               gap={0.5}
               width={'50%'}
             >
-              {threads && (
-                <TextLinkButton href="#" sx={{ fontSize: 12, justifyContent: 'flex-end' }}>
-                  {`Show thread (${threads})`}
+              {threadLength && (
+                <TextLinkButton href="#" sx={{ fontSize: 12, justifyContent: 'flex-end' }} onClick={toggleThread}>
+                  {`Show thread (${threadLength})`}
                 </TextLinkButton>
               )}
               <TextLinkButton href="#" sx={{ fontSize: 12, justifyContent: 'flex-end', minWidth: 54 }}>

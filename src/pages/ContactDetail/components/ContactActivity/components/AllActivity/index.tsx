@@ -1,6 +1,6 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { ReactComponent as CheckBoxIcon } from 'assets/icons/boxCheckedGrey.svg';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useActivity } from 'store/activity/hooks';
 import { useContact } from 'store/contact/hooks';
 import { ACTIVITY_TYPE_ID } from 'types';
