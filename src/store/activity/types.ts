@@ -2,6 +2,8 @@ import { CreateActivityDto } from 'http/activity';
 import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID } from 'types';
 
 export interface EmailActivityDetail {
+  emailFrom: string;
+  emailTo: string;
   emailSubject: string;
   emailBody: string;
   emailDate: Date;
