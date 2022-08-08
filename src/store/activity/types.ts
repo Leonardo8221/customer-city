@@ -2,6 +2,8 @@ import { CreateActivityDto } from 'http/activity';
 import { ACTIVITY_TYPE_ID, CONTACT_STAGE_ID, EMAIL_TYPE_ID } from 'types';
 
 export interface EmailActivityDetail {
+  emailFrom: string;
+  emailTo: string;
   emailSubject: string;
   emailBody: string;
   emailDate: Date;
@@ -9,6 +11,16 @@ export interface EmailActivityDetail {
   emailTypeId?: EMAIL_TYPE_ID;
   hasAttachment: boolean;
 }
+
+export type EmailData = {
+  from: string;
+  to: string;
+  subject: string;
+  body: string;
+  dateTime: string;
+  actionText: string;
+  statusText: string;
+};
 
 export interface Activity {
   activityId: number;
@@ -36,6 +48,6 @@ export interface ActivityReturnHook extends ActivityState {
   setError: (error: boolean) => void;
   setSuccessRead: (success: boolean) => void;
   setSuccessWrite: (success: boolean) => void;
-  getActivities: () => void;
+  getActivities: (contactId: number) => void;
   createActivity: (data: Partial<CreateActivityDto>) => void;
 }

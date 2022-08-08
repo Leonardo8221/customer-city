@@ -12,12 +12,12 @@ export const Modal = styled(MuiModal)(({ theme }) => ({
 export const ModalContainer = styled(Box)(({ theme }) => ({
   maxHeight: '90%',
   overflowY: 'auto',
-  maxWidth: 640,
   width: '100%',
   backgroundColor: theme.palette.neutral.white,
   borderRadius: 4,
   padding: '16px 32px',
 }));
+ModalContainer.defaultProps = { maxWidth: 640 };
 
 export const ModalHeader = styled(Box)(() => ({
   padding: '8px 0 24px',

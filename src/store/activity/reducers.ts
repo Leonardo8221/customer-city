@@ -18,6 +18,9 @@ const activityReducer = createSlice({
   extraReducers: (builder: ActionReducerMapBuilder<ActivityState>): void => {
     builder.addCase(setLoading, (state, { payload }) => {
       state.loading = payload;
+      if (payload) {
+        state.activities = [];
+      }
     });
 
     builder.addCase(setError, (state, { payload }) => {
@@ -34,6 +37,7 @@ const activityReducer = createSlice({
 
     builder.addMatcher(isAnyOf(getActivities.pending, createActivity.pending), (state) => {
       state.loading = true;
+      state.activities = [];
       state.error = false;
       state.successRead = false;
       state.successWrite = false;

@@ -43,8 +43,8 @@ const validationSchema = yup.object({
 const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
   const editor = useRef(null);
   const { user } = useUser();
-  const { contacts, getContacts, contact } = useContact();
-  const { loading, createEmail, connectedAccount } = useEmail();
+  const { getContacts, contact } = useContact();
+  const { loading, connectedAccount } = useEmail();
   const { createActivity } = useActivity();
 
   const [emailFrom, setEmailFrom] = useState<string>(user?.userEmail || '');
@@ -66,7 +66,7 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
     const email: Partial<Email> = {
       ...values,
     };
-    createEmail(email);
+
     const activity: Partial<CreateActivityDto> = {
       activityTypeId: ACTIVITY_TYPE_ID.EMAIL,
       accountId: (contact as Contact)?.accountId,
@@ -74,8 +74,10 @@ const EmailModal: FC<EmailModalProps> = ({ open, toggleOpen }) => {
       salePhaseId: SALE_PHASE_ID.PRESALES,
       tenantId: (contact as Contact)?.tenantUser?.tenantId,
       contactStageId: (contact as Contact)?.contactStageId || CONTACT_STAGE_ID.COLD,
-      status: ACTIVITY_STATUS.SPAM.toString(),
+      status: ACTIVITY_STATUS.SENT.toString(),
       emailActivityDetail: {
+        emailFrom: email.emailFrom,
+        emailTo: email.emailTo,
         emailSubject: email.emailSubject,
         emailBody: email.emailContent,
         emailTypeId: EMAIL_TYPE_ID.OUTGOING,

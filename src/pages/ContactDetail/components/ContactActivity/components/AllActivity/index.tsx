@@ -1,17 +1,22 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { ReactComponent as CheckBoxIcon } from 'assets/icons/boxCheckedGrey.svg';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useActivity } from 'store/activity/hooks';
+import { useContact } from 'store/contact/hooks';
 import { ACTIVITY_TYPE_ID } from 'types';
 import EmailActivity from './components/EmailActivity';
 import { ActivityContainer, EmptyContainer } from './ui';
 
 const AllActivity: FC = () => {
-  const { getActivities, activities, successWrite, loading } = useActivity();
+  const { getActivities, activities, successWrite, loading, setLoading } = useActivity();
+  const { contact } = useContact();
 
   useEffect(() => {
-    getActivities();
-  }, [successWrite]);
+    setLoading(true);
+    if (contact) {
+      getActivities(Number(contact?.contactId));
+    }
+  }, [successWrite, contact]);
 
   return (
     <ActivityContainer>

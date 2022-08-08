@@ -175,7 +175,7 @@ const EmailProviderModal: FC<Props> = ({ open, toggleOpen, postAction }) => {
             <strong>{page === PageEnum.first ? '1' : page === PageEnum.second ? '2' : ''}</strong>
             {page === PageEnum.third ? '' : '/2'}
           </span>
-          <Box sx={{ width: 250, display: 'flex', flexDirection: 'row-reverse' }}>
+          <Box sx={{ width: page === PageEnum.third ? 300 : 250, display: 'flex', flexDirection: 'row-reverse' }}>
             <LoadingButton
               variant="contained"
               loading={Boolean(loading)}
