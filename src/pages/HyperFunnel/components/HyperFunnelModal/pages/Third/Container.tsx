@@ -132,8 +132,8 @@ export const Container: FC = memo(function Container() {
           <Typography variant="b16" sx={{ mb: 1 }}>
             Stages
           </Typography>
-          {DEAL_STAGE_TYPES.map((stageType) => (
-            <>
+          {DEAL_STAGE_TYPES.map((stageType, index) => (
+            <Box key={index}>
               <Typography
                 variant="p12"
                 sx={{
@@ -153,7 +153,7 @@ export const Container: FC = memo(function Container() {
                 .map((card, idx) => (
                   <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
                 ))}
-            </>
+            </Box>
           ))}
         </CardPanel>
 
