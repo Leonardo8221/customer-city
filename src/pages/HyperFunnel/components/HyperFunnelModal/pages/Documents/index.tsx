@@ -27,6 +27,7 @@ const fileTypes = ['PDF', 'DOC', 'DOCX', 'TXT', 'XLSX', 'XLS'];
 
 const DocumentPage: FC = () => {
   const { user } = useUser();
+  console.log('*******************', s3Config);
   const s3 = new ReactS3Client(s3Config);
   const [files, setFiles] = useState<PipelineDocument[]>([]);
   const [links, setLinks] = useState<PipelineDocument[]>([]);

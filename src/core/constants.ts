@@ -131,13 +131,15 @@ export const CONTACT_ASSOCIATES_DEMO = [
   { label: 'Beil', value: '2' },
 ];
 
+const getBucketName = () => process.env.REACT_APP_S3_BUCKET_NAME || `customercity-uploads`;
+const getS3Url = () => process.env.REACT_APP_S3_URL || `https://${getBucketName()}.s3.amazonaws.com`;
 export const s3Config = {
-  bucketName: 'customercity-uploads',
+  bucketName: getBucketName(),
   dirName: 'documents' /* Optional */,
   region: 'us-east-1',
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_ID ?? '',
   secretAccessKey: process.env.REACT_APP_AWS_SECURITY_KEY ?? '',
-  s3Url: process.env.REACT_APP_S3_URL,
+  s3Url: getS3Url(),
 };
 
 export const firebaseConfig = {
