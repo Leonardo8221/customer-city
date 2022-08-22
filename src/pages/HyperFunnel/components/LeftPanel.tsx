@@ -15,7 +15,7 @@ import { HyperFunnelModal } from 'pages/HyperFunnel/components';
 import Paper from '@mui/material/Paper';
 
 export default function HyperFunnel() {
-  const { baseStages, pipelines, setEditPipeline } = usePipelines();
+  const { baseStages, pipelines, setEditPipeline, deletePipeline } = usePipelines();
   const { flag, toggle } = useToggle();
 
   const edit = (id: number) => {
@@ -49,15 +49,20 @@ export default function HyperFunnel() {
               </Typography>
             </Grid>
             <Grid item>
-              <IconButton>
-                <Button
-                  onClick={() => {
-                    edit(pipeline.pipelineId);
-                  }}
-                >
-                  Edit
-                </Button>
-              </IconButton>
+              <Button
+                onClick={() => {
+                  edit(pipeline.pipelineId);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                onClick={() => {
+                  deletePipeline(pipeline.pipelineId);
+                }}
+              >
+                Delete
+              </Button>
             </Grid>
           </Grid>
         ))}

@@ -97,6 +97,7 @@ type PipelinesContextProps = {
   createPipeline: (newPipeline: Pipeline) => void;
   setEditPipeline: (pipelineId: number | null) => void;
   editPipeline: number | null;
+  deletePipeline: (id: number) => void;
 };
 
 type FetchPipeline = Pipeline & {
@@ -125,6 +126,13 @@ export default function PipelinesProvider(props: { children: JSX.Element[] }) {
     });
   };
 
+  const remove = (id: number) => {
+    deletePipeline(id).then(() => {
+      const removed = pipelines.filter((p) => p.pipelineId !== id);
+      setPipelines(removed);
+    });
+  };
+
   //   const fetch = getAllPipelines;
 
   useEffect(() => {
@@ -145,6 +153,7 @@ export default function PipelinesProvider(props: { children: JSX.Element[] }) {
         createPipeline,
         setEditPipeline,
         editPipeline,
+        deletePipeline: remove,
       }}
     >
       {props.children}
