@@ -10,7 +10,7 @@ import { FileItemContainer, VerticalDivider } from './ui';
 import { Typography } from '@mui/material';
 import { humanFileSize } from 'core/utils';
 import { s3Config } from 'core/constants';
-import { PipelineDocument } from '../../HyperFunnelModal.context';
+import { PipelineDocument } from 'pages/HyperFunnel/PipelinesProvider';
 
 const FileItem: FC<{ file: PipelineDocument; onDelete: () => void }> = ({ file, onDelete }) => {
   let icon = PDFIcon;

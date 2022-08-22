@@ -8,7 +8,7 @@ import { ActionSelect, FirstMain, SelectionIcon } from './ui';
 import theme from 'core/theme';
 import { ButtonGroup, ModalFooter, ModalContainer, ModalHeader } from '../../ui';
 import { LoadingButton, TextButton } from 'components/ui';
-import { PipelineFormContext, PipelineFormSteps } from '../../HyperFunnelModal.context';
+import { PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
 
 export enum ActionType {
   FROM_SCRATCH,

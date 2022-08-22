@@ -6,7 +6,7 @@ import SecondPage from './pages/Second';
 import Documents from './pages/Documents';
 import ThirdPage from './pages/Third';
 import { Form, Formik } from 'formik';
-import { PipelineFormContext, PipelineFormSteps } from './HyperFunnelModal.context';
+import { PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
 import { useDealStage } from 'store/dealStage/hooks';
 import TeamUsersPage from './pages/TeamUsers';
 import ProductsPage from './pages/Products';
@@ -26,20 +26,24 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
   const { form } = useContext(PipelineFormContext);
   const [step, setStep] = useState<number>(PipelineFormSteps.FIRST);
 
-  const { getDealStages } = useDealStage();
+  // const { getDealStages } = useDealStage();
   const { getUsers } = useUser();
   const { getProducts } = useProduct();
 
   useEffect(() => {
-    getDealStages();
+    // getDealStages();
     getUsers();
     getProducts();
-  }, [getDealStages, getUsers, getProducts]);
+  }, [getUsers, getProducts]);
+
+  const submit = (values: any, ttt: any) => {
+    console.log('submit data: ', values);
+  };
 
   return (
     <PipelineFormContext.Provider value={{ form, onClose: toggleOpen, step, setStep }}>
       <Modal open={open} onClose={toggleOpen}>
-        <Formik initialValues={form} onSubmit={console.log} enableReinitialize validationSchema={validationSchema}>
+        <Formik initialValues={form} onSubmit={submit} enableReinitialize validationSchema={validationSchema}>
           <Form>
             {step === PipelineFormSteps.FIRST && <FirstPage />}
             {step === PipelineFormSteps.SECOND && <SecondPage />}

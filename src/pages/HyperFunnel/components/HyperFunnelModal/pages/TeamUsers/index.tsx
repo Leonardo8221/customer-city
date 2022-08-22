@@ -6,7 +6,7 @@ import { useUser } from 'store/user/hooks';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
-import { Pipeline, PipelineFormContext, PipelineFormSteps } from '../../HyperFunnelModal.context';
+import { Pipeline, PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
 import { User } from 'store/user/types';
 import { CustomMultiDropdown } from 'components/CustomDropdown';

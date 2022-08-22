@@ -16,8 +16,10 @@ import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { User } from 'store/user/types';
 import { OptionValue } from 'core/types';
 import { useFormikContext } from 'formik';
-import { Pipeline, PipelineStage } from '../../HyperFunnelModal.context';
+// import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
 import { useUser } from 'store/user/hooks';
+
+import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
 
 export const ItemTypes = {
   CARD: 'card',
@@ -110,7 +112,7 @@ export const Card: FC<CardProps> = memo(function Card({
         </IconButton>
 
         <Typography variant="p14" sx={{ mr: 'auto', color: isDemo ? 'neutral.main' : 'neutral.n400' }}>
-          {card.dealStageName}
+          {card.title}
         </Typography>
 
         {!isDemo && (
@@ -128,12 +130,11 @@ export const Card: FC<CardProps> = memo(function Card({
               sx={{
                 width: 6,
                 height: 6,
-                backgroundColor:
-                  DEAL_STAGE_TYPES.find((type) => type.value === card.dealStageType)?.color ?? 'primary.main',
+                backgroundColor: DEAL_STAGE_TYPES.find((type) => type.value === card.type)?.color ?? 'primary.main',
                 borderRadius: '50%',
               }}
             ></Box>
-            {card.dealStageType}
+            {card.type}
           </Typography>
         )}
 
@@ -147,7 +148,7 @@ export const Card: FC<CardProps> = memo(function Card({
         ? open && (
             <Box className="card-content">
               <Typography variant="p12" sx={{ color: 'neutral.n400' }}>
-                {card.dealStageDescription}
+                {card.description}
               </Typography>
             </Box>
           )
@@ -173,7 +174,7 @@ export const Card: FC<CardProps> = memo(function Card({
                     label="Goal"
                     placeholder="Enter the goal"
                     fullWidth
-                    value={values.pipelineStages?.[order]?.pipelineStageDescription}
+                    defaultValue={values.pipelineStages?.[order]?.pipelineStageDescription}
                     onChange={handleChange}
                   />
 

@@ -11,7 +11,7 @@ import { FC, ReactNode, useContext } from 'react';
 import { SecondMain, SelectionIcon, SelectItem, SelectionLabel } from './ui';
 import { ButtonGroup, ModalFooter, ModalHeader, ModalContainer, BackTo } from '../../ui';
 import { LoadingButton, TextButton } from 'components/ui';
-import { Pipeline, PipelineFormContext, PipelineFormSteps } from '../../HyperFunnelModal.context';
+import { Pipeline, PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
 
 interface SelectionType {

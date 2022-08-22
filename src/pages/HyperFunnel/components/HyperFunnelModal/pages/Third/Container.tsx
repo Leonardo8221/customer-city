@@ -2,7 +2,6 @@ import { Box, Divider, Typography, IconButton } from '@mui/material';
 import update from 'immutability-helper';
 import { FC, memo, useCallback, useState, useContext } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDealStage } from 'store/dealStage/hooks';
 
 import { Card, Item, ItemTypes } from './Card';
 import { ThirdMain, CardPanel, CardAddBox } from './ui';
@@ -10,8 +9,10 @@ import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
 import { LoadingButton, TextButton } from 'components/ui';
-import { Pipeline, PipelineFormContext, PipelineFormSteps, PipelineStage } from '../../HyperFunnelModal.context';
+import { PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
+import { usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
+import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
 
 export interface ContainerState {
   cards: any[];
@@ -30,11 +31,10 @@ export const DEAL_STAGE_TYPES: DealStageType[] = [
 
 export const Container: FC = memo(function Container() {
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
-  const { dealStages } = useDealStage();
+  const { baseStages, createPipeline } = usePipelines();
   const { onClose, setStep } = useContext(PipelineFormContext);
-  const { values, setValues, setFieldValue } = useFormikContext<Pipeline>();
+  const { values, setValues, setFieldValue, handleSubmit } = useFormikContext<Pipeline>();
   const cards = values.pipelineStages;
-  console.log('cards', values);
 
   const findCard = useCallback(
     (cardItem: PipelineStage) => {
@@ -74,7 +74,14 @@ export const Container: FC = memo(function Container() {
 
   const addCard = useCallback(
     (card: PipelineStage, index: number) => {
-      const newCards = [...cards.slice(0, index), { ...card, createdAt: new Date() }, ...cards.slice(index)];
+      const newCards = [
+        ...cards.slice(0, index),
+        {
+          ...card,
+          createdAt: new Date(),
+        },
+        ...cards.slice(index),
+      ];
       setFieldValue('pipelineStages', newCards);
     },
     [setFieldValue, cards],
@@ -116,6 +123,10 @@ export const Container: FC = memo(function Container() {
 
   const isEmpty = cards.length === 0;
 
+  const submit = () => {
+    createPipeline(values);
+  };
+
   return (
     <ModalContainer sx={{ width: 960 }}>
       <ModalHeader>
@@ -148,8 +159,8 @@ export const Container: FC = memo(function Container() {
                 <Box sx={{ width: 6, height: 6, backgroundColor: stageType.color, borderRadius: '50%' }}>{''}</Box>
                 {stageType.value} {'STAGE'}
               </Typography>
-              {dealStages
-                .filter((stage) => stage.dealStageType === stageType.value)
+              {baseStages
+                .filter((stage) => stage.type === stageType.value)
                 .map((card, idx) => (
                   <Card card={card} moveCard={moveCard} findCard={findCard} isDemo key={idx} />
                 ))}
@@ -209,7 +220,7 @@ export const Container: FC = memo(function Container() {
           <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
             Cancel
           </TextButton>
-          <LoadingButton variant="contained" onClick={console.log}>
+          <LoadingButton variant="contained" onClick={submit}>
             {'Create Pipeline'}
           </LoadingButton>
         </ButtonGroup>
