@@ -55,8 +55,8 @@ export type PipelineDocument = {
 export type Pipeline = {
   pipelineName: string;
   pipelineDescription: string;
-  pipelineStages: PipelineStage[];
-  pipelineDocuments: PipelineDocument[];
+  pipelineStage: PipelineStage[];
+  pipelineDocument: PipelineDocument[];
   pipelineProducts: Product[];
   pipelineOwners: User[];
 };
@@ -72,8 +72,8 @@ export enum PipelineFormSteps {
 export const defaultValues: Pipeline = {
   pipelineName: '',
   pipelineDescription: '',
-  pipelineStages: [],
-  pipelineDocuments: [],
+  pipelineStage: [],
+  pipelineDocument: [],
   pipelineProducts: [],
   pipelineOwners: [],
 };
@@ -92,29 +92,43 @@ export const PipelineFormContext = createContext<{
 });
 
 type PipelinesContextProps = {
-  pipelines: Pipeline[];
+  pipelines: FetchPipeline[];
   baseStages: BaseStage[];
   createPipeline: (newPipeline: Pipeline) => void;
+  setEditPipeline: (pipelineId: number | null) => void;
+  editPipeline: number | null;
+};
+
+type FetchPipeline = Pipeline & {
+  pipelineId: number;
 };
 
 export const PipelinesContext = React.createContext<undefined | PipelinesContextProps>(undefined);
 
-export default function PipelinesProvider(props: { children: JSX.Element }) {
+export default function PipelinesProvider(props: { children: JSX.Element[] }) {
   const [stages, setStages] = useState<PipelineStage[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [pipelines, setPipelines] = useState<Pipeline[]>([]);
+  const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
   const [baseStages, setBaseStages] = useState<BaseStage[]>([]);
+  const [editPipeline, setEditPipeline] = useState<number | null>(null);
 
   const createPipeline = (newPipeline: Pipeline) => {
-    createNewPipeline(newPipeline).then((data: Pipeline[]) => {
-      setPipelines(data);
+    if (editPipeline) {
+      updatePipeline(editPipeline, newPipeline).then((data: FetchPipeline) => {
+        setPipelines([...pipelines, data]);
+      });
+      return;
+    }
+    createNewPipeline(newPipeline).then((data: FetchPipeline) => {
+      setPipelines([...pipelines, data]);
     });
   };
+
   //   const fetch = getAllPipelines;
 
   useEffect(() => {
-    getAllPipelines().then((data: Pipeline[]) => {
+    getAllPipelines().then((data: FetchPipeline[]) => {
       setPipelines(data);
     });
 
@@ -129,6 +143,8 @@ export default function PipelinesProvider(props: { children: JSX.Element }) {
         pipelines,
         baseStages,
         createPipeline,
+        setEditPipeline,
+        editPipeline,
       }}
     >
       {props.children}
@@ -147,7 +163,7 @@ export function usePipelines() {
 }
 
 async function getAllPipelines() {
-  return apiCall<Pipeline[]>({ method: 'GET', url: '/pipeline' });
+  return apiCall<FetchPipeline[]>({ method: 'GET', url: '/pipeline' });
 }
 
 async function getAllBaseStages() {
@@ -155,5 +171,13 @@ async function getAllBaseStages() {
 }
 
 async function createNewPipeline(data: Pipeline) {
-  return apiCall<Pipeline[]>({ method: 'POST', url: '/pipeline', data });
+  return apiCall<FetchPipeline>({ method: 'POST', url: '/pipeline', data });
+}
+
+async function updatePipeline(id: number, data: Pipeline) {
+  return apiCall<FetchPipeline>({ method: 'POST', url: `/pipeline/${id}`, data });
+}
+
+async function deletePipeline(id: number) {
+  return apiCall<boolean>({ method: 'DELETE', url: `/pipeline/${id}` });
 }

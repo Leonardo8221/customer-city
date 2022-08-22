@@ -25,7 +25,7 @@ const Selections: SelectionType[] = [
   {
     icon: <DocumentIcon />,
     title: 'Documents',
-    name: 'pipelineDocuments',
+    name: 'pipelineDocument',
     pageIndex: PipelineFormSteps.SECOND_DOCUMENTS,
   },
   {
@@ -63,7 +63,7 @@ const SecondPage: FC = () => {
           label="Pipeline name"
           placeholder="Type the pipeline name"
           fullWidth
-          value={values.pipelineName}
+          defaultValue={values.pipelineName}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.pipelineName && !!errors.pipelineName}
@@ -74,7 +74,7 @@ const SecondPage: FC = () => {
           label="Pipeline description"
           placeholder="Add a pipeline description"
           fullWidth
-          value={values.pipelineDescription}
+          defaultValue={values.pipelineDescription}
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.pipelineDescription && !!errors.pipelineDescription}
@@ -95,7 +95,7 @@ const SecondPage: FC = () => {
             <SelectionLabel>
               <SelectionIcon>{selection.icon}</SelectionIcon>
               <Typography variant="p14">{selection.title}</Typography>
-              <Notification>{values[selection.name].length}</Notification>
+              <Notification>{selection.name in values ? values[selection.name].length : 0}</Notification>
             </SelectionLabel>
 
             <PlusIcon className="plus-n400" />

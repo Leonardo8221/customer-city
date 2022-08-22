@@ -34,7 +34,7 @@ export const Container: FC = memo(function Container() {
   const { baseStages, createPipeline } = usePipelines();
   const { onClose, setStep } = useContext(PipelineFormContext);
   const { values, setValues, setFieldValue, handleSubmit } = useFormikContext<Pipeline>();
-  const cards = values.pipelineStages;
+  const cards = values.pipelineStage;
 
   const findCard = useCallback(
     (cardItem: PipelineStage) => {
@@ -53,7 +53,7 @@ export const Container: FC = memo(function Container() {
       setHoverIndex(undefined);
       setValues(
         update(values, {
-          pipelineStages: {
+          pipelineStage: {
             $splice: [
               [index, 1],
               [atIndex, 0, card],
@@ -82,7 +82,7 @@ export const Container: FC = memo(function Container() {
         },
         ...cards.slice(index),
       ];
-      setFieldValue('pipelineStages', newCards);
+      setFieldValue('pipelineStage', newCards);
     },
     [setFieldValue, cards],
   );
@@ -106,7 +106,7 @@ export const Container: FC = memo(function Container() {
       accept: ItemTypes.CARD,
       drop: ({ card, isDemo }: Item) => {
         if (!isDemo) return;
-        setValues(update(values, { pipelineStages: { $push: [{ ...card, createdAt: new Date() }] } }));
+        setValues(update(values, { pipelineStage: { $push: [{ ...card, createdAt: new Date() }] } }));
       },
     }),
     [values],
@@ -114,7 +114,7 @@ export const Container: FC = memo(function Container() {
 
   const handleDelete = useCallback(
     (index: number) => {
-      setValues(update(values, { pipelineStages: { $splice: [[index, 1]] } }));
+      setValues(update(values, { pipelineStage: { $splice: [[index, 1]] } }));
     },
     [values, setValues],
   );
