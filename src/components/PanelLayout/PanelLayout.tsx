@@ -5,7 +5,7 @@ import { Navbar } from 'components/Navbar';
 import { Container } from './ui';
 import { Drawer } from 'components/Drawer';
 
-const PanelLayout: FC = () => {
+export default function PanelLayout(){
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => setDrawerOpen((prevState) => !prevState);
@@ -17,6 +17,4 @@ const PanelLayout: FC = () => {
       <Outlet />
     </Container>
   );
-};
-
-export default PanelLayout;
+}

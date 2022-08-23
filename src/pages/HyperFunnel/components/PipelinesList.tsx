@@ -1,26 +1,13 @@
-import { FC, useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
 
-import { ReactComponent as BlocksIcon } from 'assets/icons/blocks.svg';
-import { PrimaryButton } from 'components/ui';
-import { Product } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
-import { useAuth } from 'store/auth/hooks';
 import MuiBox from '@mui/material/Box';
 import { styled } from '@mui/material';
-import { usePipelines } from '../PipelinesProvider';
 import LeftPanel from 'pages/HyperFunnel/components/LeftPanel';
+import PanelBodySidebar from 'components/PanelLayout/PanelBodySidebar';
 
 export default function HyperFunnel() {
-  const { baseStages, pipelines } = usePipelines();
 
   return (
-    <Container>
-      <LeftContainer>
-        <LeftPanel />
-      </LeftContainer>
-      <RightContainer />
-    </Container>
+    <PanelBodySidebar leftPanelChild={<LeftPanel />} middlePanelChild={<RightContainer />} leftPanelTitle="HyperFunnels" />
   );
 }
 

@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useToggle } from 'utils/toggle';
 import { HyperFunnelModal } from 'pages/HyperFunnel/components';
-import Paper from '@mui/material/Paper';
+import HyperFunnelPipelineCard from 'pages/HyperFunnel/components/HyperFunnelPipelineCard'
 
-export default function HyperFunnel() {
+export default function LeftPanel() {
   const { baseStages, pipelines, setEditPipeline, deletePipeline } = usePipelines();
   const { flag, toggle } = useToggle();
 
@@ -23,11 +23,8 @@ export default function HyperFunnel() {
     toggle();
   };
   return (
-    <Paper style={{ height: '100%' }}>
+    <>
       <HyperFunnelModal open={flag} toggleOpen={toggle} />
-      <Typography variant="h2" sx={{ color: 'neutral.main', mt: 3, mx: 4 }}>
-        HyperFunnel
-      </Typography>
 
       <Grid container justifyContent="space-between">
         <Grid item>
@@ -42,32 +39,10 @@ export default function HyperFunnel() {
 
       <Grid container>
         {pipelines.map((pipeline, index) => (
-          <Grid container key={index} justifyContent="space-between">
-            <Grid item>
-              <Typography variant="inherit" sx={{ color: 'neutral.main', mt: 3, mx: 4 }}>
-                {pipeline.pipelineName}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={() => {
-                  edit(pipeline.pipelineId);
-                }}
-              >
-                Edit
-              </Button>
-              <Button
-                onClick={() => {
-                  deletePipeline(pipeline.pipelineId);
-                }}
-              >
-                Delete
-              </Button>
-            </Grid>
-          </Grid>
+            <HyperFunnelPipelineCard key={index} pipeline={pipeline} />
         ))}
       </Grid>
-    </Paper>
+    </>
   );
 }
 

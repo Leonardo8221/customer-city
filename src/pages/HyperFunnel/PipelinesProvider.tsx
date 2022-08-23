@@ -106,7 +106,7 @@ type FetchPipeline = Pipeline & {
 
 export const PipelinesContext = React.createContext<undefined | PipelinesContextProps>(undefined);
 
-export default function PipelinesProvider(props: { children: JSX.Element[] }) {
+export default function PipelinesProvider(props: { children: JSX.Element | JSX.Element[] }) {
   const [stages, setStages] = useState<PipelineStage[]>([]);
   const [loading, setLoading] = useState(true);
 

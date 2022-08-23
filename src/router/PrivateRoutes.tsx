@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { PRIVATE_ROUTE_PATHS } from 'core/constants';
 import { useUser } from 'store/user/hooks';
 import { dashboardRoutes, renderRoute, profileRoutes } from './routes';
+import { PanelLayout } from 'components/PanelLayout';
 
 const PrivateRoutes: FC = () => {
   const { getCurrentUser } = useUser();
