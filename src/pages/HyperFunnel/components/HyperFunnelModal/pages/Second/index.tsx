@@ -25,7 +25,7 @@ const Selections: SelectionType[] = [
   {
     icon: <DocumentIcon />,
     title: 'Documents',
-    name: 'pipelineDocument',
+    name: 'pipelineDocuments',
     pageIndex: PipelineFormSteps.SECOND_DOCUMENTS,
   },
   {

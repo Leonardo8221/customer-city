@@ -1,13 +1,13 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import { ReactComponent as ChevronLeftIcon } from 'assets/icons/chevronLeft.svg';
-import { ReactComponent as ChevronRightIcon } from 'assets/icons/chevronRight.svg';
 import Visible from 'components/PanelLayout/Visible';
 import { Typography } from '@mui/material';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
 const drawerWidth = 500;
 
@@ -41,45 +41,40 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 type PanelBodySidebarProps = {
-  rightPanelChild?: JSX.Element
-  middlePanelChild: JSX.Element
-  leftPanelChild?: JSX.Element
-  leftPanelTitle?: string
-}
+  rightPanelChild?: JSX.Element;
+  middlePanelChild: JSX.Element;
+  leftPanelChild?: JSX.Element;
+  leftPanelTitle?: string;
+  leftPanelOpen?: boolean;
+};
 
-export default function PanelBodySidebar(props:PanelBodySidebarProps) {
-
+export default function PanelBodySidebar(props: PanelBodySidebarProps) {
   return (
     <Box sx={{ display: 'flex' }}>
       <LeftDrawer {...props} />
-      <Box component="main">
-        {props.middlePanelChild}
-      </Box>
+      <Box component="main">{props.middlePanelChild}</Box>
     </Box>
   );
 }
 
-function LeftDrawer(props: PanelBodySidebarProps){
-
-  const [open, setOpen] = React.useState(false);
+function LeftDrawer(props: PanelBodySidebarProps) {
+  const [open, setOpen] = useState(Boolean(props.leftPanelOpen));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -89,38 +84,29 @@ function LeftDrawer(props: PanelBodySidebarProps){
     setOpen(false);
   };
 
-  if( !props.leftPanelChild ){
+  if (!props.leftPanelChild) {
     return null;
   }
 
-  return(
+  return (
     <Drawer variant="permanent" open={open}>
       <Toolbar />
       <DrawerHeader>
         <Visible when={open}>
-          <Typography variant='h2'>{props.leftPanelTitle}</Typography>
-        </Visible>        
+          <Typography variant="h2">{props.leftPanelTitle}</Typography>
+        </Visible>
         <Visible when={open}>
-          <IconButton 
-                onClick={handleDrawerClose}
-            >
-            <ChevronLeftIcon />
+          <IconButton onClick={handleDrawerClose}>
+            <FirstPageIcon />
           </IconButton>
         </Visible>
         <Visible when={!open}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-          >
-            <ChevronRightIcon />
+          <IconButton onClick={handleDrawerOpen}>
+            <LastPageIcon />
           </IconButton>
         </Visible>
       </DrawerHeader>
-      <Visible when={open}>
-        {props.leftPanelChild}
-      </Visible>
+      <Visible when={open}>{props.leftPanelChild}</Visible>
     </Drawer>
-  )
-
+  );
 }

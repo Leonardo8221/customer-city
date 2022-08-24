@@ -55,8 +55,8 @@ export type PipelineDocument = {
 export type Pipeline = {
   pipelineName: string;
   pipelineDescription: string;
-  pipelineStage: PipelineStage[];
-  pipelineDocument: PipelineDocument[];
+  pipelineStages: PipelineStage[];
+  pipelineDocuments: PipelineDocument[];
   pipelineProducts: Product[];
   pipelineOwners: User[];
 };
@@ -72,8 +72,8 @@ export enum PipelineFormSteps {
 export const defaultValues: Pipeline = {
   pipelineName: '',
   pipelineDescription: '',
-  pipelineStage: [],
-  pipelineDocument: [],
+  pipelineStages: [],
+  pipelineDocuments: [],
   pipelineProducts: [],
   pipelineOwners: [],
 };
@@ -184,7 +184,7 @@ async function createNewPipeline(data: Pipeline) {
 }
 
 async function updatePipeline(id: number, data: Pipeline) {
-  return apiCall<FetchPipeline>({ method: 'POST', url: `/pipeline/${id}`, data });
+  return apiCall<FetchPipeline>({ method: 'PUT', url: `/pipeline/${id}`, data });
 }
 
 async function deletePipeline(id: number) {

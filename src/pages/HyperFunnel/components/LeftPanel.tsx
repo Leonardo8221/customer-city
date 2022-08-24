@@ -1,10 +1,3 @@
-import { FC, useState, useEffect } from 'react';
-
-import { ReactComponent as BlocksIcon } from 'assets/icons/blocks.svg';
-import { PrimaryButton } from 'components/ui';
-import { Product } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
-import { useAuth } from 'store/auth/hooks';
 import MuiBox from '@mui/material/Box';
 import { Button, IconButton, styled } from '@mui/material';
 import { usePipelines } from '../PipelinesProvider';
@@ -12,16 +5,12 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useToggle } from 'utils/toggle';
 import { HyperFunnelModal } from 'pages/HyperFunnel/components';
-import HyperFunnelPipelineCard from 'pages/HyperFunnel/components/HyperFunnelPipelineCard'
+import HyperFunnelPipelineCard from 'pages/HyperFunnel/components/HyperFunnelPipelineCard';
 
 export default function LeftPanel() {
   const { baseStages, pipelines, setEditPipeline, deletePipeline } = usePipelines();
   const { flag, toggle } = useToggle();
 
-  const edit = (id: number) => {
-    setEditPipeline(id);
-    toggle();
-  };
   return (
     <>
       <HyperFunnelModal open={flag} toggleOpen={toggle} />
@@ -37,19 +26,20 @@ export default function LeftPanel() {
         </Grid>
       </Grid>
 
-      <Grid container>
+      <Container margin={2}>
         {pipelines.map((pipeline, index) => (
-            <HyperFunnelPipelineCard key={index} pipeline={pipeline} />
+          <HyperFunnelPipelineCard key={index} pipeline={pipeline} />
         ))}
-      </Grid>
+      </Container>
     </>
   );
 }
 
 export const Container = styled(MuiBox)(() => ({
-  flex: 1,
-  display: 'flex',
-  backgroundColor: 'white',
+  backgroundColor: '#F6F8FB',
+  padding: 16,
+  height: '100%',
+  marginBottom: 32,
 }));
 
 export const RightContainer = styled(MuiBox)(() => ({ padding: 24, width: 400 }));

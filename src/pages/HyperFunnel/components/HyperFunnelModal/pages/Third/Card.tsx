@@ -156,12 +156,12 @@ export const Card: FC<CardProps> = memo(function Card({
             <Box className="card-content">
               <CustomInput
                 id="pipelineStageName"
-                name={`pipelineStage[${order}].pipelineStageName`}
+                name={`pipelineStages[${order}].pipelineStageName`}
                 title="Stage name"
                 label="Stage name"
                 placeholder="Enter the Stage name"
                 fullWidth
-                value={values.pipelineStage?.[order]?.pipelineStageName}
+                value={values.pipelineStages?.[order]?.pipelineStageName}
                 onChange={handleChange}
               />
 
@@ -169,12 +169,12 @@ export const Card: FC<CardProps> = memo(function Card({
                 <>
                   <CustomInput
                     id="goal"
-                    name={`pipelineStage[${order}].pipelineStageDescription`}
+                    name={`pipelineStages[${order}].pipelineStageDescription`}
                     title="Goal"
                     label="Goal"
                     placeholder="Enter the goal"
                     fullWidth
-                    defaultValue={values.pipelineStage?.[order]?.pipelineStageDescription}
+                    defaultValue={values.pipelineStages?.[order]?.pipelineStageDescription}
                     onChange={handleChange}
                   />
 
@@ -182,13 +182,13 @@ export const Card: FC<CardProps> = memo(function Card({
                     id="pipelineOwners"
                     label="Owners"
                     placeholder="Enter the Team ownership"
-                    value={(values.pipelineStage?.[order]?.pipelineStageOwners ?? []).map((user) => {
+                    value={(values.pipelineStages?.[order]?.pipelineStageOwners ?? []).map((user) => {
                       return { label: user.userName, value: user };
                     })}
                     options={userSuggestions}
                     onSelect={(value) =>
                       setFieldValue(
-                        `pipelineStage[${order}].pipelineStageOwners`,
+                        `pipelineStages[${order}].pipelineStageOwners`,
                         value.map((o) => o.value),
                       )
                     }
@@ -200,12 +200,12 @@ export const Card: FC<CardProps> = memo(function Card({
 
                   <CustomInput
                     id="forecastCategory"
-                    name={`pipelineStage[${order}].pipelineStageCategory`}
+                    name={`pipelineStages[${order}].pipelineStageCategory`}
                     title="Forecast Category"
                     label="Forecast Category"
                     placeholder="Enter the forecast category"
                     fullWidth
-                    value={values.pipelineStage?.[order]?.pipelineStageCategory}
+                    value={values.pipelineStages?.[order]?.pipelineStageCategory}
                     onChange={handleChange}
                   />
 

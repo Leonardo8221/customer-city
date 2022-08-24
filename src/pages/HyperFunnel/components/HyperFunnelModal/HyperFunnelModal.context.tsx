@@ -45,16 +45,16 @@ export const defaultValues: Pipeline = {
   pipelineProducts: [],
   pipelineOwners: [],
 };
-// export const PipelineFormContext = createContext<{
-//   form: Pipeline;
-//   // update: (name: string, value: any) => void;
-//   step: number;
-//   setStep: (step: number) => void;
-//   onClose: () => void;
-// }>({
-//   form: defaultValues,
-//   // update: () => {},
-//   step: PipelineFormSteps.FIRST,
-//   setStep: console.log,
-//   onClose: console.log,
-// });
+export const PipelineFormContext = createContext<{
+  form: Pipeline;
+  // update: (name: string, value: any) => void;
+  step: number;
+  setStep: (step: number) => void;
+  onClose: () => void;
+}>({
+  form: defaultValues,
+  // update: () => {},
+  step: PipelineFormSteps.FIRST,
+  setStep: console.log,
+  onClose: console.log,
+});

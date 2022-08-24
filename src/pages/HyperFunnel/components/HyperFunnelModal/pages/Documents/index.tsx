@@ -44,8 +44,8 @@ const DocumentPage: FC = () => {
   const { values, setValues } = useFormikContext<Pipeline>();
 
   useEffect(() => {
-    setFiles(values.pipelineDocument.filter((d) => d.type === 'document'));
-    setLinks(values.pipelineDocument.filter((d) => d.type === 'link'));
+    setFiles(values.pipelineDocuments.filter((d) => d.type === 'document'));
+    setLinks(values.pipelineDocuments.filter((d) => d.type === 'link'));
   }, [values]);
 
   const onTabChange = (event: SyntheticEvent, newValue: number) => {
@@ -95,7 +95,7 @@ const DocumentPage: FC = () => {
   };
 
   const handleSave = () => {
-    setValues(update(values, { $merge: { pipelineDocument: [...files, ...links] } }));
+    setValues(update(values, { $merge: { pipelineDocuments: [...files, ...links] } }));
     setStep(PipelineFormSteps.SECOND);
   };
 

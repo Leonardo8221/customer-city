@@ -10,8 +10,8 @@ import EmptyHyperFunnel from 'pages/HyperFunnel/EmptyHyperFunnel';
 export default function HyperFunnel() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
-  const { loading, error, getProducts } = useProduct();
-  const { isAdmin, isSuperAdmin } = useAuth();
+  // const { loading, error, getProducts } = useProduct();
+  // const { isAdmin, isSuperAdmin } = useAuth();
 
   useEffect(() => {
     // getProducts();

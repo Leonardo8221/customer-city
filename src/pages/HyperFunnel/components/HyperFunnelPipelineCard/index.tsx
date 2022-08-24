@@ -1,44 +1,55 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
-import { Pipeline } from 'pages/HyperFunnel/PipelinesProvider';
+import { Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 import { IconButton, styled } from '@mui/material';
+import { useToggle } from 'utils/toggle';
+import { HyperFunnelModal } from 'pages/HyperFunnel/components';
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
-
-export default function HyperFunnelPipelineCard(props:{
-  pipeline: Pipeline
+export default function HyperFunnelPipelineCard(props: {
+  pipeline: Pipeline & {
+    pipelineId: number;
+  };
 }) {
+  const { setEditPipeline, deletePipeline } = usePipelines();
+  const { flag, toggle } = useToggle();
+
+  const onEdit = () => {
+    setEditPipeline(props.pipeline.pipelineId);
+    toggle();
+  };
+
+  const onDelete = () => {
+    deletePipeline(props.pipeline.pipelineId);
+  };
+
   return (
     <StyledCard>
-      <CardHeader 
-        title = {props.pipeline.pipelineName}
-        action = {
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        }        
+      <HyperFunnelModal open={flag} toggleOpen={toggle} />
+      <CardHeader
+        title={props.pipeline.pipelineName}
+        action={
+          <>
+            <IconButton onClick={onEdit}>
+              <DescriptionIcon />
+            </IconButton>
+            <IconButton onClick={onDelete}>
+              <MoreVertIcon />
+            </IconButton>
+          </>
+        }
       />
     </StyledCard>
   );
 }
 
-
-
 const StyledCard = styled(Card)(({ theme }) => ({
-  width: '100%'
-}))
+  width: '100%',
+  borderRadius: 2,
+  marginBottom: 2,
+  borderColor: 'blue',
+  borderWidth: 4,
+  color: 'blue',
+}));
