@@ -1,13 +1,21 @@
-
 import MuiBox from '@mui/material/Box';
 import { styled } from '@mui/material';
 import LeftPanel from 'pages/HyperFunnel/components/LeftPanel';
 import PanelBodySidebar from 'components/PanelLayout/PanelBodySidebar';
+import { usePipelines } from '../PipelinesProvider';
 
 export default function HyperFunnel() {
+  const { pipelines } = usePipelines();
 
+  if (pipelines.length === 0) {
+    return null;
+  }
   return (
-    <PanelBodySidebar leftPanelChild={<LeftPanel />} middlePanelChild={<RightContainer />} leftPanelTitle="HyperFunnels" />
+    <PanelBodySidebar
+      leftPanelChild={<LeftPanel />}
+      middlePanelChild={<RightContainer />}
+      leftPanelTitle="HyperFunnels"
+    />
   );
 }
 
