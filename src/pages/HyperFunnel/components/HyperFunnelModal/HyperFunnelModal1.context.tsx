@@ -25,7 +25,7 @@ export type Pipeline = {
   pipelineDescription: string;
   pipelineStages: PipelineStage[];
   pipelineDocuments: PipelineDocument[];
-  pipelineProducts: Product[];
+  products: Product[];
   pipelineOwners: User[];
 };
 
@@ -42,7 +42,7 @@ export const defaultValues: Pipeline = {
   pipelineDescription: '',
   pipelineStages: [],
   pipelineDocuments: [],
-  pipelineProducts: [],
+  products: [],
   pipelineOwners: [],
 };
 export const PipelineFormContext = createContext<{

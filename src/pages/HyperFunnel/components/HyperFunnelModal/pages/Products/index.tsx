@@ -23,8 +23,8 @@ const TeamUsersPage: FC = () => {
 
   useEffect(() => {
     setSelectedProducts(
-      values.pipelineProducts.map((user) => {
-        return { label: user.productName, value: user };
+      values.products.map((product) => {
+        return { label: product.productName, value: product };
       }),
     );
   }, [values]);
@@ -37,7 +37,7 @@ const TeamUsersPage: FC = () => {
   }, [products]);
 
   const handleSave = () => {
-    setValues(update(values, { $merge: { pipelineProducts: selectedProducts.map((s) => s.value) } }));
+    setValues(update(values, { $merge: { products: selectedProducts.map((s) => s.value) } }));
     setStep(PipelineFormSteps.SECOND);
   };
 
@@ -55,13 +55,13 @@ const TeamUsersPage: FC = () => {
 
       <ProductsMain sx={{ height: 496 }}>
         <CustomMultiDropdown<Product>
-          id="pipelineProducts"
+          id="products"
           placeholder="Choose Products"
           value={selectedProducts}
           options={Suggestions}
           onSelect={(value) => setSelectedProducts(value)}
           InputProps={{
-            error: touched.pipelineProducts && !!errors.pipelineProducts,
+            error: touched.products && !!errors.products,
             onBlur: handleBlur,
           }}
         />

@@ -1,7 +1,7 @@
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteForever from '@mui/icons-material/DeleteForever';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import { IconButton, styled } from '@mui/material';
@@ -36,7 +36,7 @@ export default function HyperFunnelPipelineCard(props: {
               <DescriptionIcon />
             </IconButton>
             <IconButton onClick={onDelete}>
-              <MoreVertIcon />
+              <DeleteForever />
             </IconButton>
           </>
         }

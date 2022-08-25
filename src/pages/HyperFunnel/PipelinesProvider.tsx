@@ -3,6 +3,8 @@ import { Product } from 'store/product/types';
 import { User } from 'store/user/types';
 import { apiCall } from 'http/index';
 import { client, baseURL } from 'http/api-client';
+import { useAsync } from 'utils/async';
+import { Loader } from 'components/Loader';
 
 export interface DealStage {
   dealStageId: number;
@@ -32,17 +34,6 @@ export interface PipelineStage extends BaseStage {
   baseStage?: BaseStage;
 }
 
-// type PipelineStage = {
-//     type: 'Pre-Sales' | 'Sales' | 'Post-Sales',
-//     systemPipelineStage: DealStage | ContactStage,
-//     pipelineStageId: number,
-//     name: string,
-//     goal?: string
-//     owners?: User[],
-//     forcastCategory?: number,
-//     document?: PipelineDocument[]
-// }
-
 export type PipelineDocument = {
   type: 'document' | 'link';
   location: string;
@@ -57,7 +48,7 @@ export type Pipeline = {
   pipelineDescription: string;
   pipelineStages: PipelineStage[];
   pipelineDocuments: PipelineDocument[];
-  pipelineProducts: Product[];
+  products: Product[];
   pipelineOwners: User[];
 };
 
@@ -74,7 +65,7 @@ export const defaultValues: Pipeline = {
   pipelineDescription: '',
   pipelineStages: [],
   pipelineDocuments: [],
-  pipelineProducts: [],
+  products: [],
   pipelineOwners: [],
 };
 export const PipelineFormContext = createContext<{
@@ -108,11 +99,28 @@ export const PipelinesContext = React.createContext<undefined | PipelinesContext
 
 export default function PipelinesProvider(props: { children: JSX.Element | JSX.Element[] }) {
   const [stages, setStages] = useState<PipelineStage[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
   const [baseStages, setBaseStages] = useState<BaseStage[]>([]);
   const [editPipeline, setEditPipeline] = useState<number | null>(null);
+
+  const { data: savedPipelines, loading } = useAsync(getAllPipelines);
+  const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
+
+  useEffect(() => {
+    if (!savedPipelines) {
+      return;
+    }
+    setPipelines(savedPipelines);
+  }, [savedPipelines]);
+
+  useEffect(() => {
+    if (!savedBaseSages) {
+      return;
+    }
+    setBaseStages(savedBaseSages);
+  }, [savedBaseSages]);
 
   const createPipeline = (newPipeline: Pipeline) => {
     if (editPipeline) {
@@ -133,17 +141,9 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     });
   };
 
-  //   const fetch = getAllPipelines;
-
-  useEffect(() => {
-    getAllPipelines().then((data: FetchPipeline[]) => {
-      setPipelines(data);
-    });
-
-    getAllBaseStages().then((data: BaseStage[]) => {
-      setBaseStages(data);
-    });
-  }, []);
+  if (looadingBaseStages || loading) {
+    return <Loader />;
+  }
 
   return (
     <PipelinesContext.Provider

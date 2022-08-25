@@ -37,7 +37,7 @@ const Selections: SelectionType[] = [
   {
     icon: <ProductIcon />,
     title: 'Products',
-    name: 'pipelineProducts',
+    name: 'products',
     pageIndex: PipelineFormSteps.SECOND_PRODUCTS,
   },
 ];
