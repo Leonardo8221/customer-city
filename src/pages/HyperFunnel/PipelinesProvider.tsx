@@ -5,6 +5,7 @@ import { apiCall } from 'http/index';
 import { client, baseURL } from 'http/api-client';
 import { useAsync } from 'utils/async';
 import { Loader } from 'components/Loader';
+import { useProduct } from 'store/product/hooks';
 
 export interface DealStage {
   dealStageId: number;
@@ -25,6 +26,10 @@ export interface BaseStage {
   description: string;
 }
 
+export interface PipelineProduct {
+  pipelineId?: number;
+  productId?: number;
+}
 export interface PipelineStage extends BaseStage {
   createdAt?: Date;
   pipelineStageName?: string;
@@ -50,6 +55,7 @@ export type Pipeline = {
   pipelineDocuments: PipelineDocument[];
   products: Product[];
   pipelineOwners: User[];
+  // pipelineProducts: PipelineProduct[]
 };
 
 export enum PipelineFormSteps {
@@ -67,6 +73,7 @@ export const defaultValues: Pipeline = {
   pipelineDocuments: [],
   products: [],
   pipelineOwners: [],
+  // pipelineProducts: []
 };
 export const PipelineFormContext = createContext<{
   form: Pipeline;
@@ -108,12 +115,28 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
   const { data: savedPipelines, loading } = useAsync(getAllPipelines);
   const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
 
+  const { products: savedProducts } = useProduct();
+
   useEffect(() => {
     if (!savedPipelines) {
       return;
     }
-    setPipelines(savedPipelines);
-  }, [savedPipelines]);
+
+    const saved = savedPipelines.map((pipeline) => {
+      const { pipelineProducts, ...others } = pipeline;
+      const products = pipelineProducts.map((p) => {
+        return savedProducts.filter((s) => s.productId === p.productId)[0];
+      });
+
+      const newPipeline: FetchPipeline = {
+        ...others,
+        products,
+      };
+
+      return newPipeline;
+    });
+    setPipelines(saved);
+  }, [savedPipelines, savedProducts]);
 
   useEffect(() => {
     if (!savedBaseSages) {
@@ -132,6 +155,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     createNewPipeline(newPipeline).then((data: FetchPipeline) => {
       setPipelines([...pipelines, data]);
     });
+    window.location.reload();
   };
 
   const remove = (id: number) => {
@@ -139,6 +163,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
       const removed = pipelines.filter((p) => p.pipelineId !== id);
       setPipelines(removed);
     });
+    window.location.reload();
   };
 
   if (looadingBaseStages || loading) {
@@ -171,8 +196,12 @@ export function usePipelines() {
   return context;
 }
 
+type Fetched = FetchPipeline & {
+  pipelineProducts: PipelineProduct[];
+};
+
 async function getAllPipelines() {
-  return apiCall<FetchPipeline[]>({ method: 'GET', url: '/pipeline' });
+  return apiCall<Fetched[]>({ method: 'GET', url: '/pipeline' });
 }
 
 async function getAllBaseStages() {
@@ -180,7 +209,14 @@ async function getAllBaseStages() {
 }
 
 async function createNewPipeline(data: Pipeline) {
-  return apiCall<FetchPipeline>({ method: 'POST', url: '/pipeline', data });
+  const { products, ...others } = data;
+  const pipelineProducts = products.map((p) => {
+    return {
+      productId: p.productId,
+    };
+  });
+  const d1 = { ...others, pipelineProducts };
+  return apiCall<FetchPipeline>({ method: 'POST', url: '/pipeline', data: d1 });
 }
 
 async function updatePipeline(id: number, data: Pipeline) {

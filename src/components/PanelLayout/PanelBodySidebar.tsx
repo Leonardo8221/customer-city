@@ -74,7 +74,7 @@ export default function PanelBodySidebar(props: PanelBodySidebarProps) {
 }
 
 function LeftDrawer(props: PanelBodySidebarProps) {
-  const [open, setOpen] = useState(Boolean(props.leftPanelOpen));
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
