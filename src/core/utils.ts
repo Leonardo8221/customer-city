@@ -1,5 +1,5 @@
-import { ProductCategory, ProductCurrency } from 'store/product/types';
-import { ProductRateChargeType } from 'store/product/types';
+import { ProductCategory, ProductCurrency } from 'providers/ProductsProvider';
+import { ProductRateChargeType } from 'providers/ProductsProvider';
 import { PRIVATE_ABS_ROUTE_PATHS } from './constants';
 import { UserType } from './types';
 

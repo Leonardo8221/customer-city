@@ -4,14 +4,14 @@ import { LoadingButton } from '@mui/lab';
 import { Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
 
-import { createProduct as createProductApi, updateProduct as updateProductApi } from 'http/product';
+// import { createProduct as createProductApi, updateProduct as updateProductApi } from 'http/product';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter, TextButton } from 'components/ui';
 import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { CustomTextArea } from 'components/CustomTextarea';
-import { Product, ProductCategory, ProductCurrency, ProductRateChargeType } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
+import { Product, ProductCategory, ProductCurrency, ProductRateChargeType } from 'providers/ProductsProvider';
+// import { useProduct } from 'store/product/hooks';
 import { PRODUCT_RATE_CHARGE_TYPE_OPTIONS, PRODUCT_CATEGORY_OPTIONS, PRODUCT_CURRENCY_OPTIONS } from 'core/constants';
 import { PriceCurrencyContainer, Paper } from './ui';
 
@@ -43,7 +43,7 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
-  const { getProducts } = useProduct();
+  // const { getProducts } = useProduct();
 
   const closeModal = () => {
     formRef.current?.resetForm();
@@ -60,10 +60,10 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
         price: parseFloat(values.price),
       };
 
-      if (product) await updateProductApi(product.productId, data);
-      else await createProductApi(data);
+      // if (product) await updateProductApi(product.productId, data);
+      // else await createProductApi(data);
 
-      getProducts();
+      // getProducts();
 
       closeModal();
     } catch (err) {

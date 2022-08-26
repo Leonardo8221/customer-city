@@ -10,11 +10,11 @@ import { useFormikContext } from 'formik';
 import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { OptionValue } from 'core/types';
 import update from 'immutability-helper';
-import { Product } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
+import { Product } from 'providers/ProductsProvider';
+import { useProducts } from 'providers/ProductsProvider';
 
 const TeamUsersPage: FC = () => {
-  const { products } = useProduct();
+  const { products } = useProducts();
 
   const { onClose, setStep } = useContext(PipelineFormContext);
   const [selectedProducts, setSelectedProducts] = useState<OptionValue<Product>[]>([]);

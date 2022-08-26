@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { DealStage } from 'store/dealStage/types';
-import { Product } from 'store/product/types';
+import { Product } from 'providers/ProductsProvider';
 import { User } from 'store/user/types';
 
 export interface PipelineStage extends DealStage {

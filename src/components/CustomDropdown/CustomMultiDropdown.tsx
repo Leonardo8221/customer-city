@@ -6,7 +6,7 @@ import { ReactComponent as TraingleDownIcon } from 'assets/icons/triangleDown.sv
 import { Paper } from './ui';
 import { User } from 'store/user/types';
 import { OptionValue } from 'core/types';
-import { Product } from 'store/product/types';
+import { Product } from 'providers/ProductsProvider';
 
 type OptionValueType = string | number | User | Product;
 

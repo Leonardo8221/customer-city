@@ -11,7 +11,7 @@ import { useDealStage } from 'store/dealStage/hooks';
 import TeamUsersPage from './pages/TeamUsers';
 import ProductsPage from './pages/Products';
 import { useUser } from 'store/user/hooks';
-import { useProduct } from 'store/product/hooks';
+import { useProducts } from 'providers/ProductsProvider';
 
 interface ProductModalProps {
   open: boolean;
@@ -37,14 +37,8 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
   };
 
   // const { getDealStages } = useDealStage();
-  const { getUsers } = useUser();
-  const { getProducts } = useProduct();
-
-  useEffect(() => {
-    // getDealStages();
-    getUsers();
-    getProducts();
-  }, [getUsers, getProducts]);
+  // const { getUsers } = useUser();
+  // const { products } = useProducts();
 
   const submit = (values: any) => {
     console.log('submit data: ', values);

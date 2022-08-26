@@ -8,7 +8,7 @@ import { initialRootState } from 'store/reducers';
 import { UserType } from 'core/types';
 import { productsData } from 'test/data';
 import { mapProductCategoryToLabel, mapProductRateChargeTypeToLabel, mapProductCurrencyToLabel } from 'core/utils';
-import { ProductCategory, ProductRateChargeType, ProductCurrency } from 'store/product/types';
+import { ProductCategory, ProductRateChargeType, ProductCurrency } from 'providers/ProductsProvider';
 import HyperFunnel from './HyperFunnel';
 
 const initialState = { ...initialRootState, auth: { ...initialRootState.auth, role: UserType.ADMIN } };

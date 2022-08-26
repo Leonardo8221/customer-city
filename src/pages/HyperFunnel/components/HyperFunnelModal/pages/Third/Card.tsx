@@ -193,7 +193,7 @@ export const Card: FC<CardProps> = memo(function Card({
                       )
                     }
                     InputProps={{
-                      error: touched.pipelineOwners && !!errors.pipelineOwners,
+                      error: touched.pipelineUsers && !!errors.pipelineUsers,
                       onBlur: handleBlur,
                     }}
                   />

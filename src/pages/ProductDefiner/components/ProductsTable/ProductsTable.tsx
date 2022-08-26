@@ -3,27 +3,23 @@ import { Box } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams, GridRowParams } from '@mui/x-data-grid';
 import format from 'date-fns/format';
 
-import { deleteProduct as deleteProductApi } from 'http/product';
-import { TableFooter } from 'components/TableFooter';
-import { Product } from 'store/product/types';
+import { Product } from 'providers/ProductsProvider';
 import { mapProductCategoryToLabel, mapProductRateChargeTypeToLabel } from 'core/utils';
-import { useProduct } from 'store/product/hooks';
 import { BaseCheckbox, ColumnSortedAscendingIcon, ColumnSortedDescendingIcon, ColumnUnsortedIcon } from './ui';
 import './ProductsTable.css';
 
 const ProductFooter: FC = () => {
-  const { getProducts } = useProduct();
-
   return (
-    <TableFooter
-      entity="product"
-      pluralEntity="products"
-      idProp="productId"
-      onDelete={async (ids: number[]) => {
-        await Promise.all(ids.map((id) => deleteProductApi(id)));
-      }}
-      onSuccess={getProducts}
-    />
+    <>Check this later because of refactoring products provider</>
+    // <TableFooter
+    //   entity="product"
+    //   pluralEntity="products"
+    //   idProp="productId"
+    //   onDelete={async (ids: number[]) => {
+    //     await Promise.all(ids.map((id) => deleteProductApi(id)));
+    //   }}
+    //   onSuccess={getProducts}
+    // />
   );
 };
 

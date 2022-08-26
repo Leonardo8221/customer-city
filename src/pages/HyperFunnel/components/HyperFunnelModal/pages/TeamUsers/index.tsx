@@ -23,7 +23,7 @@ const TeamUsersPage: FC = () => {
 
   useEffect(() => {
     setSelectedUsers(
-      values.pipelineOwners.map((user) => {
+      values.pipelineUsers.map((user) => {
         return { label: user.userName, value: user };
       }),
     );
@@ -37,7 +37,7 @@ const TeamUsersPage: FC = () => {
   }, [users]);
 
   const handleSave = () => {
-    setValues(update(values, { $merge: { pipelineOwners: selectedUsers.map((s) => s.value) } }));
+    setValues(update(values, { $merge: { pipelineUsers: selectedUsers.map((s) => s.value) } }));
     setStep(PipelineFormSteps.SECOND);
   };
 
@@ -61,7 +61,7 @@ const TeamUsersPage: FC = () => {
           options={userSuggestions}
           onSelect={(value) => setSelectedUsers(value)}
           InputProps={{
-            error: touched.pipelineOwners && !!errors.pipelineOwners,
+            error: touched.pipelineUsers && !!errors.pipelineUsers,
             onBlur: handleBlur,
           }}
         />

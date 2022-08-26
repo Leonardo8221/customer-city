@@ -1,30 +1,25 @@
-import { FC, useState, useEffect, useMemo } from 'react';
+import { FC, useState, useMemo } from 'react';
 import { Typography, Grid, Box } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { PrimaryButton, SecondaryButton } from 'components/ui';
-import { Product } from 'store/product/types';
-import { useProduct } from 'store/product/hooks';
+import { Product } from 'providers/ProductsProvider';
 import { Loader } from 'components/Loader';
 import { OptionValue } from 'core/types';
 import { useAuth } from 'store/auth/hooks';
 import { Container, ProductsSection, ProducsContainer, CounterContainer, SectionTitleContainer } from './ui';
 import { ProductModal } from './components';
 import { ProductsTable } from './components/ProductsTable';
+import { useProducts } from 'providers/ProductsProvider';
 
 const ProductDefiner: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const { loading, error, products, getProducts } = useProduct();
+  const { loading, products } = useProducts();
   const { isAdmin, isSuperAdmin } = useAuth();
-
-  useEffect(() => {
-    getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const toggleModal = () => {
     if (modalOpen && selectedProduct) setSelectedProduct(undefined);
@@ -117,12 +112,6 @@ const ProductDefiner: FC = () => {
       </ProductsSection>
 
       <ProductModal open={modalOpen} toggleOpen={toggleModal} product={selectedProduct} />
-
-      {!!error && (
-        <Typography variant="caption" color="red">
-          {typeof error === 'string' ? error : 'Something went wrong!'}
-        </Typography>
-      )}
 
       {loading && <Loader />}
     </Container>

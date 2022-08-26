@@ -1,4 +1,4 @@
-import { ProductCategory, ProductCurrency, ProductRateChargeType } from 'store/product/types';
+import { ProductCategory, ProductCurrency, ProductRateChargeType } from 'providers/ProductsProvider';
 import { OptionValue, UserType } from './types';
 import {
   mapUserRoleToLabel,

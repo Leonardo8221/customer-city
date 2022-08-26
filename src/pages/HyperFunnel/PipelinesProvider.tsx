@@ -1,12 +1,10 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Product } from 'store/product/types';
 import { User } from 'store/user/types';
 import { apiCall } from 'http/index';
 import { client, baseURL } from 'http/api-client';
 import { useAsync } from 'utils/async';
 import { Loader } from 'components/Loader';
-import { useProduct } from 'store/product/hooks';
-
+import { useProducts, Product } from 'providers/ProductsProvider';
 export interface DealStage {
   dealStageId: number;
   dealStageName: string;
@@ -54,7 +52,7 @@ export type Pipeline = {
   pipelineStages: PipelineStage[];
   pipelineDocuments: PipelineDocument[];
   products: Product[];
-  pipelineOwners: User[];
+  pipelineUsers: User[];
   // pipelineProducts: PipelineProduct[]
 };
 
@@ -72,7 +70,7 @@ export const defaultValues: Pipeline = {
   pipelineStages: [],
   pipelineDocuments: [],
   products: [],
-  pipelineOwners: [],
+  pipelineUsers: [],
   // pipelineProducts: []
 };
 export const PipelineFormContext = createContext<{
@@ -105,7 +103,7 @@ type FetchPipeline = Pipeline & {
 export const PipelinesContext = React.createContext<undefined | PipelinesContextProps>(undefined);
 
 export default function PipelinesProvider(props: { children: JSX.Element | JSX.Element[] }) {
-  const [stages, setStages] = useState<PipelineStage[]>([]);
+  // const [stages, setStages] = useState<PipelineStage[]>([]);
   // const [loading, setLoading] = useState(true);
 
   const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
@@ -115,7 +113,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
   const { data: savedPipelines, loading } = useAsync(getAllPipelines);
   const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
 
-  const { products: savedProducts } = useProduct();
+  const { products: savedProducts } = useProducts();
 
   useEffect(() => {
     if (!savedPipelines) {

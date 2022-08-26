@@ -31,7 +31,7 @@ const Selections: SelectionType[] = [
   {
     icon: <AvatarIcon />,
     title: 'Team and Users',
-    name: 'pipelineOwners',
+    name: 'pipelineUsers',
     pageIndex: PipelineFormSteps.SECOND_OWNERS,
   },
   {
