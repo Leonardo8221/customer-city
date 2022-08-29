@@ -105,6 +105,8 @@ export const Card: FC<CardProps> = memo(function Card({
     }, [] as OptionValue<User>[]);
   }, [users]);
 
+  const canHaveForcastCatogoryInput = card.type === 'Sales';
+
   return (
     <CardContainer ref={drop} sx={{ backgroundColor: isDemo ? 'lightBg.main' : 'neutral.white' }}>
       <Box ref={drag} className="card-header">
@@ -199,16 +201,18 @@ export const Card: FC<CardProps> = memo(function Card({
                     }}
                   />
 
-                  <CustomInput
-                    id="forecastCategory"
-                    name={`pipelineStages[${order}].pipelineStageCategory`}
-                    title="Forecast Category"
-                    label="Forecast Category"
-                    placeholder="Enter the forecast category"
-                    fullWidth
-                    value={values.pipelineStages?.[order]?.pipelineStageCategory}
-                    onChange={handleChange}
-                  />
+                  {canHaveForcastCatogoryInput && (
+                    <CustomInput
+                      id="forecastCategory"
+                      name={`pipelineStages[${order}].pipelineStageCategory`}
+                      title="Forecast Category"
+                      label="Forecast Category"
+                      placeholder="Enter the forecast category"
+                      fullWidth
+                      value={values.pipelineStages?.[order]?.pipelineStageCategory}
+                      onChange={handleChange}
+                    />
+                  )}
 
                   <CustomIconButton startIcon={<PlusIcon />} sx={{ p: 0.5, height: 20 }}>
                     Attach Documents

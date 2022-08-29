@@ -33,10 +33,6 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
     return filtered;
   };
 
-  // const { getDealStages } = useDealStage();
-  // const { getUsers } = useUser();
-  // const { products } = useProducts();
-
   const submit = (values: any) => {
     console.log('submit data: ', values);
   };

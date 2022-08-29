@@ -5,7 +5,7 @@ import { TextButton, LoadingButton } from 'components/ui';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
-import { Pipeline, PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
+import { Pipeline, PipelineFormContext, PipelineFormSteps, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
 import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { OptionValue } from 'core/types';
@@ -20,6 +20,13 @@ const TeamUsersPage: FC = () => {
   const [selectedProducts, setSelectedProducts] = useState<OptionValue<Product>[]>([]);
 
   const { values, touched, errors, setValues, handleBlur } = useFormikContext<Pipeline>();
+
+  const { setEditPipeline } = usePipelines();
+
+  const closeModal = () => {
+    setEditPipeline(null);
+    onClose();
+  };
 
   useEffect(() => {
     setSelectedProducts(
@@ -48,7 +55,7 @@ const TeamUsersPage: FC = () => {
           Products
         </Typography>
 
-        <IconButton onClick={onClose}>
+        <IconButton onClick={closeModal}>
           <CrossIcon />
         </IconButton>
       </ModalHeader>
@@ -74,7 +81,7 @@ const TeamUsersPage: FC = () => {
         </BackTo>
 
         <ButtonGroup>
-          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+          <TextButton sx={{ marginRight: 3 }} onClick={closeModal}>
             Cancel
           </TextButton>
           <LoadingButton variant="contained" onClick={handleSave}>

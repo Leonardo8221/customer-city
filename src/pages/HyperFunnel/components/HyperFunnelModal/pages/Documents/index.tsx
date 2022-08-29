@@ -23,6 +23,7 @@ import {
   PipelineDocument,
   PipelineFormContext,
   PipelineFormSteps,
+  usePipelines,
 } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
 
@@ -32,7 +33,7 @@ const fileTypes = ['PDF', 'DOC', 'DOCX', 'TXT', 'XLSX', 'XLS'];
 
 const DocumentPage: FC = () => {
   const { user } = useUser();
-  console.log('*******************', s3Config);
+
   const s3 = new ReactS3Client(s3Config);
   const [files, setFiles] = useState<PipelineDocument[]>([]);
   const [links, setLinks] = useState<PipelineDocument[]>([]);
@@ -42,6 +43,13 @@ const DocumentPage: FC = () => {
 
   const { onClose, setStep } = useContext(PipelineFormContext);
   const { values, setValues } = useFormikContext<Pipeline>();
+
+  const { setEditPipeline } = usePipelines();
+
+  const closeModal = () => {
+    setEditPipeline(null);
+    onClose();
+  };
 
   useEffect(() => {
     setFiles(values.pipelineDocuments.filter((d) => d.type === 'document'));
@@ -106,7 +114,7 @@ const DocumentPage: FC = () => {
           {'Sales Documentation'}
         </Typography>
 
-        <IconButton onClick={onClose}>
+        <IconButton onClick={closeModal}>
           <CrossIcon />
         </IconButton>
       </ModalHeader>
@@ -201,7 +209,7 @@ const DocumentPage: FC = () => {
         </BackTo>
 
         <ButtonGroup>
-          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+          <TextButton sx={{ marginRight: 3 }} onClick={closeModal}>
             Cancel
           </TextButton>
           <LoadingButton variant="contained" onClick={handleSave}>

@@ -11,7 +11,7 @@ import { FC, ReactNode, useContext } from 'react';
 import { SecondMain, SelectionIcon, SelectItem, SelectionLabel } from './ui';
 import { ButtonGroup, ModalFooter, ModalHeader, ModalContainer, BackTo } from '../../ui';
 import { LoadingButton, TextButton } from 'components/ui';
-import { Pipeline, PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
+import { Pipeline, PipelineFormContext, PipelineFormSteps, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
 import { useFormikContext } from 'formik';
 
 interface SelectionType {
@@ -45,6 +45,13 @@ const Selections: SelectionType[] = [
 const SecondPage: FC = () => {
   const { onClose, setStep } = useContext(PipelineFormContext);
   const { values, touched, errors, handleChange, handleBlur } = useFormikContext<Pipeline>();
+
+  const { setEditPipeline } = usePipelines();
+
+  const closeModal = () => {
+    setEditPipeline(null);
+    onClose();
+  };
   return (
     <ModalContainer>
       <ModalHeader>
@@ -52,7 +59,7 @@ const SecondPage: FC = () => {
           {'New Pipeline'}
         </Typography>
 
-        <IconButton onClick={onClose}>
+        <IconButton onClick={closeModal}>
           <CrossIcon />
         </IconButton>
       </ModalHeader>
@@ -109,7 +116,7 @@ const SecondPage: FC = () => {
           <Typography variant="p12">Back to Step 1</Typography>
         </BackTo>
         <ButtonGroup>
-          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+          <TextButton sx={{ marginRight: 3 }} onClick={closeModal}>
             Cancel
           </TextButton>
           <LoadingButton variant="contained" onClick={() => setStep(PipelineFormSteps.THIRD)}>

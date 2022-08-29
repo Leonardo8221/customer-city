@@ -153,7 +153,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     createNewPipeline(newPipeline).then((data: FetchPipeline) => {
       setPipelines([...pipelines, data]);
     });
-    // window.location.reload();
+    window.location.reload();
   };
 
   const remove = (id: number) => {
@@ -161,7 +161,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
       const removed = pipelines.filter((p) => p.pipelineId !== id);
       setPipelines(removed);
     });
-    // window.location.reload();
+    window.location.reload();
   };
 
   if (looadingBaseStages || loading) {
@@ -218,7 +218,15 @@ async function createNewPipeline(data: Pipeline) {
 }
 
 async function updatePipeline(id: number, data: Pipeline) {
-  return apiCall<FetchPipeline>({ method: 'PUT', url: `/pipeline/${id}`, data });
+  const { products, ...others } = data;
+  const pipelineProducts = products.map((p) => {
+    return {
+      productId: p.productId,
+    };
+  });
+  const d1 = { ...others, pipelineProducts };
+
+  return apiCall<FetchPipeline>({ method: 'PUT', url: `/pipeline/${id}`, data: d1 });
 }
 
 async function deletePipeline(id: number) {

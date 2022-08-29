@@ -8,7 +8,7 @@ import { ActionSelect, FirstMain, SelectionIcon } from './ui';
 import theme from 'core/theme';
 import { ButtonGroup, ModalFooter, ModalContainer, ModalHeader } from '../../ui';
 import { LoadingButton, TextButton } from 'components/ui';
-import { PipelineFormContext, PipelineFormSteps } from 'pages/HyperFunnel/PipelinesProvider';
+import { PipelineFormContext, PipelineFormSteps, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
 
 export enum ActionType {
   FROM_SCRATCH,
@@ -50,6 +50,12 @@ const Selections: SelectionType[] = [
 
 const FirstPage: FC = () => {
   const { onClose, setStep } = useContext(PipelineFormContext);
+  const { setEditPipeline } = usePipelines();
+
+  const closeModal = () => {
+    setEditPipeline(null);
+    onClose();
+  };
   return (
     <ModalContainer>
       <ModalHeader>
@@ -57,7 +63,7 @@ const FirstPage: FC = () => {
           {'New Pipeline'}
         </Typography>
 
-        <IconButton onClick={onClose}>
+        <IconButton onClick={closeModal}>
           <CrossIcon />
         </IconButton>
       </ModalHeader>
@@ -86,7 +92,7 @@ const FirstPage: FC = () => {
         </Box>
 
         <ButtonGroup>
-          <TextButton sx={{ marginRight: 3 }} onClick={() => onClose}>
+          <TextButton sx={{ marginRight: 3 }} onClick={closeModal}>
             Cancel
           </TextButton>
           <LoadingButton variant="contained" onClick={() => setStep(PipelineFormSteps.SECOND)}>
