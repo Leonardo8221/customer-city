@@ -20,6 +20,7 @@ import { useFormikContext } from 'formik';
 import { useUser } from 'store/user/hooks';
 
 import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
+import { useTenantUsers } from 'providers/TenantUsersProvider';
 
 export const ItemTypes = {
   CARD: 'card',
@@ -54,7 +55,7 @@ export const Card: FC<CardProps> = memo(function Card({
 }: CardProps) {
   const originalIndex = findCard(card).index;
   const [open, setOpen] = useState<boolean>(false);
-  const { users } = useUser();
+  const { users } = useTenantUsers();
 
   const { values, touched, errors, handleBlur, handleChange, setFieldValue } = useFormikContext<Pipeline>();
 

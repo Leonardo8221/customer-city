@@ -36,6 +36,8 @@ export const Container: FC = memo(function Container() {
   const { values, setValues, setFieldValue, handleSubmit } = useFormikContext<Pipeline>();
   const cards = values.pipelineStages;
 
+  const { editPipeline } = usePipelines();
+
   const findCard = useCallback(
     (cardItem: PipelineStage) => {
       setHoverIndex(undefined);
@@ -222,7 +224,7 @@ export const Container: FC = memo(function Container() {
             Cancel
           </TextButton>
           <LoadingButton variant="contained" onClick={submit}>
-            {'Create Pipeline'}
+            {editPipeline ? 'Update Pipeline' : 'Create Pipeline'}
           </LoadingButton>
         </ButtonGroup>
       </ModalFooter>

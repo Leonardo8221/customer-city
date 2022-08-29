@@ -7,11 +7,8 @@ import Documents from './pages/Documents';
 import ThirdPage from './pages/Third';
 import { Form, Formik } from 'formik';
 import { PipelineFormContext, PipelineFormSteps, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
-import { useDealStage } from 'store/dealStage/hooks';
 import TeamUsersPage from './pages/TeamUsers';
 import ProductsPage from './pages/Products';
-import { useUser } from 'store/user/hooks';
-import { useProducts } from 'providers/ProductsProvider';
 
 interface ProductModalProps {
   open: boolean;

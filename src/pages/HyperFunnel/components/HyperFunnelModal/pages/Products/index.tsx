@@ -45,7 +45,7 @@ const TeamUsersPage: FC = () => {
     <ModalContainer>
       <ModalHeader>
         <Typography variant="h3" sx={{ color: 'neutral.main' }}>
-          {'Teams & Users'}
+          Products
         </Typography>
 
         <IconButton onClick={onClose}>

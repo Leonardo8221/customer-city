@@ -2,7 +2,6 @@ import { FC, useContext, useMemo, useState, useEffect } from 'react';
 import { TeamUsersMain } from './ui';
 import { Typography, IconButton } from '@mui/material';
 import { TextButton, LoadingButton } from 'components/ui';
-import { useUser } from 'store/user/hooks';
 import { ReactComponent as ArrowLeft } from 'assets/icons/navBack.svg';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ButtonGroup, ModalFooter, BackTo, ModalContainer, ModalHeader } from '../../ui';
@@ -12,9 +11,10 @@ import { User } from 'store/user/types';
 import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { OptionValue } from 'core/types';
 import update from 'immutability-helper';
+import { useTenantUsers } from 'providers/TenantUsersProvider';
 
 const TeamUsersPage: FC = () => {
-  const { users } = useUser();
+  const { users } = useTenantUsers();
 
   const { onClose, setStep } = useContext(PipelineFormContext);
   const [selectedUsers, setSelectedUsers] = useState<OptionValue<User>[]>([]);
@@ -22,12 +22,21 @@ const TeamUsersPage: FC = () => {
   const { values, touched, errors, setValues, handleBlur } = useFormikContext<Pipeline>();
 
   useEffect(() => {
+    if (!values.pipelineUsers) {
+      return;
+    }
+
+    const pUsers = values.pipelineUsers.map((pu) => {
+      const userId = pu.userId;
+      const user = users.filter((u) => u.userId === userId)[0];
+      return user;
+    });
     setSelectedUsers(
-      values.pipelineUsers.map((user) => {
+      pUsers.map((user) => {
         return { label: user.userName, value: user };
       }),
     );
-  }, [values]);
+  }, [users, values]);
 
   const userSuggestions = useMemo(() => {
     return users.reduce((acc, val) => {
