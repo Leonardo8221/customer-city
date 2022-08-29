@@ -107,14 +107,15 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
   // const [loading, setLoading] = useState(true);
 
   const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
-  const [baseStages, setBaseStages] = useState<BaseStage[]>([]);
+  // const [baseStages, setBaseStages] = useState<BaseStage[]>([]);
   const [editPipeline, setEditPipeline] = useState<number | null>(null);
 
   const { data: savedPipelines, loading } = useAsync(getAllPipelines);
-  const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
+  // const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
 
   const { products: savedProducts } = useProducts();
 
+  const baseStages = createBaseStages();
   useEffect(() => {
     if (!savedPipelines) {
       return;
@@ -136,12 +137,12 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     setPipelines(saved);
   }, [savedPipelines, savedProducts]);
 
-  useEffect(() => {
-    if (!savedBaseSages) {
-      return;
-    }
-    setBaseStages(savedBaseSages);
-  }, [savedBaseSages]);
+  // useEffect(() => {
+  //   if (!savedBaseSages) {
+  //     return;
+  //   }
+  //   setBaseStages(savedBaseSages);
+  // }, [savedBaseSages]);
 
   const createPipeline = (newPipeline: Pipeline) => {
     if (editPipeline) {
@@ -164,7 +165,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     window.location.reload();
   };
 
-  if (looadingBaseStages || loading) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -231,4 +232,79 @@ async function updatePipeline(id: number, data: Pipeline) {
 
 async function deletePipeline(id: number) {
   return apiCall<boolean>({ method: 'DELETE', url: `/pipeline/${id}` });
+}
+
+function createBaseStages(): BaseStage[] {
+  return [
+    {
+      type: 'Pre-Sales',
+      baseStageId: 1,
+      title: 'Prospecting',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Pre-Sales',
+      baseStageId: 2,
+      title: 'Outreach',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Pre-Sales',
+      baseStageId: 3,
+      title: 'Engagement',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Pre-Sales',
+      baseStageId: 4,
+      title: 'Discovery',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Pre-Sales',
+      baseStageId: 5,
+      title: 'Qualification',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Sales',
+      baseStageId: 6,
+      title: 'Planning & Analysis',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Sales',
+      baseStageId: 7,
+      title: 'Value Proposition',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Sales',
+      baseStageId: 8,
+      title: 'Proposal',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Sales',
+      baseStageId: 9,
+      title: 'Contract',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+    {
+      type: 'Sales',
+      baseStageId: 10,
+      title: 'Closed',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elit, nulla massa nisl pretium, pulvinar rutrum facilisis dis. Viverra a, ipsum risus, suspendisse velit. Vulputate at ullamcorper tempor, vitae.',
+    },
+  ];
 }
