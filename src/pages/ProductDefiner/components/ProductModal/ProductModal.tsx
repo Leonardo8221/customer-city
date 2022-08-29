@@ -10,8 +10,13 @@ import { Modal, ModalContainer, ModalHeader, ModalMain, ModalFooter, TextButton 
 import { CustomInput } from 'components/CustomInput';
 import { CustomDropdown } from 'components/CustomDropdown';
 import { CustomTextArea } from 'components/CustomTextarea';
-import { Product, ProductCategory, ProductCurrency, ProductRateChargeType } from 'providers/ProductsProvider';
-// import { useProduct } from 'store/product/hooks';
+import {
+  Product,
+  ProductCategory,
+  ProductCurrency,
+  ProductRateChargeType,
+  useProducts,
+} from 'providers/ProductsProvider';
 import { PRODUCT_RATE_CHARGE_TYPE_OPTIONS, PRODUCT_CATEGORY_OPTIONS, PRODUCT_CURRENCY_OPTIONS } from 'core/constants';
 import { PriceCurrencyContainer, Paper } from './ui';
 
@@ -43,7 +48,8 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const formRef = useRef<FormikProps<FormValues> | null>(null);
-  // const { getProducts } = useProduct();
+
+  const { update, create } = useProducts();
 
   const closeModal = () => {
     formRef.current?.resetForm();
@@ -60,10 +66,8 @@ const ProductModal: FC<ProductModalProps> = ({ open, product, toggleOpen }) => {
         price: parseFloat(values.price),
       };
 
-      // if (product) await updateProductApi(product.productId, data);
-      // else await createProductApi(data);
-
-      // getProducts();
+      if (product) update(product.productId, data as Product);
+      else create(data as Product);
 
       closeModal();
     } catch (err) {

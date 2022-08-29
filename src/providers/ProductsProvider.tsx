@@ -33,6 +33,9 @@ export interface Product {
 type ProductsContextProps = {
   products: Product[];
   loading: boolean;
+  create: (p: Product) => void;
+  update: (id: number, p: Product) => void;
+  remove: (id: number) => void;
 };
 
 export const ProductsContext = React.createContext<undefined | ProductsContextProps>(undefined);
@@ -43,6 +46,26 @@ export default function ProductsProvider(props: { children: JSX.Element | JSX.El
   const [products, setProducts] = useState<Product[]>([]);
 
   const { data: savedProducts, loading } = useAsync(getAllProducts);
+
+  const create = (newProduct: Product) => {
+    createProduct(newProduct).then((product) => {
+      setProducts([...products, product]);
+    });
+  };
+
+  const update = (productId: number, updatedProduct: Product) => {
+    updateProduct(productId, updatedProduct).then((product) => {
+      const updated = products.map((p) => (p.productId === productId ? updatedProduct : p));
+      setProducts(updated);
+    });
+  };
+
+  const remove = (productId: number) => {
+    deleteProduct(productId).then(() => {
+      const removed = products.filter((p) => p.productId !== productId);
+      setProducts(removed);
+    });
+  };
 
   useEffect(() => {
     if (!savedProducts) {
@@ -60,6 +83,9 @@ export default function ProductsProvider(props: { children: JSX.Element | JSX.El
       value={{
         products,
         loading,
+        create,
+        update,
+        remove,
       }}
     >
       {props.children}
