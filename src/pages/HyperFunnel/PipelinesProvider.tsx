@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { User } from 'store/user/types';
 import { apiCall } from 'http/index';
-import { client, baseURL } from 'http/api-client';
 import { useAsync } from 'utils/async';
 import { Loader } from 'components/Loader';
 import { useProducts, Product } from 'providers/ProductsProvider';
@@ -148,13 +147,14 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
     if (editPipeline) {
       updatePipeline(editPipeline, newPipeline).then((data: FetchPipeline) => {
         setPipelines([...pipelines, data]);
+        window.location.reload();
       });
       return;
     }
     createNewPipeline(newPipeline).then((data: FetchPipeline) => {
       setPipelines([...pipelines, data]);
+      window.location.reload();
     });
-    window.location.reload();
   };
 
   const remove = (id: number) => {
