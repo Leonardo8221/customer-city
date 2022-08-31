@@ -30,7 +30,7 @@ const TeamUsersPage: FC = () => {
 
   useEffect(() => {
     setSelectedProducts(
-      values.products.map((product) => {
+      values.pipelineProducts.map((product) => {
         return { label: product.productName, value: product };
       }),
     );
@@ -44,7 +44,7 @@ const TeamUsersPage: FC = () => {
   }, [products]);
 
   const handleSave = () => {
-    setValues(update(values, { $merge: { products: selectedProducts.map((s) => s.value) } }));
+    setValues(update(values, { $merge: { pipelineProducts: selectedProducts.map((s) => s.value) } }));
     setStep(PipelineFormSteps.SECOND);
   };
 
@@ -68,7 +68,7 @@ const TeamUsersPage: FC = () => {
           options={Suggestions}
           onSelect={(value) => setSelectedProducts(value)}
           InputProps={{
-            error: touched.products && !!errors.products,
+            error: touched.pipelineProducts && !!errors.pipelineProducts,
             onBlur: handleBlur,
           }}
         />

@@ -31,9 +31,9 @@ export const DEAL_STAGE_TYPES: DealStageType[] = [
 
 export const Container: FC = memo(function Container() {
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
-  const { baseStages, createPipeline } = usePipelines();
+  const { baseStages, createPipeline, setEditPipeline } = usePipelines();
   const { onClose, setStep } = useContext(PipelineFormContext);
-  const { values, setValues, setFieldValue, handleSubmit } = useFormikContext<Pipeline>();
+  const { values, setValues, setFieldValue } = useFormikContext<Pipeline>();
   const cards = values.pipelineStages;
 
   const { editPipeline } = usePipelines();
@@ -125,9 +125,13 @@ export const Container: FC = memo(function Container() {
 
   const isEmpty = cards.length === 0;
 
+  const closeModal = () => {
+    onClose();
+    setEditPipeline(null);
+  };
   const submit = () => {
-    console.log('values: ', values);
     createPipeline(values);
+    closeModal();
   };
 
   return (
@@ -137,7 +141,7 @@ export const Container: FC = memo(function Container() {
           {'Pipeline Stages'}
         </Typography>
 
-        <IconButton onClick={onClose}>
+        <IconButton onClick={closeModal}>
           <CrossIcon />
         </IconButton>
       </ModalHeader>

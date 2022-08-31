@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import * as yup from 'yup';
 import { Modal } from 'components/ui';
 import FirstPage from './pages/First';
@@ -33,8 +33,8 @@ const HyperFunnelModal: FC<ProductModalProps> = ({ open, toggleOpen }) => {
     return filtered;
   };
 
-  const submit = (values: any) => {
-    console.log('submit data: ', values);
+  const submit = () => {
+    console.log('submit data');
   };
 
   const onClose = () => {

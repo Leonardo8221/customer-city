@@ -16,8 +16,6 @@ import { CustomMultiDropdown } from 'components/CustomDropdown';
 import { User } from 'store/user/types';
 import { OptionValue } from 'core/types';
 import { useFormikContext } from 'formik';
-// import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
-import { useUser } from 'store/user/hooks';
 
 import { Pipeline, PipelineStage } from 'pages/HyperFunnel/PipelinesProvider';
 import { useTenantUsers } from 'providers/TenantUsersProvider';
