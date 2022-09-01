@@ -5,7 +5,7 @@ import Panels from 'pages/HyperFunnel/components/Panels';
 import PanelBodySidebar from 'components/PanelLayout/PanelBodySidebar';
 import { usePipelines } from '../PipelinesProvider';
 
-export default function HyperFunnel() {
+export default function PipelinesList() {
   const { pipelines } = usePipelines();
 
   if (pipelines.length === 0) {

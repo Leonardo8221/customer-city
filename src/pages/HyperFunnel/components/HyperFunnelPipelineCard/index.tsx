@@ -1,6 +1,6 @@
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import { Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
+import { Pipeline, usePipelines, FetchPipeline } from 'pages/HyperFunnel/PipelinesProvider';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import DescriptionIcon from '@mui/icons-material/Description';
 
@@ -8,12 +8,8 @@ import { IconButton, styled } from '@mui/material';
 import { useToggle } from 'utils/toggle';
 import { HyperFunnelModal } from 'pages/HyperFunnel/components';
 
-export default function HyperFunnelPipelineCard(props: {
-  pipeline: Pipeline & {
-    pipelineId: number;
-  };
-}) {
-  const { setEditPipeline, deletePipeline } = usePipelines();
+export default function HyperFunnelPipelineCard(props: { pipeline: FetchPipeline }) {
+  const { setEditPipeline, deletePipeline, setSelectedPipeline } = usePipelines();
   const { flag, toggle } = useToggle();
 
   const onEdit = () => {
@@ -26,7 +22,7 @@ export default function HyperFunnelPipelineCard(props: {
   };
 
   return (
-    <StyledCard>
+    <StyledCard onClick={() => setSelectedPipeline(props.pipeline)}>
       <HyperFunnelModal open={flag} toggleOpen={toggle} />
       <CardHeader
         title={props.pipeline.pipelineName}

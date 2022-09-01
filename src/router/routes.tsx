@@ -21,6 +21,7 @@ import { HyperFunnel } from 'pages/HyperFunnel';
 import { Integration } from 'pages/Integration';
 import { IntegrationDetail } from 'pages/IntegrationDetail';
 import { IntegrationRedirect } from 'pages/IntegrationRedirect';
+import JourneyBuilder from 'pages/HyperFunnel/components/JourneyBuilder';
 
 interface AppRoute {
   path?: string;
@@ -41,6 +42,7 @@ export const dashboardRoutes: AppRoute[] = [
       { path: PRIVATE_ROUTE_PATHS.accountDetail, element: <AccountDetail /> },
       { path: PRIVATE_ROUTE_PATHS.productDefiner, element: <ProductDefiner /> },
       { path: PRIVATE_ROUTE_PATHS.hyperFunnel, element: <HyperFunnel /> },
+      { path: PRIVATE_ROUTE_PATHS.journeyBuilder, element: <JourneyBuilder /> },
       { path: PRIVATE_ROUTE_PATHS.dealScape, element: <Deal /> },
       { path: PRIVATE_ROUTE_PATHS.dealScapeDetail, element: <DealDetail /> },
       { path: PRIVATE_ROUTE_PATHS.controlTower, element: <ControlTower /> },

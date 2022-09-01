@@ -91,9 +91,11 @@ type PipelinesContextProps = {
   setEditPipeline: (pipelineId: number | null) => void;
   editPipeline: number | null;
   deletePipeline: (id: number) => void;
+  selectedPipeline: FetchPipeline | null;
+  setSelectedPipeline: (pipeline: FetchPipeline | null) => void;
 };
 
-type FetchPipeline = Pipeline & {
+export type FetchPipeline = Pipeline & {
   pipelineId: number;
 };
 
@@ -103,6 +105,7 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
   const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
   const [editPipeline, setEditPipeline] = useState<number | null>(null);
 
+  const [selectedPipeline, setSelectedPipeline] = useState<FetchPipeline | null>(null);
   const { data: savedPipelines, loading } = useAsync(getAllPipelines);
 
   const baseStages = createBaseStages();
@@ -152,6 +155,8 @@ export default function PipelinesProvider(props: { children: JSX.Element | JSX.E
         setEditPipeline,
         editPipeline,
         deletePipeline: remove,
+        setSelectedPipeline,
+        selectedPipeline,
       }}
     >
       {props.children}
@@ -163,7 +168,7 @@ export function usePipelines() {
   const context = React.useContext(PipelinesContext);
 
   if (!context) {
-    throw new Error('usePipelineStagesContext must be used within PipelinesProvider');
+    throw new Error('usePipelineContext must be used within PipelinesProvider');
   }
 
   return context;
