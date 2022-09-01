@@ -1,5 +1,5 @@
 import MuiBox from '@mui/material/Box';
-import { Button, IconButton, styled } from '@mui/material';
+import { Button, styled } from '@mui/material';
 import { usePipelines } from '../PipelinesProvider';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -8,7 +8,7 @@ import { HyperFunnelModal } from 'pages/HyperFunnel/components';
 import HyperFunnelPipelineCard from 'pages/HyperFunnel/components/HyperFunnelPipelineCard';
 
 export default function LeftPanel() {
-  const { baseStages, pipelines, setEditPipeline, deletePipeline } = usePipelines();
+  const { pipelines } = usePipelines();
   const { flag, toggle } = useToggle();
 
   return (

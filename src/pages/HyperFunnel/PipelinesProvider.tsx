@@ -3,7 +3,7 @@ import { User } from 'store/user/types';
 import { apiCall } from 'http/index';
 import { useAsync } from 'utils/async';
 import { Loader } from 'components/Loader';
-import { useProducts, Product } from 'providers/ProductsProvider';
+import { Product } from 'providers/ProductsProvider';
 export interface DealStage {
   dealStageId: number;
   dealStageName: string;
@@ -100,17 +100,10 @@ type FetchPipeline = Pipeline & {
 export const PipelinesContext = React.createContext<undefined | PipelinesContextProps>(undefined);
 
 export default function PipelinesProvider(props: { children: JSX.Element | JSX.Element[] }) {
-  // const [stages, setStages] = useState<PipelineStage[]>([]);
-  // const [loading, setLoading] = useState(true);
-
   const [pipelines, setPipelines] = useState<FetchPipeline[]>([]);
-  // const [baseStages, setBaseStages] = useState<BaseStage[]>([]);
   const [editPipeline, setEditPipeline] = useState<number | null>(null);
 
   const { data: savedPipelines, loading } = useAsync(getAllPipelines);
-  // const { data: savedBaseSages, loading: looadingBaseStages } = useAsync(getAllBaseStages);
-
-  const { products: savedProducts } = useProducts();
 
   const baseStages = createBaseStages();
   useEffect(() => {
