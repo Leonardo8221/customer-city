@@ -15,7 +15,7 @@ interface CustomSelectProps<T extends OptionValue> {
   name?: string;
   value: T;
   options: Option<T>[];
-  onSelect?: (value: T) => Promise<void>;
+  onSelect?: (value: T) => void;
   small?: boolean;
   sx?: SxProps<Theme>;
   variant?: 'outlined' | 'standard';
@@ -24,7 +24,7 @@ interface CustomSelectProps<T extends OptionValue> {
   defaultValue?: string;
 }
 
-const CustomSelect = <T extends OptionValue>({
+const CustomOptions = <T extends OptionValue>({
   id,
   value,
   options,
@@ -42,16 +42,11 @@ const CustomSelect = <T extends OptionValue>({
     setSelectedValue(value);
   }, [value]);
 
-  const onChange = async (event: SelectChangeEvent<unknown>) => {
+  const onChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedValue(event.target.value as T);
 
     if (!onSelect) return;
-
-    try {
-      await onSelect(event.target.value as T);
-    } catch (error) {
-      /** */
-    }
+    onSelect(event.target.value as T);
   };
 
   const selectedOption = options.find((option) => option.value === selectedValue);
@@ -94,4 +89,4 @@ const CustomSelect = <T extends OptionValue>({
   );
 };
 
-export default CustomSelect;
+export default CustomOptions;

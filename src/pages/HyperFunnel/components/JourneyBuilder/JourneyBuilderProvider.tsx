@@ -1,22 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { apiCall } from 'http/index';
 import { useAsync } from 'utils/async';
 import { Loader } from 'components/Loader';
-import { Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
+import { FetchPipeline, Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
+import { useParams } from 'react-router-dom';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
+import StorageIcon from '@mui/icons-material/Storage';
+import PinIcon from '@mui/icons-material/Pin';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import EmojiFlagsIcon from '@mui/icons-material/EmojiFlags';
 
-export const dateTypes = ['Text', 'Record', 'Number', 'Currency', 'Boolean'];
+export const DEFAULT_DATA_TYPES: Record<string, JSX.Element> = {
+  Text: <TextFieldsIcon />,
+  Record: <StorageIcon />,
+  Number: <PinIcon />,
+  Currency: <AttachMoneyIcon />,
+  Boolean: <EmojiFlagsIcon />,
+};
 
+export type ResourceType = {
+  label: string;
+  value: string;
+};
 export type Resource = {
-  id: number;
+  id: number | null;
   type: string;
   name: string;
   description: string;
-  dateType: 'Text' | 'Record' | 'Number' | 'Currency' | 'Boolean';
+  dataType: 'Text' | 'Record' | 'Number' | 'Currency' | 'Boolean';
 };
 
 type JourneyBuilderContextProps = {
-  pipeline: Pipeline;
+  pipeline: FetchPipeline;
   resources: Resource[];
+  resourceTypes: ResourceType[];
   createResource: (newResource: Resource) => void;
   removeResource: (resourceId: number) => void;
   updateResource: (resourceId: number, newResource: Resource) => void;
@@ -29,9 +46,11 @@ export default function JourneyBuilderProvider(props: { children: JSX.Element | 
   const { pipelines } = usePipelines();
   const [resources, setResources] = useState<Resource[]>([]);
 
-  const { data: savedResources, loading } = useAsync(getAllResources);
+  const { data: savedResources, loading } = useGetAllResources();
 
   const pipeline = pipelines.filter((p) => p.pipelineId === pipelineId)[0];
+
+  const resourceTypes = getResourceTypes();
 
   useEffect(() => {
     if (!savedResources) {
@@ -63,7 +82,7 @@ export default function JourneyBuilderProvider(props: { children: JSX.Element | 
     updateResource(resourceId, newResource).then(() => {
       const updated = resources.map((r) => {
         if (r.id === resourceId) {
-          return newResource;
+          return { ...newResource, id: resourceId };
         }
         return r;
       });
@@ -78,6 +97,7 @@ export default function JourneyBuilderProvider(props: { children: JSX.Element | 
         updateResource: updateR,
         resources,
         pipeline,
+        resourceTypes,
       }}
     >
       {children}
@@ -95,8 +115,11 @@ export function useJourneyBuilder() {
   return context;
 }
 
-async function getAllResources() {
-  return apiCall<Resource[]>({ method: 'GET', url: '/resource' });
+function useGetAllResources() {
+  const { id: pipelineId } = useParams();
+  const url = `pipeline/${pipelineId}/resources`;
+  const fetch = useCallback(() => apiCall<Resource[]>({ method: 'GET', url }), [url]);
+  return useAsync(fetch);
 }
 
 async function createNewResource(data: Resource) {
@@ -109,4 +132,17 @@ async function updateResource(id: number, data: Resource) {
 
 async function deleteResource(id: number) {
   return apiCall<boolean>({ method: 'DELETE', url: `/resource/${id}` });
+}
+
+function getResourceTypes(): ResourceType[] {
+  return [
+    {
+      label: 'Variable',
+      value: 'variable',
+    },
+    {
+      label: 'Decision Split',
+      value: 'decision_split',
+    },
+  ];
 }
