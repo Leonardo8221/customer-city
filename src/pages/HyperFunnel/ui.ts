@@ -1,5 +1,9 @@
 import { styled, Box } from '@mui/material';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+
 export const Container = styled(Box)(() => ({
   flex: 1,
   display: 'flex',
@@ -29,4 +33,23 @@ export const HyperFunnelContainer = styled(Box)(() => ({
   justifyContent: 'center',
   flexDirection: 'column',
   gap: '2.5rem',
+}));
+
+export const StyledAccordion = styled(Accordion)(({ theme }) => ({
+  boxShadow: 'unset',
+  marginBottom: theme.spacing(2),
+  '& .MuiPaper-root': {
+    border: 'unset',
+  },
+}));
+
+export const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  backgroundColor: '#F6F8FB',
+}));
+
+export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
+  '& .MuiAccordionSummary-content': {
+    marginLeft: theme.spacing(1),
+  },
 }));

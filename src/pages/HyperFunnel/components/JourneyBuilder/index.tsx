@@ -1,8 +1,4 @@
-import PipelinesList from 'pages/HyperFunnel/components/PipelinesList';
-import EmptyHyperFunnel from 'pages/HyperFunnel/EmptyHyperFunnel';
-import ProductsProvider from 'providers/ProductsProvider';
-import TenantUsersProvider from 'providers/TenantUsersProvider';
-import PipelinesProvider, { Pipeline, usePipelines } from 'pages/HyperFunnel/PipelinesProvider';
+import PipelinesProvider from 'pages/HyperFunnel/PipelinesProvider';
 import { useParams } from 'react-router-dom';
 import JourneyBuilderProvider, { useJourneyBuilder } from './JourneyBuilderProvider';
 import PanelBodySidebar from 'components/PanelLayout/PanelBodySidebar';

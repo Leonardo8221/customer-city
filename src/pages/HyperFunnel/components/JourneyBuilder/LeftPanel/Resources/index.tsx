@@ -1,17 +1,15 @@
 import AddResource from './AddResource';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Resource, ResourceType, useJourneyBuilder } from '../../JourneyBuilderProvider';
 import { ReactComponent as TextSVG } from 'assets/icons/resourceText.svg';
 import { ReactComponent as DecisionSplitSVG } from 'assets/icons/resourceDecisionSplit.svg';
 
-import { Box, Grid, styled } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useToggle } from 'utils/toggle';
 import ResourceConfig from './ResourceConfig';
-
+import { StyledAccordion, StyledAccordionSummary, StyledAccordionDetails } from 'pages/HyperFunnel/ui';
 export default function Resources() {
   return (
     <>
@@ -92,22 +90,3 @@ function ResourceIcon(props: { resource: Resource }) {
 
   return null;
 }
-
-export const StyledAccordion = styled(Accordion)(({ theme }) => ({
-  boxShadow: 'unset',
-  marginBottom: theme.spacing(2),
-  '& .MuiPaper-root': {
-    border: 'unset',
-  },
-}));
-
-export const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  backgroundColor: '#F6F8FB',
-}));
-
-export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
-  '& .MuiAccordionSummary-content': {
-    marginLeft: theme.spacing(1),
-  },
-}));

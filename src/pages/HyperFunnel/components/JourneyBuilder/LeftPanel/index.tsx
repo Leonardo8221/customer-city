@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 import Resources from './Resources';
+import TouchPoints from './TouchPoints';
 
 export default function LeftPanel() {
   const [value, setValue] = React.useState('1');
@@ -23,7 +24,9 @@ export default function LeftPanel() {
             <Tab label="Resources" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1">Item One</TabPanel>
+        <TabPanel value="1">
+          <TouchPoints />
+        </TabPanel>
         <TabPanel value="2">
           <Resources />
         </TabPanel>
