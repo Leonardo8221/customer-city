@@ -76,6 +76,12 @@ const defaultNodes: Node[] = [
     position: { x: 200, y: 390 },
     data: { shape: 'parallelogram', width: 150, height: 70, label: 'Parallelogram', color: '#668de3' },
   },
+  {
+    id: '10',
+    type: 'shape',
+    position: { x: 200, y: 390 },
+    data: { shape: 'resizable-rectangle', width: 150, height: 70, label: 'Parallelogram', color: '#668de3' },
+  },
 ];
 
 const defaultEdgeOptions = {

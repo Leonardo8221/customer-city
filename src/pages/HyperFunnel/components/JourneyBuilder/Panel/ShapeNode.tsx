@@ -1,4 +1,6 @@
 import { Handle, NodeProps, Position } from 'react-flow-renderer';
+import { Resizable } from 'react-resizable';
+import React from 'react';
 
 const handleStyle = { opacity: 0 };
 
@@ -56,6 +58,8 @@ function useShape({ type, width, height, color = '#9ca8b3', selected }: UseShape
       return (
         <path d={`M0,${height} L${width * 0.25},0 L${width},0 L${width - width * 0.25},${height} z`} {...styles} />
       );
+    case 'resizable-rectangle':
+      return <ResizableContainer width={200} height={200} />;
     default:
       return null;
   }
@@ -90,5 +94,22 @@ export default function ShapeNode({ data, selected }: NodeProps) {
         <div style={{ fontFamily: 'monospace', fontWeight: 'bold', color: 'white', fontSize: 12 }}>{data?.label}</div>
       </div>
     </div>
+  );
+}
+
+function ResizableContainer(props: { width: number; height: number }) {
+  const [height, setHeight] = React.useState(props.height);
+  const [width, setWidth] = React.useState(props.width);
+  const onResize = (event: any, { element, size, handle }: any) => {
+    setHeight(size.height);
+    setWidth(size.width);
+  };
+
+  return (
+    <Resizable height={height} width={width} onResize={onResize}>
+      <div className="box" style={{ width: width + 'px', height: height + 'px' }}>
+        <span>Contents</span>
+      </div>
+    </Resizable>
   );
 }

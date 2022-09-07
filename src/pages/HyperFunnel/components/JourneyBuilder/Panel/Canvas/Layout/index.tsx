@@ -1,84 +1,58 @@
+import { FunctionComponent, useCallback } from 'react';
 import ReactFlow, {
-  addEdge,
   Background,
-  useNodesState,
-  useEdgesState,
-  MiniMap,
-  Controls,
   Node,
-  Edge,
-  Connection,
+  NodeTypes,
+  useReactFlow,
+  MarkerType,
+  ReactFlowProvider,
 } from 'react-flow-renderer';
 
-import { useCallback } from 'react';
 import { useJourneyBuilder } from '../../../JourneyBuilderProvider';
+import ResizeRotateNode from 'pages/HyperFunnel/components/JourneyBuilder/Panel/ResizeRotateNode';
 
-const initialNodes: Node[] = [
-  {
-    id: '2',
-    data: { label: 'Group A' },
-    position: { x: 0, y: 0 },
-    className: 'light',
-    style: {
-      backgroundColor: 'rgba(255, 0, 0, 0.2)',
-      width: 500,
-      height: '100%',
-    },
-  },
-  {
-    id: '2a',
-    data: { label: 'Node A.1' },
-    position: { x: 10, y: 50 },
-    parentNode: '2',
-  },
-  {
-    id: '4',
-    data: { label: 'Group B' },
-    position: { x: 500, y: 0 },
-    className: 'light',
-    style: {
-      backgroundColor: 'rgba(255, 0, 0, 0.2)',
-      width: 500,
-      height: '100%',
-    },
-  },
-  {
-    id: '4a',
-    data: { label: 'Node B.1' },
-    position: { x: 15, y: 65 },
-    className: 'light',
-    parentNode: '4',
-    extent: 'parent',
-  },
-];
+const nodeTypes: NodeTypes = {
+  resizeRotate: ResizeRotateNode as FunctionComponent,
+};
+const proOptions = { account: 'paid-pro', hideAttribution: true };
 
-const initialEdges: Edge[] = [];
+const defaultEdgeOptions = {
+  style: { strokeWidth: 3, stroke: '#9ca8b3' },
+  markerEnd: {
+    type: MarkerType.ArrowClosed,
+  },
+  zIndex: 1,
+};
 
 export default function CanvasLayout() {
+  return (
+    <ReactFlowProvider>
+      <ReactFlowPro />
+    </ReactFlowProvider>
+  );
+}
+
+function ReactFlowPro() {
+  const { getNodes, setNodes } = useReactFlow();
   const { layoutNodes } = useSubPanels();
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const onMoveStart = useCallback(() => {
+    const nodes = getNodes().map((n) => {
+      n.selected = false;
+      return n;
+    });
 
-  const onConnect = useCallback(
-    (connection: Connection) => {
-      setEdges((eds) => addEdge(connection, eds));
-    },
-    [setEdges],
-  );
+    setNodes(nodes);
+  }, [getNodes, setNodes]);
 
   return (
     <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      className="react-flow-subflows-example"
-      fitView
+      nodeTypes={nodeTypes}
+      defaultNodes={layoutNodes}
+      defaultEdgeOptions={defaultEdgeOptions}
+      onMoveStart={onMoveStart}
+      proOptions={proOptions}
     >
-      <MiniMap />
-      <Controls />
       <Background />
     </ReactFlow>
   );
@@ -94,17 +68,19 @@ function useSubPanels() {
       id: index.toString(),
       data: {
         label: `${pipelineStage.pipelineStageName} (${pipelineStage.title}) `,
-      },
-      position: {
-        x: index * unitWidth,
-        y: 0,
-      },
-      className: 'light',
-      style: {
         backgroundColor: 'rgba(255, 0, 0, 0.2)',
         width: unitWidth,
         height: '100%',
+        offsetX: index * unitWidth,
+        offsetY: 0,
       },
+      className: 'light',
+      type: 'resizeRotate',
+      position: {
+        x: index * unitWidth + 20,
+        y: 0,
+      },
+      draggable: false,
     };
 
     return node;
