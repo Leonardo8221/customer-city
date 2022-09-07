@@ -68,7 +68,7 @@ export default function PanelBodySidebar(props: PanelBodySidebarProps) {
   return (
     <Box sx={{ display: 'flex' }}>
       <LeftDrawer {...props} />
-      <Box component="main" sx={{ width: '100%' }}>
+      <Box component="main" sx={{ width: '100%', height: 'calc( 100vh - 56px )' }}>
         {props.middlePanelChild}
       </Box>
     </Box>

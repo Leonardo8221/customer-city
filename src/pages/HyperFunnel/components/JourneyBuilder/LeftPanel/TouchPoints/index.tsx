@@ -18,6 +18,8 @@ import { ReactComponent as LinkSVG } from 'assets/icons/touchPoints/link.svg';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import React, { DragEvent } from 'react';
+
 export type TouchPoint = {
   label: string;
   value: string;
@@ -35,6 +37,12 @@ export default function Touchpoints() {
 function TouchPointList() {
   const points = getTouchPointDefaults();
 
+  const onDragStart = (event: DragEvent, nodeType: string) => {
+    event.preventDefault();
+    event.dataTransfer.setData('application/reactflow', nodeType);
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
   return (
     <>
       <StyledAccordion>
@@ -42,8 +50,10 @@ function TouchPointList() {
         <StyledAccordionDetails>
           <Grid container>
             <Grid item sm={6} textAlign="center">
-              <GetDataSVG />
-              <Typography>{points[0].label}</Typography>
+              <div onDragStart={(event: DragEvent) => onDragStart(event, points[0].value)}>
+                <GetDataSVG />
+                <Typography>{points[0].label}</Typography>
+              </div>
             </Grid>
             <Grid item sm={6} textAlign="center">
               <UpdateDataSVG />

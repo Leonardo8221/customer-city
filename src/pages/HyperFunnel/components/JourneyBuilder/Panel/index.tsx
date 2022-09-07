@@ -1,6 +1,31 @@
 import MuiBox from '@mui/material/Box';
-import { styled } from '@mui/material';
+import { Button, Grid, styled, Toolbar } from '@mui/material';
+import FlowExample from 'pages/HyperFunnel/components/JourneyBuilder/Panel/FlowExample';
+import CanvasPanel from './Canvas';
+import { useNavigate, generatePath } from 'react-router-dom';
+import { PRIVATE_ABS_ROUTE_PATHS } from 'core/constants';
 
 export default function Panel() {
-  return <>Canvas Panel</>;
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(generatePath(PRIVATE_ABS_ROUTE_PATHS.hyperFunnel));
+  };
+  return (
+    <>
+      <Toolbar>
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Button variant="outlined" onClick={goBack}>
+              Back
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button variant="outlined">Save</Button>
+          </Grid>
+        </Grid>
+      </Toolbar>
+      <CanvasPanel />
+    </>
+  );
 }

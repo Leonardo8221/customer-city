@@ -9,7 +9,7 @@ import { useToggle } from 'utils/toggle';
 import { HyperFunnelModal } from 'pages/HyperFunnel/components';
 
 export default function HyperFunnelPipelineCard(props: { pipeline: FetchPipeline }) {
-  const { setEditPipeline, deletePipeline, setSelectedPipeline } = usePipelines();
+  const { setEditPipeline, deletePipeline, setSelectedPipeline, selectedPipeline } = usePipelines();
   const { flag, toggle } = useToggle();
 
   const onEdit = () => {
@@ -22,7 +22,10 @@ export default function HyperFunnelPipelineCard(props: { pipeline: FetchPipeline
   };
 
   return (
-    <StyledCard onClick={() => setSelectedPipeline(props.pipeline)}>
+    <StyledCard
+      onClick={() => setSelectedPipeline(props.pipeline)}
+      selected={props.pipeline.pipelineId === selectedPipeline?.pipelineId}
+    >
       <HyperFunnelModal open={flag} toggleOpen={toggle} />
       <CardHeader
         title={props.pipeline.pipelineName}
@@ -41,11 +44,15 @@ export default function HyperFunnelPipelineCard(props: { pipeline: FetchPipeline
   );
 }
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)<{ selected: boolean }>(({ theme, selected }) => ({
   width: '100%',
   borderRadius: 2,
   marginBottom: 2,
   borderColor: 'blue',
   borderWidth: 4,
-  color: 'blue',
+  color: selected === true ? 'blue' : '#1E232C',
+
+  ':hover': {
+    cursor: 'pointer',
+  },
 }));
