@@ -6,6 +6,8 @@ import ReactFlow, {
   useReactFlow,
   MarkerType,
   ReactFlowProvider,
+  Controls,
+  MiniMap,
 } from 'react-flow-renderer';
 
 import { useJourneyBuilder } from '../../../JourneyBuilderProvider';
@@ -52,8 +54,14 @@ function ReactFlowPro() {
       defaultEdgeOptions={defaultEdgeOptions}
       onMoveStart={onMoveStart}
       proOptions={proOptions}
+      minZoom={0.5}
+      maxZoom={2}
+      defaultZoom={1}
+      style={{ height: 'calc( 100vh - 56px - 64px )' }}
     >
-      <Background />
+      <Controls />
+      <MiniMap />
+      {/* <Background /> */}
     </ReactFlow>
   );
 }
@@ -62,25 +70,27 @@ function useSubPanels() {
   const { pipeline } = useJourneyBuilder();
   const { pipelineStages } = pipeline;
 
+  const colors = ['#ff000033', '#3079d633', '#30d65933', '#c1dc1833', '#dc6a1833', '#dc18c033'];
+
   const layoutNodes: Node[] = pipelineStages.map((pipelineStage, index) => {
     const unitWidth = 500;
     const node: Node = {
       id: index.toString(),
       data: {
         label: `${pipelineStage.pipelineStageName} (${pipelineStage.title}) `,
-        backgroundColor: 'rgba(255, 0, 0, 0.2)',
+        backgroundColor: colors[index % 6],
         width: unitWidth,
-        height: '100%',
-        offsetX: index * unitWidth,
+        height: 800,
+        offsetX: index * unitWidth + 50,
         offsetY: 0,
       },
       className: 'light',
       type: 'resizeRotate',
       position: {
-        x: index * unitWidth + 20,
+        x: index * unitWidth + 50 * index,
         y: 0,
       },
-      draggable: false,
+      // draggable: false,
     };
 
     return node;

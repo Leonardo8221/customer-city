@@ -13,7 +13,7 @@ export default function Panel() {
   };
   return (
     <>
-      <Toolbar>
+      <Toolbar style={{ backgroundColor: 'white' }}>
         <Grid container justifyContent="space-between">
           <Grid item>
             <Button variant="outlined" onClick={goBack}>

@@ -1,66 +1,48 @@
-import { useEffect, useState, useRef, useMemo } from 'react';
-import Moveable from 'moveable';
-import { Handle, useUpdateNodeInternals } from 'react-flow-renderer';
+import React, { useRef, useMemo } from 'react';
+import { Handle, NodeProps, Position } from 'react-flow-renderer';
+import { makeMoveable, DraggableProps, ResizableProps, Draggable, Resizable } from 'react-moveable';
 
-export default function ResizeRotateNode({ id, data, selected, dragging, sourcePosition, targetPosition }: any) {
-  const nodeRef = useRef<any>();
-  const [size, setSize] = useState({ width: data.width, height: 700 });
-  const [transform, setTransform] = useState('none');
-  const updateNodeInternals = useUpdateNodeInternals();
+const Moveable = makeMoveable<DraggableProps & ResizableProps>([Draggable, Resizable]);
+
+export default function ResizeRotateNode({
+  id,
+  data,
+  selected,
+  sourcePosition = Position.Left,
+  targetPosition = Position.Right,
+}: NodeProps) {
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   const style = useMemo(
     () => ({
-      transform,
-      width: size.width,
-      height: size.height,
-      background: data?.backgroundColor,
-      padding: 20,
-      borderRadius: 10,
+      background: data.backgroundColor,
+      borderRadius: 2,
+      padding: 10,
+      width: data.width,
+      height: data.height,
     }),
-    [transform, size.width, size.height, data?.backgroundColor],
+    [data.backgroundColor, data.height, data.width],
   );
 
-  useEffect(() => {
-    if (!nodeRef.current || !selected || dragging) {
+  const onResize = ({ drag, width, height }: { drag: any; width: number; height: number }) => {
+    if (!nodeRef.current) {
       return;
     }
 
-    const moveable = new Moveable(document.body, {
-      target: nodeRef.current,
-      className: 'nodrag',
-      draggable: false,
-      resizable: true,
-      scalable: false,
-      rotatable: false,
-      warpable: false,
-      pinchable: false,
-      origin: false,
-      keepRatio: false,
-      edge: false,
-      throttleDrag: 0,
-      throttleResize: 0,
-      throttleScale: 0,
-      throttleRotate: 0,
-      dragArea: false,
-    });
-
-    moveable.on('resize', ({ width, height, drag }) => {
-      setTransform(drag.transform);
-      setSize({ width, height });
-    });
-
-    return () => moveable.destroy();
-  }, [selected, dragging]);
-
-  useEffect(() => {
-    updateNodeInternals(id);
-  }, [transform, id, updateNodeInternals]);
+    nodeRef.current.style.width = `${width}px`;
+    nodeRef.current.style.height = `${height}px`;
+    nodeRef.current.style.transform = drag.transform;
+    console.log('drag.transform: ', drag.transform);
+  };
 
   return (
-    <div ref={nodeRef} style={style}>
-      <span>{data.label}</span>
-      <Handle style={{ opacity: 0 }} position={sourcePosition} type="source" />
-      <Handle style={{ opacity: 0 }} position={targetPosition} type="target" />
-    </div>
+    <>
+      <Moveable className="nodrag" resizable={selected} target={nodeRef} onResize={onResize} hideDefaultLines />
+      <div ref={nodeRef} style={style}>
+        <span>{data.label}</span>
+        <Handle style={{ opacity: 0 }} position={sourcePosition} type="source" />
+        <Handle style={{ opacity: 0 }} position={targetPosition} type="target" />
+      </div>
+    </>
   );
 }
