@@ -13,14 +13,14 @@ export enum APPLICATION_STATUS_LABEL {
   LOADING = 'Loading...',
 }
 
-export const mapStatusLabel = (status: APPLICATION_STATUS | string) => {
+export const mapStatusLabel = (status: APPLICATION_STATUS | string): APPLICATION_STATUS_LABEL => {
   const map = {
     [APPLICATION_STATUS.INSTALLED.toString()]: APPLICATION_STATUS_LABEL.INSTALLED,
     [APPLICATION_STATUS.NOT_INSTALLED.toString()]: APPLICATION_STATUS_LABEL.NOT_INSTALLED,
     [APPLICATION_STATUS.DEFAULT.toString()]: APPLICATION_STATUS_LABEL.DEFAULT,
   };
   if (status in map) return map[status];
-  return status || APPLICATION_STATUS_LABEL.LOADING;
+  return APPLICATION_STATUS_LABEL.LOADING;
 };
 
 export interface IntegrationSession {

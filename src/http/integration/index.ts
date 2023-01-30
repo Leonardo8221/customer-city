@@ -13,4 +13,4 @@ export const uninstall = (id: string): Promise<void> =>
   apiCall({ method: 'delete', url: `/integration/${id}/uninstall` });
 
 export const authCallback = (payload: string): Promise<void> =>
-  apiCall({ method: 'post', url: `/integration/callback/google-callback/${payload}` });
+  apiCall({ method: 'post', url: `/integration/callback/${payload}` });

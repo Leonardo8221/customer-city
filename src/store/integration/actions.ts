@@ -41,6 +41,10 @@ export const authCallback = createAsyncThunk<void, string>(AUTH_CALLBACK, async 
   return await authCallbackApi(payload);
 });
 
-export const uninstall = createAsyncThunk<void, string>(UNINSTALL, async (id) => {
-  return await uninstallApi(id);
-});
+export const uninstall = createAsyncThunk<void, { id: string; callback: () => void }>(
+  UNINSTALL,
+  async ({ id, callback }) => {
+    await uninstallApi(id);
+    callback();
+  },
+);
