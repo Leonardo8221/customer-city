@@ -9,15 +9,16 @@ const IntegrationRedirectPage: FC = () => {
     window.close();
   };
 
-  const params = window.location.search;
   useEffect(() => {
+    const params = window.location.search;
+    const paths = window.location.pathname.split('/').filter((i) => !!i);
+    const appId = paths[paths.length - 1];
+
     // get the URL parameters which will include the auth token
-    console.log('AUTH PARAMS =====================', params);
-    console.log('WINDOW OPENER =====================', window.opener);
-    if (params) {
-      authCallback(String(params));
+    if (appId + params) {
+      authCallback(appId + params);
     }
-  }, []);
+  }, [authCallback]);
 
   useEffect(() => {
     if (success) {

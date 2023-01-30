@@ -57,7 +57,8 @@ const IntegrationPage: FC = () => {
         {integrations.map((integration, index) => (
           <IntegrationCard
             key={index}
-            integrationId={integration.integrationId}
+            id={integration.id}
+            applicationId={integration.applicationId}
             applicationName={integration.applicationName}
             applicationDescription={integration.applicationDescription}
             applicationIcon={integration.applicationIcon}

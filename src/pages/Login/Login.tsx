@@ -51,9 +51,9 @@ const Login: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (prevSession !== session && session) navigate(PUBLIC_ABS_ROUTE_PATHS.createPassword);
-  }, [session, prevSession, navigate]);
+  // useEffect(() => {
+  //   if (prevSession !== session && session) navigate(PUBLIC_ABS_ROUTE_PATHS.createPassword);
+  // }, [session, prevSession, navigate]);
 
   const initialValues: FormValues = {
     email: searchParams.get('email') ?? '',

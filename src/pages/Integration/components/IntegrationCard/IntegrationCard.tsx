@@ -14,7 +14,7 @@ import { CardContainer } from './ui';
 type IntegrationCardProps = Integration;
 
 const IntegrationCard: FC<IntegrationCardProps> = ({
-  integrationId,
+  applicationId,
   applicationName,
   applicationDescription,
   applicationIcon,
@@ -22,14 +22,14 @@ const IntegrationCard: FC<IntegrationCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const openDetail = () => {
-    const path = generatePath(PRIVATE_ABS_ROUTE_PATHS.integrationDetail, { id: String(integrationId) });
+    const path = generatePath(PRIVATE_ABS_ROUTE_PATHS.integrationDetail, { id: String(applicationId) });
     navigate(path);
   };
   const isInstalled = applicationStatus === APPLICATION_STATUS.INSTALLED;
   return (
     <CardContainer sx={{ backgroundColor: 'neutral.white' }} onClick={openDetail}>
       <Box className="card-header">
-        <img width="32" src={applicationIcon}></img>
+        <img height="40" src={applicationIcon}></img>
         <PrimaryButton
           variant={isInstalled ? 'outlined' : 'contained'}
           startIcon={isInstalled ? <InstalledIcon /> : <InstallIcon />}

@@ -26,14 +26,14 @@ const slice = createGenericSlice({
     });
     builder.addCase(setError, (state, { payload }) => {
       state.data.applicationStatus = APPLICATION_STATUS.NOT_INSTALLED;
-      state.data.statusLabel = mapStatusLabel(APPLICATION_STATUS.NOT_INSTALLED);
+      state.data.statusLabel = mapStatusLabel(APPLICATION_STATUS_LABEL.NOT_INSTALLED);
       state.error = true;
       state.loading = false;
       state.success = false;
     });
     builder.addCase(setSuccess, (state, { payload }) => {
-      state.data.applicationStatus = APPLICATION_STATUS.INSTALLED;
-      state.data.statusLabel = mapStatusLabel(APPLICATION_STATUS.INSTALLED);
+      state.data.applicationStatus = payload.applicationStatus;
+      state.data.statusLabel = payload.statusLabel;
       state.success = true;
       state.loading = false;
       state.error = false;

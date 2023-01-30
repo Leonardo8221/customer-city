@@ -1,5 +1,6 @@
 export interface Integration {
-  integrationId: string;
+  id: number;
+  applicationId: string;
   applicationName: string;
   applicationDescription: string;
   applicationIcon: string;
@@ -34,5 +35,5 @@ export interface IntegrationReturnHook extends IntegrationState {
   setIntegrationStatus: (newStatus: string) => void;
   authorize: (id: string) => void;
   authCallback: (payload: string) => void;
-  uninstall: (id: string) => void;
+  uninstall: ({ id, callback }: { id: string; callback: () => void }) => void;
 }
